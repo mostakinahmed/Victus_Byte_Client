@@ -1,45 +1,46 @@
-import { Truck, ShieldCheck, Globe, Clock } from "lucide-react";
+import React from "react";
+import { FaTruck, FaBriefcase, FaDollarSign, FaPhoneAlt } from "react-icons/fa";
 
-const policies = [
-  {
-    title: "Fast Delivery",
-    icon: <Clock className="h-12 w-12 animate-bounce" />,
-  },
-  {
-    title: "100% Authentic Products",
-    icon: <ShieldCheck className="h-12 w-12 animate-pulse" />,
-  },
-  {
-    title: "Delivery All Over Bangladesh",
-    icon: <Globe className="h-12 w-12 animate-spin" />,
-  },
-  {
-    title: "Trusted Service",
-    icon: <Truck className="h-12 w-12 animate-bounce" />,
-  },
-];
-
-export default function CompanyPolicyCards() {
+const FooterLinks = () => {
   return (
-    <section className="w-full py-12 -mt-3">
-      <div className="mx-auto max-w-[1400px] px-4">
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {policies.map((item, index) => (
-            <div
-              key={index}
-              className="group rounded border border-border bg-background p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg flex flex-col items-center justify-center"
-            >
-              <div className="mb-4 inline-flex items-center justify-center">
-                {item.icon}
-              </div>
-
-              <h3 className="text-lg font-semibold text-foreground text-center">
-                {item.title}
-              </h3>
-            </div>
-          ))}
+    <div className="max-w-[1370px] hidden md:flex mx-auto border-1 bg-white border-gray-300 px-4  flex-wrap justify-between p-2 mb-4">
+      {/* Cancellation & Returns */}
+      <div className="w-full sm:w-1/4 flex items-center justify-center p-4 gap-5 ">
+        <FaTruck size={30} className="text-gray-600 mt-2"  />
+        <div>
+          <span className="block font-bold mt-2 text-gray-600">Cancellation & Returns</span>
+          <p className="text-sm text-gray-600 mt-1">If products not matched</p>
         </div>
       </div>
-    </section>
+
+      {/* Privacy Policy */}
+      <div className="w-full sm:w-1/4 flex items-center justify-center p-4 gap-4">
+        <FaBriefcase size={30} className="text-gray-600 mt-2" />
+        <div>
+          <span className="block  font-bold mt-2 text-gray-600">Privacy Policy</span>
+          <p className="text-sm text-gray-600 mt-1">Check before dealing</p>
+        </div>
+      </div>
+
+      {/* EMI Policy */}
+      <div className="w-full sm:w-1/4 flex items-center justify-center p-4 gap-4 ">
+        <FaDollarSign size={30} className="text-gray-600 mt-2" />
+        <div>
+          <span className="block  font-bold mt-2 text-gray-600">EMI Policy</span>
+          <p className="text-sm text-gray-600 mt-1">We provide 0% EMI facilities*</p>
+        </div>
+      </div>
+
+      {/* Customer Support */}
+      <div className="w-full sm:w-1/4 flex items-center justify-center p-4 gap-5 ">
+        <FaPhoneAlt size={30} className="text-gray-600 mt-2" />
+        <div>
+          <span className="block font-bold mt-2 text-gray-600">Customer Support</span>
+          <p className="text-sm text-gray-600 mt-1">Call us at 09613800800</p>
+        </div>
+      </div>
+    </div>
   );
-}
+};
+
+export default FooterLinks;

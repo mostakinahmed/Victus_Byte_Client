@@ -84,13 +84,21 @@ const gradients = [
   "bg-gradient-to-br from-teal-500 to-lime-400",
   "bg-gradient-to-br from-rose-500 to-pink-400",
   "bg-gradient-to-br from-orange-500 to-yellow-400",
+   "bg-gradient-to-br from-pink-500 to-red-400",
+  "bg-gradient-to-br from-indigo-500 to-purple-500",
+  "bg-gradient-to-br from-green-400 to-emerald-500",
+  "bg-gradient-to-br from-blue-500 to-cyan-400",
+  "bg-gradient-to-br from-yellow-400 to-amber-500",
+  "bg-gradient-to-br from-teal-500 to-lime-400",
+  "bg-gradient-to-br from-rose-500 to-pink-400",
+  "bg-gradient-to-br from-orange-500 to-yellow-400",
 ];
 
 const CategoryCardsSlider = () => {
   const { categoryData } = useContext(DataContext);
 
   return (
-    <div className="max-w-[1370px] mx-auto px-4 overflow-hidden rounded relative">
+    <div className="max-w-[1370px] mx-auto px-4 overflow-hidden relative">
       <div className="flex animate-slide gap-4 w-max">
         {/* Duplicate categories for smooth infinite sliding */}
         {[...categories, ...categories].map((cat, index) => (
@@ -98,7 +106,7 @@ const CategoryCardsSlider = () => {
             key={index}
             onClick={() => handleClick(cat)}
             className={`
-    cursor-pointer rounded text-white font-semibold
+    cursor-pointer text-white font-semibold
     flex flex-col items-center justify-center text-center
     transition-all duration-300 ease-in-out transform hover:scale-105
     shadow-md hover:shadow-xl

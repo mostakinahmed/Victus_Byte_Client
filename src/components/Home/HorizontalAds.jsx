@@ -8,13 +8,13 @@ export default function HorizontalAds() {
   useEffect(() => {
     const timer = setInterval(() => {
       setIndex((prev) => (prev + 1) % images.length);
-    }, 1500);
+    }, 2000);
 
     return () => clearInterval(timer);
   }, []);
 
   return (
-    <div className="max-w-[1400px] h-full lg:h-[150px]  mx-auto lg:px-4 px-2 md:mb-4 md:mt-2">
+    <div className="max-w-[1400px] h-full lg:h-[150px]  mx-auto mt-3 -mb-3 lg:px-4 px-2 md:mb-4 md:mt-3">
       <img
         src={images[index]}
         alt="Banner Ads"

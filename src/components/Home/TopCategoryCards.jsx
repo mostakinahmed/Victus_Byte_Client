@@ -15,7 +15,7 @@ const TopCategoryCards = () => {
             <Link to={`/product/${cat.catID}`}>
               <div
                 key={index}
-                className="bg-white shadow-md rounded-lg flex flex-col items-center justify-center h-21 w-22 lg:w-29 lg:h-28 
+                className="bg-white shadow-md  flex flex-col items-center justify-center h-21 w-22 lg:w-29 lg:h-28 
                 text-center hover:scale-105 hover:text-[#fe741d] transform transition duration-300 cursor-pointer"
               >
                 {/* Icon: use cat.icon if available, otherwise default */}

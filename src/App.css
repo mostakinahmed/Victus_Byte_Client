@@ -8,9 +8,25 @@
   }
 }
 
+/* Your existing code */
 .animate-scroll {
   animation: scroll 75s linear infinite;
   width: max-content;
+}
+
+/* Add this to stop it on hover */
+.animate-scroll:hover {
+  animation-play-state: paused;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    /* Moves half the width of the doubled array */
+    transform: translateX(-50%);
+  }
 }
 
 .loader {

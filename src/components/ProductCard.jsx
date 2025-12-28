@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export const ProductCard = ({ data }) => {
   return (
     <>
-      <div className="bg-white rounded shadow-md overflow-hidden transform transition-transform duration-300 hover:scale-105">
+      <div className="bg-white  shadow overflow-hidden transform transition-transform duration-300 hover:scale-103">
         <div className="h-7 flex items-center">
           {data.price.discount > 0 && (
             <div className="inline-flex items-center -ml-3 mt-2 bg-[#fe741d] rounded-md px-4 h-fit leading-none">
