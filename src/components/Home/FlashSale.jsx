@@ -60,12 +60,12 @@ export default function FlashSale() {
   return (
     <section className="max-w-[1370px] bg-gray-800 xl:mx-auto mx-2 lg:mx-4 mt-6 overflow-hidden pb-3 md:pb-4">
       {/* Header Section */}
-      <div className="w-full flex items-center justify-between bg-gray-900 text-white px-4 py-4 shadow-md mb-4">
+      <div className="w-full flex items-center justify-between bg-gray-900 text-white px-4 md:py-4 py-2 shadow-md mb-4">
         <div className="flex items-center gap-2">
           <FiZap className="text-xl text-yellow-400 animate-pulse" />
-          <h3 className="text-lg font-bold tracking-tight uppercase">Flash Sale</h3>
+          <h3 className="text-sm md:text-lg font-bold tracking-tight uppercase">Flash Sale</h3>
         </div>
-        <div className="text-sm flex items-center gap-2 bg-red-600 text-white px-3 py-1.5 font-bold rounded-sm">
+        <div className="text-sm flex items-center gap-2 bg-red-600 text-white px-3 py-1 font-bold rounded-sm">
           <span>Ends in:</span>
           <span className="font-mono text-base md:text-lg">03:12:45</span>
         </div>
@@ -88,7 +88,7 @@ export default function FlashSale() {
             {flashData.map((product) => (
               <div
                 key={product.pID}
-                className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 flex-shrink-0 px-1.5 md:px-2"
+                className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 flex-shrink-0 px-1 md:px-2"
               >
                 <Link to={`/product/${product.category}/${product.pID}`}>
                   <ProductCard data={product} />

@@ -60,7 +60,7 @@ export const FeatureProduct = () => {
           <div className="p-2 -ml-4 md:ml-0">
             <FiZap className="text-xl md:-ml-3 text-[#fe741d] animate-pulse" />
           </div>
-          <h3 className=" md:text-xl -ml-3  md:-ml-1 font-bold text-gray-800">
+          <h3 className=" md:text-xl -ml-3  md:-ml-1 font-bold text-gray-900">
             Featured Product
           </h3>
         </div>

@@ -28,12 +28,29 @@ const BannerSection = () => {
         <SearchBar />
       </div>
 
-      <div className="md:col-span-2 ">
+      <div className="md:col-span-2 relative group">
+        {/* The Image */}
         <img
           src={images[index]}
           alt="Banner"
-          className="w-full  md:h-[263px] lg:h-[349px] xl:h-[480px] h-[210px] rounded transition-all duration-500"
+          className="w-full md:h-[263px] lg:h-[349px] xl:h-[480px] h-[210px] rounded transition-all duration-500 object-fill"
         />
+
+        {/* Indicator Dots Container */}
+        <div className="absolute bottom-2 md:bottom-4 left-1/2 -translate-x-1/2 flex md:gap-5 gap-2 ">
+          {images.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setIndex(i)} // Assuming your state function is setIndex
+              className={`h-2 transition-all duration-300 rounded-full ${
+                index === i
+                  ? "w-6 bg-white" // Active dot: wider and white
+                  : "w-2 bg-white/70 hover:bg-white/90" // Inactive: small and semi-transparent
+              }`}
+              aria-label={`Go to slide ${i + 1}`}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Right Sideboxes */}
@@ -58,9 +75,8 @@ const BannerSection = () => {
         </div>
       </div>
 
-
       {/* Info Cards Section */}
-      <div className="hidden md:flex col-span-1 md:col-span-3 flex-col md:flex-row gap-3 justify-between text-gray-700">
+      <div className="hidden md:flex col-span-1 md:col-span-3 flex-col md:flex-row gap-2.5 justify-between text-gray-700">
         {/* Card 1 */}
         <div className="flex-1 bg-white px-6 py-4  shadow hover:shadow-md transition text-center">
           <h4 className="text-[20px] font-semibold text-[#fe741d]">1K+ Sold</h4>
@@ -89,7 +105,7 @@ const BannerSection = () => {
       {/* Info Cards Section (Headings Only) */}
       <div className="flex flex-col gap-2 text-gray-700 md:hidden">
         {/* Row 1: Card 1 & Card 2 */}
-        <div className="flex flex-row md:flex-row gap-2">
+        <div className="flex flex-row md:flex-row gap-2.5">
           <div className="flex-1 bg-white px-6 py-3 h-12 rounded shadow hover:shadow-md transition text-center">
             <h4 className="text-[17px] font-semibold text-[#fe741d]">
               1K+ Sold

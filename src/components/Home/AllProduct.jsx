@@ -37,7 +37,7 @@ export default function AllProduct() {
     <div className="max-w-[1400px] mx-auto lg:px-4 px-2 ">
       <FeatureText data="All Product" />
 
-      <div className="pb-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 md:gap-4 gap-3">
+      <div className="pb-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 md:gap-4 gap-2">
         {visibleProducts.slice(0, 18).map((product) => (
           <Link
             key={product.pID}
@@ -47,9 +47,7 @@ export default function AllProduct() {
           </Link>
         ))}
       </div>
-      <div className="w-full mb-2">
-        <h2 className="text-end text-blue-600 cursor-pointer text-lg -mt-3">See More...</h2>
-      </div>
+    
     </div>
   );
 }
