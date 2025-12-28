@@ -38,7 +38,7 @@ const RightSide = ({ filterData }) => {
 
   return (
     <section className="w-full ">
-      <h2 className="text-lg bg-white text-center p-1 pl-1 rounded shadow font-semibold mb-4">
+      <h2 className="md:text-lg bg-white text-center p-1.5 pl-1 rounded shadow font-semibold mb-4">
         {catName}
       </h2>
 
