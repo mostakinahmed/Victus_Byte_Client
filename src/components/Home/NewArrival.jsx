@@ -82,7 +82,7 @@ export default function NewArrivals() {
       >
         <div className="overflow-hidden px-1">
           <div
-            className="flex transition-transform duration-700 ease-in-out"
+            className="flex transition-transform duration-1000 ease-in-out"
             style={{
               // 2. The movement percentage now adapts to visibleItems
               transform: `translateX(-${currentIndex * (100 / visibleItems)}%)`,

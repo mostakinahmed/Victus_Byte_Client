@@ -80,39 +80,58 @@ export const SearchBar = () => {
       </svg>
 
       {/* SEARCH DROPDOWN */}
-      {search && (
-        <div className="absolute left-1/2 -translate-x-1/2 mt-1 w-full bg-white border-2 border-[#f4813a] shadow-lg rounded overflow-y-auto z-50">
-          <div className="flex items-center gap-8 text-white bg-[#f4813a] px-3 py-1.5 border-b border-gray-300">
-            Product List:
-          </div>
+      {/* SEARCH DROPDOWN */}
+      <div
+        className={`absolute left-1/2 -translate-x-1/2 mt-1 w-full bg-white border-x-4 border-b-4 border-[#f4813a] shadow-2xl overflow-hidden z-50 transition-all duration-300 ease-out origin-top ${
+          search
+            ? "opacity-100 scale-y-100 translate-y-0"
+            : "opacity-0 scale-y-95 -translate-y-2 pointer-events-none"
+        }`}
+      >
+        {/* Header */}
+        <div className="flex items-center gap-8 text-white bg-[#f4813a] px-3 py-1.5 font-semibold">
+          Product List:
+        </div>
+
+        {/* Results List */}
+        <div className="max-h-[400px] overflow-y-auto">
           {filtered.length > 0 ? (
             filtered.slice(0, 5).map((p) => (
               <Link
                 key={p.pID}
                 to={`/product/${p.category}/${p.pID}`}
-                onClick={() => setSearch("")} // close dropdown on click
-                className="flex items-center gap-8 px-3 py-1 border-b border-gray-300 hover:bg-gray-100"
+                onClick={() => setSearch("")}
+                className="flex items-center gap-4 px-3 py-2 border-b border-gray-100 hover:bg-orange-50 transition-colors"
               >
                 <img
                   src={p.images}
                   alt={p.name}
-                  className="w-12 h-12 object-cover rounded"
+                  className="w-12 h-12 object-cover rounded shadow-sm"
                 />
-                <span>{p.name}</span>
+                <span className="text-gray-800 font-medium truncate">
+                  {p.name}
+                </span>
               </Link>
             ))
           ) : (
-            <p className="px-3 py-2 text-gray-500">No results found</p>
-          )}
-          {filtered.length > 5 && (
-            <div className="flex items-center justify-center gap-8 px-3 py-1.5 bg-[#f4813a] hover:bg-[#f56911] text-white hover:text-black">
-              <button onClick={searchPage} className="w-full text-lg font-bold">
-                See more...
-              </button>
-            </div>
+            <p className="px-4 py-6 text-center text-gray-500 italic">
+              No results found for "{search}"
+            </p>
           )}
         </div>
-      )}
+
+        {/* Footer */}
+        {filtered.length > 5 && (
+          <div className="bg-[#f4813a] transition-colors hover:bg-[#e66d21]">
+            <button
+              onClick={searchPage}
+              className="w-full py-2 text-white font-bold text-sm uppercase tracking-wider"
+            >
+              See {filtered.length - 5} more results...
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

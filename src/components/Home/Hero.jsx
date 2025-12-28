@@ -15,7 +15,7 @@ const BannerSection = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setIndex((prev) => (prev + 1) % images.length);
-    }, 2000); // 2 seconds
+    }, 2500); // 2 seconds
 
     return () => clearInterval(timer);
   }, []);

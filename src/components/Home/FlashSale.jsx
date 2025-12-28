@@ -79,7 +79,7 @@ export default function FlashSale() {
       >
         <div className="overflow-hidden">
           <div
-            className="flex transition-transform duration-700 ease-in-out"
+            className="flex transition-transform duration-1000 ease-in-out"
             style={{
               // Moves based on the width of a single item
               transform: `translateX(-${currentIndex * (100 / visibleItems)}%)`,
