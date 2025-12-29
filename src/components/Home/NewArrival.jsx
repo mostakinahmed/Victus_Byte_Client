@@ -27,7 +27,7 @@ export default function NewArrivals() {
   }, []);
 
   useEffect(() => {
-    const data = productData.filter((item) => item.status?.isFeatured).slice(0, 12);
+    const data = productData.filter((item) => item.status?.isNewArrival);
     setNewArrivalData(data);
   }, [productData]);
 
