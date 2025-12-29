@@ -49,12 +49,15 @@ const NavbarTop = () => {
   return (
     // Height is implicit here, but sticky top-0 is key
     <div className="bg-white shadow lg:shadow-none text-black py-1 md:py-0 border-b sticky top-0 z-50">
-      
       {/* ======= DESKTOP NAV ======= */}
       <div className="max-w-[1400px] mx-auto items-center justify-between px-4 hidden md:flex h-[56px]">
         <div>
           <Link to="/home">
-            <img className="w-[100px] h-[45px]" src="/logo full final.png" alt="Logo" />
+            <img
+              className="w-[100px] h-[45px]"
+              src="/logo full final.png"
+              alt="Logo"
+            />
           </Link>
         </div>
 
@@ -69,11 +72,18 @@ const NavbarTop = () => {
             </div>
           </Link>
 
-          <div onClick={() => navigate("/track-order")} className="cursor-pointer p-2 rounded hover:bg-gray-100 transition" title="Track Order">
+          <div
+            onClick={() => navigate("/track-order")}
+            className="cursor-pointer p-2 rounded hover:bg-gray-100 transition"
+            title="Track Order"
+          >
             <FiTruck size={24} className="text-gray-800" />
           </div>
 
-          <div className="relative p-2 rounded hover:bg-gray-100 transition" title="Cart">
+          <div
+            className="relative p-2 rounded hover:bg-gray-100 transition"
+            title="Cart"
+          >
             <Link to="/checkout/cart">
               <i className="ri-shopping-cart-2-line text-2xl"></i>
             </Link>
@@ -91,16 +101,27 @@ const NavbarTop = () => {
       {/* ======= MOBILE NAV ======= */}
       <div className="bg-white w-full h-[40px] md:hidden flex items-center justify-between px-3">
         <div className="text-2xl cursor-pointer" onClick={toggle}>
-          <i className={values ? "ri-close-line text-indigo-600" : "ri-menu-3-line"}></i>
+          <i
+            className={
+              values ? "ri-close-line text-indigo-600" : "ri-menu-3-line"
+            }
+          ></i>
         </div>
 
         <Link to="/home">
-          <img className="h-[35px] ml-15" src="/logo full final.png" alt="Logo" />
+          <img
+            className="h-[35px] ml-15"
+            src="/logo full final.png"
+            alt="Logo"
+          />
         </Link>
 
         <div className="flex items-center gap-3 w-[100px] justify-end">
           {searchIcon && (
-            <i className="ri-search-line text-xl" onClick={() => setSbar(!sBar)}></i>
+            <i
+              className="ri-search-line text-xl"
+              onClick={() => setSbar(!sBar)}
+            ></i>
           )}
           <div className="relative ml-1">
             <Link to="/checkout/cart">
@@ -148,7 +169,7 @@ const NavbarTop = () => {
           {catData?.map((cat, index) => (
             <Link
               key={index}
-              to={`/product/${cat.catID}`}
+              to={`/${cat.catName}`}
               className="group flex items-center justify-between px-4 py-3 border-b-1 text-gray-700  border-gray-200 text-sm font-medium hover:bg-indigo-50 hover:text-indigo-600 transition-all"
               onClick={() => setValue(false)}
             >

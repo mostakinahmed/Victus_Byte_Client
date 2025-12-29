@@ -10,17 +10,18 @@ export default function FlashSale() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [visibleItems, setVisibleItems] = useState(6);
-  
+
   // Ref to track the timer for cleaner auto-sliding
   const autoSlideTimer = useRef(null);
 
   // 1. Handle Responsive Column Count
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 640) setVisibleItems(2);      // Mobile: 2 cards
-      else if (window.innerWidth < 768) setVisibleItems(3); // Small Tablet: 3 cards
+      if (window.innerWidth < 640) setVisibleItems(2); // Mobile: 2 cards
+      else if (window.innerWidth < 768)
+        setVisibleItems(3); // Small Tablet: 3 cards
       else if (window.innerWidth < 1024) setVisibleItems(4); // Tablet: 4 cards
-      else setVisibleItems(6);                               // Desktop: 6 cards
+      else setVisibleItems(6); // Desktop: 6 cards
     };
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -63,7 +64,9 @@ export default function FlashSale() {
       <div className="w-full flex items-center justify-between bg-gray-900 text-white px-4 md:py-4 py-2 shadow-md mb-4">
         <div className="flex items-center gap-2">
           <FiZap className="text-xl text-yellow-400 animate-pulse" />
-          <h3 className="text-sm md:text-lg font-bold tracking-tight uppercase">Flash Sale</h3>
+          <h3 className="text-sm md:text-lg font-bold tracking-tight uppercase">
+            Flash Sale
+          </h3>
         </div>
         <div className="text-sm flex items-center gap-2 bg-red-600 text-white px-3 py-1 font-bold rounded-sm">
           <span>Ends in:</span>
@@ -72,7 +75,7 @@ export default function FlashSale() {
       </div>
 
       {/* Slider Wrapper */}
-      <div 
+      <div
         className="relative group px-1"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
@@ -90,7 +93,13 @@ export default function FlashSale() {
                 key={product.pID}
                 className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 flex-shrink-0 px-1 md:px-2"
               >
-                <Link to={`/product/${product.category}/${product.pID}`}>
+                <Link
+                  key={product.pID}
+                  to={`/${product.category}/${product.name
+                    .replace(/\s+/g, "-")
+                    .toLowerCase()}`} // Replace spaces with hyphens in the URL
+                  aria-label={`View details for ${product.name}`}
+                >
                   <ProductCard data={product} />
                 </Link>
               </div>

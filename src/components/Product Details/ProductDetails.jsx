@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { DataContext } from "../Context Api/UserContext";
 import Specification from "../Product Details/Specification.jsx";
 import { RelatedProduct } from "./RelatedProduct.jsx";
@@ -23,25 +23,31 @@ const ProductDetail = () => {
 
   // Context data
   const { categoryData, productData, stockData } = useContext(DataContext);
-  const { cat, id } = useParams();
+  const { cat, name } = useParams(); // Using 'name' from URL params
 
-  // Find product
-  const product = productData?.find((item) => item.pID === id);
+  // Find product by name (case insensitive)
+  // Remove hyphens and convert to lowercase for comparison
+  const normalizedProductName = name.replace(/-/g, " ").toLowerCase().trim();
 
-  // Find category
-  const CurrCat = categoryData?.find((item) => item.catID === cat);
+  // Find product by normalized name (case insensitive, hyphen-agnostic)
+  const product = productData?.find(
+    (item) =>
+      item.name.replace(/-/g, "").toLowerCase().trim() === normalizedProductName
+  );
+
+  const CurrCat = categoryData?.find((item) => item.catID === cat).catID;
 
   // Find related products
   const allProductsInCategory =
     productData
-      ?.filter((item) => item.category === cat && item.pID !== id)
+      ?.filter((item) => item.category === cat && item.name !== name)
       .slice(0, 6) || [];
 
   // Update stock
   useEffect(() => {
     if (!stockData || !product) return;
 
-    const stock = stockData.find((item) => item.pID === id);
+    const stock = stockData.find((item) => item.pID === product.pID);
 
     if (stock && Array.isArray(stock.SKU)) {
       const count = stock.SKU.filter((s) => s.status === true).length;
@@ -49,7 +55,7 @@ const ProductDetail = () => {
     } else {
       setCurrentStock(0);
     }
-  }, [product, id, stockData]);
+  }, [product, stockData]);
 
   // If product doesn't exist -> NOW it's safe to return
   if (!product) {
@@ -77,7 +83,7 @@ const ProductDetail = () => {
     localStorage.setItem("cart", JSON.stringify(cart));
   };
 
-  //Buy now handler
+  // Buy now handler
   const buyNowBtn = (product) => {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -103,7 +109,7 @@ const ProductDetail = () => {
     const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
 
     const found = existingCart.find((item) => item.pID === product.pID);
-    //just toast compleated
+    //just toast completed
     if (found) {
       toast.success("Already Added!");
     } else {

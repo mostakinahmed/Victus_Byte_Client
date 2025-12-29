@@ -33,20 +33,33 @@ const Loader = () => (
       alignItems: "center",
     }}
   >
-    <div className="flex flex-col gap-4 items-center justify-center min-h-screen">
-      {/* Spinning loader */}
-      <AiOutlineLoading3Quarters className="text-6xl text-blue-500 animate-spin" />
+    <div className="flex flex-col items-center justify-center min-h-screen bg-slate-50">
+      {/* Container with Glassmorphism effect */}
+      <div className="flex flex-col items-center p-10 bg-white/40 backdrop-blur-md rounded-3xl border border-white/20 shadow-xl">
+        {/* Spinner Wrapper with a pulse glow */}
+        <div className="relative flex items-center justify-center mb-6">
+          <div className="absolute w-16 h-16 bg-blue-400/20 rounded-full animate-ping"></div>
+          <AiOutlineLoading3Quarters className="text-5xl text-blue-600 animate-spin relative z-10" />
+        </div>
 
-      {/* Data icon */}
-      <MdStorage className="text-5xl text-gray-400" />
+        {/* Loading Text with character spacing */}
+        <h2 className="text-gray-800 text-xl font-bold tracking-widest uppercase">
+          Loading
+          <span className="inline-flex ml-1">
+            <span className="animate-[bounce_1.5s_infinite_100ms]">.</span>
+            <span className="animate-[bounce_1.5s_infinite_200ms]">.</span>
+            <span className="animate-[bounce_1.5s_infinite_300ms]">.</span>
+          </span>
+        </h2>
 
-      {/* Loading text */}
-      <div className="text-gray-700 text-lg font-medium">
-        Loading your data...
+        <p className="text-gray-500 text-sm mt-2 font-medium">
+          Synchronizing your data...
+        </p>
       </div>
-      <div className="text-gray-500 text-sm">
-        Please wait a moment while we fetch your latest updates
-      </div>
+
+      {/* Optional: Subtle background decorative blobs */}
+      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-indigo-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
     </div>
   </div>
 );
@@ -87,7 +100,7 @@ function App() {
         <Route path="/" element={<TempHome />} />
         <Route path="/home" element={<Home />} />
         <Route path="/:cat" element={<AllProduct />} />
-        <Route path="/product/:cat/:id" element={<ProductDetails />} />
+        <Route path="/:cat/:name" element={<ProductDetails />} />
         <Route path="/offer" element={<Offer />} />
         <Route path="/product/:cat/:id/buynow" element={<BuyNow />} />
         <Route path="/checkout/cart" element={<Cart />} />

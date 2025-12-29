@@ -15,7 +15,12 @@ export const RelatedProduct = ({ data }) => {
           const limitedSpecs = flatSpecs.slice(0, 3);
 
           return (
-            <Link to={`/product/${element.category}/${element.pID}`}>
+            <Link
+              to={`/${element.category}/${element.name
+                .replace(/\s+/g, "-")
+                .toLowerCase()}`} // Replace spaces with hyphens in the URL
+              aria-label={`View details for ${element.name}`}
+            >
               <div
                 key={element._id}
                 className="h-[155px] max-w-[400px] m-2 mt-3 shadow-sides flex flex-col justify-between pt-2 transform transition-transform duration-300 hover:scale-105"

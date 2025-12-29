@@ -62,7 +62,9 @@ const RightSide = ({ filterData }) => {
           productsToDisplay.map((product) => (
             <Link
               key={product.pID}
-              to={`/product/${product.category}/${product.pID}`}
+              to={`/${product.category}/${product.name
+                .replace(/\s+/g, "-")
+                .toLowerCase()}`} // Replace spaces with hyphens in the URL
               aria-label={`View details for ${product.name}`}
             >
               <ProductCard data={product} />

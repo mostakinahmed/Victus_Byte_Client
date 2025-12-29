@@ -92,7 +92,13 @@ export const FeatureProduct = () => {
                 key={product.pID}
                 className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 flex-shrink-0 px-1 md:px-2"
               >
-                <Link to={`/product/${product.category}/${product.pID}`}>
+                <Link
+                  key={product.pID}
+                  to={`/${product.category}/${product.name
+                    .replace(/\s+/g, "-")
+                    .toLowerCase()}`} // Replace spaces with hyphens in the URL
+                  aria-label={`View details for ${product.name}`}
+                >
                   <ProductCard data={product} />
                 </Link>
               </div>
