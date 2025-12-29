@@ -23,7 +23,7 @@ const Footer = () => {
             <div className="flex justify-between lg:gap-8 gap-4 flex-col md:flex-row">
               {/* LEFT SECTION */}
               <div className="flex flex-col">
-                <Link to={"/home"}>
+                <Link to={"/"}>
                   <img
                     className="lg:h-16 lg:w-32 h-14 w-30 lg:mb-4  bg-gray-800 p-1 rounded"
                     src="/logo full final.png"

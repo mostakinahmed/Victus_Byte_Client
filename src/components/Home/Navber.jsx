@@ -52,7 +52,7 @@ const NavbarTop = () => {
       {/* ======= DESKTOP NAV ======= */}
       <div className="max-w-[1400px] mx-auto items-center justify-between px-4 hidden md:flex h-[56px]">
         <div>
-          <Link to="/home">
+          <Link to="/">
             <img
               className="w-[100px] h-[45px]"
               src="/logo full final.png"
@@ -108,7 +108,7 @@ const NavbarTop = () => {
           ></i>
         </div>
 
-        <Link to="/home">
+        <Link to="/">
           <img
             className="h-[35px] ml-15"
             src="/logo full final.png"

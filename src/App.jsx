@@ -97,8 +97,8 @@ function App() {
       )}
 
       <Routes>
-        <Route path="/" element={<TempHome />} />
-        <Route path="/home" element={<Home />} />
+        {/* <Route path="/" element={<TempHome />} /> */}
+        <Route path="/" element={<Home />} />
         <Route path="/:cat" element={<AllProduct />} />
         <Route path="/:cat/:name" element={<ProductDetails />} />
         <Route path="/offer" element={<Offer />} />
