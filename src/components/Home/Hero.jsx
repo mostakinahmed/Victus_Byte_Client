@@ -7,7 +7,7 @@ const BannerSection = () => {
   const images = [
     "https://i.ibb.co.com/k2Jh26yY/ads-banner-2.png",
     "https://i.ibb.co.com/WNthCVS1/main-banner-2.png",
-    "https://www.startech.com.bd/image/cache/catalog/home/banner/2025/starlink-in-store-activation-offer-web-banner-982x500.webp",
+    "https://www.startech.com.bd/image/cache/catalog/home/banner/2025/eid_ul_adha_notice/home-appliances-banner-982x500.webp",
   ];
 
   const [index, setIndex] = useState(0);
