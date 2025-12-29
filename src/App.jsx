@@ -86,7 +86,7 @@ function App() {
       <Routes>
         <Route path="/" element={<TempHome />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/product/:cat" element={<AllProduct />} />
+        <Route path="/:cat" element={<AllProduct />} />
         <Route path="/product/:cat/:id" element={<ProductDetails />} />
         <Route path="/offer" element={<Offer />} />
         <Route path="/product/:cat/:id/buynow" element={<BuyNow />} />

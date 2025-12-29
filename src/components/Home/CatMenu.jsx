@@ -29,7 +29,7 @@ const CategoryMenu = () => {
           {catData.map((cat, index) => (
             <Link
               key={index}
-              to={`/product/${cat.catID}`}
+              to={`/${cat.catName.toLowerCase()}`}
               className="relative group text-gray-700 hover:text-blue-600 font-semibold lg:text-[15px] whitespace-nowrap pr-3"
             >
               {cat.catName}

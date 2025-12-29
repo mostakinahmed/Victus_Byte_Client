@@ -6,7 +6,7 @@ import { FiFilter, FiChevronDown } from "react-icons/fi";
 
 const LeftSide = ({ onFilter }) => {
   const { categoryData, productData } = useContext(DataContext);
-  const { cat } = useParams();
+  const { cat: urlParam } = useParams();
 
   const [catData, setCatData] = useState([]);
   const [value, setValue] = useState(false);
@@ -14,8 +14,17 @@ const LeftSide = ({ onFilter }) => {
   const [selectedIds, setSelectedIds] = useState([]);
   const [uniqueBrands, setUniqueBrands] = useState([]);
   const [selectedBrand, setSelectedBrand] = useState([]);
-
+  const [cat, setCat] = useState(urlParam); // Store category in state
   const toog = () => setValue(!value);
+
+  useEffect(() => {
+    if (categoryData && urlParam) {
+      const foundCat = categoryData.find(
+        (c) => c.catName.toLowerCase() === urlParam.toLowerCase()
+      );
+      setCat(foundCat ? foundCat.catID : urlParam); // Set category ID or raw URL param
+    }
+  }, [categoryData, urlParam]);
 
   // Responsive: Show filters by default on large screens
   useEffect(() => {
@@ -89,89 +98,105 @@ const LeftSide = ({ onFilter }) => {
   };
 
   // Memoized Filter Logic to prevent infinite loops
-// 1. Memoized Filter Logic 
-const applyFilters = useCallback(() => {
-  if (!productData) return;
+  // 1. Memoized Filter Logic
+  const applyFilters = useCallback(() => {
+    if (!productData) return;
 
-  let filtered = [...productData];
+    let filtered = [...productData];
 
-  // Category Filter
-  if (selectedIds.length > 0) {
-    filtered = filtered.filter((p) => selectedIds.includes(p.category));
-  } else if (cat) {
-    filtered = filtered.filter((p) => p.category === cat);
-  }
+    // Category Filter
+    if (selectedIds.length > 0) {
+      filtered = filtered.filter((p) => selectedIds.includes(p.category));
+    } else if (cat) {
+      filtered = filtered.filter((p) => p.category === cat);
+    }
 
-  // Brand Filter
-  if (selectedBrand.length > 0) {
-    filtered = filtered.filter((p) => selectedBrand.includes(p.brandName));
-  }
+    // Brand Filter
+    if (selectedBrand.length > 0) {
+      filtered = filtered.filter((p) => selectedBrand.includes(p.brandName));
+    }
 
-  // Price Filter
-  const minVal = selectedRange.min !== "" ? parseFloat(selectedRange.min) : null;
-  const maxVal = selectedRange.max !== "" ? parseFloat(selectedRange.max) : null;
+    // Price Filter
+    const minVal =
+      selectedRange.min !== "" ? parseFloat(selectedRange.min) : null;
+    const maxVal =
+      selectedRange.max !== "" ? parseFloat(selectedRange.max) : null;
 
-  if (minVal !== null || maxVal !== null) {
-    filtered = filtered.filter((p) => {
-      const price = typeof p.price === "object"
-          ? parseFloat(p.price.selling)
-          : parseFloat(p.price);
-      const satisfiesMin = minVal === null || price >= minVal;
-      const satisfiesMax = maxVal === null || price <= maxVal;
-      return satisfiesMin && satisfiesMax;
-    });
-  }
+    if (minVal !== null || maxVal !== null) {
+      filtered = filtered.filter((p) => {
+        const price =
+          typeof p.price === "object"
+            ? parseFloat(p.price.selling)
+            : parseFloat(p.price);
+        const satisfiesMin = minVal === null || price >= minVal;
+        const satisfiesMax = maxVal === null || price <= maxVal;
+        return satisfiesMin && satisfiesMax;
+      });
+    }
 
-  // IMPORTANT: We call onFilter here, but we don't include it in the 
-  // dependency array of useCallback to prevent the infinite loop.
-  onFilter?.(filtered);
-  
-  // Removed 'onFilter' from dependencies below
-}, [productData, selectedIds, selectedBrand, selectedRange, cat]);
+    // IMPORTANT: We call onFilter here, but we don't include it in the
+    // dependency array of useCallback to prevent the infinite loop.
+    onFilter?.(filtered);
 
-useEffect(() => {
-  applyFilters();
-}, [applyFilters]);
+    // Removed 'onFilter' from dependencies below
+  }, [productData, selectedIds, selectedBrand, selectedRange, cat]);
+
+  useEffect(() => {
+    applyFilters();
+  }, [applyFilters]);
 
   return (
     <div className="bg-white rounded shadow-sm border border-gray-100 overflow-hidden  top-20">
-     {/* Add 'sticky top-0' if you want it to follow the user as they scroll */}
-<div className="lg:hidden sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
-  <button
-    onClick={toog}
-    className="w-full flex items-center justify-between px-5 py-4 text-gray-800 transition-all duration-300 active:scale-95"
-  >
-    {/* Left Side: Icon and Text */}
-    <div className="flex items-center gap-3">
-      <div className="relative">
-        <FiFilter 
-          className={`text-xl transition-colors duration-300 ${
-            value ? 'text-indigo-600' : 'text-gray-500'
-          }`} 
-        />
-        
-        {/* Smart Badge: Only visible if filters are applied */}
-        {(selectedIds.length > 0 || selectedBrand.length > 0 || selectedRange.min || selectedRange.max) && (
-          <span className="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-indigo-600 text-[10px] font-bold text-white ring-2 ring-white animate-in zoom-in">
-            {selectedIds.length + selectedBrand.length + (selectedRange.min || selectedRange.max ? 1 : 0)}
-          </span>
-        )}
-      </div>
-      
-      <span className="font-bold text-sm uppercase tracking-widest text-gray-700">
-        {value ? "Close Filters" : "Filter & Sort"}
-      </span>
-    </div>
+      {/* Add 'sticky top-0' if you want it to follow the user as they scroll */}
+      <div className="lg:hidden sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
+        <button
+          onClick={toog}
+          className="w-full flex items-center justify-between px-5 py-4 text-gray-800 transition-all duration-300 active:scale-95"
+        >
+          {/* Left Side: Icon and Text */}
+          <div className="flex items-center gap-3">
+            <div className="relative">
+              <FiFilter
+                className={`text-xl transition-colors duration-300 ${
+                  value ? "text-indigo-600" : "text-gray-500"
+                }`}
+              />
 
-    {/* Right Side: State Indicator */}
-    <div className="flex items-center gap-2">
-      {value && <span className="text-[10px] font-bold text-indigo-600 uppercase">Active</span>}
-      <div className={`transition-transform duration-300 ${value ? "rotate-180" : "rotate-0"}`}>
-        <FiChevronDown className="text-xl text-gray-400" />
+              {/* Smart Badge: Only visible if filters are applied */}
+              {(selectedIds.length > 0 ||
+                selectedBrand.length > 0 ||
+                selectedRange.min ||
+                selectedRange.max) && (
+                <span className="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-indigo-600 text-[10px] font-bold text-white ring-2 ring-white animate-in zoom-in">
+                  {selectedIds.length +
+                    selectedBrand.length +
+                    (selectedRange.min || selectedRange.max ? 1 : 0)}
+                </span>
+              )}
+            </div>
+
+            <span className="font-bold text-sm uppercase tracking-widest text-gray-700">
+              {value ? "Close Filters" : "Filter & Sort"}
+            </span>
+          </div>
+
+          {/* Right Side: State Indicator */}
+          <div className="flex items-center gap-2">
+            {value && (
+              <span className="text-[10px] font-bold text-indigo-600 uppercase">
+                Active
+              </span>
+            )}
+            <div
+              className={`transition-transform duration-300 ${
+                value ? "rotate-180" : "rotate-0"
+              }`}
+            >
+              <FiChevronDown className="text-xl text-gray-400" />
+            </div>
+          </div>
+        </button>
       </div>
-    </div>
-  </button>
-</div>
 
       {value && (
         <aside className="w-full md:-ml-2 lg:w-64 p-5 space-y-3">
