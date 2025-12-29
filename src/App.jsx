@@ -89,12 +89,10 @@ function App() {
 
   return (
     <CartProvider>
-      {!isTempHome && (
-        <div className="fixed top-0 w-full z-50">
-          <Navber />
-          <CatMenu />
-        </div>
-      )}
+      <div className="fixed top-0 w-full z-50">
+        <Navber />
+        <CatMenu />
+      </div>
 
       <Routes>
         {/* <Route path="/" element={<TempHome />} /> */}
@@ -116,7 +114,7 @@ function App() {
       </Routes>
 
       <FooterLinks />
-      {!isTempHome && <Footer />}
+      <Footer />
     </CartProvider>
   );
 }
