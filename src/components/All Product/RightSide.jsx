@@ -18,7 +18,7 @@ const RightSide = ({ filterData }) => {
       if (result && result.catName) {
         setCatName(result.catName);
       } else {
-        setCatName("Unknown Category"); // optional fallback
+        setCatName(cat); // optional fallback
       }
     }
   }, [cat, categoryData]);
@@ -30,7 +30,19 @@ const RightSide = ({ filterData }) => {
         (product) => product.category === cat
       );
 
-      setFilteredProducts(filtered);
+      if (cat === "new-arrival") {
+        const newArrivalProducts = productData.filter(
+          (product) => product.status?.isNewArrival
+        );
+        setFilteredProducts(newArrivalProducts);
+      } else if (cat === "featured-products") {
+        const featuredProducts = productData.filter(
+          (product) => product.status?.isFeatured
+        );
+        console.log(featuredProducts);
+
+        setFilteredProducts(featuredProducts);
+      }
     } else {
       setFilteredProducts(productData); // If no category, show all products
     }
