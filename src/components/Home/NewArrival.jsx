@@ -65,7 +65,7 @@ export default function NewArrivals() {
 
         {/* View All Button */}
         <Link
-          to="/product/new-arrival"
+          to="/new-arrival"
           className="flex items-center gap-1 text-[11px] md:text-xs font-bold uppercase tracking-wider text-[#fe741d] hover:text-white border border-[#fe741d] hover:bg-[#fe741d] px-3 py-1.5 md:px-5 md:py-2 rounded-full transition-all duration-300"
         >
           View All

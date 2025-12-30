@@ -23,12 +23,11 @@ const AlsoLike = () => {
             You May Also Like
           </h3>
         </div>
-
       </div>
 
       {/* Auto-scrolling Row */}
       <div className="overflow-hidden w-full group">
-        <div 
+        <div
           className="flex gap-4 animate-scroll group-hover:[animation-play-state:paused]"
           style={{ width: "max-content" }}
         >
@@ -38,7 +37,7 @@ const AlsoLike = () => {
               key={`${product.pID}-${index}`}
               className="w-[195px] flex-shrink-0"
             >
-              <Link to={`/product/${product.category}/${product.pID}`}>
+              <Link to={`/${product.category}/${product.name}`}>
                 <ProductCard data={product} />
               </Link>
             </div>

@@ -43,7 +43,7 @@ const NavbarTop = () => {
 
   useEffect(() => {
     setSbar(false);
-    setSearchIcon(location.pathname !== "/home");
+    setSearchIcon(location.pathname !== "/");
   }, [location]);
 
   return (
