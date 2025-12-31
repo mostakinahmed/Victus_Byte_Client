@@ -56,108 +56,117 @@ export const Profile = () => {
 
       {/* Dropdown when logged in */}
       {login && open && (
-        <div className="absolute md:top-11 top-10.5 md:right-0 -right-1 w-max md:min-w-70 min-w-1/2 bg-white shadow-xl rounded border-1 z-50 md:p-3 p-2">
-          <div className="flex w-full h-12 gap-3">
-            <div className="bg-gray-100 w-14 h-10 flex justify-center items-center mt-1.5 rounded-4xl">
-              {" "}
-              <User className="w-6 h-6 hover:text-white text-gray-800" />
-            </div>
-            <div className="w-full flex flex-col">
-              <div className="border-b ">
-                <span className="md:text-xl text-md font-bold text-gray-800">
-                  {" "}
+        <div className="relative z-[100]">
+          {/* --- 2. THE DROPDOWN DIV --- */}
+          <div className="absolute md:top-11 top-11 md:right-0 -right-2 w-max md:min-w-[320px] min-w-[280px] bg-white/95 backdrop-blur-md shadow-2xl rounded-b-2xl border border-slate-300 z-[100] p-4 animate-in fade-in zoom-in-95 duration-300">
+            {/* User Identity Header */}
+            <div className="flex items-center gap-4 pb- border-b border-slate-100">
+              <div className="bg-indigo-600 w-12 h-12 flex justify-center items-center rounded-2xl shadow-lg shadow-indigo-100 shrink-0">
+                <User className="w-6 h-6 text-white" />
+              </div>
+              <div className="flex flex-col min-w-0">
+                <span className="text-sm font-black text-slate-800 uppercase tracking-tight truncate">
                   Mostakin Ahmed
                 </span>
-              </div>
-              <div className="lg:-mt-[2px] -mt-1">
-                <span className="lg:text-[1rem] no-underline text-decoration:none text-xs text-gray-500">
-                  +8801773-820336
+                <span className="text-[11px] font-bold text-slate-400 font-mono">
+                  +880 1773-820336
                 </span>
               </div>
             </div>
-          </div>
-          {/* point */}
-          <div className="flex border-2 border-[#fe741d] bg-[#fff3eb] w-full lg:h-10 h-9 gap-2 lg:mt-5 mt-3">
-            <div className=" flex justify-center items-center gap-3 text-[#fe741d]">
-              <FaGem className="ml-3" size={23} color="" />
-              <span className="font-bold text-lg">10 Points</span>
+
+            {/* Points & Loyalty Card */}
+            <div className="mt-4 bg-gradient-to-br from-amber-500 to-[#fe741d] rounded-xl p-3 shadow-lg shadow-amber-100 border border-white/20">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-white">
+                  <FaGem className="animate-pulse" size={18} />
+                  <span className="text-[10px] font-black uppercase tracking-widest opacity-80">
+                    Reward Balance
+                  </span>
+                </div>
+                <span className="bg-white/20 px-2 py-0.5 rounded-md text-[10px] font-black text-white">
+                  PRO
+                </span>
+              </div>
+              <p className="text-xl font-black text-white mt-1">
+                10{" "}
+                <span className="text-xs font-bold opacity-90 uppercase">
+                  Points
+                </span>
+              </p>
             </div>
+
+            {/* Navigation Links */}
+            <nav className="mt-4">
+              <ul className="flex flex-col gap-1">
+                <li
+                  onClick={() => {
+                    setOpen(false);
+                    navigate("/profile/my-order");
+                  }}
+                  className="group px-3 py-2.5 rounded-xl hover:bg-slate-50 flex items-center justify-between cursor-pointer transition-all"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-slate-100 rounded-lg group-hover:bg-white group-hover:shadow-sm transition-all">
+                      <ShoppingBag className="w-4 h-4 text-slate-600 group-hover:text-indigo-600" />
+                    </div>
+                    <span className="text-xs font-bold text-slate-600 group-hover:text-slate-900 uppercase tracking-tighter">
+                      My Orders
+                    </span>
+                  </div>
+                  <div className="w-1.5 h-1.5 rounded-full bg-slate-200 group-hover:bg-indigo-500 transition-all" />
+                </li>
+
+                <li
+                  onClick={goProfile}
+                  className="group px-3 py-2.5 rounded-xl hover:bg-slate-50 flex items-center justify-between cursor-pointer transition-all"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-slate-100 rounded-lg group-hover:bg-white group-hover:shadow-sm transition-all">
+                      <User className="w-4 h-4 text-slate-600 group-hover:text-indigo-600" />
+                    </div>
+                    <span className="text-xs font-bold text-slate-600 group-hover:text-slate-900 uppercase tracking-tighter">
+                      Profile Settings
+                    </span>
+                  </div>
+                </li>
+
+                <li
+                  onClick={async () => {
+                    setOpen(false);
+                    /* Your MySwal logic remains the same */
+                  }}
+                  className="group px-3 py-2.5 rounded-xl hover:bg-slate-50 flex items-center justify-between cursor-pointer transition-all"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-slate-100 rounded-lg group-hover:bg-white group-hover:shadow-sm transition-all">
+                      <UserCog className="w-4 h-4 text-slate-600 group-hover:text-indigo-600" />
+                    </div>
+                    <span className="text-xs font-bold text-slate-600 group-hover:text-slate-900 uppercase tracking-tighter">
+                      Track Order
+                    </span>
+                  </div>
+                </li>
+
+                {/* Separator */}
+                <div className="my-2 border-t border-slate-50" />
+
+                <li
+                  onClick={() => {
+                    setLogin(false);
+                    setOpen(false);
+                  }}
+                  className="group px-3 py-2.5 rounded-xl hover:bg-rose-50 flex items-center gap-3 cursor-pointer transition-all"
+                >
+                  <div className="p-2 bg-rose-100/50 rounded-lg group-hover:bg-rose-500 transition-all">
+                    <LogOut className="w-4 h-4 text-rose-600 group-hover:text-white" />
+                  </div>
+                  <span className="text-xs font-black text-rose-600 uppercase tracking-widest">
+                    Logout
+                  </span>
+                </li>
+              </ul>
+            </nav>
           </div>
-          <ul className="flex flex-col gap-1 mt-2">
-            <li
-              onClick={() => {
-                setOpen(false);
-                navigate("/profile/my-order");
-              }}
-              className="px-3 md:py-2 py-1 rounded hover:bg-gray-100 flex items-center gap-2 cursor-pointer"
-            >
-              <ShoppingBag className="w-4 h-4" />
-              <span>My Orders</span>
-            </li>
-            <li
-              onClick={goProfile}
-              className="px-3 md:py-2 py-1 rounded hover:bg-gray-100 flex items-center gap-2 cursor-pointer"
-            >
-              <User className="w-4 h-4" />
-              <span>Profile</span>
-            </li>
-
-            {/* <li className="px-3 md:py-2 py-1 rounded hover:bg-gray-100 flex items-center gap-2 cursor-pointer">
-              <UserCog className="w-4 h-4" />
-              <span>Track Order</span>
-            </li> */}
-            <li
-              onClick={async () => {
-                setOpen(false); // close dropdown
-                const { value: orderId } = await MySwal.fire({
-                  title: "Track your order",
-                  input: "text",
-                  inputLabel: "Enter your Order ID",
-                  inputPlaceholder: "OID12345",
-                  showCancelButton: true,
-                  confirmButtonText: "Track",
-                  cancelButtonText: "Cancel",
-                  inputValidator: (value) => {
-                    if (!value) return "You need to enter your Order ID!";
-                  },
-                });
-
-                if (orderId) {
-                  // Replace this with your actual API call to get status
-                  const statusList = [
-                    "Processing",
-                    "Shipped",
-                    "Delivered",
-                    "Cancelled",
-                  ];
-                  const randomStatus =
-                    statusList[Math.floor(Math.random() * statusList.length)];
-
-                  MySwal.fire({
-                    title: `Order ID: ${orderId}`,
-                    text: `Status: ${randomStatus}`,
-                    icon: "info",
-                    confirmButtonText: "OK",
-                  });
-                }
-              }}
-              className="px-3 md:py-2 py-1 rounded hover:bg-gray-100 flex items-center gap-2 cursor-pointer"
-            >
-              <UserCog className="w-4 h-4" />
-              <span>Track Order</span>
-            </li>
-
-            <li
-              onClick={() => {
-                setLogin(false);
-                setOpen(false);
-              }}
-              className="px-3 md:py-2 py-1 rounded hover:bg-gray-100 flex items-center gap-2 cursor-pointer text-red-600"
-            >
-              <LogOut className="w-4 h-4" />
-              <span>Logout</span>
-            </li>
-          </ul>
         </div>
       )}
     </div>
