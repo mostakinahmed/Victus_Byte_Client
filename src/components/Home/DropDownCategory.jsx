@@ -75,7 +75,7 @@ const Navbar = () => {
 
               {/* --- The Single Column Dropdown --- */}
               <div
-                className={`absolute top-full left-0 w-48 bg-white shadow-2xl py-3 rounded-b-xl border border-slate-100 transition-all duration-300 origin-top 
+                className={`absolute top-full left-0 w-48 bg-white shadow-2xl py-3 rounded-b transition-all duration-300 origin-top 
     {/* ✅ FIX: Lower z-index than the profile dropdown */}
     z-30 
     ${
