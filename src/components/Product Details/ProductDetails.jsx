@@ -35,7 +35,7 @@ const ProductDetail = () => {
       item.name.replace(/-/g, "").toLowerCase().trim() === normalizedProductName
   );
 
-  const CurrCat = categoryData?.find((item) => item.catID === cat).catID;
+  const CurrCat = categoryData?.find((item) => item.catID === cat);
 
   // Find related products
   const allProductsInCategory =
