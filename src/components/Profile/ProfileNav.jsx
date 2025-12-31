@@ -99,7 +99,7 @@ export const Profile = () => {
                 <span className="text-sm font-black text-slate-800 uppercase tracking-tight truncate">
                   Mostakin Ahmed
                 </span>
-                <span className="text-[11px] font-bold text-slate-400 font-mono">
+                <span className="text-[12px] text-slate-500 font-mono">
                   +880 1773-820336
                 </span>
               </div>
@@ -154,10 +154,10 @@ export const Profile = () => {
                       <div className="p-1.5 bg-slate-100 rounded-md group-hover:bg-white group-hover:shadow-sm transition-all">
                         {React.cloneElement(item.icon, {
                           className:
-                            "w-3.5 h-3.5 text-slate-600 group-hover:text-indigo-600",
+                            "w-4 h-4 text-slate-700 group-hover:text-indigo-600",
                         })}
                       </div>
-                      <span className="text-[11px] font-bold text-slate-600 group-hover:text-slate-900 uppercase tracking-tight">
+                      <span className="text-[14px] font-semibold text-slate-700 group-hover:text-slate-900  tracking-wide">
                         {item.label}
                       </span>
                     </div>
