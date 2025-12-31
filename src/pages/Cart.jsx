@@ -73,19 +73,19 @@ export const Cart = () => {
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="bg-slate-50/50 border-b border-slate-100">
-                    <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                    <th className="px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest">
                       Product
                     </th>
-                    <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">
+                    <th className="px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest text-center">
                       Quantity
                     </th>
-                    <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">
+                    <th className="px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest text-center">
                       Unit Price
                     </th>
-                    <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">
+                    <th className="px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest text-right">
                       Subtotal
                     </th>
-                    <th className="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">
+                    <th className="px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest text-center">
                       Action
                     </th>
                   </tr>
@@ -110,7 +110,7 @@ export const Cart = () => {
                             <span className="text-sm font-black text-slate-800 leading-tight mb-1">
                               {item.name}
                             </span>
-                            <span className="text-[10px] font-mono font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-md w-fit">
+                            <span className="text-[12px] font-mono font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-md w-fit">
                               PID: {item.pID}
                             </span>
                           </div>
@@ -143,7 +143,7 @@ export const Cart = () => {
                       <td className="px-6 py-5 text-center">
                         <button
                           onClick={() => onRemove(item.pID)}
-                          className="p-2 text-slate-300 hover:text-rose-500 hover:bg-rose-50 rounded-xl transition-all"
+                          className="p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-xl transition-all"
                         >
                           <IoClose size={20} />
                         </button>

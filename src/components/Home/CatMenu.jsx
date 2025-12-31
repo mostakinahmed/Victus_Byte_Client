@@ -26,7 +26,7 @@ const CategoryMenu = () => {
   return (
     <div className="bg-white shadow-md  w-full hidden md:flex">
       <div className=" xl:max-w-[1370px] w-full mx-auto flex justify-between lg:pl-3 xl:pl-0 py-2">
-        <div className="flex flex-nowrap w-full lg:flex-nowrap  overflow-hidden overflow-x-auto sm:flex-wrap  lg:gap-5 lg:ml-2 xl:ml-3 text-sm font-medium text-gray-700">
+        <div className="flex flex-nowrap w-full lg:flex-nowrap  overflow-hidden overflow-x-auto sm:flex-wrap  xl:gap-5 lg:ml-2 xl:ml-3 text-sm font-medium text-gray-700">
           {catData.map((cat, index) => (
             <Link
               key={index}

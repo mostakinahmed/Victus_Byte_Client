@@ -47,20 +47,20 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="bg-white  sticky top-0 z-[100]  flex items-center">
-      <div className="max-w-7xl mx-auto w-full flex items-center gap-4">
+    <nav className="  sticky top-0 z-[100]  h-full flex items-center">
+      <div className="w-full flex items-center gap-3">
         {/* --- Single Column Hover Menus --- */}
         <div className="flex items-center h-full">
           {menuData.map((menu) => (
             <div
               key={menu.id}
-              className="relative  flex items-center"
+              className="relative  flex items-center h-full"
               onMouseEnter={() => setActiveMenu(menu.id)}
               onMouseLeave={() => setActiveMenu(null)}
             >
               {/* Main Nav Link */}
               <button
-                className={`flex items-center gap-2 px-5 text-xs font-semibold text-[15px] tracking-wide transition-colors ${
+                className={`flex items-center h-full xl:gap-2 lg:gap-1 px-5 text-xs font-semibold text-[15px] tracking-wide transition-colors ${
                   activeMenu === menu.id ? "text-blue-600" : "text-gray-700"
                 }`}
               >
@@ -75,7 +75,7 @@ const Navbar = () => {
 
               {/* --- The Single Column Dropdown --- */}
               <div
-                className={`absolute top-full left-0 w-48 bg-white shadow-2xl py-3 rounded-b transition-all duration-300 origin-top 
+                className={`absolute top-full -left-4  w-45 bg-white shadow-2xl py-3 rounded-b transition-all duration-300 origin-top 
     {/* ✅ FIX: Lower z-index than the profile dropdown */}
     z-30 
     ${
@@ -91,7 +91,7 @@ const Navbar = () => {
                         href={`/category/${sub
                           .toLowerCase()
                           .replace(/\s+/g, "-")}`}
-                        className="flex items-center px-4 py-2.5 text-[14px] font-bold text-slate-700 hover:text-blue-600 hover:bg-blue-50/50 transition-all border-l-4 border-transparent hover:border-blue-600"
+                        className="flex items-center px-2 py-2 text-[14px] font-bold text-slate-700 hover:text-blue-600 hover:bg-blue-50/50 transition-all border-l-4 border-transparent hover:border-blue-600"
                       >
                         {sub}
                       </a>
