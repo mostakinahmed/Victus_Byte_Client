@@ -5,7 +5,7 @@ import { CartContext } from "../Context Api/CartContext";
 import { DataContext } from "../Context Api/UserContext";
 import { SearchBar } from "../SearchBar";
 import { Profile } from "../Profile/ProfileNav";
-import { FiTruck } from "react-icons/fi";
+import { FiTruck, FiPercent } from "react-icons/fi";
 
 const NavbarTop = () => {
   const navigate = useNavigate();
@@ -66,9 +66,23 @@ const NavbarTop = () => {
         </div>
 
         <div className="flex items-center gap-4">
-          <Link to="/offer">
-            <div className="px-3 py-1 rounded font-semibold shadow-md text-white animate-pulse bg-red-600 hover:bg-red-700 transition">
-              Offers
+          <Link to="/offer" className="group">
+            <div className="relative flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-rose-600 to-red-500 rounded-full shadow-[0_0_15px_rgba(225,29,72,0.4)] hover:shadow-[0_0_25px_rgba(225,29,72,0.6)] transition-all duration-300 active:scale-95 overflow-hidden">
+              {/* Pulse Animation Layer */}
+              <span className="absolute inset-0 bg-white/20 animate-pulse group-hover:animate-none" />
+
+              {/* Icon Container */}
+              <div className="relative z-10 flex items-center justify-center w-5 h-5 bg-white/20 rounded-full backdrop-blur-sm group-hover:rotate-12 transition-transform">
+                <FiPercent className="text-white text-[10px]" />
+              </div>
+
+              {/* Text Label */}
+              <span className="relative z-10 text-[11px] font-black text-white uppercase tracking-[0.15em]">
+                Live Offers
+              </span>
+
+              {/* Shine Effect */}
+              <div className="absolute top-0 -inset-full h-full w-1/2 z-20 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white/30 opacity-40 group-hover:animate-shine" />
             </div>
           </Link>
 
