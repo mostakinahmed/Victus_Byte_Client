@@ -94,7 +94,7 @@ export const SearchBar = () => {
             filtered.slice(0, 5).map((p) => (
               <Link
                 key={p.pID}
-                to={`/product/${p.category}/${p.pID}`}
+                to={`/${p.category}/${p.name}`}
                 onClick={() => setSearch("")}
                 className="flex items-center gap-4 px-4 py-3 border-b border-gray-100 hover:bg-orange-50 transition-colors group"
               >

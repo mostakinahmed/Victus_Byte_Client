@@ -46,7 +46,7 @@ export default function SearchResult() {
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
           {filtered.map((product) => (
-            <Link to={`/product/${product.category}/${product.pID}`}>
+            <Link to={`/${product.category}/${product.name}`}>
               <ProductCard data={product} />
             </Link>
           ))}
