@@ -6,7 +6,7 @@ import { Home } from "./pages/Home";
 import AllProduct from "./pages/AllProduct.jsx";
 import ProductDetails from "./components/Product Details/ProductDetails.jsx";
 import { Offer } from "./pages/Offer.jsx";
-import Footer from "./components/Footer.jsx";
+import Footer from "./components/Footer/Footer.jsx";
 import { BuyNow } from "./pages/BuyNow.jsx";
 import { Cart } from "./pages/Cart.jsx";
 import { CartProvider } from "./components/Context Api/CartContext.jsx";
@@ -23,6 +23,12 @@ import { MyOrders } from "./components/Profile/MyOrder";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { MdStorage } from "react-icons/md";
 import FooterLinks from "./components/PolicyCard";
+import AboutUs from "./components/Footer/AboutUs";
+import Contact from "./components/Footer/Contact";
+import FAQ from "./components/Footer/FAQ";
+import Shipping from "./components/Footer/Shipping";
+import Return from "./components/Footer/Return";
+import Payment from "./components/Footer/Payment";
 
 const Loader = () => (
   <div
@@ -111,6 +117,14 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/track-order" element={<TrackOrder />} />
         <Route path="/checkout/purchase" element={<BuyNow />} />
+
+        {/* Footer all link */}
+        <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/contact-us" element={<Contact />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/shipping-info" element={<Shipping />} />
+        <Route path="/return-policy" element={<Return />} />
+        <Route path="/payment-info" element={<Payment />} />
       </Routes>
 
       <FooterLinks />

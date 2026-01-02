@@ -62,17 +62,26 @@ const Footer = () => {
                       <span>Track Order</span>
                     </li>
 
-                    <li className="flex items-center gap-2 cursor-pointer hover:text-indigo-500">
+                    <li
+                      onClick={() => navigate("/about-us")}
+                      className="flex items-center gap-2 cursor-pointer hover:text-indigo-500"
+                    >
                       <FiInfo size={20} />
                       <span>About Us</span>
                     </li>
 
-                    <li className="flex items-center gap-2 cursor-pointer hover:text-indigo-500">
+                    <li
+                      onClick={() => navigate("/contact-us")}
+                      className="flex items-center gap-2 cursor-pointer hover:text-indigo-500"
+                    >
                       <FiPhoneCall size={20} />
                       <span>Contact</span>
                     </li>
 
-                    <li className="flex items-center gap-2 cursor-pointer hover:text-indigo-500">
+                    <li
+                      onClick={() => navigate("/faq")}
+                      className="flex items-center gap-2 cursor-pointer hover:text-indigo-500"
+                    >
                       <FiHelpCircle size={20} />
                       <span>FAQ</span>
                     </li>
@@ -84,12 +93,18 @@ const Footer = () => {
                   <h4 className="text-white font-semibold mb-4">Support</h4>
 
                   <ul className="space-y-2">
-                    <li className="flex items-center gap-2 cursor-pointer hover:text-indigo-500">
+                    <li
+                      onClick={() => navigate("/shipping-info")}
+                      className="flex items-center gap-2 cursor-pointer hover:text-indigo-500"
+                    >
                       <FiSend size={20} />
                       <span>Shipping</span>
                     </li>
 
-                    <li className="flex items-center gap-2 cursor-pointer hover:text-indigo-500">
+                    <li
+                      onClick={() => navigate("/return-policy")}
+                      className="flex items-center gap-2 cursor-pointer hover:text-indigo-500"
+                    >
                       <FiRotateCcw size={20} />
                       <span>Returns</span>
                     </li>
@@ -99,7 +114,10 @@ const Footer = () => {
                       <span>Order Status</span>
                     </li>
 
-                    <li className="flex items-center gap-2 cursor-pointer hover:text-indigo-500">
+                    <li
+                      onClick={() => navigate("/payment-info")}
+                      className="flex items-center gap-2 cursor-pointer hover:text-indigo-500"
+                    >
                       <FiCreditCard size={20} />
                       <span>Payment Options</span>
                     </li>
