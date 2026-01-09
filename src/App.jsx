@@ -29,6 +29,8 @@ import FAQ from "./components/Footer/FAQ";
 import Shipping from "./components/Footer/Shipping";
 import Return from "./components/Footer/Return";
 import Payment from "./components/Footer/Payment";
+import KidsZone from "./components/Kids Zone/KidsZone";
+import Electronics from "./components/Electronics/Electronics";
 
 const Loader = () => (
   <div
@@ -117,6 +119,8 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/track-order" element={<TrackOrder />} />
         <Route path="/checkout/purchase" element={<BuyNow />} />
+        <Route path="/kids-zone" element={<KidsZone />} />
+        <Route path="/electronics" element={<Electronics />} />
 
         {/* Footer all link */}
         <Route path="/about-us" element={<AboutUs />} />

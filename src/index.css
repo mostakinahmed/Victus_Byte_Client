@@ -41,9 +41,16 @@
   --sidebar-ring: oklch(0.705 0.015 286.067);
 }
 
-body {
+/* body {
   font-family:sans-serif;
    background-color: #f0f4f8;
+  margin: var(--root-margin);
+  padding: var(--root-padding);
+} */
+
+body {
+  font-family:sans-serif;
+   background-color: #f0f9ff;
   margin: var(--root-margin);
   padding: var(--root-padding);
 }

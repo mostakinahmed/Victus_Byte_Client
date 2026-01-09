@@ -1,92 +1,93 @@
 import React from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 const dummyCategories = [
   {
     id: 1,
-    title: "Winter Collections",
+    title: "Computer Accesories",
     items: [
       {
-        name: "Comforters",
-        img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
+        name: "Graphics Card",
+        img: "https://www.startech.com.bd/image/cache/catalog/graphics-card/msi/gt-730/gt-730-01-500x500.webp",
       },
       {
-        name: "Electric Kettle",
-        img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
+        name: "Motherboard",
+        img: "https://www.startech.com.bd/image/cache/catalog/motherboard/gigabyte/b450m-k/b450m-k-01-500x500.webp",
       },
       {
-        name: "Moisturizers",
-        img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
+        name: "Power Supply",
+        img: "https://www.startech.com.bd/image/cache/catalog/power-supply/t-wolf/atx-350/atx-350w-04-500x500.webp",
       },
       {
-        name: "Water Heaters",
-        img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
+        name: "RAM",
+        img: "https://www.startech.com.bd/image/cache/catalog/component/ram/team/delta-8gb/8gb-500x500.jpg",
       },
     ],
   },
   {
     id: 2,
-    title: "Islamic Accessories",
+    title: "Storage Device",
     items: [
       {
-        name: "Dates (Khurma)",
-        img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
+        name: "M.2 SSD (NVMe)",
+        img: "https://www.startech.com.bd/image/cache/catalog/ssd/colorful/cn600/cn600-01-500x500.webp",
       },
       {
-        name: "Jaynamaz",
-        img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
+        name: "SATA SSD",
+        img: "https://www.startech.com.bd/image/cache/catalog/ssd/netac/ls-ne-sa500/ls-ne-sa500-01-500x500.webp",
       },
       {
-        name: "Hajj Kits",
-        img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
+        name: "HDD",
+        img: "https://www.startech.com.bd/image/cache/catalog/hdd/seagate/2tb-7200rpm/2tb-7200rpm-1-500x500.jpg",
       },
       {
-        name: "Fragrances",
-        img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
+        name: "Pendrive",
+        img: "https://www.startech.com.bd/image/cache/catalog/pendrive/adata/uc310-128gb/uc310-128gb-01-500x500.webp",
       },
     ],
   },
   {
     id: 3,
-    title: "Beauty & Health",
+    title: "Smart Device",
     items: [
       {
-        name: "Personal Care",
-        img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
+        name: "Mobile",
+        img: "https://www.startech.com.bd/image/cache/catalog/mobile/samsung/galaxy-a55/galaxy-a55-02-500x500.webp",
       },
       {
-        name: "Beauty Tools",
-        img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
+        name: "Smart Watch",
+        img: "https://www.startech.com.bd/image/cache/catalog/smart-watch/havit/m9035/m9035-black-01-500x500.webp",
       },
       {
-        name: "Shaving",
-        img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
+        name: "EurBuds",
+        img: "https://www.startech.com.bd/image/cache/catalog/earbuds/oneplus/nord-buds-3-pro/nord-buds-3%20pro-01-500x500.webp",
       },
       {
-        name: "Skin Care",
-        img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
+        name: " Power Bank",
+        img: "https://www.startech.com.bd/image/cache/catalog/power-bank/joyroom/jr-l002/jr-l002-01-500x500.webp",
       },
     ],
   },
   {
     id: 4,
-    title: "Infant & Kids Zone",
+    title: "Electronics",
     items: [
       {
-        name: "Baby Care",
-        img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
+        name: "Monitor",
+        img: "https://www.startech.com.bd/image/cache/catalog/monitor/pc-power/pcgm-king22/pcgm-king22-01-500x500.webp",
       },
       {
-        name: "Kids Toys",
-        img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
+        name: "TV Box",
+        img: "https://www.startech.com.bd/image/cache/catalog/tv-box/tx3/tx3-mini-a/tx3-mini-a-0001-500x500.jpg",
       },
       {
-        name: "Winter Care",
-        img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
+        name: "Electric Kettle",
+        img: "https://www.startech.com.bd/image/cache/catalog/gadget/daily-lifestyle/smart/sek-s18es/sek-s18es-0001-500x500.webp",
       },
       {
-        name: "Diapering",
-        img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
+        name: "IP Camera",
+        img: "https://www.startech.com.bd/image/cache/catalog/ip-camera/hikvision/hilook-ipc-b121h-c/hilook-ipc-b121h-c-01-500x500.webp",
       },
     ],
   },
@@ -105,17 +106,20 @@ const CategoryBox = ({ data }) => {
       {/* 2x2 Image Grid */}
       <div className="grid grid-cols-2 gap-3">
         {data.items.map((item, idx) => (
-          <div key={idx} className="flex flex-col items-center  cursor-pointer">
-            <div className="bg-gray-100 p-2 rounded w-32 aspect-square flex items-center justify-center overflow-hidden">
-              <img
-                src={item.img}
-                alt={item.name}
-                className="object-contain  transition-transform"
-              />
-            </div>
-            <span className="text-[14px] text-gray-600 hover:text-blue-600 mt-2 text-center leading-tight">
-              {item.name}
-            </span>
+          <div key={idx} className="flex text-center flex-col items-center  cursor-pointer">
+           
+            <Link to={`/${item.name.toLowerCase()}`}>
+              <div className="bg-gray-100 p-3  rounded w-32 aspect-square flex items-center justify-center overflow-hidden">
+                <img
+                  src={item.img}
+                  alt={item.name}
+                  className="object-contain  transition-transform"
+                />
+              </div>
+              <span className="text-[14px] text-center text-gray-600 hover:text-blue-600 mt-2 leading-tight">
+                {item.name}
+              </span>
+            </Link>
           </div>
         ))}
       </div>
