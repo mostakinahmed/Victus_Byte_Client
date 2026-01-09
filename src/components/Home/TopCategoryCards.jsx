@@ -9,7 +9,7 @@ const TopCategoryCards = () => {
 
   return (
     <div className="max-w-[1400px] mx-auto mb-7 mt-5">
-      {/* <FeatureText data="Top Categories" /> */}
+      <FeatureText data="Top Categories" />
 
       {/* GRID SETUP:
         - border-t and border-l: Creates the top and left outer frame.
@@ -22,7 +22,7 @@ const TopCategoryCards = () => {
         {categoryData && categoryData.length > 0 ? (
           categoryData
             // .filter((item) => item.topCategory === true)
-            // .slice(0, 12) // Example: if you have 12 cards and 6 cols, it makes 2 rows perfectly
+             .slice(0, 12) // Example: if you have 12 cards and 6 cols, it makes 2 rows perfectly
             .map((cat, index) => (
               <Link
                 key={index}

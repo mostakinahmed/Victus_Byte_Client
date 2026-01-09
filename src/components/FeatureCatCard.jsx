@@ -1,147 +1,151 @@
-import React, { useContext, useState } from "react";
-import { FiBox } from "react-icons/fi"; // Default icon
-import { DataContext } from "./Context Api/UserContext";
+import React from "react";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
-const categories = [
+const dummyCategories = [
   {
     id: 1,
-    name: "Laptop",
-    icon: "https://cdn-icons-png.flaticon.com/512/1055/1055687.png",
+    title: "Winter Collections",
+    items: [
+      {
+        name: "Comforters",
+        img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
+      },
+      {
+        name: "Electric Kettle",
+        img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
+      },
+      {
+        name: "Moisturizers",
+        img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
+      },
+      {
+        name: "Water Heaters",
+        img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
+      },
+    ],
   },
   {
     id: 2,
-    name: "Clothing",
-    icon: "https://cdn-icons-png.flaticon.com/512/892/892458.png",
+    title: "Islamic Accessories",
+    items: [
+      {
+        name: "Dates (Khurma)",
+        img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
+      },
+      {
+        name: "Jaynamaz",
+        img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
+      },
+      {
+        name: "Hajj Kits",
+        img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
+      },
+      {
+        name: "Fragrances",
+        img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
+      },
+    ],
   },
   {
     id: 3,
-    name: "Gaming",
-    icon: "https://cdn-icons-png.flaticon.com/512/1015/1015087.png",
+    title: "Beauty & Health",
+    items: [
+      {
+        name: "Personal Care",
+        img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
+      },
+      {
+        name: "Beauty Tools",
+        img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
+      },
+      {
+        name: "Shaving",
+        img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
+      },
+      {
+        name: "Skin Care",
+        img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
+      },
+    ],
   },
   {
     id: 4,
-    name: "Mobile",
-    icon: "https://cdn-icons-png.flaticon.com/512/744/744920.png",
-  },
-  {
-    id: 5,
-    name: "Headphones",
-    icon: "https://cdn-icons-png.flaticon.com/512/727/727240.png",
-  },
-  {
-    id: 6,
-    name: "Camera",
-    icon: "https://cdn-icons-png.flaticon.com/512/2910/2910760.png",
-  },
-  {
-    id: 7,
-    name: "Furniture",
-    icon: "https://cdn-icons-png.flaticon.com/512/260/260107.png",
-  },
-  {
-    id: 8,
-    name: "Books",
-    icon: "https://cdn-icons-png.flaticon.com/512/29/29302.png",
-  },
-  {
-    id: 9,
-    name: "Bikes",
-    icon: "https://cdn-icons-png.flaticon.com/512/2972/2972100.png",
-  },
-  {
-    id: 10,
-    name: "Sports",
-    icon: "https://cdn-icons-png.flaticon.com/512/833/833314.png",
-  },
-  {
-    id: 11,
-    name: "Music",
-    icon: "https://cdn-icons-png.flaticon.com/512/727/727245.png",
-  },
-  {
-    id: 12,
-    name: "Art",
-    icon: "https://cdn-icons-png.flaticon.com/512/2910/2910743.png",
-  },
-  {
-    id: 13,
-    name: "Coffee",
-    icon: "https://cdn-icons-png.flaticon.com/512/691/691783.png",
-  },
-  {
-    id: 14,
-    name: "Fruits",
-    icon: "https://cdn-icons-png.flaticon.com/512/590/590685.png",
+    title: "Infant & Kids Zone",
+    items: [
+      {
+        name: "Baby Care",
+        img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
+      },
+      {
+        name: "Kids Toys",
+        img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
+      },
+      {
+        name: "Winter Care",
+        img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
+      },
+      {
+        name: "Diapering",
+        img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
+      },
+    ],
   },
 ];
 
-const gradients = [
-  "bg-gradient-to-br from-pink-500 to-red-400",
-  "bg-gradient-to-br from-indigo-500 to-purple-500",
-  "bg-gradient-to-br from-green-400 to-emerald-500",
-  "bg-gradient-to-br from-blue-500 to-cyan-400",
-  "bg-gradient-to-br from-yellow-400 to-amber-500",
-  "bg-gradient-to-br from-teal-500 to-lime-400",
-  "bg-gradient-to-br from-rose-500 to-pink-400",
-  "bg-gradient-to-br from-orange-500 to-yellow-400",
-   "bg-gradient-to-br from-pink-500 to-red-400",
-  "bg-gradient-to-br from-indigo-500 to-purple-500",
-  "bg-gradient-to-br from-green-400 to-emerald-500",
-  "bg-gradient-to-br from-blue-500 to-cyan-400",
-  "bg-gradient-to-br from-yellow-400 to-amber-500",
-  "bg-gradient-to-br from-teal-500 to-lime-400",
-  "bg-gradient-to-br from-rose-500 to-pink-400",
-  "bg-gradient-to-br from-orange-500 to-yellow-400",
-];
-
-const CategoryCardsSlider = () => {
-  const { categoryData } = useContext(DataContext);
-
+const CategoryBox = ({ data }) => {
   return (
-    <div className="max-w-[1370px] mx-auto px-4 overflow-hidden relative">
-      <div className="flex animate-slide gap-4 w-max">
-        {/* Duplicate categories for smooth infinite sliding */}
-        {[...categories, ...categories].map((cat, index) => (
-          <div
-            key={index}
-            onClick={() => handleClick(cat)}
-            className={`
-    cursor-pointer text-white font-semibold
-    flex flex-col items-center justify-center text-center
-    transition-all duration-300 ease-in-out transform hover:scale-105
-    shadow-md hover:shadow-xl
-    w-22 h-13 sm:w-24 md:w-35 md:h-20
-    ${gradients[index % gradients.length]}
-  `}
-          >
-            <img
-              src={cat.icon}
-              alt={cat.name}
-              className="w-7 h-7 sm:w-10 sm:h-10 md:mb-1 p-1"
-            />
+    <div
+      className="bg-white p-4 border border-gray-100 
+     hover:shadow-lg hover:z-10"
+    >
+      <h3 className="text-gray-700 font-semibold mb-4 text-[16px]">
+        {data.title}
+      </h3>
 
-            <div className="text-[13px] sm:text-sm md:text-base px-2">
-              {cat.name}
+      {/* 2x2 Image Grid */}
+      <div className="grid grid-cols-2 gap-3">
+        {data.items.map((item, idx) => (
+          <div key={idx} className="flex flex-col items-center  cursor-pointer">
+            <div className="bg-gray-100 p-2 rounded w-32 aspect-square flex items-center justify-center overflow-hidden">
+              <img
+                src={item.img}
+                alt={item.name}
+                className="object-contain  transition-transform"
+              />
             </div>
+            <span className="text-[14px] text-gray-600 hover:text-blue-600 mt-2 text-center leading-tight">
+              {item.name}
+            </span>
           </div>
         ))}
       </div>
-
-      <style>
-        {`
-          @keyframes slide {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-100%); } 
-}
-
-.animate-slide {
-  animation: slide 60s linear infinite; 
-}
-
-        `}
-      </style>
+      {/* 
+      <button className="text-blue-500 text-xs font-medium mt-4 flex items-center hover:underline">
+        See More <FiChevronRight className="ml-0.5" />
+      </button> */}
     </div>
   );
 };
 
-export default CategoryCardsSlider;
+const MultiCategorySection = () => {
+  return (
+    <div className="max-w-[1400px] mx-auto mt-3 px-4">
+      {/* Section Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        {dummyCategories.map((cat) => (
+          <CategoryBox key={cat.id} data={cat} />
+        ))}
+      </div>
+
+      {/* Slider Controls (Visual Only for this layout) */}
+      {/* <button className="absolute left-1 top-1/2 -translate-y-1/2 bg-white shadow-xl p-2 rounded-full hidden group-hover:block border border-gray-200 z-10">
+        <FiChevronLeft size={24} className="text-gray-400" />
+      </button>
+      <button className="absolute right-1 top-1/2 -translate-y-1/2 bg-white shadow-xl p-2 rounded-full hidden group-hover:block border border-gray-200 z-10">
+        <FiChevronRight size={24} className="text-gray-400" />
+      </button> */}
+    </div>
+  );
+};
+
+export default MultiCategorySection;

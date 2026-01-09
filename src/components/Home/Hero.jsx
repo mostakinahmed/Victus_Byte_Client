@@ -78,7 +78,7 @@ const BannerSection = () => {
       {/* Info Cards Section */}
       <div className="hidden md:flex mt-1 col-span-1 md:col-span-3 flex-col md:flex-row gap-2.5 justify-between text-gray-700">
         {/* Card 1 */}
-        <div className="flex-1 bg-white px-6 py-4  shadow hover:shadow-md transition text-center">
+        <div className="flex-1 bg-white px-6 py-4   hover:shadow-md transition text-center">
           <h4 className="text-[20px] font-semibold text-[#fe741d]">1K+ Sold</h4>
           <p className="text-md text-gray-500 mt-1">
             Trusted by customers nationwide
@@ -86,7 +86,7 @@ const BannerSection = () => {
         </div>
 
         {/* Card 2 */}
-        <div className="flex-1 bg-white px-6 py-4  shadow hover:shadow-md transition text-center">
+        <div className="flex-1 bg-white px-6 py-4   hover:shadow-md transition text-center">
           <h4 className="text-[20px] font-semibold text-[#fe741d]">
             Fast Delivery
           </h4>
@@ -94,7 +94,7 @@ const BannerSection = () => {
         </div>
 
         {/* Card 3 */}
-        <div className="flex-1 bg-white px-6 py-4 shadow hover:shadow-md transition text-center">
+        <div className="flex-1 bg-white px-6 py-4  hover:shadow-md transition text-center">
           <h4 className="text-[20px] font-semibold text-[#fe741d]">
             24/7 Support
           </h4>

@@ -5,7 +5,7 @@ import { FiCheckCircle } from "react-icons/fi";
 export const ProductCard = ({ data }) => {
   return (
     <>
-      <div className="bg-white  shadow overflow-hidden transform transition-transform duration-300 hover:scale-103">
+      <div className="bg-white  shadow overflow-hidden">
         <div className="w-full flex justify-between">
           <div className="h-7 flex items-center">
             {data.price.discount > 0 && (
