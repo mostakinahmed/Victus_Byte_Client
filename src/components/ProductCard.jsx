@@ -6,10 +6,10 @@ const ProductCard = ({ data }) => {
   const finalPrice = data.price.selling - (data.price.discount || 0);
 
   return (
-    <div className="flex flex-col h-[380px] font-sans bg-white border border-slate-100 rounded overflow-hidden transition-all duration-300 hover:shadow-xl group/card cursor-pointer">
+    <div className="flex flex-col md:h-[340px] h-[280px] font-sans border border-slate-200 rounded overflow-hidden transition-all duration-300 hover:shadow-xl group/card cursor-pointer">
       
       {/* --- PRODUCT IMAGE SECTION --- */}
-      <div className="relative h-56 bg-[#fcfcfc] p-6 flex items-center justify-center overflow-hidden">
+      <div className="relative h-56 bg-[#fcfcfc] md:p-4 p-2 flex items-center justify-center overflow-hidden">
         
         {/* SALE Badge */}
         {data.price.discount > 0 && (
@@ -33,7 +33,7 @@ const ProductCard = ({ data }) => {
       </div>
 
       {/* --- PRODUCT INFO SECTION --- */}
-      <div className="p-4 flex flex-col flex-grow bg-white">
+      <div className="md:p-3 p-2 md:-mt-2 flex flex-col flex-grow bg-white">
         
         {/* Brand */}
         <span className="text-[10px] font-bold text-blue-500 uppercase tracking-widest mb-1">
@@ -41,13 +41,13 @@ const ProductCard = ({ data }) => {
         </span>
 
         {/* Product Name */}
-        <h3 className="text-sm font-bold text-slate-800 line-clamp-2 mb-2 leading-tight h- transition-colors group-hover/card:text-blue-600">
+        <h3 className="text-sm font-bold text-slate-800 line-clamp-2 md:mb-1 leading-tight  transition-colors group-hover/card:text-blue-600">
           {data.name}
         </h3>
 
         {/* Price + Action */}
         <div className="mt-auto">
-          <div className="flex items-center gap-2 mb-4">
+          <div className="flex items-center gap-2 mb-2">
             <span className="text-lg font-black text-slate-900">
               ৳{finalPrice.toLocaleString()}
             </span>
@@ -60,7 +60,7 @@ const ProductCard = ({ data }) => {
           </div>
 
           <Link to="/checkout/cart">
-            <button className="w-full py-3 bg-slate-900 text-white text-[11px] font-black uppercase tracking-widest hover:bg-blue-600 transition-colors rounded shadow-lg shadow-slate-200">
+            <button className="w-full md:py-2.5 py-2 bg-slate-900 text-white md:text-[11px] text-[10px] font-black uppercase tracking-widest hover:bg-blue-600 transition-colors rounded shadow-lg shadow-slate-200">
               Add to Cart
             </button>
           </Link>

@@ -3,7 +3,7 @@ import { FaTruck, FaBriefcase, FaDollarSign, FaPhoneAlt } from "react-icons/fa";
 
 const FooterLinks = () => {
   return (
-    <div className="max-w-[1370px] hidden md:flex mx-auto border-1 bg-white border-gray-300 px-4  flex-wrap justify-between p-2 mb-4">
+    <div className="max-w-[1370px] font-sans hidden md:flex mx-auto border-1 bg-white border-gray-300 px-4  flex-wrap justify-between p-2 mb-4">
       {/* Cancellation & Returns */}
       <div className="w-full sm:w-1/4 flex items-center justify-center p-4 gap-5 ">
         <FaTruck size={30} className="text-gray-600 mt-2"  />

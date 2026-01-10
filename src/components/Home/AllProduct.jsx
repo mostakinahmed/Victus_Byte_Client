@@ -34,7 +34,7 @@ export default function AllProduct() {
   return (
     <div className="max-w-[1400px] mx-auto mt-6 lg:px-4 px-2 ">
       {/* Section Title */}
-      <div className="flex items-center justify-between bg-white shadow-sm border border-gray-100 md:p-4 px-4 py-2  mb-5">
+      <div className="flex items-center justify-between bg-white shadow-sm border border-gray-100 md:p-4 px-4 py-2  mb-3">
         <div className="flex items-center gap-3">
           <div className="p-2 -ml-4 md:ml-0">
             <FiZap className="text-xl md:-ml-3 text-[#fe741d] animate-pulse" />
@@ -53,8 +53,8 @@ export default function AllProduct() {
         </Link>
       </div>
 
-      <div className="pb-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 md:gap-4 gap-2">
-        {visibleProducts.slice(0, 10).map((product) => (
+      <div className="pb-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 md:gap-2.5 gap-2">
+        {visibleProducts.slice(0, 12).map((product) => (
           <Link
             key={product.pID}
             to={`/${product.category}/${product.name

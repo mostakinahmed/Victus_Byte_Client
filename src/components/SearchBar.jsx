@@ -95,7 +95,7 @@ export const SearchBar = () => {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && searchPage()}
-          className="w-full bg-white px-4 pr-10 py-1.5 border-1 border-slate-900 rounded-full text-black focus:outline-none placeholder:text-slate-400 placeholder:tracking-wider placeholder:font-semibold placeholder:text-sm transition-all duration-300"
+          className="w-full bg-white px-4 pr-10 py-1.5 border-1 border-slate-900 rounded-full text-black focus:outline-none placeholder:text-slate-400 placeholder:tracking-wider placeholder:font-semibold placeholder:md:text-sm placeholder:text-xs transition-all duration-300"
         />
 
         <svg

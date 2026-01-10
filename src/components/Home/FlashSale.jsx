@@ -9,33 +9,50 @@ export default function FlashSale() {
   const [flashData, setFlashData] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [visibleItems, setVisibleItems] = useState(5);
+  const [visibleItems, setVisibleItems] = useState(6);
 
-  // Ref to track the timer for cleaner auto-sliding
+  // Dynamic Countdown State
+  const [timeLeft, setTimeLeft] = useState({ h: 3, m: 12, s: 45 });
+
   const autoSlideTimer = useRef(null);
 
   // 1. Handle Responsive Column Count
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 640) setVisibleItems(2); // Mobile: 2 cards
-      else if (window.innerWidth < 768)
-        setVisibleItems(3); // Small Tablet: 3 cards
-      else if (window.innerWidth < 1024) setVisibleItems(4); // Tablet: 4 cards
-      else setVisibleItems(5); // Desktop: 6 cards
+      const width = window.innerWidth;
+      if (width < 640) setVisibleItems(2);
+      else if (width < 768) setVisibleItems(3);
+      else if (width < 1024) setVisibleItems(4);
+      else if (width < 1280) setVisibleItems(5);
+      else setVisibleItems(6);
     };
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // 2. Filter Flash Sale Data
   useEffect(() => {
     const data = productData.filter((item) => item.status?.isFlashSale);
     setFlashData(data);
   }, [productData]);
 
+  // 3. Countdown Timer Logic
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev.s > 0) return { ...prev, s: prev.s - 1 };
+        if (prev.m > 0) return { ...prev, h: prev.h, m: prev.m - 1, s: 59 };
+        if (prev.h > 0) return { h: prev.h - 1, m: 59, s: 59 };
+        return prev;
+      });
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
   const maxIndex = Math.max(0, flashData.length - visibleItems);
 
-  // 2. Navigation Functions
+  // 4. Navigation Functions
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
   };
@@ -44,7 +61,7 @@ export default function FlashSale() {
     setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
   };
 
-  // 3. Auto-Slide Logic
+  // 5. Auto-Slide Logic
   useEffect(() => {
     if (isPaused || flashData.length <= visibleItems) {
       if (autoSlideTimer.current) clearInterval(autoSlideTimer.current);
@@ -53,53 +70,64 @@ export default function FlashSale() {
 
     autoSlideTimer.current = setInterval(() => {
       nextSlide();
-    }, 2000); // Slides every 3 seconds
+    }, 3000);
 
     return () => clearInterval(autoSlideTimer.current);
   }, [currentIndex, isPaused, maxIndex, flashData.length, visibleItems]);
 
   return (
-    <section className="max-w-[1370px] bg-gray-800 xl:mx-auto mx-2 lg:mx-4 mt-6 overflow-hidden pb-3 md:pb-4">
-      {/* Header Section */}
-      <div className="w-full flex items-center justify-between bg-gray-900 text-white px-4 md:py-4 py-2 shadow-md mb-4">
+    <section className="max-w-[1370px] bg-gray-800 xl:mx-auto mx-2 lg:mx-4 mt-6 overflow-hidden pb-3">
+      {/* --- HEADER SECTION --- */}
+      <div className="w-full flex items-center justify-between bg-gray-900 text-white px-4 md:py-4 py-2 border-b border-gray-700">
         <div className="flex items-center gap-2">
-          <FiZap className="text-xl text-yellow-400 animate-pulse" />
-          <h3 className="text-sm md:text-lg font-bold tracking-tight uppercase">
+          <div className="bg-yellow-400 p-1.5 rounded-full animate-pulse">
+            <FiZap className="text-gray-900 text-lg md:text-xl" />
+          </div>
+          <h3 className="text-sm md:text-lg font-black tracking-widest uppercase">
             Flash Sale
           </h3>
         </div>
-        <div className="text-sm flex items-center gap-2 bg-red-600 text-white px-3 py-1 font-bold rounded-sm">
-          <span>Ends in:</span>
-          <span className="font-mono text-base md:text-lg">03:12:45</span>
+
+        {/* Real-time Countdown */}
+        <div className="flex items-center gap-2 bg-red-600 text-white px-3 py-1 rounded-sm border border-red-500 shadow-inner">
+          <span className="text-[10px] md:text-xs font-bold uppercase hidden sm:inline">
+            Ends in:
+          </span>
+          <span className="font-mono text-base md:text-xl font-black tracking-wider">
+            {String(timeLeft.h).padStart(2, "0")}:
+            {String(timeLeft.m).padStart(2, "0")}:
+            {String(timeLeft.s).padStart(2, "0")}
+          </span>
         </div>
       </div>
 
-      {/* Slider Wrapper */}
+      {/* --- SLIDER WRAPPER --- */}
       <div
-        className="relative group px-1"
+        className="relative group px-1 mt-4"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
         <div className="overflow-hidden">
           <div
-            className="flex transition-transform duration-1000 ease-in-out"
+            className="flex transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
             style={{
-              // Moves based on the width of a single item
+              // Logic: moves exactly by the calculated width of one item
               transform: `translateX(-${currentIndex * (100 / visibleItems)}%)`,
             }}
           >
             {flashData.map((product) => (
               <div
                 key={product.pID}
-                className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 flex-shrink-0 px-1 md:px-2"
+                style={{ width: `${100 / visibleItems}%` }}
+                className="flex-shrink-0 px-1 md:px-1.5"
               >
                 <Link
-                  key={product.pID}
                   to={`/${product.category}/${product.name
                     .replace(/\s+/g, "-")
-                    .toLowerCase()}`} // Replace spaces with hyphens in the URL
-                  aria-label={`View details for ${product.name}`}
+                    .toLowerCase()}`}
+                  className="block h-full"
                 >
+                  {/* Using your stylish ProductCard */}
                   <ProductCard data={product} />
                 </Link>
               </div>
@@ -107,22 +135,26 @@ export default function FlashSale() {
           </div>
         </div>
 
-        {/* Left Control - Overlap style */}
+        {/* --- CONTROLS --- */}
         <button
           onClick={prevSlide}
-          className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-gray-900/90 hover:bg-red-600 text-white p-2 md:p-3 rounded-r-xl border border-l-0 border-gray-700 shadow-xl transition-all"
+          className={`absolute left-0 top-1/2 -translate-y-1/2 z-30 bg-gray-900/95 hover:bg-blue-600 text-white p-2  rounded-r-2xl border-y border-r border-gray-700 shadow-2xl transition-all duration-300 ${
+            currentIndex === 0 ? "opacity-30" : "opacity-100"
+          }`}
         >
-          <FiChevronLeft className="text-xl md:text-2xl" />
+          <FiChevronLeft size={24} />
         </button>
 
-        {/* Right Control - Overlap style */}
         <button
           onClick={nextSlide}
-          className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-gray-900/90 hover:bg-red-600 text-white p-2 md:p-3 rounded-l-xl border border-r-0 border-gray-700 shadow-xl transition-all"
+          className={`absolute right-0 top-1/2 -translate-y-1/2 z-30 bg-gray-900/95 hover:bg-blue-600 text-white p-2 rounded-l-2xl border-y border-l border-gray-700 shadow-2xl transition-all duration-300 ${
+            currentIndex === maxIndex ? "opacity-30" : "opacity-100"
+          }`}
         >
-          <FiChevronRight className="text-xl md:text-2xl" />
+          <FiChevronRight size={24} />
         </button>
       </div>
+
     </section>
   );
 }

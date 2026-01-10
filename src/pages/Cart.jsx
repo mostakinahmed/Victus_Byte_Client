@@ -62,40 +62,40 @@ export const Cart = () => {
     navigate("/checkout/purchase");
   };
   return (
-    <div className="max-w-[1400px] lg:mt-[86px] mt-[40px] pt-5 mx-auto md:px-4 px-2 mb-60  animate-in fade-in duration-700">
+    <div className="max-w-[1400px] lg:mt-[86px] font-sans mt-[40px] pt-5 mx-auto md:px-4 px-2 mb-60  animate-in fade-in duration-700">
      
 
       <div className="flex flex-col lg:flex-row gap-8">
         {/* --- Left Side: Product List --- */}
         <div className="flex-1">
-          <div className="bg-white border border-slate-200  overflow-hidden">
+          <div className="bg-white  overflow-hidden">
             <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse">
+              <table className="w-full text-left border-collapse overflow-x-auto whitespace-nowrap">
                 <thead>
-                  <tr className="bg-slate-50/50 border-b border-slate-100">
-                    <th className="px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest">
+                  <tr className="bg-slate-50/50 border-b border-slate-200">
+                    <th className="px-6 py-4 text-[12px] uppercase tracking-widest">
                       Product
                     </th>
-                    <th className="px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest text-center">
+                    <th className="px-6 py-4 text-[12px] uppercase tracking-widest">
                       Quantity
                     </th>
-                    <th className="px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest text-center">
+                    <th className="px-6 py-4 text-[12px] uppercase tracking-widest">
                       Unit Price
                     </th>
-                    <th className="px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest text-right">
+                    <th className="px-6 py-4 text-[12px] uppercase tracking-widest">
                       Subtotal
                     </th>
-                    <th className="px-6 py-4 text-[10px] font-black text-slate-500 uppercase tracking-widest text-center">
+                    <th className="px-6 py-4 text-[12px] uppercase tracking-widest">
                       Action
                     </th>
                   </tr>
                 </thead>
 
-                <tbody className="divide-y divide-slate-50">
+                <tbody className="">
                   {items.map((item, index) => (
                     <tr
                       key={index}
-                      className="group hover:bg-slate-50/30 transition-all"
+                      className="group hover:bg-slate-50/30 transition-all divide-y"
                     >
                       <td className="px-6 py-5">
                         <div className="flex items-center gap-4">
@@ -106,26 +106,26 @@ export const Cart = () => {
                               className="w-full h-full object-contain"
                             />
                           </div>
-                          <div className="flex flex-col">
-                            <span className="text-sm font-black text-slate-800 leading-tight mb-1">
+                          <div className="flex w-30 md:w-full flex-col">
+                            <span className="text-md  leading-tight mb-1">
                               {item.name}
                             </span>
-                            <span className="text-[12px] font-mono font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-md w-fit">
+                            <span className="text-[12px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-md w-fit">
                               PID: {item.pID}
                             </span>
                           </div>
                         </div>
                       </td>
 
-                      <td className="px-6 py-5 text-center font-bold text-slate-700">
+                      <td className=" py-5 text-center">
                         <span className="bg-slate-100 px-3 py-1 rounded-lg">
                           x{item.qty}
                         </span>
                       </td>
 
-                      <td className="px-6 py-5 text-center">
+                      <td className=" py-5 text-center">
                         <div className="flex flex-col items-center">
-                          <span className="text-sm font-black text-slate-800">
+                          <span className=" ">
                             ৳{item.price.selling}
                           </span>
                           {item.price.discount > 0 && (
@@ -136,7 +136,7 @@ export const Cart = () => {
                         </div>
                       </td>
 
-                      <td className="px-6 py-5 text-right font-black text-slate-900">
+                      <td className="px-8 py-5 text-right ">
                         ৳{item.price.selling * item.qty - item.price.discount}
                       </td>
 

@@ -93,11 +93,11 @@ export function HomeBuy({ data }) {
   return (
     <div className="min-h-screen font-sans w-full flex flex-col items-center px-2 lg:px-4 mb-20 animate-in fade-in duration-500">
       {/* --- 1. PRODUCT MANIFEST HEADER --- */}
-      <div className="bg-white w-full border border-slate-200 shadow-sm overflow-hidden mb-4">
+      <div className="bg-white w-full border border-slate-200  overflow-hidden mb-4">
         <div className="bg-slate-50 px-6 py-4 border-b border-slate-100 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <FiPackage className="text-indigo-600" size={18} />
-            <h2 className="text-sm font-black text-slate-800 uppercase tracking-widest">
+            <h2 className="text-sm font-semibold uppercase tracking-widest">
               Order Manifest
             </h2>
           </div>
@@ -122,7 +122,7 @@ export function HomeBuy({ data }) {
                 </div>
 
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-xs font-black text-slate-800 truncate uppercase tracking-tighter">
+                  <h3 className="text-sm uppercase truncate ">
                     {item.name}
                   </h3>
                   <p className="text-indigo-600 text-sm font-black mt-0.5">
@@ -138,7 +138,7 @@ export function HomeBuy({ data }) {
       {/* --- 2. CUSTOMER LOGISTICS FORM --- */}
       <form
         onSubmit={handleSubmit}
-        className="bg-white w-full border border-slate-200 shadow overflow-hidden"
+        className="bg-white w-full border border-slate-200  overflow-hidden"
       >
         <div className="bg-slate-900 px-8 py-6 flex items-center gap-3">
           <div className="p-2 bg-indigo-500 rounded-lg text-white shadow-lg shadow-indigo-500/20">
@@ -154,39 +154,39 @@ export function HomeBuy({ data }) {
           </div>
         </div>
 
-        <div className="p-8 space-y-6">
+        <div className="p-8 md:space-y-6 space-y-3">
           {/* Name & Email Group */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="space-y-1.5">
-              <label className="text-[12px] font-black text-slate-500 uppercase tracking-widest ml-1">
+              <label className="text-sm uppercase tracking-wider ml-1">
                 Recipient Name
               </label>
               <div className="relative group">
                 <FiUser className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-indigo-500 transition-colors" />
                 <input
                   type="text"
-                  placeholder="e.g. Mostakin Ahmed"
+                  placeholder="Your Name...."
                   required
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-700 outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all"
+                  className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all"
                 />
               </div>
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-[12px] font-black text-slate-500 uppercase tracking-widest ml-1">
+              <label className="text-sm uppercase tracking-wider ml-1">
                 Contact Email
               </label>
               <div className="relative group">
                 <FiMail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-indigo-500 transition-colors" />
                 <input
                   type="email"
-                  placeholder="email@example.com"
+                  placeholder="user@example.com"
                   required
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-700 outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all"
+                  className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm  outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all"
                 />
               </div>
             </div>
@@ -194,7 +194,7 @@ export function HomeBuy({ data }) {
 
           {/* Phone Number */}
           <div className="space-y-1.5">
-            <label className="text-[12px] font-black text-slate-500 uppercase tracking-widest ml-1">
+            <label className="text-sm uppercase tracking-wider ml-1">
                Phone Number
             </label>
             <div className="relative group">
@@ -205,14 +205,14 @@ export function HomeBuy({ data }) {
                 required
                 value={form.phone}
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono font-bold text-slate-700 outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all tracking-tighter"
+                className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm  outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all tracking-tighter"
               />
             </div>
           </div>
 
           {/* Address Textarea */}
           <div className="space-y-1.5">
-            <label className="text-[12px] font-black text-slate-500 uppercase tracking-widest ml-1">
+            <label className="text-sm uppercase tracking-wider ml-1">
               Delivery Destination
             </label>
             <div className="relative group">
@@ -222,20 +222,20 @@ export function HomeBuy({ data }) {
                 required
                 value={form.address}
                 onChange={(e) => setForm({ ...form, address: e.target.value })}
-                className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-600 outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all h-24 leading-relaxed"
+                className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm  outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all h-24 leading-relaxed"
               />
             </div>
           </div>
 
           {/* Geographical Selectors */}
           <div className="space-y-1.5 pt-2">
-            <label className="text-[12px] font-black text-slate-500 uppercase tracking-widest ml-1 flex items-center gap-1">
+            <label className="text-sm uppercase tracking-wider ml-1 flex items-center gap-1">
               <FiMap size={10} /> Territory Mapping
             </label>
             <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-100">
               {/* Division */}
               <select
-                className="bg-white border border-slate-200 rounded-xl p-3 text-sm font-bold text-slate-700 cursor-pointer focus:border-indigo-500 outline-none"
+                className="bg-white border border-slate-200 rounded-xl p-3 text-sm  cursor-pointer focus:border-indigo-500 outline-none"
                 required
                 value={form.division}
                 onChange={(e) => {
@@ -260,7 +260,7 @@ export function HomeBuy({ data }) {
 
               {/* District */}
               <select
-                className="bg-white border border-slate-200 rounded-xl p-3 text-sm font-bold text-slate-700 cursor-pointer disabled:opacity-50"
+                className="bg-white border border-slate-200 rounded-xl p-3 text-sm  cursor-pointer disabled:opacity-50"
                 required
                 value={form.district}
                 onChange={(e) => {
@@ -281,7 +281,7 @@ export function HomeBuy({ data }) {
 
               {/* Upazila */}
               <select
-                className="bg-white border border-slate-200 rounded-xl p-3 text-sm font-bold text-slate-700 cursor-pointer disabled:opacity-50"
+                className="bg-white border border-slate-200 rounded-xl p-3 text-sm cursor-pointer disabled:opacity-50"
                 required
                 value={form.upazila}
                 onChange={(e) => {
@@ -328,9 +328,9 @@ export function HomeBuy({ data }) {
           <div className="pt-4">
             <button
               type="submit"
-              className="w-full py-5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-indigo-100 transition-all active:scale-[0.98] flex items-center justify-center gap-2"
+              className="w-full md:py-5 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-indigo-100 transition-all active:scale-[0.98] flex items-center justify-center gap-2"
             >
-              Finalize & Place Order <FiChevronRight size={18} />
+              Place Order <FiChevronRight size={18} />
             </button>
           </div>
         </div>

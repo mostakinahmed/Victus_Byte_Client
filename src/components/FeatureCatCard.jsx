@@ -190,7 +190,7 @@ const MultiCategorySection = () => {
         {dummyCategories.map((cat, index) => (
           <div
             key={index}
-            className="xl:w-[24.2%] lg:w-[32%] md:w-[45%] w-[85%] flex-shrink-0 snap-center"
+            className="xl:w-[24.2%] lg:w-[32%] md:w-[45%] w-[80%] flex-shrink-0 snap-center"
           >
             <CategoryBox data={cat} />
           </div>

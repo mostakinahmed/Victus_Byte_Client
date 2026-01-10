@@ -11,14 +11,16 @@ export default function NewArrivals() {
   const [isPaused, setIsPaused] = useState(false);
 
   // 1. Logic to handle dynamic visible items based on screen width
-  const [visibleItems, setVisibleItems] = useState(5);
+  const [visibleItems, setVisibleItems] = useState(6);
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 640) setVisibleItems(2); // Mobile
-      else if (window.innerWidth < 768) setVisibleItems(3); // Small Tablet
-      else if (window.innerWidth < 1024) setVisibleItems(4); // Tablet
-      else setVisibleItems(5); // Desktop
+      const width = window.innerWidth;
+      if (width < 640) setVisibleItems(2);
+      else if (width < 768) setVisibleItems(3);
+      else if (width < 1024) setVisibleItems(4);
+      else if (width < 1280) setVisibleItems(5);
+      else setVisibleItems(6);
     };
 
     handleResize(); // Initialize on mount
@@ -51,7 +53,7 @@ export default function NewArrivals() {
   }, [currentIndex, isPaused, maxIndex, visibleItems]);
 
   return (
-    <section className="max-w-[1370px] mt-4 bg-red-300 mb-6 lg:mx-auto md:pb-4 pb-3 mx-2 ">
+    <section className="max-w-[1370px] mt-4 bg-red-300 mb-6 lg:mx-auto  pb-3 mx-2 ">
       {/* Header Section */}
       <div className="flex items-center justify-between bg-white shadow-sm border border-gray-100 md:p-4 px-4 py-2  mb-8">
         <div className="flex items-center gap-3">
@@ -66,7 +68,7 @@ export default function NewArrivals() {
         {/* View All Button */}
         <Link
           to="/new-arrival"
-          className="flex items-center gap-1 text-[11px] md:text-xs font-bold uppercase tracking-wider text-slate-900 hover:text-white border border-slate-900 hover:bg-slate-900 px-3 py-1.5 md:px-5 md:py-2 rounded-full transition-all duration-300"
+          className="flex items-center gap-1 text-[9px] md:text-xs font-bold uppercase tracking-wider text-slate-900 hover:text-white border border-slate-900 hover:bg-slate-900 px-3 py-1.5 md:px-5 md:py-2 rounded-full transition-all duration-300"
         >
           View All
         </Link>
@@ -92,7 +94,7 @@ export default function NewArrivals() {
               <div
                 key={product.pID}
                 // 3. Changed w-full to w-1/2 for mobile
-                className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 flex-shrink-0 px-1 md:px-2"
+                className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 flex-shrink-0 px-1 md:px-1.5"
               >
                 <Link
                   key={product.pID}
@@ -113,13 +115,13 @@ export default function NewArrivals() {
           <>
             <button
               onClick={prevSlide}
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-red-300/90 hover:bg-indigo-600 hover:text-white text-gray-800 p-2 md:p-3 rounded-r-xl shadow-lg transition-all"
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-red-300/90 hover:bg-slate-900 hover:text-white text-gray-800 p-1.5 md:p-2 rounded-r-xl shadow-lg transition-all"
             >
               <FiChevronLeft size={24} />
             </button>
             <button
               onClick={nextSlide}
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-red-300/90 hover:bg-indigo-600 hover:text-white text-gray-800 p-2 md:p-3 rounded-l-xl shadow-lg transition-all"
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-red-300/90 hover:bg-slate-900 hover:text-white text-gray-800 p-1.5 md:p-2 rounded-l-xl shadow-lg transition-all"
             >
               <FiChevronRight size={24} />
             </button>

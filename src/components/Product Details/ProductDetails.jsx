@@ -131,7 +131,7 @@ const ProductDetail = () => {
         <section className="max-w-[1400px] mt-[9px] lg:mt-[50px] p-3 md:px-5 px-2 mx-auto">
           <div className="flex flex-col md:flex-row mt-10 justify-between gap-3">
             {/* Left: Image Gallery */}
-            <div className="flex-1 bg-white flex rounded shadow">
+            <div className="flex-1 bg-white flex rounded  border-b border-slate-200">
               {/* Thumbnails */}
               <div className="flex flex-col gap-2 border-r px-3 py-1 justify-center overflow-y-auto max-h-[400px]">
                 {product.images?.map((img, idx) => (
@@ -179,7 +179,7 @@ const ProductDetail = () => {
             </div>
 
             {/* Right: Product Details */}
-            <div className="flex-1 bg-white lg:h-[400px] shadow px-4 pb-5 pt-2 rounded">
+            <div className="flex-1 bg-white lg:h-[400px]  border-b border-slate-200 px-4 pb-5 pt-2 rounded">
               <h1 className="lg:text-xl text-lg font-bold text-gray-800 mb-2">
                 {product.name}
               </h1>
