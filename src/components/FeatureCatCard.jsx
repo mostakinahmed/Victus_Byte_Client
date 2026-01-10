@@ -96,7 +96,7 @@ const dummyCategories = [
 const CategoryBox = ({ data }) => {
   return (
     <div
-      className="bg-white p-4 border border-gray-100 
+      className="bg-white md:p-4 p-2 border border-gray-100 
      hover:shadow-lg hover:z-10"
     >
       <h3 className="text-gray-700 font-semibold mb-4 text-[16px]">
@@ -104,10 +104,12 @@ const CategoryBox = ({ data }) => {
       </h3>
 
       {/* 2x2 Image Grid */}
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 md:gap-3 gap-2">
         {data.items.map((item, idx) => (
-          <div key={idx} className="flex text-center flex-col items-center  cursor-pointer">
-           
+          <div
+            key={idx}
+            className="flex text-center flex-col items-center  cursor-pointer"
+          >
             <Link to={`/${item.name.toLowerCase()}`}>
               <div className="bg-gray-100 p-3  rounded w-32 aspect-square flex items-center justify-center overflow-hidden">
                 <img
@@ -123,31 +125,36 @@ const CategoryBox = ({ data }) => {
           </div>
         ))}
       </div>
-      {/* 
+      
       <button className="text-blue-500 text-xs font-medium mt-4 flex items-center hover:underline">
         See More <FiChevronRight className="ml-0.5" />
-      </button> */}
+      </button>
     </div>
   );
 };
 
 const MultiCategorySection = () => {
   return (
-    <div className="max-w-[1400px] mx-auto mt-3 px-4">
-      {/* Section Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+    <div className="max-w-[1400px] mx-auto mt-3 md:px-4 px-2">
+      {/* - flex-nowrap: Keeps all items on one line
+        - overflow-x-auto: Enables horizontal swiping
+        - snap-x snap-mandatory: Makes cards "stick" into place when scrolling
+        - no-scrollbar: Custom class to hide the scrollbar (defined below)
+        - sm:grid: Switches to normal grid on tablets/desktop
+      */}
+      <div
+        className="flex flex-nowrap overflow-x-auto md:gap-3 gap-2 md:pb-3 no-scrollbar snap-x snap-mandatory
+                      sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible sm:snap-none"
+      >
         {dummyCategories.map((cat) => (
-          <CategoryBox key={cat.id} data={cat} />
+          <div
+            key={cat.id}
+            className="md:min-w-[85%] min-w-[80%] sm:min-w-0 flex-shrink-0 sm:flex-shrink snap-center"
+          >
+            <CategoryBox data={cat} />
+          </div>
         ))}
       </div>
-
-      {/* Slider Controls (Visual Only for this layout) */}
-      {/* <button className="absolute left-1 top-1/2 -translate-y-1/2 bg-white shadow-xl p-2 rounded-full hidden group-hover:block border border-gray-200 z-10">
-        <FiChevronLeft size={24} className="text-gray-400" />
-      </button>
-      <button className="absolute right-1 top-1/2 -translate-y-1/2 bg-white shadow-xl p-2 rounded-full hidden group-hover:block border border-gray-200 z-10">
-        <FiChevronRight size={24} className="text-gray-400" />
-      </button> */}
     </div>
   );
 };

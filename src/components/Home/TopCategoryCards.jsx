@@ -8,7 +8,7 @@ const TopCategoryCards = () => {
   const { categoryData } = useContext(DataContext);
 
   return (
-    <div className="max-w-[1400px] mx-auto mb-7 mt-5">
+    <div className="max-w-[1400px] mx-auto mb-7 -mt-2">
       <FeatureText data="Top Categories" />
 
       {/* GRID SETUP:
