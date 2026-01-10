@@ -9,7 +9,7 @@ export const FeatureProduct = () => {
   const { productData } = useContext(DataContext);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [visibleItems, setVisibleItems] = useState(6);
+  const [visibleItems, setVisibleItems] = useState(5);
 
   // 1. Filter featured data
   const featuredData = useMemo(
@@ -23,7 +23,7 @@ export const FeatureProduct = () => {
       if (window.innerWidth < 640) setVisibleItems(2); // Mobile: 2 items
       else if (window.innerWidth < 768) setVisibleItems(3);
       else if (window.innerWidth < 1024) setVisibleItems(4);
-      else setVisibleItems(6); // Desktop: 6 items
+      else setVisibleItems(5); // Desktop: 6 items
     };
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -90,7 +90,7 @@ export const FeatureProduct = () => {
             {featuredData.map((product) => (
               <div
                 key={product.pID}
-                className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 flex-shrink-0 px-1 md:px-2"
+                className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 flex-shrink-0 px-1 md:px-2"
               >
                 <Link
                   key={product.pID}

@@ -170,6 +170,8 @@ const ProductSection = ({ title, products, showSeeMore = false }) => (
       >
         {products.map((item) => (
           <SwiperSlide key={item.id}>
+
+            
             <div className="flex flex-col h-[400px] bg-white border border-slate-100 rounded-lg overflow-hidden transition-all duration-300 hover:shadow-xl group/card cursor-pointer">
               
               {/* Product Image Section */}
@@ -219,6 +221,9 @@ const ProductSection = ({ title, products, showSeeMore = false }) => (
                 </div>
               </div>
             </div>
+
+
+
           </SwiperSlide>
         ))}
       </Swiper>

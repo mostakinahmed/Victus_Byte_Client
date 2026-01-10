@@ -4,7 +4,7 @@ export default function ProductSpecTable({ data }) {
   const productSpecs = data.specifications;
 
   return (
-    <div className=" p-4  bg-white rounded shadow lg:h-[57rem]  overflow-y-auto">
+    <div className=" p-4 font-sans bg-white rounded shadow lg:h-[57rem]  overflow-y-auto">
       <h2 className="lg:text-2xl text-xl font-bold text-gray-700 mb-4">
         Product Specifications
       </h2>

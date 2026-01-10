@@ -91,7 +91,7 @@ export function HomeBuy({ data }) {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center px-2 lg:px-4 mb-20 animate-in fade-in duration-500">
+    <div className="min-h-screen font-sans w-full flex flex-col items-center px-2 lg:px-4 mb-20 animate-in fade-in duration-500">
       {/* --- 1. PRODUCT MANIFEST HEADER --- */}
       <div className="bg-white w-full border border-slate-200 shadow-sm overflow-hidden mb-4">
         <div className="bg-slate-50 px-6 py-4 border-b border-slate-100 flex items-center justify-between">

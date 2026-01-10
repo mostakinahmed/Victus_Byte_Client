@@ -48,7 +48,7 @@ const NavbarTop = () => {
 
   return (
     // Height is implicit here, but sticky top-0 is key
-    <div className="bg-white shadow lg:shadow-none text-black py-1 md:py-0 border-b sticky top-0 z-50">
+    <div className="bg-white font-sans shadow lg:shadow-none text-black py-1 md:py-0 border-b sticky top-0 z-50">
       {/* ======= DESKTOP NAV ======= */}
       <div className="max-w-[1400px] mx-auto items-center justify-between px-4 hidden md:flex h-[56px]">
         <div>

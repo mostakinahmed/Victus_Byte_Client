@@ -53,8 +53,8 @@ export default function AllProduct() {
         </Link>
       </div>
 
-      <div className="pb-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 md:gap-4 gap-2">
-        {visibleProducts.slice(0, 18).map((product) => (
+      <div className="pb-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 md:gap-4 gap-2">
+        {visibleProducts.slice(0, 10).map((product) => (
           <Link
             key={product.pID}
             to={`/${product.category}/${product.name

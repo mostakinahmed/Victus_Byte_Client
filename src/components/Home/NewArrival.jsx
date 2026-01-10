@@ -11,14 +11,14 @@ export default function NewArrivals() {
   const [isPaused, setIsPaused] = useState(false);
 
   // 1. Logic to handle dynamic visible items based on screen width
-  const [visibleItems, setVisibleItems] = useState(6);
+  const [visibleItems, setVisibleItems] = useState(5);
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 640) setVisibleItems(2); // Mobile
       else if (window.innerWidth < 768) setVisibleItems(3); // Small Tablet
       else if (window.innerWidth < 1024) setVisibleItems(4); // Tablet
-      else setVisibleItems(6); // Desktop
+      else setVisibleItems(5); // Desktop
     };
 
     handleResize(); // Initialize on mount
@@ -92,7 +92,7 @@ export default function NewArrivals() {
               <div
                 key={product.pID}
                 // 3. Changed w-full to w-1/2 for mobile
-                className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 flex-shrink-0 px-1 md:px-2"
+                className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 flex-shrink-0 px-1 md:px-2"
               >
                 <Link
                   key={product.pID}

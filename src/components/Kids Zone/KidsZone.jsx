@@ -20,6 +20,16 @@ const KidsZoneLayout = () => {
       discount: null,
       img: "https://manchestermuseumshop.com/cdn/shop/files/Keel-Toys-Stan-Small_02d40031-c0ff-452e-bd35-d4b931091da6_1445x.jpg?v=1694443600",
     },
+      {
+      id: 3,
+      name: "Sony WH-1000XM5 Noise Cancelling Headphones",
+      brand: "Sony",
+      price: "35,000",
+      oldPrice: "38,500",
+      discount: 9,
+      img: "https://m.media-amazon.com/images/I/51aXvjzcukL._AC_SL1500_.jpg",
+      tag: "Wireless"
+    },
     {
       id: 2,
       name: "Funskool Fundough Fun Roller Set",

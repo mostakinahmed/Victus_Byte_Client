@@ -1,75 +1,72 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FiCheckCircle } from "react-icons/fi";
 
-export const ProductCard = ({ data }) => {
+const ProductCard = ({ data }) => {
+  // Final price calculation
+  const finalPrice = data.price.selling - (data.price.discount || 0);
+
   return (
-    <>
-      <div className="bg-white  shadow overflow-hidden">
-        <div className="w-full flex justify-between">
-          <div className="h-7 flex items-center">
-            {data.price.discount > 0 && (
-              <div className="inline-flex items-center -ml-3 mt-2 bg-[#fe741d] rounded-md px-4 h-fit leading-none">
-                <span className="text-white text-xs ml-2 py-0.5 font-semibold leading-none">
-                  Save: {data.price.discount} Tk
-                </span>
-              </div>
-            )}
+    <div className="flex flex-col h-[380px] font-sans bg-white border border-slate-100 rounded overflow-hidden transition-all duration-300 hover:shadow-xl group/card cursor-pointer">
+      
+      {/* --- PRODUCT IMAGE SECTION --- */}
+      <div className="relative h-56 bg-[#fcfcfc] p-6 flex items-center justify-center overflow-hidden">
+        
+        {/* SALE Badge */}
+        {data.price.discount > 0 && (
+          <div className="absolute top-3 left-3 z-10 bg-blue-600 text-white text-[10px] font-bold px-2 py-1 rounded">
+            SALE -{data.price.discount}%
           </div>
+        )}
 
-          <div className="h-7 flex items-center">
-            {data.status?.isNewArrival && (
-              <div className="inline-flex items-center -mr-4 mt-2 bg-green-600 rounded-md px-3 h-fit leading-none">
-                <span
-                  className="text-white  text-xs mr-3
-                 py-1 font-semibold leading-none"
-                >
-                  NEW
-                </span>
-              </div>
-            )}
+        {/* Tag / New Badge */}
+        {data.status?.isNewArrival && (
+          <div className="absolute top-3 right-3 z-10 bg-slate-100 text-slate-600 text-[10px] font-bold px-2 py-1 rounded">
+            New
           </div>
-        </div>
+        )}
 
-        <div className="overflow-hidden">
-          <img
-            className="w-full h-[165px] p-2 mt-1 object-contain transform transition-transform duration-500 hover:scale-110"
-            src={data.images[0]}
-            alt={data.name}
-          />
-        </div>
-        <div className="px-3 pt-1">
-          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-green-100 text-green-700 rounded-full text-[10px] font-bold uppercase">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+        <img
+          src={data.images?.[0]}
+          alt={data.name}
+          className="w-full h-full mt-5 object-contain transition-transform duration-500 group-hover/card:scale-105"
+        />
+      </div>
+
+      {/* --- PRODUCT INFO SECTION --- */}
+      <div className="p-4 flex flex-col flex-grow bg-white">
+        
+        {/* Brand */}
+        <span className="text-[10px] font-bold text-blue-500 uppercase tracking-widest mb-1">
+          {data.brandName || "TECH DEVICE"}
+        </span>
+
+        {/* Product Name */}
+        <h3 className="text-sm font-bold text-slate-800 line-clamp-2 mb-2 leading-tight h- transition-colors group-hover/card:text-blue-600">
+          {data.name}
+        </h3>
+
+        {/* Price + Action */}
+        <div className="mt-auto">
+          <div className="flex items-center gap-2 mb-4">
+            <span className="text-lg font-black text-slate-900">
+              ৳{finalPrice.toLocaleString()}
             </span>
-            In Stock
-          </span>
 
-          <h2 className="text-sm font-semibold text-gray-800 mb-1 line-clamp-2 truncate">
-            {data.name}
-          </h2>
-
-          <div className="flex items-center justify-between -mt-2 lg:-mt-1">
-            <span className="text-red-600  font-bold lg:text- text-">
-              {data.price.selling - (data.price.discount || 0) || 0}{" "}
-              <span className="-ml-1">৳</span>
-            </span>
             {data.price.discount > 0 && (
-              <span className="text-gray-600 font-semibold line-through">
-                {data.price.selling} <span className="-ml-1">৳</span>
+              <span className="text-xs text-slate-400 line-through">
+                ৳{data.price.selling.toLocaleString()}
               </span>
             )}
           </div>
+
+          <Link to="/checkout/cart">
+            <button className="w-full py-3 bg-slate-900 text-white text-[11px] font-black uppercase tracking-widest hover:bg-blue-600 transition-colors rounded shadow-lg shadow-slate-200">
+              Add to Cart
+            </button>
+          </Link>
         </div>
-        <Link to={`/checkout/cart`}>
-          <button className="w-full  bg-[#fe741d] hover:bg-indigo-800 text-white text-sm py-2 transition duration-300">
-            Buy Now
-          </button>
-        </Link>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -125,7 +125,7 @@ const ProductDetail = () => {
 
   return (
     <>
-      <div className="min-h-screen pb-5">
+      <div className="min-h-screen font-sans pb-5">
         <ResponsiveToaster />
         {/* Top section */}
         <section className="max-w-[1400px] mt-[9px] lg:mt-[50px] p-3 md:px-5 px-2 mx-auto">
@@ -187,14 +187,14 @@ const ProductDetail = () => {
               <div className="flex flex-row  lg:gap-4 gap-2 -ml-1 flex-row-wrap ">
                 <p className="text-xs lg:text-sm flex items-center text-gray-500 mb-1 bg-gray-100 px-2 rounded-2xl">
                   Category:
-                  <span className="text-[#fe741d] ml-1 lg:text-sm font-semibold  uppercase">
+                  <span className="text-[#fe741d] ml-1 lg:text-sm text-[11px] font-semibold  uppercase">
                     {CurrCat?.catName}
                   </span>
                 </p>
                 <h1 className="hidden lg:flex text-gray-500 -mt-1">|</h1>
                 <p className="text-xs lg:text-sm flex items-center text-gray-500 mb-1 bg-gray-100 px-2 rounded-2xl">
                   Brand:{" "}
-                  <span className="text-[#fe741d] lg:text-sm ml-1 font-semibold uppercase">
+                  <span className="text-[#fe741d] lg:text-sm text-[11px] ml-1 font-semibold uppercase">
                     {product.brandName}
                   </span>
                 </p>
@@ -202,7 +202,7 @@ const ProductDetail = () => {
 
                 <p className="text-xs lg:text-sm flex items-center w-[115px] text-gray-500 mb-1 bg-gray-100 px-2 rounded-2xl">
                   Code:{" "}
-                  <span className="text-[#fe741d] ml-1 lg:text-sm font-semibold  uppercase">
+                  <span className="text-[#fe741d] ml-1  text-[11px] lg:text-sm font-semibold  uppercase">
                     {product.pID}
                   </span>
                 </p>

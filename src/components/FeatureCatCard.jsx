@@ -111,7 +111,7 @@ const CategoryBox = ({ data }) => {
             className="flex text-center flex-col items-center  cursor-pointer"
           >
             <Link to={`/${item.name.toLowerCase()}`}>
-              <div className="bg-gray-100 p-3  rounded w-32 aspect-square flex items-center justify-center overflow-hidden">
+              <div className="bg-gray-100 p-3 mb-1 rounded w-32 aspect-square flex items-center justify-center overflow-hidden">
                 <img
                   src={item.img}
                   alt={item.name}
@@ -135,7 +135,7 @@ const CategoryBox = ({ data }) => {
 
 const MultiCategorySection = () => {
   return (
-    <div className="max-w-[1400px] mx-auto mt-3 md:px-4 px-2">
+    <div className="max-w-[1400px] font-sans mx-auto mt-3 md:px-4 px-2">
       {/* - flex-nowrap: Keeps all items on one line
         - overflow-x-auto: Enables horizontal swiping
         - snap-x snap-mandatory: Makes cards "stick" into place when scrolling

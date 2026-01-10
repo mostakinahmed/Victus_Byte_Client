@@ -9,7 +9,7 @@ export default function FlashSale() {
   const [flashData, setFlashData] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [visibleItems, setVisibleItems] = useState(6);
+  const [visibleItems, setVisibleItems] = useState(5);
 
   // Ref to track the timer for cleaner auto-sliding
   const autoSlideTimer = useRef(null);
@@ -21,7 +21,7 @@ export default function FlashSale() {
       else if (window.innerWidth < 768)
         setVisibleItems(3); // Small Tablet: 3 cards
       else if (window.innerWidth < 1024) setVisibleItems(4); // Tablet: 4 cards
-      else setVisibleItems(6); // Desktop: 6 cards
+      else setVisibleItems(5); // Desktop: 6 cards
     };
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -91,7 +91,7 @@ export default function FlashSale() {
             {flashData.map((product) => (
               <div
                 key={product.pID}
-                className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 flex-shrink-0 px-1 md:px-2"
+                className="w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 flex-shrink-0 px-1 md:px-2"
               >
                 <Link
                   key={product.pID}

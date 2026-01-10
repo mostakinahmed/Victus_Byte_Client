@@ -57,7 +57,7 @@ const RightSide = ({ filterData }) => {
         {catName}
       </h2>
 
-      <div className="grid gap-3 lg:grid-cols-4 xl:grid-cols-5 grid-cols-2 lg:gap-3">
+      <div className="grid gap-3 lg:grid-cols-4 xl:grid-cols-4 grid-cols-2 lg:gap-3">
         {productsToDisplay.length > 0 ? (
           productsToDisplay.map((product) => (
             <Link

@@ -8,7 +8,7 @@ const TopCategoryCards = () => {
   const { categoryData } = useContext(DataContext);
 
   return (
-    <div className="max-w-[1400px] mx-auto mb-7 -mt-2">
+    <div className="max-w-[1400px] font-sans mx-auto mb-7 -mt-2">
       <FeatureText data="Top Categories" />
 
       {/* GRID SETUP:
@@ -44,7 +44,7 @@ const TopCategoryCards = () => {
                         className="h-full w-full object-contain"
                       />
                     ) : (
-                      <FiBox className="text-2xl lg:text-3xl text-gray-700 group-hover:text-[#fe741d] transition-colors" />
+                      <FiBox className="text-2xl lg:text-3xl text-gray-500 group-hover:text-[#fe741d] transition-colors" />
                     )}
                   </div>
 
