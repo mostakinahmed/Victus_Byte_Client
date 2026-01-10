@@ -5,9 +5,55 @@ import { useLocation, Link, useNavigate } from "react-router-dom";
 export const SearchBar = () => {
   const { productData } = useContext(DataContext);
   const [search, setSearch] = useState("");
+  const [placeholder, setPlaceholder] = useState(""); // State for animated text
   const navigate = useNavigate();
   const location = useLocation();
   const wrapperRef = useRef(null);
+
+  // --- AUTO TYPING LOGIC ---
+  useEffect(() => {
+    const phrases = [
+      "Search for Graphics Cards....",
+      "Looking for Motherboards?",
+      "Search for Ryzen Processors....",
+      "Find the best Gaming Mice.....",
+      "Search for 1TB NVMe SSDs....."
+    ];
+
+    let currentPhraseIndex = 0;
+    let currentCharacterIndex = 0;
+    let isDeleting = false;
+    let typingSpeed = 200;
+    let timerId;
+
+    const type = () => {
+      const currentFullPhrase = phrases[currentPhraseIndex];
+
+      if (isDeleting) {
+        setPlaceholder(currentFullPhrase.substring(0, currentCharacterIndex - 1));
+        currentCharacterIndex--;
+        typingSpeed = 100; 
+      } else {
+        setPlaceholder(currentFullPhrase.substring(0, currentCharacterIndex + 1));
+        currentCharacterIndex++;
+        typingSpeed = 100; 
+      }
+
+      if (!isDeleting && currentCharacterIndex === currentFullPhrase.length) {
+        isDeleting = true;
+        typingSpeed = 2000; // Pause at end
+      } else if (isDeleting && currentCharacterIndex === 0) {
+        isDeleting = false;
+        currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+        typingSpeed = 500;
+      }
+
+      timerId = setTimeout(type, typingSpeed);
+    };
+
+    timerId = setTimeout(type, typingSpeed);
+    return () => clearTimeout(timerId); // Cleanup
+  }, []);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -41,27 +87,25 @@ export const SearchBar = () => {
   };
 
   return (
-    /* ✅ Wrapper defines the constraint for both input and dropdown */
     <div ref={wrapperRef} className="relative w-full max-w-xl mx-auto md:mx-0">
       <div className="relative flex items-center">
         <input
           type="text"
-          placeholder="Search products..."
+          placeholder={placeholder} // ✅ Bind animated placeholder
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && searchPage()}
-          className="w-full bg-white px-4 pr-10 py-1.5 border-2 border-[#f4813a] text-black focus:outline-none placeholder:text-gray-400"
+          className="w-full bg-white px-4 pr-10 py-1.5 border-1 border-slate-900 rounded-full text-black focus:outline-none placeholder:text-slate-400 placeholder:tracking-wider placeholder:font-semibold placeholder:text-sm transition-all duration-300"
         />
 
-        {/* ✅ Search Icon positioned relative to input container */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
-          strokeWidth={3}
+          strokeWidth={2}
           stroke="currentColor"
           onClick={searchPage}
-          className="absolute right-3 w-5 h-5 text-gray-500 cursor-pointer hover:text-[#f4813a] transition"
+          className="absolute right-3 w-5 h-5 text-slate-900 cursor-pointer hover:text-[#f4813a] transition"
         >
           <path
             strokeLinecap="round"
@@ -72,7 +116,6 @@ export const SearchBar = () => {
       </div>
 
       {/* --- SEARCH DROPDOWN --- */}
-      {/* ✅ w-full and left-0 ensures it matches the input container perfectly */}
       <div
         className={`absolute left-0 top-full mt-1 w-full bg-white border-x-2 border-b-2 border-[#f4813a] shadow-2xl overflow-hidden z-[100] transition-all duration-300 ease-out origin-top ${
           search
@@ -80,7 +123,6 @@ export const SearchBar = () => {
             : "opacity-0 scale-y-95 pointer-events-none"
         }`}
       >
-        {/* Header */}
         <div className="flex items-center justify-between text-white bg-[#f4813a] px-4 py-1.5 text-xs font-black uppercase tracking-widest">
           <span>Quick Results</span>
           <span className="text-[10px] opacity-80">
@@ -88,7 +130,6 @@ export const SearchBar = () => {
           </span>
         </div>
 
-        {/* Results List */}
         <div className="max-h-[350px] overflow-y-auto custom-scrollbar">
           {filtered.length > 0 ? (
             filtered.slice(0, 5).map((p) => (
@@ -100,7 +141,7 @@ export const SearchBar = () => {
               >
                 <div className="w-10 h-10 shrink-0 bg-white rounded border border-gray-100 p-1">
                   <img
-                    src={p.images[0]} // Added index 0 assuming it's an array
+                    src={p.images[0]} 
                     alt={p.name}
                     className="w-full h-full object-contain"
                   />
@@ -124,7 +165,6 @@ export const SearchBar = () => {
           )}
         </div>
 
-        {/* Footer */}
         {filtered.length > 5 && (
           <button
             onClick={searchPage}

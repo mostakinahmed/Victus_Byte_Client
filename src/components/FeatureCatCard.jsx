@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useRef } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
 const dummyCategories = [
   {
     id: 1,
-    title: "Computer Accesories",
+    title: "Computer Accessories",
     items: [
       {
         name: "Graphics Card",
@@ -60,11 +60,11 @@ const dummyCategories = [
         img: "https://www.startech.com.bd/image/cache/catalog/smart-watch/havit/m9035/m9035-black-01-500x500.webp",
       },
       {
-        name: "EurBuds",
+        name: "EarBuds",
         img: "https://www.startech.com.bd/image/cache/catalog/earbuds/oneplus/nord-buds-3-pro/nord-buds-3%20pro-01-500x500.webp",
       },
       {
-        name: " Power Bank",
+        name: "Power Bank",
         img: "https://www.startech.com.bd/image/cache/catalog/power-bank/joyroom/jr-l002/jr-l002-01-500x500.webp",
       },
     ],
@@ -91,70 +91,128 @@ const dummyCategories = [
       },
     ],
   },
+  {
+    id: 5,
+    title: "Gaming Zone",
+    items: [
+      {
+        name: "Gaming Mouse",
+        img: "https://www.startech.com.bd/image/cache/catalog/graphics-card/msi/gt-730/gt-730-01-500x500.webp",
+      },
+      {
+        name: "Keyboard",
+        img: "https://www.startech.com.bd/image/cache/catalog/motherboard/gigabyte/b450m-k/b450m-k-01-500x500.webp",
+      },
+      {
+        name: "Headset",
+        img: "https://www.startech.com.bd/image/cache/catalog/power-supply/t-wolf/atx-350/atx-350w-04-500x500.webp",
+      },
+      {
+        name: "Chair",
+        img: "https://www.startech.com.bd/image/cache/catalog/component/ram/team/delta-8gb/8gb-500x500.jpg",
+      },
+    ],
+  },
 ];
 
 const CategoryBox = ({ data }) => {
   return (
-    <div
-      className="bg-white md:p-4 p-2 border border-gray-100 
-     hover:shadow-lg hover:z-10"
-    >
-      <h3 className="text-gray-700 font-semibold mb-4 text-[16px]">
+    <div className="bg-white md:p-4 p-2 border border-gray-100 h-full hover:shadow-lg transition-all duration-300 rounded-sm">
+      <h3 className="text-gray-700 font-semibold mb-4 text-[16px] truncate border-b pb-2">
         {data.title}
       </h3>
 
-      {/* 2x2 Image Grid */}
       <div className="grid grid-cols-2 md:gap-3 gap-2">
-        {data.items.map((item, idx) => (
+        {data.items.slice(0, 4).map((item, idx) => (
           <div
             key={idx}
-            className="flex text-center flex-col items-center  cursor-pointer"
+            className="flex text-center flex-col items-center cursor-pointer group/item"
           >
-            <Link to={`/${item.name.toLowerCase()}`}>
-              <div className="bg-gray-100 p-3 mb-1 rounded w-32 aspect-square flex items-center justify-center overflow-hidden">
+            <Link to={`/${item.name.toLowerCase()}`} className="w-full">
+              <div className="bg-gray-100 md:p-4 p-5  mb-1 rounded w-full aspect-square flex items-center justify-center overflow-hidden">
                 <img
                   src={item.img}
                   alt={item.name}
-                  className="object-contain  transition-transform"
+                  className="object-contain transition-transform duration-500 group-hover/item:scale-110"
                 />
               </div>
-              <span className="text-[14px] text-center text-gray-600 hover:text-blue-600 mt-2 leading-tight">
+              <span className="text-[12px] md:text-[13px] text-center text-gray-600 hover:text-blue-600 mt-1 leading-tight block truncate font-medium">
                 {item.name}
               </span>
             </Link>
           </div>
         ))}
       </div>
-      
-      <button className="text-blue-500 text-xs font-medium mt-4 flex items-center hover:underline">
-        See More <FiChevronRight className="ml-0.5" />
-      </button>
+
+      <Link to={`/section/${data.title.toLowerCase()}`}>
+        <button className="group mt-4 relative flex items-center gap-1 text-blue-600 text-xs font-bold transition-all duration-300 hover:text-slate-900">
+          <span className="relative">
+            See More
+            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#fe741d] transition-all duration-300 group-hover:w-full group-hover:bg-slate-900"></span>
+          </span>
+          <FiChevronRight className="transition-transform duration-300 group-hover:translate-x-1" />
+        </button>
+      </Link>
     </div>
   );
 };
 
 const MultiCategorySection = () => {
+  const scrollRef = useRef(null);
+
+  const scroll = (direction) => {
+    if (scrollRef.current) {
+      const scrollAmount = scrollRef.current.clientWidth * 0.8;
+      const scrollTo =
+        direction === "left"
+          ? scrollRef.current.scrollLeft - scrollAmount
+          : scrollRef.current.scrollLeft + scrollAmount;
+
+      scrollRef.current.scrollTo({ left: scrollTo, behavior: "smooth" });
+    }
+  };
+
   return (
-    <div className="max-w-[1400px] font-sans mx-auto mt-3 md:px-4 px-2">
-      {/* - flex-nowrap: Keeps all items on one line
-        - overflow-x-auto: Enables horizontal swiping
-        - snap-x snap-mandatory: Makes cards "stick" into place when scrolling
-        - no-scrollbar: Custom class to hide the scrollbar (defined below)
-        - sm:grid: Switches to normal grid on tablets/desktop
-      */}
-      <div
-        className="flex flex-nowrap overflow-x-auto md:gap-3 gap-2 md:pb-3 no-scrollbar snap-x snap-mandatory
-                      sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible sm:snap-none"
+    <div className="max-w-[1400px] font-sans mx-auto mt-4 md:px-4 px-2 relative group/main">
+      {/* --- NAVIGATION BUTTONS (DESKTOP ONLY) --- */}
+      <button
+        onClick={() => scroll("left")}
+        className="absolute -left-2 top-1/2 -translate-y-1/2 z-40 bg-white shadow-xl p-3 rounded-full border border-gray-100 hidden group-hover/main:md:flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all duration-300"
       >
-        {dummyCategories.map((cat) => (
+        <FiChevronLeft size={20} />
+      </button>
+
+      {/* --- HORIZONTAL SINGLE ROW SCROLLER --- */}
+      <div
+        ref={scrollRef}
+        className="flex flex-nowrap overflow-x-auto gap-4 pb-2 no-scrollbar snap-x snap-mandatory"
+      >
+        {dummyCategories.map((cat, index) => (
           <div
-            key={cat.id}
-            className="md:min-w-[85%] min-w-[80%] sm:min-w-0 flex-shrink-0 sm:flex-shrink snap-center"
+            key={index}
+            className="xl:w-[24.2%] lg:w-[32%] md:w-[45%] w-[85%] flex-shrink-0 snap-center"
           >
             <CategoryBox data={cat} />
           </div>
         ))}
       </div>
+
+      <button
+        onClick={() => scroll("right")}
+        className="absolute -right-2 top-1/2 -translate-y-1/2 z-40 bg-white shadow-xl p-3 rounded-full border border-gray-100 hidden group-hover/main:md:flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all duration-300"
+      >
+        <FiChevronRight size={20} />
+      </button>
+
+      {/* --- CSS FOR HIDING SCROLLBAR --- */}
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      `,
+        }}
+      />
     </div>
   );
 };

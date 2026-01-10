@@ -74,7 +74,7 @@ const Electronics = () => {
   ];
 
   return (
-    <div className="max-w-[1400px] px-4 mx-auto min-h-screen pb-12 mt-[97px] font-sans">
+    <div className="max-w-[1400px] md:px-4 px-2 mx-auto min-h-screen pb-12 md:mt-[97px] mt-12 font-sans">
       
       {/* --- TECH FEATURES HIGHLIGHT --- */}
       {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">

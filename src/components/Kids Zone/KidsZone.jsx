@@ -78,7 +78,7 @@ const KidsZoneLayout = () => {
   ];
 
   return (
-    <div className="max-w-[1400px] px-4 mx-auto px- min-h-screen pb-12 mt-[87px] font-sans">
+    <div className="max-w-[1400px] md:px-4 px-2 mx-auto  min-h-screen pb-12 md:mt-[87px] mt-9 font-sans">
       {/* --- HERO BANNER SECTION --- */}
       <div className=" py-5 relative group">
         <Swiper

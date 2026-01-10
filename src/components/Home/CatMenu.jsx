@@ -31,13 +31,13 @@ const CategoryMenu = () => {
   ];
 
   return (
-    <div className="bg-white font-sans shadow w-full hidden md:flex sticky h-10 top-0 z-[100] border-b border-gray-100">
+    <div className="bg-white font-sans shadow w-full hidden md:flex  h-10 top-0 z-[100] border-b border-gray-100">
       <div className="xl:max-w-[1380px] w-full mx-auto flex justify-between items-center py-1">
         {/* --- LEFT SECTION: Home --- */}
         <div className="flex items-center">
           <Link
             to={"/"}
-            className="flex items-center gap-2 px-5 py-2 text-gray-700 hover:text-blue-600 font-bold lg:text-[15px] transition-all border-r border-gray-100"
+            className="flex items-center gap-2 px-5 py-2 text-gray-800 hover:text-blue-600 font-bold lg:text-[15px] transition-all border-r border-gray-100"
           >
             <FiHome className="text-lg text-blue-600" />
             Home
@@ -48,42 +48,42 @@ const CategoryMenu = () => {
         <div className="flex-grow flex items-center xl:gap-10 lg:gap-3 ml-4">
           <Link
             to="/kids-zone"
-            className="flex items-center gap-2 text-gray-600 hover:text-blue-600 font-semibold text-[14px]"
+            className="flex items-center gap-2 text-gray-700 hover:text-blue-600 font-semibold text-[14px]"
           >
             <FiShoppingBag className="opacity-70" />
             Kids Zone
           </Link>
           <Link
             to="/electronics"
-            className="flex items-center gap-2 text-gray-600 hover:text-blue-600 font-semibold text-[14px]"
+            className="flex items-center gap-2 text-gray-700 hover:text-blue-600 font-semibold text-[14px]"
           >
             <FiLayers className="opacity-70" />
             Electronics
           </Link>
           <Link
             to="/offers"
-            className="flex items-center gap-2 text-gray-600 hover:text-blue-600 font-semibold text-[14px]"
+            className="flex items-center gap-2 text-gray-700 hover:text-blue-600 font-semibold text-[14px]"
           >
             <FiZap className="text-yellow-500" />
             Daily Deals
           </Link>
           <Link
             to="/kids-zone"
-            className="flex items-center gap-2 text-gray-600 hover:text-blue-600 font-semibold text-[14px]"
+            className="flex items-center gap-2 text-gray-700 hover:text-blue-600 font-semibold text-[14px]"
           >
             <FiShoppingBag className="opacity-70" />
             Kids Zone
           </Link>
           <Link
             to="/electronics"
-            className="flex items-center gap-2 text-gray-600 hover:text-blue-600 font-semibold text-[14px]"
+            className="flex items-center gap-2 text-gray-700 hover:text-blue-600 font-semibold text-[14px]"
           >
             <FiLayers className="opacity-70" />
             Electronics
           </Link>
           <Link
             to="/offers"
-            className="flex items-center gap-2 text-gray-600 hover:text-blue-600 font-semibold text-[14px]"
+            className="flex items-center gap-2 text-gray-700 hover:text-blue-600 font-semibold text-[14px]"
           >
             <FiZap className="text-yellow-500" />
             Daily Deals

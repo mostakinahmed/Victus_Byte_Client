@@ -88,7 +88,7 @@ export const Profile = () => {
       {login && open && (
         <div className="relative z-[100]">
           {/* Reduced width from 320px to 260px and padding from p-4 to p-3 */}
-          <div className="absolute md:top-11.5 top-2 md:right-0 -right-2 w-max md:min-w-[260px] min-w-[240px] bg-white/95 backdrop-blur-md shadow-xl rounded-b border border-slate-300 z-[100] p-3 animate-in fade-in zoom-in-95 duration-200">
+          <div className="absolute md:top-2 top-2 md:right-0 -right-2 w-max md:min-w-[260px] min-w-[240px] bg-white backdrop-blur-md shadow-xl rounded-b border border-slate-300 z-[100] p-3 animate-in fade-in zoom-in-95 duration-200">
             {/* User Identity Header - Compacted gap and padding */}
             <div className="flex items-center gap-3 pb-3 border-b border-slate-300">
               {/* Smaller Avatar Icon (w-10 h-10) */}
@@ -148,7 +148,7 @@ export const Profile = () => {
                   <li
                     key={idx}
                     onClick={item.onClick}
-                    className="group px-2 py-1.5 rounded-lg hover:bg-slate-200 flex items-center justify-between cursor-pointer transition-all"
+                    className="group px-2 py-1.5 rounded-lg hover:bg-slate-100 flex items-center justify-between cursor-pointer transition-all"
                   >
                     <div className="flex items-center gap-2.5">
                       <div className="p-1.5 bg-slate-100 rounded-md group-hover:bg-white group-hover:shadow-sm transition-all">
