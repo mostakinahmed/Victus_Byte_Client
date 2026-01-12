@@ -139,7 +139,7 @@ const NavbarTop = () => {
           )}
           <div className="relative ml-1">
             <Link to="/checkout/cart">
-              <i className="ri-shopping-cart-2-line text-2xl text-gray-900"></i>
+              <i className="ri-shopping-cart-2-line text-2xl text-gray-800"></i>
             </Link>
             {cartItems.length > 0 && (
               <span className="absolute -top-1 -right-1 bg-[#fe741d] text-white text-[10px] px-1 rounded-full">

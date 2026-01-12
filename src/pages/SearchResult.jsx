@@ -37,7 +37,7 @@ export default function SearchResult() {
   return (
     <div className="max-w-[1400px] mt-[20px] lg:mt-[65px] mx-auto lg:px-4 px-2 py-10 min-h-screen">
       {/* --- 1. SYSTEM TERMINAL HEADER --- */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-5 bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:mb-5 mb-2.5 bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
         <div className="flex items-center gap-3">
           <div className="w-1.5 h-6 bg-[#fe741d] rounded-full" />
           <h1 className="text-sm md:text-base font-black text-slate-800 uppercase tracking-widest">
@@ -90,7 +90,7 @@ export default function SearchResult() {
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 md:gap-2.5 -mt-0 md:-mt-2">
           {filtered.map((product) => (
             <Link
               key={product.pID}
