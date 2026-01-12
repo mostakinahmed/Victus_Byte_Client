@@ -28,14 +28,14 @@ const AlsoLike = () => {
       {/* Auto-scrolling Row */}
       <div className="overflow-hidden w-full group">
         <div
-          className="flex gap-4 animate-scroll group-hover:[animation-play-state:paused]"
+          className="flex gap-2 animate-scroll group-hover:[animation-play-state:paused]"
           style={{ width: "max-content" }}
         >
           {/* Double the data for a seamless loop */}
           {[...productData, ...productData].map((product, index) => (
             <div
               key={`${product.pID}-${index}`}
-              className="w-[195px] flex-shrink-0"
+              className="w-[230px] flex-shrink-0"
             >
               <Link to={`/${product.category}/${product.name}`}>
                 <ProductCard data={product} />

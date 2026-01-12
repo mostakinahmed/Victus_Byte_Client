@@ -113,7 +113,7 @@ export function HomeBuy({ data }) {
                 key={index}
                 className="group flex items-center gap-4 p-3 rounded-xl border border-slate-100 bg-slate-50/50 hover:border-indigo-200 hover:bg-white transition-all duration-300 shadow-sm"
               >
-                <div className="w-16 h-16 shrink-0 bg-white rounded-lg border border-slate-100 p-1 group-hover:shadow-md transition-all">
+                <div className="w-16 h-16 shrink-0 bg-white border border-slate-100 p-1  transition-all">
                   <img
                     src={item.images[0]}
                     alt={item.name}

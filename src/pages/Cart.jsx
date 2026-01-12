@@ -97,9 +97,9 @@ export const Cart = () => {
                       key={index}
                       className="group hover:bg-slate-50/30 transition-all divide-y"
                     >
-                      <td className="px-6 py-5">
+                      <td className="px-6">
                         <div className="flex items-center gap-4">
-                          <div className="w-20 h-20 shrink-0 bg-white border border-slate-100 rounded-2xl p-2 group-hover:shadow-md transition-all">
+                          <div className="w-32 h-32 shrink-0 bg-white p-1 transition-all">
                             <img
                               src={item.images[0]}
                               alt={item.name}
