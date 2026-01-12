@@ -53,14 +53,17 @@ export default function NewArrivals() {
   }, [currentIndex, isPaused, maxIndex, visibleItems]);
 
   return (
-    <section className="max-w-[1370px] mt-4 bg-red-300 mb-6 lg:mx-auto  pb-3 mx-2 ">
+    <section
+      className="max-w-[1370px] mt-4 mb-6 lg:mx-auto pb-3 mx-2 bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: `url("https://i.ibb.co.com/GQR2wBMJ/Gray-Green-Creative-Gradient-Online-Delivery-Service-Discount-Offer-Ads-Banner.png")` }}
+    >
       {/* Header Section */}
-      <div className="flex items-center justify-between bg-white shadow-sm border border-gray-100 md:p-4 px-4 py-2  mb-8">
+      <div className="flex items-center justify-between bg-white shadow-sm border border-gray-100 md:p-4 px-4 py-2 mb-8">
         <div className="flex items-center gap-3">
           <div className="p-2 -ml-4 md:ml-0">
             <FiZap className="text-xl md:-ml-3 text-[#fe741d] animate-pulse" />
           </div>
-          <h3 className="text- md:text-xl -ml-3  md:-ml-1 font-bold text-gray-900">
+          <h3 className="text- md:text-xl -ml-3 md:-ml-1 font-bold text-gray-900">
             New Arrival
           </h3>
         </div>
@@ -115,13 +118,13 @@ export default function NewArrivals() {
           <>
             <button
               onClick={prevSlide}
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-red-300/90 hover:bg-slate-900 hover:text-white text-gray-800 p-1.5 md:p-2 rounded-r-xl shadow-lg transition-all"
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-slate-900 hover:text-white text-gray-800 p-1.5 md:p-2 rounded-r-xl shadow-lg transition-all"
             >
               <FiChevronLeft size={24} />
             </button>
             <button
               onClick={nextSlide}
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-red-300/90 hover:bg-slate-900 hover:text-white text-gray-800 p-1.5 md:p-2 rounded-l-xl shadow-lg transition-all"
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-slate-900 hover:text-white text-gray-800 p-1.5 md:p-2 rounded-l-xl shadow-lg transition-all"
             >
               <FiChevronRight size={24} />
             </button>
