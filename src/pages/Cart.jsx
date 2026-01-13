@@ -63,89 +63,92 @@ export const Cart = () => {
   };
   return (
     <div className="max-w-[1400px] lg:mt-[86px] font-sans mt-[40px] pt-5 mx-auto md:px-4 px-2 mb-60  animate-in fade-in duration-700">
-     
-
-      <div className="flex flex-col lg:flex-row gap-8">
+      <div className="flex flex-col lg:flex-row gap-4">
         {/* --- Left Side: Product List --- */}
         <div className="flex-1">
-          <div className="bg-white  overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse overflow-x-auto whitespace-nowrap">
+          <div className="bg-white overflow-hidden border border-slate-200">
+            {/* DESKTOP VIEW: Table (Hidden on Mobile) */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-slate-50/50 border-b border-slate-200">
-                    <th className="px-6 py-4 text-[12px] uppercase tracking-widest">
+                  <tr className="bg-slate-50 border-b border-slate-200">
+                    <th className="px-6 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-widest">
                       Product
                     </th>
-                    <th className="px-6 py-4 text-[12px] uppercase tracking-widest">
+                    <th className="px-4 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-widest text-center">
                       Quantity
                     </th>
-                    <th className="px-6 py-4 text-[12px] uppercase tracking-widest">
+                    <th className="px-4 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-widest text-center">
                       Unit Price
                     </th>
-                    <th className="px-6 py-4 text-[12px] uppercase tracking-widest">
+                    <th className="px-4 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-widest text-right">
                       Subtotal
                     </th>
-                    <th className="px-6 py-4 text-[12px] uppercase tracking-widest">
+                    <th className="px-6 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-widest text-center">
                       Action
                     </th>
                   </tr>
                 </thead>
-
-                <tbody className="">
+                <tbody className="divide-y divide-slate-100">
                   {items.map((item, index) => (
                     <tr
                       key={index}
-                      className="group hover:bg-slate-50/30 transition-all divide-y"
+                      className="group hover:bg-slate-50/50 transition-all"
                     >
-                      <td className="px-6">
+                      <td className="px-6 py-4">
                         <div className="flex items-center gap-4">
-                          <div className="w-32 h-32 shrink-0 bg-white p-1 transition-all">
+                          <div className="w-16 h-16 shrink-0 bg-white border border-slate-100 p-1 rounded">
                             <img
                               src={item.images[0]}
                               alt={item.name}
                               className="w-full h-full object-contain"
                             />
                           </div>
-                          <div className="flex w-30 md:w-full flex-col">
-                            <span className="text-md  leading-tight mb-1">
+                          <div className="flex flex-col gap-1">
+                            <span className="text-sm font-bold text-slate-800 line-clamp-1">
                               {item.name}
                             </span>
-                            <span className="text-[12px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-md w-fit">
-                              PID: {item.pID}
-                            </span>
+                            <div className="flex items-center gap-1">
+                              <span className="text-[10px] font-bold text-slate-400 uppercase">
+                                Code:
+                              </span>
+                              <span className="text-[10px] font-bold text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded uppercase">
+                                {item.pID}
+                              </span>
+                            </div>
                           </div>
                         </div>
                       </td>
-
-                      <td className=" py-5 text-center">
-                        <span className="bg-slate-100 px-3 py-1 rounded-lg">
+                      <td className="px-4 py-4 text-center">
+                        <span className="text-sm font-bold text-slate-600 bg-slate-100 px-3 py-1 rounded-md">
                           x{item.qty}
                         </span>
                       </td>
-
-                      <td className=" py-5 text-center">
+                      <td className="px-4 py-4 text-center">
                         <div className="flex flex-col items-center">
-                          <span className=" ">
-                            ৳{item.price.selling}
+                          <span className="text-sm font-bold text-slate-800">
+                            ৳{item.price.selling.toLocaleString()}
                           </span>
                           {item.price.discount > 0 && (
-                            <span className="text-[10px] font-bold text-rose-500 bg-rose-50 px-1.5 rounded">
+                            <span className="text-[9px] font-bold text-rose-500 bg-rose-50 px-1 rounded">
                               -{item.price.discount} Disc.
                             </span>
                           )}
                         </div>
                       </td>
-
-                      <td className="px-8 py-5 text-right ">
-                        ৳{item.price.selling * item.qty - item.price.discount}
+                      <td className="px-4 py-4 text-right font-black text-slate-900 text-sm">
+                        ৳
+                        {(
+                          item.price.selling * item.qty -
+                          item.price.discount
+                        ).toLocaleString()}
                       </td>
-
-                      <td className="px-6 py-5 text-center">
+                      <td className="px-6 py-4 text-center">
                         <button
                           onClick={() => onRemove(item.pID)}
-                          className="p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-xl transition-all"
+                          className="p-2 text-slate-400 hover:text-rose-500 hover:bg-rose-50 rounded-full transition-all"
                         >
-                          <IoClose size={20} />
+                          <IoClose size={18} />
                         </button>
                       </td>
                     </tr>
@@ -154,15 +157,70 @@ export const Cart = () => {
               </table>
             </div>
 
-            {items.length === 0 && (
-              <div className="p-20 flex flex-col items-center text-center">
-                <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center text-slate-200 mb-4">
-                  <FiPackage size={40} />
+            {/* MOBILE VIEW: Card List (Hidden on Desktop) */}
+            <div className="md:hidden divide-y divide-slate-100">
+              {items.map((item, index) => (
+                <div key={index} className="p-4 flex flex-col gap-4">
+                  <div className="flex gap-4">
+                    {/* Image */}
+                    <div className="w-20 h-20 shrink-0 bg-white border border-slate-100 p-1 rounded-lg">
+                      <img
+                        src={item.images[0]}
+                        alt={item.name}
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+
+                    {/* Details */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex justify-between items-start">
+                        <h3 className="text-sm font-bold text-slate-800 line-clamp-2 pr-2">
+                          {item.name}
+                        </h3>
+                        <button
+                          onClick={() => onRemove(item.pID)}
+                          className="text-slate-400 p-1"
+                        >
+                          <IoClose size={20} />
+                        </button>
+                      </div>
+                      <span className="text-[10px] font-bold text-slate-500 uppercase">
+                        Code: {item.pID}
+                      </span>
+
+                      <div className="mt-3 flex justify-between items-end">
+                        <div className="flex flex-col gap-0.5">
+                          <span className="text-xs text-slate-500">
+                            Unit: ৳{item.price.selling}
+                          </span>
+                          <span className="text-sm font-black text-slate-900">
+                            Total: ৳
+                            {(
+                              item.price.selling * item.qty -
+                              item.price.discount
+                            ).toLocaleString()}
+                          </span>
+                        </div>
+                        <div className="bg-slate-100 px-3 py-1 rounded text-xs font-bold text-slate-700">
+                          Qty: {item.qty}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <h2 className="text-lg font-black text-slate-800 uppercase tracking-widest">
+              ))}
+            </div>
+
+            {/* Empty State */}
+            {items.length === 0 && (
+              <div className="py-20 flex flex-col items-center text-center px-6">
+                <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center text-slate-200 mb-4">
+                  <FiPackage size={32} />
+                </div>
+                <h2 className="text-sm font-black text-slate-800 uppercase tracking-widest">
                   Your Bag is Empty
                 </h2>
-                <p className="text-sm text-slate-400 mt-2">
+                <p className="text-xs text-slate-400 mt-2 leading-relaxed">
                   Looks like you haven't added anything yet.
                 </p>
               </div>
