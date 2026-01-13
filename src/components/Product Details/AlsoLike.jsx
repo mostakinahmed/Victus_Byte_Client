@@ -35,7 +35,7 @@ const AlsoLike = () => {
           {[...productData, ...productData].map((product, index) => (
             <div
               key={`${product.pID}-${index}`}
-              className="w-[230px] flex-shrink-0"
+              className="w-[180px] md:w-[230px] flex-shrink-0"
             >
               <Link to={`/${product.category}/${product.name}`}>
                 <ProductCard data={product} />

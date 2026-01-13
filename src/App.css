@@ -10,7 +10,7 @@
 
 /* Your existing code */
 .animate-scroll {
-  animation: scroll 75s linear infinite;
+  animation: scroll 220s linear infinite;
   width: max-content;
 }
 

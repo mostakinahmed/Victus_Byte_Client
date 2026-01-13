@@ -16,11 +16,11 @@ export const Description = ({ data }) => {
         </div>
 
         {/* Product image (right side on larger screens) */}
-        <div className="w-full h-[11rem] md:w-1/3 flex justify-center">
+        <div className="w-full h-[11rem] md:h-70 md:w-1/3 flex justify-center">
           <img
             src={data.images[0]}
             alt={data.name}
-            className="w-40 sm:w-52 md:w-60 h-auto object-contain rounded-md  hover:scale-105 transition-transform duration-300"
+            className="w-40 sm:w-52 md:w-72 h-auto object-contain rounded-md  hover:scale-105 transition-transform duration-300"
           />
         </div>
       </div>

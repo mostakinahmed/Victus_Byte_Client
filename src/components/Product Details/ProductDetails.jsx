@@ -128,180 +128,177 @@ const ProductDetail = () => {
       <div className="min-h-screen font-sans pb-5">
         <ResponsiveToaster />
         {/* Top section */}
-        <section className="max-w-[1400px] mt-[9px] lg:mt-[50px] p-3 md:px-5 px-2 mx-auto">
-          <div className="flex flex-col md:flex-row mt-10 justify-between gap-3">
-            {/* Left: Image Gallery */}
-            <div className="flex-1 bg-white flex rounded  border-b border-slate-200">
-              {/* Thumbnails */}
-              <div className="flex flex-col gap-2 border-r px-3 py-1 justify-center overflow-y-auto max-h-[400px]">
+        <section className="max-w-[1400px]  lg:mt-[50px] p-3 md:px-5 px-2 mx-auto">
+          <div className="flex flex-col lg:flex-row mt-11 justify-between gap-3  mx-auto">
+            {/* Left: Image Gallery (Tighter version) */}
+            <div className="lg:w-[45%] flex flex-col md:flex-row bg-white rounded border border-slate-200 overflow-hidden">
+              {/* Thumbnails - Smaller and Tighter */}
+              <div className="order-2 md:order-1 flex md:flex-col gap-2 border-t md:border-t-0 md:border-r border-slate-100 p-2 justify-center md:justify-start overflow-x-auto bg-slate-50/50">
                 {product.images?.map((img, idx) => (
                   <img
                     key={idx}
                     src={img}
-                    alt={`${product.name} ${idx + 1}`}
+                    alt="thumb"
                     onClick={() => setCurrentIndex(idx)}
-                    className={`w-17 h-17 p-1 object-contain rounded cursor-pointer border-2 ${
+                    className={`w-12 h-12 md:w-14 md:h-14 flex-shrink-0 object-contain p-1 rounded border-2 transition-all ${
                       idx === currentIndex
-                        ? "border-blue-500"
-                        : "border-gray-200"
+                        ? "border-[#fe741d] bg-white"
+                        : "border-transparent opacity-60 hover:opacity-100"
                     }`}
                   />
                 ))}
               </div>
 
-              {/* Main Image */}
-              <div className="flex-1 relative bg-white rounded h-[400px] flex items-center justify-center">
+              {/* Main Image Container */}
+              <div className="order-1 md:order-2 flex-1 relative bg-white h-[250px] md:h-[400px] flex items-center justify-center p-4">
+                {/* Brand Name Watermark */}
+                <span className="absolute top-3 right-3 z-10  max-h-6 bg-green-400 backdrop-blur-sm px-2 rounded border border-slate-200 py-[2px] md:text-[12px] text-[11px]  font-extrabold text-white uppercase tracking-widest pointer-events-none select-none">
+                  {product.brandName}
+                </span>
+
                 <img
                   src={product.images[currentIndex]}
                   alt={product.name}
-                  className="w-full h-full object-contain p-6 lg:p-3 rounded"
+                  className="w-full h-[250px] md:h-[400px] object-contain"
                 />
 
                 {/* Arrows */}
                 {product.images.length > 1 && (
-                  <>
+                  <div className="flex md:hidden lg:flex">
                     <button
                       onClick={prevImage}
-                      className="absolute left-1 top-1/2 cursor-pointer transform -translate-y-1/2 bg-gray-100 p-2 rounded-full hover:bg-gray-200"
+                      className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 p-1.5 rounded-full border border-slate-100 shadow-sm hover:bg-white transition-colors"
                     >
-                      <FiChevronLeft size={24} />
+                      <FiChevronLeft size={18} />
                     </button>
-
                     <button
                       onClick={nextImage}
-                      className="absolute right-1 top-1/2 cursor-pointer transform -translate-y-1/2 bg-gray-100 p-2 rounded-full hover:bg-gray-200"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 p-1.5 rounded-full border border-slate-100 shadow-sm hover:bg-white transition-colors"
                     >
-                      <FiChevronRight size={24} />
+                      <FiChevronRight size={18} />
                     </button>
-                  </>
+                  </div>
                 )}
               </div>
             </div>
 
-            {/* Right: Product Details */}
-            <div className="flex-1 bg-white lg:h-[400px]  border-b border-slate-200 px-4 pb-5 pt-2 rounded">
-              <h1 className="lg:text-xl text-lg font-bold text-gray-800 mb-2">
-                {product.name}
-              </h1>
-
-              <div className="flex flex-row  lg:gap-4 gap-2 -ml-1 flex-row-wrap ">
-                <p className="text-xs lg:text-sm flex items-center text-gray-500 mb-1 bg-gray-100 px-2 rounded-2xl">
-                  Category:
-                  <span className="text-[#fe741d] ml-1 lg:text-sm text-[11px] font-semibold  uppercase">
-                    {CurrCat?.catName}
-                  </span>
-                </p>
-                <h1 className="hidden lg:flex text-gray-500 -mt-1">|</h1>
-                <p className="text-xs lg:text-sm flex items-center text-gray-500 mb-1 bg-gray-100 px-2 rounded-2xl">
-                  Brand:{" "}
-                  <span className="text-[#fe741d] lg:text-sm text-[11px] ml-1 font-semibold uppercase">
-                    {product.brandName}
-                  </span>
-                </p>
-                <h1 className="hidden lg:flex text-gray-500 -mt-1">|</h1>
-
-                <p className="text-xs lg:text-sm flex items-center w-[115px] text-gray-500 mb-1 bg-gray-100 px-2 rounded-2xl">
-                  Code:{" "}
-                  <span className="text-[#fe741d] ml-1  text-[11px] lg:text-sm font-semibold  uppercase">
-                    {product.pID}
-                  </span>
-                </p>
-              </div>
-
-              {/* color box */}
-              <div className="flex flex-col space-x-3  mt-20 mb-2">
-                <h1 className="text-gray-700 mb-1">
-                  Color: <span className="font-semibold">{selectedColor}</span>
+            {/* Right: Product Details (Tighter version) */}
+            <div className="flex-1 bg-white border border-slate-200 p-3 md:p-5 rounded flex flex-col justify-between">
+              <div>
+                {/* Title & Badges */}
+                <h1 className="text-lg md:text-xl font-bold text-slate-800 leading-tight mb-2">
+                  {product.name}
                 </h1>
-                <div className="flex gap-3">
-                  {["Red", "Blue", "Green", "Yellow", "Purple"].map(
-                    (name, idx) => (
-                      <div
-                        key={idx}
-                        onClick={() => setSelectedColor(name)}
-                        className={`lg:w-14 lg:h-8 w-12 h-7 flex items-center justify-center border border-[#fe741d] lg:text-sm text-xs font-medium cursor-pointer transition-all
-        ${
-          selectedColor === name
-            ? "bg-[#fe741d] text-white scale-105"
-            : "bg-transparent text-gray-900"
-        }
-      `}
-                      >
-                        {name}
-                      </div>
-                    )
+
+                <div className="flex flex-wrap items-center justify-between md:justify-start gap-1.5 md:gap-5 mb-4 md:mb-10">
+                  <span className="bg-slate-100 text-slate-600 text-[11px] md:tracking-wider font-bold px-2 py-0.5 rounded uppercase border border-slate-200">
+                    Cat:{" "}
+                    <span className="text-[#fe741d]">{CurrCat?.catName}</span>
+                  </span>
+                  <span className="bg-slate-100 text-slate-600 text-[11px] md:tracking-wider font-bold px-2 py-0.5 rounded uppercase border border-slate-200">
+                    Brand:{" "}
+                    <span className="text-[#fe741d]">{product.brandName}</span>
+                  </span>
+                  <span className="bg-slate-100 text-slate-600 text-[11px] md:text-[12px] md:tracking-wider font-bold px-2 py-0.5 rounded uppercase border border-slate-200">
+                    Code: <span className="text-[#fe741d]">{product.pID}</span>
+                  </span>
+                </div>
+
+                <hr className="border-slate-100 mb-4" />
+
+                {/* Pricing & Stock */}
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-2xl font-black text-slate-900">
+                      ৳
+                      {(
+                        product.price.selling - product.price.discount
+                      ).toLocaleString()}
+                    </span>
+                    {product.price.discount > 0 && (
+                      <span className="text-sm text-slate-400 line-through">
+                        ৳{product.price.selling.toLocaleString()}
+                      </span>
+                    )}
+                  </div>
+                  {currentStock > 0 ? (
+                    <span className="text-[10px] font-bold text-green-600 uppercase">
+                      ● In Stock
+                    </span>
+                  ) : (
+                    <span className="text-[10px] font-bold text-red-600 uppercase">
+                      ● Out of Stock
+                    </span>
                   )}
+                </div>
+
+                {/* Selection (Color & Qty in one tight row if possible) */}
+                <div className="md:space-y-4 space-y-3">
+                  <div>
+                    <h3 className="text-[11px] font-bold text-slate-500 uppercase mb-2">
+                      Color:{" "}
+                      <span className="text-slate-900">{selectedColor}</span>
+                    </h3>
+                    <div className="flex flex-wrap gap-1.5">
+                      {["Red", "Blue", "Green", "Yellow", "Purple"].map(
+                        (name) => (
+                          <button
+                            key={name}
+                            onClick={() => setSelectedColor(name)}
+                            className={`px-3 py-1 text-xs font-semibold rounded border transition-all
+                  ${
+                    selectedColor === name
+                      ? "bg-[#fe741d] border-[#fe741d] text-white"
+                      : "bg-white border-slate-200 text-slate-600 hover:border-slate-300"
+                  }`}
+                          >
+                            {name}
+                          </button>
+                        )
+                      )}
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 className="text-[11px] font-bold text-slate-500 uppercase mb-2">
+                      Quantity
+                    </h3>
+                    <div className="flex items-center w-fit border border-slate-200 rounded overflow-hidden">
+                      <button
+                        onClick={() =>
+                          quantity > 1 && setQuantity(quantity - 1)
+                        }
+                        className="w-8 h-8 flex items-center justify-center bg-slate-50 hover:bg-slate-100 text-slate-600 font-bold border-r border-slate-200"
+                      >
+                        -
+                      </button>
+                      <span className="w-10 text-center text-sm font-bold text-slate-800">
+                        {quantity}
+                      </span>
+                      <button
+                        onClick={() => setQuantity(quantity + 1)}
+                        className="w-8 h-8 flex items-center justify-center bg-slate-50 hover:bg-slate-100 text-slate-600 font-bold border-l border-slate-200"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              {/* Availability */}
-              <p className="text- text-gray-700 mb-1 ">
-                Availability:{" "}
-                {currentStock > 0 ? (
-                  <span className="text-green-600 font-semibold">In Stock</span>
-                ) : (
-                  <span className="text-red-600 font-semibold">
-                    Out of Stock
-                  </span>
-                )}
-              </p>
-
-              <div className="flex  gap-3 ">
-                <p className="text-xl font-semibold text-gray-800">
-                  TK: {product.price.selling - product.price.discount}
-                  .00
-                </p>
-                {product.price.discount > 0 && (
-                  <p className="text-md text-gray-500 mt- line-through">
-                    TK: {product.price.selling}.00
-                  </p>
-                )}
-              </div>
-
-              {/* quantity */}
-              <div className="flex items-center mt-3 mb-4">
-                {/* Minus Button */}
-                <button
-                  onClick={() => quantity > 1 && setQuantity(quantity - 1)}
-                  className="w-10 h-10 border border-gray-300 bg-gray-100 flex items-center justify-center 
-               text-lg hover:bg-gray-200 active:bg-gray-200 select-none"
-                >
-                  -
-                </button>
-
-                {/* Number Box */}
-                <input
-                  type="text"
-                  value={quantity}
-                  readOnly
-                  className="w-14 h-10 border-t border-b border-gray-300 text-center 
-               focus:outline-none text-lg"
-                />
-
-                {/* Plus Button */}
-                <button
-                  onClick={() => setQuantity(quantity + 1)}
-                  className="w-10 h-10 border border-gray-300 bg-gray-100 flex items-center justify-center 
-               text-lg hover:bg-gray-200 active:bg-gray-200 select-none"
-                >
-                  +
-                </button>
-              </div>
-
-              {/* Buttons */}
-              <div className="flex gap-4">
-                <button
-                  onClick={() => buyNowBtn(product)}
-                  className="bg-[#2dc6f4] hover:bg-[#00b4ea] w-50 h-10 flex items-center justify-center text-white "
-                >
-                  Buy Now
-                </button>
-
+              {/* Buttons - Tighter and smaller */}
+              <div className="md:mt-6 mt-4 flex gap-2">
                 <button
                   onClick={() => addToCartBtn(product)}
-                  className="bg-[#fe741d] hover:bg-[#fb6405] w-50 h-10 flex items-center justify-center text-white "
+                  className="flex-1 h-10 text-sm font-bold border-2 border-[#fe741d] text-[#fe741d] rounded hover:bg-orange-50 transition-all active:scale-95"
                 >
                   Add to Cart
+                </button>
+                <button
+                  onClick={() => buyNowBtn(product)}
+                  className="flex-1 h-10 text-sm font-bold bg-[#2dc6f4] hover:bg-[#00b4ea] text-white rounded shadow-sm transition-all active:scale-95"
+                >
+                  Buy Now
                 </button>
               </div>
             </div>

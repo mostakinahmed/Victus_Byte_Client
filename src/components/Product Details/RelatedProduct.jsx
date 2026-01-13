@@ -4,7 +4,7 @@ import { FiChevronRight, FiZap, FiShoppingBag } from "react-icons/fi";
 
 export const RelatedProduct = ({ data }) => {
   return (
-    <div className="w-full lg:w-[400px] font-sans bg-white border border-slate-200 overflow-hidden animate-in fade-in duration-700">
+    <div className="w-full mt-3 md:mt-0 lg:w-[400px] font-sans bg-white border border-slate-200 overflow-hidden animate-in fade-in duration-700">
       {/* Section Header */}
       <div className="p-4 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
         <div className="flex items-center gap-3">
