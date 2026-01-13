@@ -53,11 +53,11 @@ const RightSide = ({ filterData }) => {
 
   return (
     <section className="w-full">
-      <h2 className=" text-md bg-white text-center p-1.5 pl-1 rounded shadow font-semibold uppercase md:mb-4 mb-2">
+      <h2 className=" text-md bg-white text-center p-1.5 pl-1 rounded shadow font-semibold uppercase md:mb-2 mb-2">
         {catName}
       </h2>
 
-      <div className="grid gap-2 lg:grid-cols-4 xl:grid-cols-5 grid-cols-2 lg:gap-3">
+      <div className="grid gap-2 lg:grid-cols-4 xl:grid-cols-5 grid-cols-2 lg:gap-2">
         {productsToDisplay.length > 0 ? (
           productsToDisplay.map((product) => (
             <Link

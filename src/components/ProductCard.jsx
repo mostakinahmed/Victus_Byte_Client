@@ -6,7 +6,7 @@ const ProductCard = ({ data }) => {
   const finalPrice = data.price.selling - (data.price.discount || 0);
 
   return (
-    <div className="flex flex-col md:h-[340px] h-[280px] font-sans border border-slate-200 rounded overflow-hidden transition-all duration-300 hover:shadow-xl group/card cursor-pointer">
+    <div className="flex flex-col md:h-[340px] shadow h-[280px] font-sans border border-slate-200 rounded overflow-hidden transition-all duration-300 hover:shadow-xl group/card cursor-pointer">
       
       {/* --- PRODUCT IMAGE SECTION --- */}
       <div className="relative h-56 bg-[#fcfcfc] md:p-4 p-2 flex items-center justify-center overflow-hidden">

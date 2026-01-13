@@ -199,9 +199,9 @@ const LeftSide = ({ onFilter }) => {
       </div>
 
       {value && (
-        <aside className="w-full md:-ml-2 lg:w-64 p-5 space-y-3">
+        <aside className="w-full md:-ml-2  lg:w-82 p-4 space-y-3">
           {/* PRICE RANGE */}
-          <div className="border-b  border-gray-100 pb-2">
+          {/* <div className="border-b  border-gray-100 pb-2">
             <h3 className="text-sm font-bold text-gray-800 uppercase mb-3">
               Price Range
             </h3>
@@ -221,38 +221,38 @@ const LeftSide = ({ onFilter }) => {
                 className="md:w-23 w-1/2 border border-gray-200 rounded px-2 py-1.5 text-sm focus:ring-1 focus:ring-indigo-500 outline-none"
               />
             </div>
-          </div>
-
-          {/* CATEGORY LIST */}
-          <div className="flex justify-between md:flex-col gap-4">
-            <div className="border-b border-gray-100 pb-2">
-              <h3 className="text-sm font-bold text-gray-800 uppercase mb-3">
-                Categories
-              </h3>
-              <div className="space-y-2">
-                {catData.map((category) => (
-                  <label
-                    key={category.catID}
-                    className="flex items-center group cursor-pointer"
-                  >
-                    <input
-                      type="checkbox"
-                      className="w-4 h-4 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500"
-                      checked={selectedIds.includes(category.catID)}
-                      onChange={(e) =>
-                        handleCheckboxChange(category.catID, e.target.checked)
-                      }
-                    />
-                    <span className="ml-3 text-sm text-gray-600 group-hover:text-indigo-600 transition-colors">
-                      {category.catName}
-                    </span>
-                  </label>
-                ))}
+          </div> */}
+          <div className="flex w-full">
+            {/* CATEGORY LIST */}
+            <div className=" ">
+              <div className="border-b border-gray-100 pb-2">
+                <h3 className="text-sm font-bold text-gray-800 uppercase mb-3">
+                  Categories
+                </h3>
+                <div className="space-y-2">
+                  {catData.map((category) => (
+                    <label
+                      key={category.catID}
+                      className="flex items-center group cursor-pointer"
+                    >
+                      <input
+                        type="checkbox"
+                        className="w-4 h-4 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500"
+                        checked={selectedIds.includes(category.catID)}
+                        onChange={(e) =>
+                          handleCheckboxChange(category.catID, e.target.checked)
+                        }
+                      />
+                      <span className="ml-3 text-sm text-gray-600 group-hover:text-indigo-600 transition-colors">
+                        {category.catName}
+                      </span>
+                    </label>
+                  ))}
+                </div>
               </div>
             </div>
-
             {/* BRAND LIST */}
-            <div className="pb-2">
+            <div className=" pb-2">
               <h3 className="text-sm font-bold text-gray-800 uppercase mb-3">
                 Brands
               </h3>
@@ -271,7 +271,7 @@ const LeftSide = ({ onFilter }) => {
                           handleBrandChange(brand, e.target.checked)
                         }
                       />
-                      <span className="ml-3 text-sm text-gray-600 group-hover:text-indigo-600 transition-colors">
+                      <span className="ml-2 text-sm text-gray-600 group-hover:text-indigo-600 transition-colors">
                         {brand}
                       </span>
                     </label>
