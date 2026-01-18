@@ -21,7 +21,7 @@ const BannerSection = () => {
   }, []);
 
   return (
-    <div className="max-w-[1400px] mx-auto mt-[35px] md:mt-[70px] lg:mt-[80px] px-2 lg:px-4 pt-6 grid grid-cols-1 md:grid-cols-3 gap-2">
+    <div className="max-w-[1400px] mx-auto mt-[35px] md:mt-[70px] lg:mt-[80px] px-2 lg:px-4 pt-6 grid grid-cols-1 md:grid-cols-3 md:gap-2 gap-1.5">
       {/* Main Banner */}
       {/* //search box */}
       <div className="md:hidden">
@@ -54,8 +54,8 @@ const BannerSection = () => {
       </div>
 
       {/* Right Sideboxes */}
-      <div className="flex flex-col lg:flex-col gap-3  rounded">
-        <div className="flex w-full gap-2 lg:block ">
+      <div className="flex lg:flex-col gap- rounded">
+        <div className="flex w-full md:gap-2 gap-1.5 lg:block ">
           {" "}
           {/* ← add gap-2 here */}
           <div className="w-1/2 lg:w-full">
@@ -103,9 +103,9 @@ const BannerSection = () => {
       </div>
 
       {/* Info Cards Section (Headings Only) */}
-      <div className="flex flex-col gap-2 text-gray-700 md:hidden">
+      <div className="flex flex-col md:gap-2 gap-1.5 text-gray-700 md:hidden">
         {/* Row 1: Card 1 & Card 2 */}
-        <div className="flex flex-row md:flex-row gap-2.5">
+        <div className="flex flex-row md:flex-row md:gap-2.5 gap-2">
           <div className="flex-1 bg-white px-6 py-3 h-12 rounded shadow hover:shadow-md transition text-center">
             <h4 className="text-[17px] font-semibold text-[#fe741d]">
               1K+ Sold

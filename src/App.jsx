@@ -11,8 +11,6 @@ import { BuyNow } from "./pages/BuyNow.jsx";
 import { Cart } from "./pages/Cart.jsx";
 import { CartProvider } from "./components/Context Api/CartContext.jsx";
 import ProfileHome from "./pages/ProfileHome.jsx";
-import TempHome from "./pages/TempHome.jsx";
-import TechGadgetHome from "./pages/TechGadgetHome.jsx";
 import SearchResult from "./pages/SearchResult";
 import SignUp from "./components/Authentication/SignUp";
 import SignIn from "./components/Authentication/SignIn";
@@ -21,7 +19,6 @@ import TrackOrder from "./components/TrackOrder";
 import { DataContext } from "./components/Context Api/UserContext";
 import { MyOrders } from "./components/Profile/MyOrder";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { MdStorage } from "react-icons/md";
 import FooterLinks from "./components/PolicyCard";
 import AboutUs from "./components/Footer/AboutUs";
 import Contact from "./components/Footer/Contact";
@@ -31,7 +28,8 @@ import Return from "./components/Footer/Return";
 import Payment from "./components/Footer/Payment";
 import KidsZone from "./components/Kids Zone/KidsZone";
 import Electronics from "./components/Electronics/Electronics";
-import  SectionList  from "./pages/SectionList";
+import SectionList from "./pages/SectionList";
+import Header from "./components/Home/Header";
 
 const Loader = () => (
   <div
@@ -43,15 +41,11 @@ const Loader = () => (
     }}
   >
     <div className="flex flex-col items-center justify-center min-h-screen bg-slate-50">
-      {/* Container with Glassmorphism effect */}
       <div className="flex flex-col items-center p-10 bg-white/40 backdrop-blur-md rounded-3xl border border-white/20 shadow-xl">
-        {/* Spinner Wrapper with a pulse glow */}
         <div className="relative flex items-center justify-center mb-6">
           <div className="absolute w-16 h-16 bg-blue-400/20 rounded-full animate-ping"></div>
           <AiOutlineLoading3Quarters className="text-5xl text-blue-600 animate-spin relative z-10" />
         </div>
-
-        {/* Loading Text with character spacing */}
         <h2 className="text-gray-800 text-xl font-bold tracking-widest uppercase">
           Loading
           <span className="inline-flex ml-1">
@@ -60,15 +54,10 @@ const Loader = () => (
             <span className="animate-[bounce_1.5s_infinite_300ms]">.</span>
           </span>
         </h2>
-
         <p className="text-gray-500 text-sm mt-2 font-medium">
           Synchronizing your data...
         </p>
       </div>
-
-      {/* Optional: Subtle background decorative blobs */}
-      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-indigo-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
     </div>
   </div>
 );
@@ -76,8 +65,8 @@ const Loader = () => (
 function App() {
   const { productData } = useContext(DataContext);
   const location = useLocation();
-
   const [loading, setLoading] = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   // Stop loader as soon as productData is available
   useEffect(() => {
@@ -91,47 +80,74 @@ function App() {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
-  const isTempHome = location.pathname === "/";
+  // Handle Scroll logic for Animated Header
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
 
-  // Show loader while backend/data is loading
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   if (loading) return <Loader />;
 
   return (
     <CartProvider>
-      <div className="fixed top-0 w-full z-50">
+      {/* 1. NAVIGATION WRAPPER: Moves from top-10 to top-0 */}
+      <div
+        className={`fixed left-0 w-full z-50  ${
+          isScrolled ? "top-0 " : "top-0"
+        }`}
+      >
+        {/* 2. SLIM HEADER CONTAINER: Shrinks height to 0 and fades out */}
+        <div
+          className={`transition-all md:duration-400 duration-300 ease-in-out overflow-hidden ${
+            isScrolled ? "h-0 opacity-0" : "h-7 md:h-10 opacity-100"
+          }`}
+        >
+          <Header />
+        </div>
+
+        {/* Navbar and Category Menu remain visible but move up with the wrapper */}
         <Navber />
         <CatMenu />
       </div>
 
-      <Routes>
-        {/* <Route path="/" element={<TempHome />} /> */}
-        <Route path="/" element={<Home />} />
-        <Route path="/:cat" element={<AllProduct />} />
-        <Route path="/:cat/:name" element={<ProductDetails />} />
-        <Route path="/offer" element={<Offer />} />
-        <Route path="/product/:cat/:id/buynow" element={<BuyNow />} />
-        <Route path="/checkout/cart" element={<Cart />} />
-        <Route path="/profile/:card" element={<ProfileHome />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/profile/my-order" element={<MyOrders />} />
-        <Route path="/home-new" element={<TechGadgetHome />} />
-        <Route path="/search-result/:keyword" element={<SearchResult />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/track-order" element={<TrackOrder />} />
-        <Route path="/checkout/purchase" element={<BuyNow />} />
-        <Route path="/kids-zone" element={<KidsZone />} />
-        <Route path="/electronics" element={<Electronics />} />
-        <Route path="/section/:section" element={<SectionList />} />
-
-        {/* Footer all link */}
-        <Route path="/about-us" element={<AboutUs />} />
-        <Route path="/contact-us" element={<Contact />} />
-        <Route path="/faq" element={<FAQ />} />
-        <Route path="/shipping-info" element={<Shipping />} />
-        <Route path="/return-policy" element={<Return />} />
-        <Route path="/payment-info" element={<Payment />} />
-      </Routes>
+      {/* 3. MAIN CONTENT: Added padding-top (pt-44) so content isn't 
+          hidden behind the fixed navigation on load.
+      */}
+      <main className="md:pt-10 pt-6">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/:cat" element={<AllProduct />} />
+          <Route path="/:cat/:name" element={<ProductDetails />} />
+          <Route path="/offer" element={<Offer />} />
+          <Route path="/product/:cat/:id/buynow" element={<BuyNow />} />
+          <Route path="/checkout/cart" element={<Cart />} />
+          <Route path="/profile/:card" element={<ProfileHome />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/my-order" element={<MyOrders />} />
+          <Route path="/search-result/:keyword" element={<SearchResult />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/track-order" element={<TrackOrder />} />
+          <Route path="/checkout/purchase" element={<BuyNow />} />
+          <Route path="/kids-zone" element={<KidsZone />} />
+          <Route path="/electronics" element={<Electronics />} />
+          <Route path="/section/:section" element={<SectionList />} />
+          <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/contact-us" element={<Contact />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/shipping-info" element={<Shipping />} />
+          <Route path="/return-policy" element={<Return />} />
+          <Route path="/payment-info" element={<Payment />} />
+        </Routes>
+      </main>
 
       <FooterLinks />
       <Footer />
