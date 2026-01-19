@@ -32,33 +32,46 @@ import SectionList from "./pages/SectionList";
 import Header from "./components/Home/Header";
 
 const Loader = () => (
-  <div
-    style={{
-      height: "100vh",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-    }}
-  >
-    <div className="flex flex-col items-center justify-center min-h-screen bg-slate-50">
-      <div className="flex flex-col items-center p-10 bg-white/40 backdrop-blur-md rounded-3xl border border-white/20 shadow-xl">
-        <div className="relative flex items-center justify-center mb-6">
-          <div className="absolute w-16 h-16 bg-blue-400/20 rounded-full animate-ping"></div>
-          <AiOutlineLoading3Quarters className="text-5xl text-blue-600 animate-spin relative z-10" />
-        </div>
-        <h2 className="text-gray-800 text-xl font-bold tracking-widest uppercase">
-          Loading
-          <span className="inline-flex ml-1">
-            <span className="animate-[bounce_1.5s_infinite_100ms]">.</span>
-            <span className="animate-[bounce_1.5s_infinite_200ms]">.</span>
-            <span className="animate-[bounce_1.5s_infinite_300ms]">.</span>
-          </span>
+  <div className="fixed inset-0 flex items-center justify-center bg-white z-50">
+    <div className="flex flex-col items-center max-w-xs w-full px-6">
+      {/* Modern Icon Container */}
+      <div className="relative mb-8">
+        {/* Subtle Outer Pulse */}
+        <div className="absolute inset-0 rounded-full bg-indigo-50 animate-pulse scale-150" />
+
+        {/* Main Spinner */}
+        <AiOutlineLoading3Quarters className="text-4xl text-indigo-600 animate-spin relative z-10" />
+      </div>
+
+      {/* Brand/Status Text */}
+      <div className="text-center space-y-2">
+        <h2 className="text-slate-900 text-lg font-semibold tracking-tight">
+          Preparing your experience
         </h2>
-        <p className="text-gray-500 text-sm mt-2 font-medium">
-          Synchronizing your data...
+        <p className="text-slate-500 text-sm font-light">
+          Securely connecting to our servers...
         </p>
       </div>
+
+      {/* Minimalist Progress Bar (Optional but high-end) */}
+      <div className="w-full h-1 bg-slate-100 rounded-full mt-8 overflow-hidden">
+        <div className="h-full bg-indigo-600 rounded-full animate-[loading_2s_ease-in-out_infinite] w-1/3" />
+      </div>
     </div>
+
+    <style jsx>{`
+      @keyframes loading {
+        0% {
+          transform: translateX(-100%);
+        }
+        50% {
+          transform: translateX(100%);
+        }
+        100% {
+          transform: translateX(200%);
+        }
+      }
+    `}</style>
   </div>
 );
 
