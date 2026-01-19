@@ -37,7 +37,7 @@ const CategoryMenu = () => {
         <div className="flex items-center">
           <Link
             to={"/"}
-            className="flex items-center gap-2 px-5 py-2 text-gray-800 hover:text-blue-600 font-bold lg:text-[15px] transition-all border-r border-gray-100"
+            className="flex items-center gap-2 px-5 py-2 text-slate-900 hover:text-blue-600 font-bold lg:text-[15px] transition-all border-r border-gray-100"
           >
             <FiHome className="text-lg text-blue-600" />
             Home

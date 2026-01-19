@@ -13,11 +13,11 @@ export const SearchBar = () => {
   // --- AUTO TYPING LOGIC ---
   useEffect(() => {
     const phrases = [
-      "Search for Graphics Cards....",
+      "Search for Graphics Cards. . . . . .",
       "Looking for Motherboards?",
-      "Search for Ryzen Processors....",
-      "Find the best Gaming Mice.....",
-      "Search for 1TB NVMe SSDs....."
+      "Search for Ryzen Processors. . . . .",
+      "Find the best Gaming Mice. . . . . .",
+      "Search for 1TB NVMe SSDs. . . . .",
     ];
 
     let currentPhraseIndex = 0;
@@ -30,13 +30,17 @@ export const SearchBar = () => {
       const currentFullPhrase = phrases[currentPhraseIndex];
 
       if (isDeleting) {
-        setPlaceholder(currentFullPhrase.substring(0, currentCharacterIndex - 1));
+        setPlaceholder(
+          currentFullPhrase.substring(0, currentCharacterIndex - 1),
+        );
         currentCharacterIndex--;
-        typingSpeed = 100; 
+        typingSpeed = 100;
       } else {
-        setPlaceholder(currentFullPhrase.substring(0, currentCharacterIndex + 1));
+        setPlaceholder(
+          currentFullPhrase.substring(0, currentCharacterIndex + 1),
+        );
         currentCharacterIndex++;
-        typingSpeed = 100; 
+        typingSpeed = 100;
       }
 
       if (!isDeleting && currentCharacterIndex === currentFullPhrase.length) {
@@ -75,7 +79,7 @@ export const SearchBar = () => {
         const desc = p.description?.toLowerCase() || "";
         const words = search.toLowerCase().trim().split(" ");
         return words.every(
-          (word) => name.includes(word) || desc.includes(word)
+          (word) => name.includes(word) || desc.includes(word),
         );
       })
     : [];
@@ -95,7 +99,7 @@ export const SearchBar = () => {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && searchPage()}
-          className="w-full bg-white px-4 pr-10 py-1.5 border-1 border-slate-900 rounded-full text-black focus:outline-none placeholder:text-slate-400 placeholder:tracking-wider placeholder:font-semibold placeholder:md:text-sm placeholder:text-xs transition-all duration-300"
+          className="w-full bg-white px-4 pr-10 py-1.5 border-1 border-slate-900 rounded-full text-black focus:outline-none placeholder:text-slate-700 placeholder:tracking-widest placeholder:font- placeholder:md:text-sm placeholder:text-xs transition-all duration-300"
         />
 
         <svg
@@ -141,7 +145,7 @@ export const SearchBar = () => {
               >
                 <div className="w-10 h-10 shrink-0 bg-white rounded border border-gray-100 p-1">
                   <img
-                    src={p.images[0]} 
+                    src={p.images[0]}
                     alt={p.name}
                     className="w-full h-full object-contain"
                   />

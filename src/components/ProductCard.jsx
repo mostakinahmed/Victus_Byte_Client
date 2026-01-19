@@ -7,14 +7,12 @@ const ProductCard = ({ data }) => {
 
   return (
     <div className="flex flex-col md:h-[340px] shadow h-[280px] font-sans border border-slate-200 rounded overflow-hidden transition-all duration-300 hover:shadow-xl group/card cursor-pointer">
-      
       {/* --- PRODUCT IMAGE SECTION --- */}
       <div className="relative h-56 bg-[#fcfcfc] md:p-4 p-2 flex items-center justify-center overflow-hidden">
-        
         {/* SALE Badge */}
         {data.price.discount > 0 && (
-          <div className="absolute top-3 left-3 z-10 bg-blue-600 text-white text-[10px] font-bold px-2 py-1 rounded">
-            SALE -{data.price.discount}%
+          <div className="absolute top-3 left-3 z-10 bg-blue-600 text-white md:text-[10px] text-[10px] font-bold md:px-2 px-1 md:py-1 py-[4px] flex justify-center items-center rounded">
+            <span className="-mb-[3px]">OFF -{data.price.discount} TK</span>
           </div>
         )}
 
@@ -34,7 +32,6 @@ const ProductCard = ({ data }) => {
 
       {/* --- PRODUCT INFO SECTION --- */}
       <div className="md:p-3 p-2 md:-mt-2 flex flex-col flex-grow bg-white">
-        
         {/* Brand */}
         <span className="text-[10px] font-bold text-blue-500 uppercase tracking-widest mb-1">
           {data.brandName || "TECH DEVICE"}

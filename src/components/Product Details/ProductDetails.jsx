@@ -184,16 +184,16 @@ const ProductDetail = () => {
                   {product.name}
                 </h1>
 
-                <div className="flex flex-wrap items-center justify-between md:justify-start gap-1.5 md:gap-5 mb-4 md:mb-10">
-                  <span className="bg-slate-100 text-slate-600 text-[11px] md:tracking-wider font-bold px-2 py-0.5 rounded uppercase border border-slate-200">
+                <div className="flex flex-wrap items-center justify-between  md:justify-start gap-1.5 md:gap-5 mb-4 md:mb-10">
+                  <span className="bg-slate-100 text-slate-600 text-[10px] md:text-[11px] md:tracking-wider font-bold px-2 py-0.5 rounded uppercase border border-slate-200">
                     Cat:{" "}
                     <span className="text-[#fe741d]">{CurrCat?.catName}</span>
                   </span>
-                  <span className="bg-slate-100 text-slate-600 text-[11px] md:tracking-wider font-bold px-2 py-0.5 rounded uppercase border border-slate-200">
+                  <span className="bg-slate-100 text-slate-600 text-[10px] md:text-[11px] md:tracking-wider font-bold px-2 py-0.5 rounded uppercase border border-slate-200">
                     Brand:{" "}
                     <span className="text-[#fe741d]">{product.brandName}</span>
                   </span>
-                  <span className="bg-slate-100 text-slate-600 text-[11px] md:text-[12px] md:tracking-wider font-bold px-2 py-0.5 rounded uppercase border border-slate-200">
+                  <span className="bg-slate-100 text-slate-600 text-[10px] md:text-[11px] md:text-[12px] md:tracking-wider font-bold px-2 py-0.5 rounded uppercase border border-slate-200">
                     Code: <span className="text-[#fe741d]">{product.pID}</span>
                   </span>
                 </div>
