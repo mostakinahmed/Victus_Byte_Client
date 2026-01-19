@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { motion } from "framer-motion"; // 1. Import motion
 import { DataContext } from "../Context Api/UserContext";
 import Specification from "../Product Details/Specification.jsx";
 import { RelatedProduct } from "./RelatedProduct.jsx";
@@ -13,42 +14,31 @@ import toast from "react-hot-toast";
 
 const ProductDetail = () => {
   const navigate = useNavigate();
-  // Cart feature
   const { updateCart } = useContext(CartContext);
-  // States
   const [currentStock, setCurrentStock] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [selectedColor, setSelectedColor] = useState("");
 
-  // Context data
   const { categoryData, productData, stockData } = useContext(DataContext);
-  const { cat, name } = useParams(); // Using 'name' from URL params
+  const { cat, name } = useParams();
 
-  // Find product by name (case insensitive)
-  // Remove hyphens and convert to lowercase for comparison
   const normalizedProductName = name.replace(/-/g, " ").toLowerCase().trim();
-
-  // Find product by normalized name (case insensitive, hyphen-agnostic)
   const product = productData?.find(
     (item) =>
-      item.name.replace(/-/g, "").toLowerCase().trim() === normalizedProductName
+      item.name.replace(/-/g, "").toLowerCase().trim() ===
+      normalizedProductName,
   );
 
   const CurrCat = categoryData?.find((item) => item.catID === cat);
-
-  // Find related products
   const allProductsInCategory =
     productData
       ?.filter((item) => item.category === cat && item.name !== name)
       .slice(0, 6) || [];
 
-  // Update stock
   useEffect(() => {
     if (!stockData || !product) return;
-
     const stock = stockData.find((item) => item.pID === product.pID);
-
     if (stock && Array.isArray(stock.SKU)) {
       const count = stock.SKU.filter((s) => s.status === true).length;
       setCurrentStock(count);
@@ -57,7 +47,6 @@ const ProductDetail = () => {
     }
   }, [product, stockData]);
 
-  // If product doesn't exist -> NOW it's safe to return
   if (!product) {
     return (
       <div className="p-5 text-center text-xl font-semibold text-red-500">
@@ -66,31 +55,20 @@ const ProductDetail = () => {
     );
   }
 
-  // Image gallery handlers
-  const prevImage = () => {
+  const prevImage = () =>
     setCurrentIndex((prev) =>
-      prev === 0 ? product.images.length - 1 : prev - 1
+      prev === 0 ? product.images.length - 1 : prev - 1,
     );
-  };
-
-  const nextImage = () => {
+  const nextImage = () =>
     setCurrentIndex((prev) =>
-      prev === product.images.length - 1 ? 0 : prev + 1
+      prev === product.images.length - 1 ? 0 : prev + 1,
     );
-  };
+  const saveCart = (cart) => localStorage.setItem("cart", JSON.stringify(cart));
 
-  const saveCart = (cart) => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  };
-
-  // Buy now handler
   const buyNowBtn = (product) => {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
     const index = cart.findIndex((item) => item.pID === product.pID);
-    if (index !== -1) {
-      // cart[index].qty += 1;
-    } else {
+    if (index === -1) {
       cart.push({
         pID: product.pID,
         name: product.name,
@@ -99,7 +77,6 @@ const ProductDetail = () => {
         qty: 1,
       });
     }
-
     saveCart(cart);
     updateCart();
     navigate("/checkout/cart");
@@ -107,32 +84,50 @@ const ProductDetail = () => {
 
   const addToCartBtn = (product) => {
     const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
-
     const found = existingCart.find((item) => item.pID === product.pID);
-    //just toast completed
     if (found) {
       toast.success("Already Added!");
     } else {
-      existingCart.push({
-        pID: product.pID,
-        qty: quantity,
-      });
+      existingCart.push({ pID: product.pID, qty: quantity });
       localStorage.setItem("cart", JSON.stringify(existingCart));
       updateCart();
       toast.success("Added to Cart!");
     }
   };
 
+  // --- Animation Variants ---
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
+  };
+
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 15 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.4, ease: "easeOut" },
+    },
+  };
+
   return (
     <>
-      <div className="min-h-screen font-sans pb-5">
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={containerVariants}
+        className="min-h-screen font-sans pb-5"
+      >
         <ResponsiveToaster />
+
         {/* Top section */}
-        <section className="max-w-[1400px]  lg:mt-[50px] p-3 md:px-5 px-2 mx-auto">
-          <div className="flex flex-col lg:flex-row mt-11 justify-between gap-3  mx-auto">
-            {/* Left: Image Gallery (Tighter version) */}
-            <div className="lg:w-[45%] flex flex-col md:flex-row bg-white rounded border border-slate-200 overflow-hidden">
-              {/* Thumbnails - Smaller and Tighter */}
+        <section className="max-w-[1400px] lg:mt-[50px] p-3 md:px-5 px-2 mx-auto">
+          <div className="flex flex-col lg:flex-row mt-11 justify-between gap-3 mx-auto">
+            {/* Left: Image Gallery (Animated) */}
+            <motion.div
+              variants={fadeInUp}
+              className="lg:w-[45%] flex flex-col md:flex-row bg-white rounded border border-slate-200 overflow-hidden"
+            >
               <div className="order-2 md:order-1 flex md:flex-col gap-2 border-t md:border-t-0 md:border-r border-slate-100 p-2 justify-center md:justify-start overflow-x-auto bg-slate-50/50">
                 {product.images?.map((img, idx) => (
                   <img
@@ -140,29 +135,26 @@ const ProductDetail = () => {
                     src={img}
                     alt="thumb"
                     onClick={() => setCurrentIndex(idx)}
-                    className={`w-12 h-12 md:w-14 md:h-14 flex-shrink-0 object-contain p-1 rounded border-2 transition-all ${
-                      idx === currentIndex
-                        ? "border-[#fe741d] bg-white"
-                        : "border-transparent opacity-60 hover:opacity-100"
-                    }`}
+                    className={`w-12 h-12 md:w-14 md:h-14 flex-shrink-0 object-contain p-1 rounded border-2 transition-all ${idx === currentIndex ? "border-[#fe741d] bg-white" : "border-transparent opacity-60 hover:opacity-100"}`}
                   />
                 ))}
               </div>
 
-              {/* Main Image Container */}
               <div className="order-1 md:order-2 flex-1 relative bg-white h-[250px] md:h-[400px] flex items-center justify-center p-4">
-                {/* Brand Name Watermark */}
-                <span className="absolute top-3 right-3 z-10  max-h-6 bg-green-400 backdrop-blur-sm px-2 rounded border border-slate-200 py-[2px] md:text-[12px] text-[11px]  font-extrabold text-white uppercase tracking-widest pointer-events-none select-none">
+                <span className="absolute top-3 right-3 z-10 max-h-6 bg-green-400 backdrop-blur-sm px-2 rounded border border-slate-200 py-[2px] md:text-[12px] text-[11px] font-extrabold text-white uppercase tracking-widest pointer-events-none select-none">
                   {product.brandName}
                 </span>
 
-                <img
+                <motion.img
+                  key={currentIndex}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3 }}
                   src={product.images[currentIndex]}
                   alt={product.name}
                   className="w-full h-[250px] md:h-[400px] object-contain"
                 />
 
-                {/* Arrows */}
                 {product.images.length > 1 && (
                   <div className="flex md:hidden lg:flex">
                     <button
@@ -180,12 +172,14 @@ const ProductDetail = () => {
                   </div>
                 )}
               </div>
-            </div>
+            </motion.div>
 
-            {/* Right: Product Details (Tighter version) */}
-            <div className="flex-1 bg-white border border-slate-200 p-3 md:p-5 rounded flex flex-col justify-between">
+            {/* Right: Product Details (Animated) */}
+            <motion.div
+              variants={fadeInUp}
+              className="flex-1 bg-white border border-slate-200 p-3 md:p-5 rounded flex flex-col justify-between"
+            >
               <div>
-                {/* Title & Badges */}
                 <h1 className="text-lg md:text-xl font-bold text-slate-800 leading-tight mb-2">
                   {product.name}
                 </h1>
@@ -206,7 +200,6 @@ const ProductDetail = () => {
 
                 <hr className="border-slate-100 mb-4" />
 
-                {/* Pricing & Stock */}
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-baseline gap-2">
                     <span className="text-2xl font-black text-slate-900">
@@ -221,18 +214,13 @@ const ProductDetail = () => {
                       </span>
                     )}
                   </div>
-                  {currentStock > 0 ? (
-                    <span className="text-[10px] font-bold text-green-600 uppercase">
-                      ● In Stock
-                    </span>
-                  ) : (
-                    <span className="text-[10px] font-bold text-red-600 uppercase">
-                      ● Out of Stock
-                    </span>
-                  )}
+                  <span
+                    className={`text-[10px] font-bold uppercase ${currentStock > 0 ? "text-green-600" : "text-red-600"}`}
+                  >
+                    ● {currentStock > 0 ? "In Stock" : "Out of Stock"}
+                  </span>
                 </div>
 
-                {/* Selection (Color & Qty in one tight row if possible) */}
                 <div className="md:space-y-4 space-y-3">
                   <div>
                     <h3 className="text-[11px] font-bold text-slate-500 uppercase mb-2">
@@ -245,16 +233,11 @@ const ProductDetail = () => {
                           <button
                             key={name}
                             onClick={() => setSelectedColor(name)}
-                            className={`px-3 py-1 text-xs font-semibold rounded border transition-all
-                  ${
-                    selectedColor === name
-                      ? "bg-[#fe741d] border-[#fe741d] text-white"
-                      : "bg-white border-slate-200 text-slate-600 hover:border-slate-300"
-                  }`}
+                            className={`px-3 py-1 text-xs font-semibold rounded border transition-all ${selectedColor === name ? "bg-[#fe741d] border-[#fe741d] text-white" : "bg-white border-slate-200 text-slate-600 hover:border-slate-300"}`}
                           >
                             {name}
                           </button>
-                        )
+                        ),
                       )}
                     </div>
                   </div>
@@ -286,7 +269,6 @@ const ProductDetail = () => {
                 </div>
               </div>
 
-              {/* Buttons - Tighter and smaller */}
               <div className="md:mt-6 mt-4 flex gap-2">
                 <button
                   onClick={() => addToCartBtn(product)}
@@ -301,26 +283,43 @@ const ProductDetail = () => {
                   Buy Now
                 </button>
               </div>
-            </div>
+            </motion.div>
           </div>
         </section>
 
-        {/* Specs and Related */}
-        <section className="max-w-full lg:max-w-[1400px] mx-auto md:px-5 px-2 flex flex-col lg:flex-row lg:gap-3">
+        {/* Specs and Related (Reveal on Scroll) */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="max-w-full lg:max-w-[1400px] mx-auto md:px-5 px-2 flex flex-col lg:flex-row lg:gap-3"
+        >
           <div className="lg:w-full xl:w-full">
             <Specification data={product} />
           </div>
           <RelatedProduct data={allProductsInCategory} />
-        </section>
+        </motion.section>
 
-        {/* Description */}
-        <section className="max-w-[1400px] p-3 md:px-5 px-2 mx-auto">
+        {/* Description (Reveal on Scroll) */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="max-w-[1400px] p-3 md:px-5 px-2 mx-auto"
+        >
           <Description data={product} />
-        </section>
-        <section>
+        </motion.section>
+
+        <motion.section
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+        >
           <AlsoLike />
-        </section>
-      </div>
+        </motion.section>
+      </motion.div>
     </>
   );
 };

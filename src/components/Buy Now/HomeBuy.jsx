@@ -154,7 +154,7 @@ export function HomeBuy({ data }) {
           </div>
         </div>
 
-        <div className="p-8 md:space-y-6 space-y-3">
+        <div className="py-8 md:px-8 px-4 md:space-y-6 space-y-3">
           {/* Name & Email Group */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="space-y-1.5">
@@ -169,7 +169,7 @@ export function HomeBuy({ data }) {
                   required
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all"
+                  className="w-full pl-10 pr-4 py-3 placeholder:tracking-widest bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all"
                 />
               </div>
             </div>
@@ -186,7 +186,7 @@ export function HomeBuy({ data }) {
                   required
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm  outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all"
+                  className="w-full pl-10 pr-4 py-3 placeholder:tracking-widest bg-slate-50 border border-slate-200 rounded-xl text-sm  outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all"
                 />
               </div>
             </div>
@@ -205,7 +205,7 @@ export function HomeBuy({ data }) {
                 required
                 value={form.phone}
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm  outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all tracking-tighter"
+                className="w-full pl-10 pr-4 py-3 placeholder:tracking-widest bg-slate-50 border border-slate-200 rounded-xl text-sm  outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all tracking-tighter"
               />
             </div>
           </div>
@@ -222,7 +222,7 @@ export function HomeBuy({ data }) {
                 required
                 value={form.address}
                 onChange={(e) => setForm({ ...form, address: e.target.value })}
-                className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm  outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all h-24 leading-relaxed"
+                className="w-full pl-10 pr-4 py-3 placeholder:tracking-widest bg-slate-50 border border-slate-200 rounded-xl text-sm  outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all h-24 leading-relaxed"
               />
             </div>
           </div>

@@ -1,7 +1,8 @@
+import React, { useContext, useState, useEffect } from "react";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion"; // 1. Import motion
 import ProductCard from "../components/ProductCard";
 import { DataContext } from "../components/Context Api/UserContext";
-import { useContext, useState, useEffect } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 export default function SearchResult() {
@@ -9,15 +10,12 @@ export default function SearchResult() {
   const { keyword } = useParams();
   const navigate = useNavigate();
 
-  // ✅ 1. Sanitize the keyword: Replace hyphens back to spaces for matching
   const decodedKeyword = keyword ? keyword.replace(/-/g, " ") : "";
 
-  // ✅ 2. Filtering logic using the cleaned keyword
   const filtered = productData.filter((item) => {
     const name = item.name?.toLowerCase() || "";
     const desc = item.description?.toLowerCase() || "";
     const words = decodedKeyword.toLowerCase().trim().split(" ");
-
     return words.every((word) => name.includes(word) || desc.includes(word));
   });
 
@@ -27,17 +25,43 @@ export default function SearchResult() {
         icon: "warning",
         title: "Registry Empty",
         text: `No matches found for "${decodedKeyword}"`,
-        backdrop: `rgba(15, 23, 42, 0.4)`, // Matches your Slate-900 theme
-        confirmButtonColor: "#4f46e5", // Indigo-600
+        backdrop: `rgba(15, 23, 42, 0.4)`,
+        confirmButtonColor: "#4f46e5",
         timer: 2000,
       });
     }
   }, [filtered, decodedKeyword]);
 
+  // --- Animation Variants ---
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.08, delayChildren: 0.1 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 15 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.4, ease: "easeOut" },
+    },
+  };
+
   return (
-    <div className="max-w-[1400px] mt-[20px] lg:mt-[65px] mx-auto lg:px-4 px-2 py-10 min-h-screen">
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+      className="max-w-[1400px] mt-[20px] lg:mt-[65px] mx-auto lg:px-4 px-2 py-10 min-h-screen"
+    >
       {/* --- 1. SYSTEM TERMINAL HEADER --- */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:mb-5 mb-2.5 bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
+      <motion.div
+        variants={itemVariants}
+        className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:mb-5 mb-2.5 bg-white border border-slate-200 rounded-2xl p-4 shadow-sm"
+      >
         <div className="flex items-center gap-3">
           <div className="w-1.5 h-6 bg-[#fe741d] rounded-full" />
           <h1 className="text-sm md:text-base font-black text-slate-800 uppercase tracking-widest">
@@ -46,7 +70,6 @@ export default function SearchResult() {
           </h1>
         </div>
 
-        {/* Status Indicator */}
         <div className="flex items-center gap-2 px-4 py-1.5 bg-slate-50 border border-slate-100 rounded-full">
           <div
             className={`w-2 h-2 rounded-full ${
@@ -59,11 +82,14 @@ export default function SearchResult() {
             {filtered.length} Units Located
           </span>
         </div>
-      </div>
+      </motion.div>
 
       {/* --- 2. RESULTS GRID --- */}
       {filtered.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-24 bg-slate-50 rounded-[3rem] border border-dashed border-slate-200">
+        <motion.div
+          variants={itemVariants}
+          className="flex flex-col items-center justify-center py-24 bg-slate-50 rounded-[3rem] border border-dashed border-slate-200"
+        >
           <div className="p-6 bg-white rounded-full shadow-xl mb-6">
             <svg
               className="w-12 h-12 text-slate-300"
@@ -88,23 +114,23 @@ export default function SearchResult() {
           >
             Reset Terminal
           </button>
-        </div>
+        </motion.div>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 md:gap-2.5 -mt-0 md:-mt-2">
+        <motion.div
+          variants={itemVariants}
+          className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 md:gap-2.5 -mt-0 md:-mt-2"
+        >
           {filtered.map((product) => (
             <Link
               key={product.pID}
-              /* ✅ Ensure the product name in the URL is also slugified */
-              to={`/${product.category}/${product.name
-                .replace(/\s+/g, "-")
-                .toLowerCase()}`}
+              to={`/${product.category}/${product.name.replace(/\s+/g, "-").toLowerCase()}`}
               className="hover:scale-[1.02] transition-transform duration-300"
             >
               <ProductCard data={product} />
             </Link>
           ))}
-        </div>
+        </motion.div>
       )}
-    </div>
+    </motion.div>
   );
 }
