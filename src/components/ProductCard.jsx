@@ -12,7 +12,7 @@ const ProductCard = ({ data }) => {
         {/* SALE Badge */}
         {data.price.discount > 0 && (
           <div className="absolute top-3 left-3 z-10 bg-blue-600 text-white md:text-[10px] text-[10px] font-bold md:px-2 px-1 md:py-1 py-[4px] flex justify-center items-center rounded">
-            <span className="-mb-[3px]">OFF -{data.price.discount} TK</span>
+            <span className="-mb-[2px]">OFF -{data.price.discount} TK</span>
           </div>
         )}
 
