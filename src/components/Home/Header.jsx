@@ -32,7 +32,7 @@ const Header = () => {
         <span className="hidden md:block">Welcome to Victus Byte</span>
 
         {/* Spaced evenly on mobile, gap-4 on desktop */}
-        <span className="">📞 09611123123</span>
+        <span className="">📞 09611342936</span>
         <span>✉️ support@victusbyte.com</span>
       </div>
     </header>
