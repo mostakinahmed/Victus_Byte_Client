@@ -93,7 +93,7 @@ export default function FlashSale() {
           <span className="text-[10px] md:text-xs font-bold uppercase hidden sm:inline">
             Ends in:
           </span>
-          <span className="font-mono text-base md:text-xl font-black tracking-wider">
+          <span className="font-mono text-xs md:text-xl font-black tracking-wider">
             {String(timeLeft.h).padStart(2, "0")}:
             {String(timeLeft.m).padStart(2, "0")}:
             {String(timeLeft.s).padStart(2, "0")}
