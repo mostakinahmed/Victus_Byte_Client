@@ -75,11 +75,13 @@ export const SearchBar = () => {
 
   const filtered = search
     ? productData.filter((p) => {
-        const name = p.name?.toLowerCase() || "";
-        const desc = p.description?.toLowerCase() || "";
         const words = search.toLowerCase().trim().split(" ");
-        return words.every(
-          (word) => name.includes(word) || desc.includes(word),
+        const productKeywords = (p.keywords || []).map((k) => k.toLowerCase());
+
+        // Returns true only if EVERY word typed in the search bar
+        // is found somewhere in the product's keywords array
+        return words.every((word) =>
+          productKeywords.some((keyword) => keyword.includes(word)),
         );
       })
     : [];

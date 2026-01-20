@@ -227,7 +227,7 @@ const ProductDetail = () => {
                       Color:{" "}
                       <span className="text-slate-900 ml-1"> {selectedColor}</span>
                     </h3>
-                    <div className="flex flex-wrap gap-1.5">
+                    <div className="flex flex-wrap gap-3">
                       {product.colors.map((name) => (
                         <button
                           key={name}
