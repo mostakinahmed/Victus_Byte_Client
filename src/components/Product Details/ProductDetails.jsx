@@ -193,7 +193,7 @@ const ProductDetail = () => {
                     Brand:{" "}
                     <span className="text-[#fe741d]">{product.brandName}</span>
                   </span>
-                  <span className="bg-slate-100 text-slate-600 text-[10px] md:text-[11px] md:text-[12px] md:tracking-wider font-bold px-2 py-0.5 rounded uppercase border border-slate-200">
+                  <span className="bg-slate-100 text-slate-600 text-[10px] md:text-[12px] md:tracking-wider font-bold px-2 py-0.5 rounded uppercase border border-slate-200">
                     Code: <span className="text-[#fe741d]">{product.pID}</span>
                   </span>
                 </div>
@@ -225,20 +225,18 @@ const ProductDetail = () => {
                   <div>
                     <h3 className="text-[11px] font-bold text-slate-500 uppercase mb-2">
                       Color:{" "}
-                      <span className="text-slate-900">{selectedColor}</span>
+                      <span className="text-slate-900 ml-1"> {selectedColor}</span>
                     </h3>
                     <div className="flex flex-wrap gap-1.5">
-                      {["Red", "Blue", "Green", "Yellow", "Purple"].map(
-                        (name) => (
-                          <button
-                            key={name}
-                            onClick={() => setSelectedColor(name)}
-                            className={`px-3 py-1 text-xs font-semibold rounded border transition-all ${selectedColor === name ? "bg-[#fe741d] border-[#fe741d] text-white" : "bg-white border-slate-200 text-slate-600 hover:border-slate-300"}`}
-                          >
-                            {name}
-                          </button>
-                        ),
-                      )}
+                      {product.colors.map((name) => (
+                        <button
+                          key={name}
+                          onClick={() => setSelectedColor(name)}
+                          className={`px-3 py-1 text-xs font-semibold rounded border transition-all ${selectedColor === name ? "bg-[#fe741d] border-[#fe741d] text-white" : "bg-white border-slate-200 text-slate-600 hover:border-slate-300"}`}
+                        >
+                          {name}
+                        </button>
+                      ))}
                     </div>
                   </div>
 
