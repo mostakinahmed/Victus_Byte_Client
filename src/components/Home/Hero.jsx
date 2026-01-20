@@ -4,11 +4,7 @@ import { SearchBar } from "../SearchBar";
 
 const BannerSection = () => {
   // const { categoryData, productData } = useContext(DataContext);
-  const images = [
-    "https://i.ibb.co.com/k2Jh26yY/ads-banner-2.png",
-    "https://i.ibb.co.com/WNthCVS1/main-banner-2.png",
-    "https://i.ibb.co.com/8gg0jC4D/home-appliances-banner-982x500.webp",
-  ];
+  const images = ["ads-1.png", "ads-2.png", "ads-3.png"];
 
   const [index, setIndex] = useState(0);
 
@@ -60,14 +56,14 @@ const BannerSection = () => {
           {/* ← add gap-2 here */}
           <div className="w-1/2 lg:w-full">
             <img
-              src="https://i.ibb.co.com/7dngFcks/right-side.png"
+              src="right-side-1.png"
               alt="Career Banner"
               className=" lg:w-full h-auto rounded"
             />
           </div>
           <div className="w-1/2 lg:w-full">
             <img
-              src="https://i.ibb.co.com/vbM8093/right-side-2.png"
+              src="right-side-2.png"
               alt="Career Banner"
               className=" lg:w-full h-auto rounded lg:mt-2"
             />
