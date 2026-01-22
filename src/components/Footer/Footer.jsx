@@ -169,7 +169,7 @@ const Footer = () => {
                   </a>
 
                   <a
-                    href="#"
+                    href="https://www.instagram.com/victusbytebd"
                     aria-label="Instagram"
                     className="hover:text-indigo-500"
                   >

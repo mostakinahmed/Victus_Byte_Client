@@ -252,11 +252,11 @@ export function HomeBuy({ data }) {
             >
               <img
                 src={item.images[0]}
-                className="w-12 h-12 object-contain"
+                className="w-13 h-13 object-contain"
                 alt=""
               />
-              <div className="min-w-0">
-                <h3 className="text-[11px] font-bold uppercase truncate">
+              <div className="md:min-w-0 w-65">
+                <h3 className="text-[11px] line-clamp-2 tracking-wider uppercase leading-tight">
                   {item.name}
                 </h3>
                 <p className="text-indigo-600 text-xs font-black">
@@ -345,7 +345,7 @@ export function HomeBuy({ data }) {
             </div>
           </div>
 
-          <div className="p-4 bg-slate-50 rounded-2xl grid md:grid-cols-3 gap-3 border border-slate-100">
+          <div className="md:p-4 p-2 bg-slate-50 rounded-2xl grid md:grid-cols-3 gap-3 border border-slate-100">
             <select
               className="bg-white border p-3 rounded-xl text-xs outline-none"
               value={form.division}
