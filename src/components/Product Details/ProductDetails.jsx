@@ -74,7 +74,8 @@ const ProductDetail = () => {
         name: product.name,
         price: product.price.selling,
         image: product.images[0],
-        qty: 1,
+        qty: quantity,
+        color: selectedColor,
       });
     }
     saveCart(cart);
@@ -88,7 +89,14 @@ const ProductDetail = () => {
     if (found) {
       toast.success("Already Added!");
     } else {
-      existingCart.push({ pID: product.pID, qty: quantity });
+      existingCart.push({
+        pID: product.pID,
+        name: product.name,
+        price: product.price.selling,
+        image: product.images[0],
+        qty: quantity,
+        color: selectedColor,
+      });
       localStorage.setItem("cart", JSON.stringify(existingCart));
       updateCart();
       toast.success("Added to Cart!");
@@ -225,10 +233,13 @@ const ProductDetail = () => {
                   <div>
                     <h3 className="text-[11px] font-bold text-slate-500 uppercase mb-2">
                       Color:{" "}
-                      <span className="text-slate-900 ml-1"> {selectedColor}</span>
+                      <span className="text-slate-900 ml-1">
+                        {" "}
+                        {selectedColor}
+                      </span>
                     </h3>
                     <div className="flex flex-wrap gap-3">
-                      {product.colors.map((name) => (
+                      {product?.colors?.map((name) => (
                         <button
                           key={name}
                           onClick={() => setSelectedColor(name)}

@@ -14,12 +14,14 @@ export const BuyNow = () => {
       .map((cartItem) => {
         const product = productData.find((p) => p.pID === cartItem.pID);
         if (!product) return null;
-        return { ...product, qty: cartItem.qty || 1 };
+        return { ...product, qty: cartItem.qty || 1, colors: cartItem.color };
       })
       .filter(Boolean);
     setItems(merged);
   }, [productData]);
 
+
+  
   const categoryList = items.flatMap((item) =>
     Array.isArray(item.category) ? item.category : [item.category],
   );
@@ -66,7 +68,7 @@ export const BuyNow = () => {
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      className="max-w-[1400px] mx-auto flex mt-[60px] md:mt-[105px] mb-4 overflow-hidden"
+      className="max-w-[1400px] mx-auto md:pr-4 flex mt-[60px] md:mt-[105px] mb-4 overflow-hidden"
     >
       {/* Checkout form (Left Side) */}
       <motion.div variants={leftSlide} className="flex-1">

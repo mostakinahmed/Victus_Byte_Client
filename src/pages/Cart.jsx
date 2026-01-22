@@ -14,6 +14,7 @@ export const Cart = () => {
 
   useEffect(() => {
     const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+    console.log(cartItems);
     const merged = cartItems
       .map((cartItem) => {
         const product = productData.find((p) => p.pID === cartItem.pID);
@@ -94,8 +95,12 @@ export const Cart = () => {
                       Product
                     </th>
                     <th className="px-4 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-widest text-center">
+                      Color
+                    </th>
+                    <th className="px-4 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-widest text-center">
                       Quantity
                     </th>
+
                     <th className="px-4 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-widest text-center">
                       Unit Price
                     </th>
@@ -136,9 +141,16 @@ export const Cart = () => {
                       </td>
                       <td className="px-4 py-4 text-center">
                         <span className="text-sm font-bold text-slate-600 bg-slate-100 px-3 py-1 rounded-md">
+                          {item.color}
+                        </span>
+                      </td>
+
+                      <td className="px-4 py-4 text-center">
+                        <span className="text-sm font-bold text-slate-600 bg-slate-100 px-3 py-1 rounded-md">
                           x{item.qty}
                         </span>
                       </td>
+
                       <td className="px-4 py-4 text-center">
                         <span className="text-sm font-bold text-slate-800">
                           ৳{item.price.selling.toLocaleString()}

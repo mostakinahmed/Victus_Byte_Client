@@ -1,6 +1,8 @@
 "use client";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion"; // Modern Animations
+import { Toaster, toast } from "sonner"; // Modern Toasts
 import {
   FiUser,
   FiMail,
@@ -10,7 +12,33 @@ import {
   FiPackage,
   FiMap,
   FiChevronRight,
+  FiCheckCircle,
+  FiCopy,
 } from "react-icons/fi";
+import { DataContext } from "../Context Api/UserContext";
+import { useNavigate } from "react-router-dom";
+import { CartContext } from "../Context Api/CartContext";
+
+// Utility: Generate Order ID
+function generateOrderId() {
+  const timestamp = Date.now().toString().slice(-5);
+  const randomNum = Math.floor(10000 + Math.random() * 90000);
+  return `OID26${timestamp}${randomNum}`;
+}
+
+// Utility: Format date & time (12-hour)
+function getOrderDateTime12h() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  let hours = now.getHours();
+  const minutes = String(now.getMinutes()).padStart(2, "0");
+  const ampm = hours >= 12 ? "PM" : "AM";
+  hours = hours % 12 || 12;
+  const hoursStr = String(hours).padStart(2, "0");
+  return `${year}-${month}-${day}   ${hoursStr}:${minutes} ${ampm}`;
+}
 
 export function HomeBuy({ data }) {
   const [divList, setDiv] = useState([]);
@@ -19,8 +47,18 @@ export function HomeBuy({ data }) {
   const [finalDisList, setFinalDis] = useState([]);
   const [finalUpaList, setFinalUpaList] = useState([]);
   const [wardList, setWardList] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false); // Modal State
+  const [currentOrderId, setCurrentOrderId] = useState("");
 
-  // Customer Form State
+  const [discount, setDiscount] = useState(0);
+  const [subTotal, setSubtotal] = useState(0);
+  const [deliverTk, setDeliverTk] = useState(150);
+  const [totalTk, setTotalTk] = useState(0);
+  const { productData } = useContext(DataContext);
+  const navigate = useNavigate();
+  const { updateCart } = useContext(CartContext);
+
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -29,10 +67,23 @@ export function HomeBuy({ data }) {
     division: "",
     district: "",
     upazila: "",
-    postal: "",
+    ward: "",
   });
 
-  //api for division and district
+  useEffect(() => {
+    const totalPrice = data.reduce(
+      (sum, item) => sum + item.price.selling * item.qty,
+      0,
+    );
+    const totalDiscount = data.reduce(
+      (sum, item) => sum + (item.price.discount || 0),
+      0,
+    );
+    setTotalTk(totalPrice - totalDiscount + deliverTk);
+    setSubtotal(totalPrice);
+    setDiscount(totalDiscount);
+  }, [data]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -41,298 +92,333 @@ export function HomeBuy({ data }) {
           axios.get("https://bdopenapi.vercel.app/api/geo/districts"),
           axios.get("https://bdopenapi.vercel.app/api/geo/upazilas"),
         ]);
-
         setDiv(divisionRes.data.data);
         setDis(districtRes.data.data);
         setUpazila(upazilaRes.data.data);
       } catch (err) {
-        console.error("Failed to fetch data", err);
+        console.error(err);
       }
     };
-
     fetchData();
-  }, []); // run once on mount
+  }, []);
 
-  //ward list
   useEffect(() => {
-    if (!form.upazila) return; // skip if empty
-
+    if (!form.upazila) return;
     const fetchDataWard = async () => {
       try {
         const WardRes = await axios.get(
-          `https://bdopenapi.vercel.app/api/geo/unions/${form.upazila}`
+          `https://bdopenapi.vercel.app/api/geo/unions/${form.upazila}`,
         );
         setWardList(WardRes.data.data);
       } catch (err) {
-        console.error("Failed to fetch data", err);
+        console.error(err);
       }
     };
-
     fetchDataWard();
   }, [form.upazila]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
-    alert(
-      `Order placed!\n\nCustomer: ${form.name}\nProducts: ${data.length} items`
-    );
+    const divName = divList.find((d) => d.id === form.division)?.name || "";
+    const disName =
+      finalDisList.find((d) => d.id === form.district)?.name || "";
+    const upaName = finalUpaList.find((d) => d.id === form.upazila)?.name || "";
+
+    const orderPayload = {
+      order_id: generateOrderId(),
+      order_date: getOrderDateTime12h(),
+      status: "Pending",
+      mode: "Online",
+      customer_id: "GUEST_USER",
+      items: data.map((item) => ({
+        product_id: item.pID,
+        product_name: item.name,
+        product_price: item.price.selling,
+        quantity: item.qty,
+        product_comments: item.colors,
+      })),
+      shipping_address: {
+        recipient_name: form.name,
+        phone: form.phone,
+        email: form.email,
+        address_line1: `${form.address}, (Div: ${divName}, Dist: ${disName}, Upa: ${upaName}, Ward: ${form.ward})`,
+      },
+      payment: { method: "COD", status: "Pending" },
+      total_amount: totalTk,
+      shipping_cost: deliverTk,
+      subtotal: subTotal,
+      discount: discount,
+    };
+
+    try {
+      await axios.post(
+        "https://api.victusbyte.com/api/order/create-order",
+        orderPayload,
+      );
+
+      // ✅ 1. Clear Local Storage
+      localStorage.removeItem("cart");
+      updateCart();
+      setCurrentOrderId(orderPayload.order_id);
+      setShowSuccess(true);
+      toast.success("Order Synced Successfully");
+    } catch (error) {
+      toast.error("Network Synchronization Failed");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  //handleDistrict
   const handleDistrict = (divID) => {
-    const district = disList.filter((dis) => dis.division_id === divID);
-    setFinalDis(district);
+    setFinalDis(disList.filter((dis) => dis.division_id === divID));
   };
 
   const handleUpazila = (disID) => {
-    const upazila = upazilaList.filter((upa) => upa.district_id === disID);
-    setFinalUpaList(upazila);
+    setFinalUpaList(upazilaList.filter((upa) => upa.district_id === disID));
   };
 
   return (
-    <div className="min-h-screen font-sans w-full flex flex-col items-center px-2 lg:px-4 mb-20 animate-in fade-in duration-500">
-      {/* --- 1. PRODUCT MANIFEST HEADER --- */}
-      <div className="bg-white w-full border border-slate-200  overflow-hidden mb-4">
-        <div className="bg-slate-50 px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+    <div className="min-h-screen font-sans w-full flex flex-col items-center px-2 lg:px-4 mb-20">
+      <Toaster position="top-right" richColors />
+
+      {/* --- SUCCESS MODAL (FRAMER MOTION) --- */}
+      <AnimatePresence>
+        {showSuccess && (
+          <div className="fixed inset-0 z-[500] flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+              onClick={() => (window.location.href = "/")}
+            />
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              className="relative bg-white w-full max-w-[340px] rounded-[32px] overflow-hidden shadow-2xl"
+            >
+              <div className="bg-indigo-600 h-24 flex items-center justify-center">
+                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center border border-white/30">
+                  <FiCheckCircle className="text-white" size={24} />
+                </div>
+              </div>
+              <div className="p-6 text-center">
+                <h2 className="text-lg font-black text-slate-900 uppercase">
+                  Success, {form.name.split(" ")[0]}!
+                </h2>
+                <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1 mb-6">
+                  Manifest Finalized
+                </p>
+
+                <div className="bg-slate-50 border border-slate-100 rounded-2xl p-4 mb-6 group relative">
+                  <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">
+                    Your Order ID
+                  </p>
+                  <p className="font-mono font-black text-indigo-600 text-sm">
+                    {currentOrderId}
+                  </p>
+                </div>
+
+                <button
+                  onClick={() => navigate("/")}
+                  className="w-full bg-slate-900 text-white py-4 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-indigo-600 transition-all active:scale-95"
+                >
+                  Return to Dashboard
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* --- 1. PRODUCT MANIFEST --- */}
+      <div className="bg-white w-full  border border-slate-200 overflow-hidden mb-4 rounded">
+        <div className="bg-slate-50 px-6 py-4 border-b border-slate-200 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <FiPackage className="text-indigo-600" size={18} />
-            <h2 className="text-sm font-semibold uppercase tracking-widest">
+            <h2 className="text-xs font-black uppercase tracking-widest">
               Order Manifest
             </h2>
           </div>
-          <span className="text-[12px] font-bold text-slate-500 bg-white border border-slate-200 px-2 py-0.5 rounded-full uppercase">
-            {data.length} Items Selected
-          </span>
         </div>
-
-        <div className="p-4">
-          <div className="grid lg:grid-cols-3 grid-cols-1 gap-3">
-            {data.map((item, index) => (
-              <div
-                key={index}
-                className="group flex items-center gap-4 p-3 rounded-xl border border-slate-100 bg-slate-50/50 hover:border-indigo-200 hover:bg-white transition-all duration-300 shadow-sm"
-              >
-                <div className="w-16 h-16 shrink-0 bg-white border border-slate-100 p-1  transition-all">
-                  <img
-                    src={item.images[0]}
-                    alt={item.name}
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-sm uppercase truncate ">
-                    {item.name}
-                  </h3>
-                  <p className="text-indigo-600 text-sm font-black mt-0.5">
-                    ৳{item.price.selling}
-                  </p>
-                </div>
+        <div className="p-4 grid lg:grid-cols-3 gap-3">
+          {data.map((item, index) => (
+            <div
+              key={index}
+              className="flex items-center gap-4 p-3 rounded-xl border border-slate-50 bg-slate-50/50"
+            >
+              <img
+                src={item.images[0]}
+                className="w-12 h-12 object-contain"
+                alt=""
+              />
+              <div className="min-w-0">
+                <h3 className="text-[11px] font-bold uppercase truncate">
+                  {item.name}
+                </h3>
+                <p className="text-indigo-600 text-xs font-black">
+                  ৳{item.price.selling}
+                </p>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* --- 2. CUSTOMER LOGISTICS FORM --- */}
+      {/* --- 2. CUSTOMER FORM --- */}
       <form
         onSubmit={handleSubmit}
-        className="bg-white w-full border border-slate-200  overflow-hidden"
+        className="bg-white w-full border border-slate-200 overflow-hidden rounded shadow-sm"
       >
-        <div className="bg-slate-900 px-8 py-6 flex items-center gap-3">
-          <div className="p-2 bg-indigo-500 rounded-lg text-white shadow-lg shadow-indigo-500/20">
-            <FiTruck size={20} />
-          </div>
-          <div>
-            <h2 className="text-lg font-black text-white tracking-tight">
-              Logistics Information
-            </h2>
-            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
-              Enter secure delivery destination
-            </p>
-          </div>
+        <div className="bg-slate-800 px-8 py-5 flex items-center gap-3">
+          <FiTruck className="text-indigo-400" size={20} />
+          <h2 className="text-sm font-black text-white uppercase tracking-widest">
+            Logistics Information
+          </h2>
         </div>
 
-        <div className="py-8 md:px-8 px-4 md:space-y-6 space-y-3">
-          {/* Name & Email Group */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="space-y-1.5">
-              <label className="text-sm uppercase tracking-wider ml-1">
+        <div className="p-6 md:p-8 space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-1">
+              <label className="text-[10px] font-black uppercase text-slate-400 ml-1">
                 Recipient Name
               </label>
-              <div className="relative group">
-                <FiUser className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-indigo-500 transition-colors" />
+              <div className="relative">
+                <FiUser className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-300" />
                 <input
                   type="text"
-                  placeholder="Your Name...."
                   required
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  className="w-full pl-10 pr-4 py-3 placeholder:tracking-widest bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all"
+                  className="w-full pl-9 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:border-indigo-500 transition-all"
                 />
               </div>
             </div>
-
-            <div className="space-y-1.5">
-              <label className="text-sm uppercase tracking-wider ml-1">
-                Contact Email
+            <div className="space-y-1">
+              <label className="text-[10px] font-black uppercase text-slate-400 ml-1">
+                Email Address
               </label>
-              <div className="relative group">
-                <FiMail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-indigo-500 transition-colors" />
+              <div className="relative">
+                <FiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-300" />
                 <input
                   type="email"
-                  placeholder="user@example.com"
                   required
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  className="w-full pl-10 pr-4 py-3 placeholder:tracking-widest bg-slate-50 border border-slate-200 rounded-xl text-sm  outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all"
+                  className="w-full pl-9 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:border-indigo-500 transition-all"
                 />
               </div>
             </div>
           </div>
 
-          {/* Phone Number */}
-          <div className="space-y-1.5">
-            <label className="text-sm uppercase tracking-wider ml-1">
-               Phone Number
+          <div className="space-y-1">
+            <label className="text-[10px] font-black uppercase text-slate-400 ml-1">
+              Phone Number
             </label>
-            <div className="relative group">
-              <FiPhone className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-indigo-500 transition-colors" />
+            <div className="relative">
+              <FiPhone className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-300" />
               <input
                 type="tel"
-                placeholder="+880 1XXX XXXXXX"
                 required
                 value={form.phone}
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                className="w-full pl-10 pr-4 py-3 placeholder:tracking-widest bg-slate-50 border border-slate-200 rounded-xl text-sm  outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all tracking-tighter"
+                className="w-full pl-9 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:border-indigo-500 transition-all"
               />
             </div>
           </div>
 
-          {/* Address Textarea */}
-          <div className="space-y-1.5">
-            <label className="text-sm uppercase tracking-wider ml-1">
+          <div className="space-y-1">
+            <label className="text-[10px] font-black uppercase text-slate-400 ml-1">
               Delivery Destination
             </label>
-            <div className="relative group">
-              <FiMapPin className="absolute left-3.5 top-4 text-slate-300 group-focus-within:text-indigo-500 transition-colors" />
+            <div className="relative">
+              <FiMapPin className="absolute left-3 top-4 text-slate-300" />
               <textarea
-                placeholder="Street Address, Apartment, House No..."
                 required
                 value={form.address}
                 onChange={(e) => setForm({ ...form, address: e.target.value })}
-                className="w-full pl-10 pr-4 py-3 placeholder:tracking-widest bg-slate-50 border border-slate-200 rounded-xl text-sm  outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all h-24 leading-relaxed"
+                className="w-full pl-9 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:border-indigo-500 h-20"
               />
             </div>
           </div>
 
-          {/* Geographical Selectors */}
-          <div className="space-y-1.5 pt-2">
-            <label className="text-sm uppercase tracking-wider ml-1 flex items-center gap-1">
-              <FiMap size={10} /> Territory Mapping
-            </label>
-            <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-100">
-              {/* Division */}
-              <select
-                className="bg-white border border-slate-200 rounded-xl p-3 text-sm  cursor-pointer focus:border-indigo-500 outline-none"
-                required
-                value={form.division}
-                onChange={(e) => {
-                  setWardList([]);
-                  const divId = e.target.value;
-                  handleDistrict(divId);
-                  setForm({
-                    ...form,
-                    division: divId,
-                    district: "",
-                    upazila: "",
-                  });
-                }}
-              >
-                <option value="">Select Division</option>
-                {divList.map((div) => (
-                  <option key={div.id} value={div.id}>
-                    {div.name} / {div.bn_name}
-                  </option>
-                ))}
-              </select>
-
-              {/* District */}
-              <select
-                className="bg-white border border-slate-200 rounded-xl p-3 text-sm  cursor-pointer disabled:opacity-50"
-                required
-                value={form.district}
-                onChange={(e) => {
-                  setWardList([]);
-                  const disId = e.target.value;
-                  handleUpazila(disId);
-                  setForm({ ...form, district: disId, upazila: "" });
-                }}
-                disabled={!form.division}
-              >
-                <option value="">Select District</option>
-                {finalDisList.map((dis) => (
-                  <option key={dis.id} value={dis.id}>
-                    {dis.name} / {dis.bn_name}
-                  </option>
-                ))}
-              </select>
-
-              {/* Upazila */}
-              <select
-                className="bg-white border border-slate-200 rounded-xl p-3 text-sm cursor-pointer disabled:opacity-50"
-                required
-                value={form.upazila}
-                onChange={(e) => {
-                  setWardList([]);
-                  setForm({ ...form, upazila: e.target.value });
-                }}
-                disabled={!form.district}
-              >
-                <option value="">Select Upazila</option>
-                {finalUpaList.map((upa) => (
-                  <option key={upa.id} value={upa.id}>
-                    {upa.name} / {upa.bn_name}
-                  </option>
-                ))}
-              </select>
-            </div>
+          <div className="p-4 bg-slate-50 rounded-2xl grid md:grid-cols-3 gap-3 border border-slate-100">
+            <select
+              className="bg-white border p-3 rounded-xl text-xs outline-none"
+              value={form.division}
+              onChange={(e) => {
+                handleDistrict(e.target.value);
+                setForm({
+                  ...form,
+                  division: e.target.value,
+                  district: "",
+                  upazila: "",
+                });
+              }}
+            >
+              <option value="">Division</option>
+              {divList.map((d) => (
+                <option key={d.id} value={d.id}>
+                  {d.name}
+                </option>
+              ))}
+            </select>
+            <select
+              className="bg-white border p-3 rounded-xl text-xs outline-none"
+              value={form.district}
+              onChange={(e) => {
+                handleUpazila(e.target.value);
+                setForm({ ...form, district: e.target.value, upazila: "" });
+              }}
+              disabled={!form.division}
+            >
+              <option value="">District</option>
+              {finalDisList.map((d) => (
+                <option key={d.id} value={d.id}>
+                  {d.name}
+                </option>
+              ))}
+            </select>
+            <select
+              className="bg-white border p-3 rounded-xl text-xs outline-none"
+              value={form.upazila}
+              onChange={(e) => setForm({ ...form, upazila: e.target.value })}
+              disabled={!form.district}
+            >
+              <option value="">Upazila</option>
+              {finalUpaList.map((d) => (
+                <option key={d.id} value={d.id}>
+                  {d.name}
+                </option>
+              ))}
+            </select>
           </div>
 
-          {/* Ward Selection Chips */}
-          {wardList?.length > 0 && (
-            <div className="space-y-3 animate-in fade-in slide-in-from-top-2">
-              <p className="text-[10px] font-black text-indigo-500 uppercase tracking-widest ml-1">
-                Select Delivery Ward
-              </p>
-              <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-2">
-                {wardList.map((item) => (
-                  <div
-                    key={item.id}
-                    className="group bg-white border border-slate-200 cursor-pointer rounded-xl p-2 text-center transition-all hover:bg-indigo-600 hover:border-indigo-600 group active:scale-95"
-                  >
-                    <p className="text-xs font-black text-slate-700 group-hover:text-white transition-colors">
-                      {item.name}
-                    </p>
-                    <p className="text-[10px] font-bold text-slate-400 group-hover:text-white/80 transition-colors uppercase">
-                      {item.bn_name}
-                    </p>
-                  </div>
-                ))}
-              </div>
+          {wardList.length > 0 && (
+            <div className="grid grid-cols-3 md:grid-cols-6 gap-2">
+              {wardList.map((w) => (
+                <div
+                  key={w.id}
+                  onClick={() => setForm({ ...form, ward: w.name })}
+                  className={`p-2 border rounded-lg text-center cursor-pointer transition-all ${form.ward === w.name ? "bg-indigo-600 border-indigo-600 text-white" : "bg-white hover:border-indigo-500 text-slate-600"}`}
+                >
+                  <p className="text-[10px] font-black uppercase">{w.name}</p>
+                </div>
+              ))}
             </div>
           )}
 
-          {/* Submit Button */}
-          <div className="pt-4">
-            <button
-              type="submit"
-              className="w-full md:py-5 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-indigo-100 transition-all active:scale-[0.98] flex items-center justify-center gap-2"
-            >
-              Place Order <FiChevronRight size={18} />
-            </button>
-          </div>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-black text-[10px] uppercase tracking-[0.2em] shadow-lg shadow-indigo-100 transition-all active:scale-95 flex items-center justify-center gap-2"
+          >
+            {isSubmitting ? "Transmitting..." : "Complete Purchase"}{" "}
+            <FiChevronRight />
+          </button>
         </div>
       </form>
     </div>
