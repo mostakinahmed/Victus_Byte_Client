@@ -18,7 +18,7 @@ const ProductDetail = () => {
   const [currentStock, setCurrentStock] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
-  const [selectedColor, setSelectedColor] = useState("");
+  const [selectedColor, setSelectedColor] = useState(null);
 
   const { categoryData, productData, stockData } = useContext(DataContext);
   const { cat, name } = useParams();
@@ -66,6 +66,10 @@ const ProductDetail = () => {
   const saveCart = (cart) => localStorage.setItem("cart", JSON.stringify(cart));
 
   const buyNowBtn = (product) => {
+    if (!selectedColor) {
+      alert("please select Color...");
+      return;
+    }
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     const index = cart.findIndex((item) => item.pID === product.pID);
     if (index === -1) {
@@ -84,6 +88,10 @@ const ProductDetail = () => {
   };
 
   const addToCartBtn = (product) => {
+    if (!selectedColor) {
+      alert("please select Color...");
+      return;
+    }
     const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
     const found = existingCart.find((item) => item.pID === product.pID);
     if (found) {

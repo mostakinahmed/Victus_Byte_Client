@@ -293,7 +293,7 @@ export function HomeBuy({ data }) {
                   required
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  className="w-full pl-9 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:border-indigo-500 transition-all"
+                  className="w-full pl-9 pr-4 py-3 bg-slate-50 border border-slate-200 tracking-wider rounded-xl text-sm outline-none focus:border-indigo-500 transition-all"
                 />
               </div>
             </div>
@@ -308,7 +308,7 @@ export function HomeBuy({ data }) {
                   required
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  className="w-full pl-9 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:border-indigo-500 transition-all"
+                  className="w-full pl-9 pr-4 py-3 bg-slate-50 border border-slate-200 tracking-wider rounded-xl text-sm outline-none focus:border-indigo-500 transition-all"
                 />
               </div>
             </div>
@@ -325,7 +325,7 @@ export function HomeBuy({ data }) {
                 required
                 value={form.phone}
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                className="w-full pl-9 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:border-indigo-500 transition-all"
+                className="w-full pl-9 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm tracking-wider outline-none focus:border-indigo-500 transition-all"
               />
             </div>
           </div>
@@ -340,14 +340,14 @@ export function HomeBuy({ data }) {
                 required
                 value={form.address}
                 onChange={(e) => setForm({ ...form, address: e.target.value })}
-                className="w-full pl-9 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs outline-none focus:border-indigo-500 h-20"
+                className="w-full pl-9 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm tracking-wider outline-none focus:border-indigo-500 h-20"
               />
             </div>
           </div>
 
           <div className="md:p-4 p-2 bg-slate-50 rounded-2xl grid md:grid-cols-3 gap-3 border border-slate-100">
             <select
-              className="bg-white border p-3 rounded-xl text-xs outline-none"
+              className="bg-white border p-3 rounded-xl text-sm outline-none"
               value={form.division}
               onChange={(e) => {
                 handleDistrict(e.target.value);
@@ -367,7 +367,7 @@ export function HomeBuy({ data }) {
               ))}
             </select>
             <select
-              className="bg-white border p-3 rounded-xl text-xs outline-none"
+              className="bg-white border p-3 rounded-xl text-sm outline-none"
               value={form.district}
               onChange={(e) => {
                 handleUpazila(e.target.value);
@@ -383,7 +383,7 @@ export function HomeBuy({ data }) {
               ))}
             </select>
             <select
-              className="bg-white border p-3 rounded-xl text-xs outline-none"
+              className="bg-white border p-3 rounded-xl text-sm outline-none"
               value={form.upazila}
               onChange={(e) => setForm({ ...form, upazila: e.target.value })}
               disabled={!form.district}
@@ -403,9 +403,9 @@ export function HomeBuy({ data }) {
                 <div
                   key={w.id}
                   onClick={() => setForm({ ...form, ward: w.name })}
-                  className={`p-2 border rounded-lg text-center cursor-pointer transition-all ${form.ward === w.name ? "bg-indigo-600 border-indigo-600 text-white" : "bg-white hover:border-indigo-500 text-slate-600"}`}
+                  className={`p-2 border rounded-lg text-center cursor-pointer transition-all ${form.ward === w.name ? "bg-indigo-600 border-indigo-600 text-white" : "bg-white hover:border-indigo-500 text-slate-800"}`}
                 >
-                  <p className="text-[10px] font-black uppercase">{w.name}</p>
+                  <p className="text-[12px] font-black tracking-wide uppercase">{w.name}</p>
                 </div>
               ))}
             </div>

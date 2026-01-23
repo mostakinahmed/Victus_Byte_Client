@@ -19,7 +19,7 @@ export const Cart = () => {
       .map((cartItem) => {
         const product = productData.find((p) => p.pID === cartItem.pID);
         if (!product) return null;
-        return { ...product, qty: cartItem.qty || 1 };
+        return { ...product, qty: cartItem.qty || 1,colors:cartItem.color };
       })
       .filter(Boolean);
     setItems(merged);
@@ -33,6 +33,7 @@ export const Cart = () => {
     (sum, item) => sum + item.price.discount,
     0,
   );
+console.log(items);
 
   const onRemove = (pID) => {
     const updatedItems = items.filter((item) => item.pID !== pID);
@@ -141,7 +142,7 @@ export const Cart = () => {
                       </td>
                       <td className="px-4 py-4 text-center">
                         <span className="text-sm font-bold text-slate-600 bg-slate-100 px-3 py-1 rounded-md">
-                          {item.color}
+                          {item.colors}
                         </span>
                       </td>
 
