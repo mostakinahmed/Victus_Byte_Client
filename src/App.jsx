@@ -30,6 +30,7 @@ import KidsZone from "./components/Kids Zone/KidsZone";
 import Electronics from "./components/Electronics/Electronics";
 import SectionList from "./pages/SectionList";
 import Header from "./components/Home/Header";
+import  TestBuy  from "./components/Buy Now/TestBuy";
 
 const Loader = () => (
   <div className="fixed inset-0 flex items-center justify-center bg-white z-50">
@@ -159,6 +160,9 @@ function App() {
           <Route path="/shipping-info" element={<Shipping />} />
           <Route path="/return-policy" element={<Return />} />
           <Route path="/payment-info" element={<Payment />} />
+          <Route path="/test-buy" element={<TestBuy />} />
+
+
         </Routes>
       </main>
 
