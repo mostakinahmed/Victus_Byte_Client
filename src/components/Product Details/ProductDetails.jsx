@@ -11,6 +11,7 @@ import { Minus, Plus } from "lucide-react";
 import AlsoLike from "./AlsoLike";
 import ResponsiveToaster from "./ResponsiveToaster";
 import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const ProductDetail = () => {
   const navigate = useNavigate();
@@ -67,9 +68,24 @@ const ProductDetail = () => {
 
   const buyNowBtn = (product) => {
     if (!selectedColor) {
-      alert("please select Color...");
+      const isMobile = window.innerWidth < 768;
+
+      Swal.fire({
+        title: "Wait!",
+        text: "Please select a color.....",
+        icon: "warning",
+        width: isMobile ? "300px" : "460px",
+        padding: "1em",
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        // --- ADD THIS LINE ---
+        heightAuto: false,
+        scrollbarPadding: false,
+      });
       return;
     }
+
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     const index = cart.findIndex((item) => item.pID === product.pID);
     if (index === -1) {
@@ -89,9 +105,24 @@ const ProductDetail = () => {
 
   const addToCartBtn = (product) => {
     if (!selectedColor) {
-      alert("please select Color...");
+      const isMobile = window.innerWidth < 768;
+
+      Swal.fire({
+        title: "Wait!",
+        text: "Please select a color.....",
+        icon: "warning",
+        width: isMobile ? "300px" : "460px",
+        padding: "1em",
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        // --- ADD THIS LINE ---
+        heightAuto: false,
+        scrollbarPadding: false,
+      });
       return;
     }
+
     const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
     const found = existingCart.find((item) => item.pID === product.pID);
     if (found) {

@@ -129,11 +129,11 @@ console.log(items);
                             />
                           </div>
                           <div className="flex flex-col gap-1">
-                            <span className="text-sm font-bold text-slate-800 line-clamp-1">
+                            <span className="text-sm font-semibold text-slate-800 line-clamp-1">
                               {item.name}
                             </span>
                             <div className="flex items-center gap-1">
-                              <span className="text-[10px] font-bold text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded uppercase">
+                              <span className="text-[10px] font-bold tracking-wider text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded uppercase">
                                 {item.pID}
                               </span>
                             </div>
@@ -141,7 +141,7 @@ console.log(items);
                         </div>
                       </td>
                       <td className="px-4 py-4 text-center">
-                        <span className="text-sm font-bold text-slate-600 bg-slate-100 px-3 py-1 rounded-md">
+                        <span className="text-sm font-semibold text-slate-700 bg-slate-100 px-3 py-1 rounded-md">
                           {item.colors}
                         </span>
                       </td>
@@ -192,12 +192,12 @@ console.log(items);
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex justify-between items-start">
-                        <h3 className="text-sm font-bold text-slate-800 line-clamp-2 pr-2">
+                        <h3 className="text-sm tracking-wider text-slate-800 line-clamp-2 pr-2">
                           {item.name}
                         </h3>
                         <button
                           onClick={() => onRemove(item.pID)}
-                          className="text-slate-400 p-1"
+                          className="text-slate-500 p-1"
                         >
                           <IoClose size={20} />
                         </button>
@@ -206,7 +206,7 @@ console.log(items);
                         <span className="text-sm font-black text-slate-900">
                           ৳{(item.price.selling * item.qty).toLocaleString()}
                         </span>
-                        <div className="bg-slate-100 px-3 py-1 rounded text-xs font-bold text-slate-700">
+                        <div className="bg-slate-100 px-3 py-1 rounded text-xs font-bold text-slate-800">
                           Qty: {item.qty}
                         </div>
                       </div>

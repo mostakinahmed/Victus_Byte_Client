@@ -38,7 +38,7 @@ const ProductCard = ({ data }) => {
         </span>
 
         {/* Product Name */}
-        <h3 className="text-sm font-bold text-slate-800 line-clamp-2 md:mb-1 leading-tight  transition-colors group-hover/card:text-blue-600">
+        <h3 className="md:text-sm text-[13px] font-semibold text-slate-800 line-clamp-2 md:mb-1 leading-tight  transition-colors group-hover/card:text-blue-600">
           {data.name}
         </h3>
 

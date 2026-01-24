@@ -158,7 +158,7 @@ export function HomeBuy({ data }) {
         orderPayload,
       );
 
-      // ✅ 1. Clear Local Storage
+      //. Clear Local Storage
       localStorage.removeItem("cart");
       updateCart();
       setCurrentOrderId(orderPayload.order_id);
@@ -236,10 +236,10 @@ export function HomeBuy({ data }) {
 
       {/* --- 1. PRODUCT MANIFEST --- */}
       <div className="bg-white w-full  border border-slate-200 overflow-hidden mb-4 rounded">
-        <div className="bg-slate-50 px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+        <div className="bg-slate-50 px-6 md:py-4 py-2 border-b border-slate-200 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <FiPackage className="text-indigo-600" size={18} />
-            <h2 className="text-xs font-black uppercase tracking-widest">
+            <h2 className="text-xs font-semibold uppercase tracking-widest">
               Order Manifest
             </h2>
           </div>
@@ -256,7 +256,7 @@ export function HomeBuy({ data }) {
                 alt=""
               />
               <div className="md:min-w-0 w-65">
-                <h3 className="text-[11px] line-clamp-2 tracking-wider uppercase leading-tight">
+                <h3 className="text-xs text-slate-900 line-clamp-2 tracking-wider uppercase leading-tight">
                   {item.name}
                 </h3>
                 <p className="text-indigo-600 text-xs font-black">
@@ -283,22 +283,22 @@ export function HomeBuy({ data }) {
         <div className="p-6 md:p-8 space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="text-[10px] font-black uppercase text-slate-400 ml-1">
+              <label className="text-[12px] font-semibold  tracking-wider text-slate-500 ml-1">
                 Recipient Name
               </label>
               <div className="relative">
-                <FiUser className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-300" />
+                <FiUser className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
                   type="text"
                   required
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  className="w-full pl-9 pr-4 py-3 bg-slate-50 border border-slate-200 tracking-wider rounded-xl text-sm outline-none focus:border-indigo-500 transition-all"
+                  className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 tracking-wider rounded-xl md:text-sm text-[13px] outline-none focus:border-indigo-500 transition-all"
                 />
               </div>
             </div>
             <div className="space-y-1">
-              <label className="text-[10px] font-black uppercase text-slate-400 ml-1">
+              <label className="text-[12px] font-semibold  tracking-wider text-slate-500 ml-1">
                 Email Address
               </label>
               <div className="relative">
@@ -308,14 +308,13 @@ export function HomeBuy({ data }) {
                   required
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  className="w-full pl-9 pr-4 py-3 bg-slate-50 border border-slate-200 tracking-wider rounded-xl text-sm outline-none focus:border-indigo-500 transition-all"
+                  className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 tracking-wider rounded-xl md:text-sm text-[13px] outline-none focus:border-indigo-500 transition-all"
                 />
               </div>
             </div>
           </div>
-
           <div className="space-y-1">
-            <label className="text-[10px] font-black uppercase text-slate-400 ml-1">
+            <label className="text-[12px] font-semibold  tracking-wider text-slate-500 ml-1">
               Phone Number
             </label>
             <div className="relative">
@@ -325,13 +324,12 @@ export function HomeBuy({ data }) {
                 required
                 value={form.phone}
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                className="w-full pl-9 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm tracking-wider outline-none focus:border-indigo-500 transition-all"
+                className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 tracking-wider rounded-xl md:text-sm text-[13px] outline-none focus:border-indigo-500 transition-all"
               />
             </div>
           </div>
-
           <div className="space-y-1">
-            <label className="text-[10px] font-black uppercase text-slate-400 ml-1">
+            <label className="text-[12px] font-semibold  tracking-wider text-slate-500 ml-1">
               Delivery Destination
             </label>
             <div className="relative">
@@ -340,11 +338,12 @@ export function HomeBuy({ data }) {
                 required
                 value={form.address}
                 onChange={(e) => setForm({ ...form, address: e.target.value })}
-                className="w-full pl-9 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm tracking-wider outline-none focus:border-indigo-500 h-20"
+                className="w-full pl-9 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl md:text-sm text-[13px]  tracking-wider outline-none focus:border-indigo-500 h-20"
               />
             </div>
           </div>
 
+          {/* //droupdown */}
           <div className="md:p-4 p-2 bg-slate-50 rounded-2xl grid md:grid-cols-3 gap-3 border border-slate-100">
             <select
               className="bg-white border p-3 rounded-xl text-sm outline-none"
@@ -396,21 +395,24 @@ export function HomeBuy({ data }) {
               ))}
             </select>
           </div>
-
           {wardList.length > 0 && (
-            <div className="grid grid-cols-3 md:grid-cols-6 gap-2">
+            <div className="grid grid-cols-3  md:grid-cols-6 gap-2">
               {wardList.map((w) => (
                 <div
                   key={w.id}
                   onClick={() => setForm({ ...form, ward: w.name })}
-                  className={`p-2 border rounded-lg text-center cursor-pointer transition-all ${form.ward === w.name ? "bg-indigo-600 border-indigo-600 text-white" : "bg-white hover:border-indigo-500 text-slate-800"}`}
+                  className={`p-1 border rounded-lg text-center cursor-pointer transition-all ${form.ward === w.name ? "bg-indigo-600 border-indigo-600 text-white" : "bg-white hover:border-indigo-500 text-slate-800"}`}
                 >
-                  <p className="text-[12px] font-black tracking-wide uppercase">{w.name}</p>
+                  <p className="md:text-[12px] text-[11px]  tracking-wider">
+                    {w.name}
+                  </p>
+                  <p className="md:text-[12px] md:text-sm text-[11px] tracking-wider">
+                    {w.bn_name}
+                  </p>
                 </div>
               ))}
             </div>
           )}
-
           <button
             type="submit"
             disabled={isSubmitting}
