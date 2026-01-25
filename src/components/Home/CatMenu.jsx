@@ -51,7 +51,7 @@ const CategoryMenu = () => {
             className="flex items-center gap-2 text-gray-700 hover:text-blue-600 font-semibold text-[14px]"
           >
             <FiShoppingBag className="opacity-70" />
-            Kids Zone
+            <span className="line-clamp-1">Kids Zone</span>
           </Link>
           <Link
             to="/electronics"
@@ -65,14 +65,14 @@ const CategoryMenu = () => {
             className="flex items-center gap-2 text-gray-700 hover:text-blue-600 font-semibold text-[14px]"
           >
             <FiZap className="text-yellow-500" />
-            Daily Deals
+            <span className="line-clamp-1">Daily Deals</span>
           </Link>
           <Link
             to="/kids-zone"
             className="flex items-center gap-2 text-gray-700 hover:text-blue-600 font-semibold text-[14px]"
           >
             <FiShoppingBag className="opacity-70" />
-            Kids Zone
+            <span className="line-clamp-1">Kids Zone</span>
           </Link>
           <Link
             to="/electronics"
@@ -86,9 +86,8 @@ const CategoryMenu = () => {
             className="flex items-center gap-2 text-gray-700 hover:text-blue-600 font-semibold text-[14px]"
           >
             <FiZap className="text-yellow-500" />
-            Daily Deals
+            <span className="line-clamp-1">Daily Deals</span>
           </Link>
-        
         </div>
 
         {/* --- RIGHT SECTION: Robotics & Storage Dropdowns --- */}
