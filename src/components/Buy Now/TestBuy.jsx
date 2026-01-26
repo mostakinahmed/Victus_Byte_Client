@@ -236,6 +236,8 @@ const TestBuy = ({ data }) => {
     }
   };
 
+  console.log(data);
+  
   return (
     <div className="min-h-screen w-full font-sans   text-white pb-20">
       <div className="w-full md:flex gap-4 ">
@@ -345,7 +347,7 @@ const TestBuy = ({ data }) => {
                         type="text"
                         autoFocus
                         placeholder="Search..."
-                        className="w-full p-2 text-sm border bg-white rounded outline-none"
+                        className="w-full p-2 md:text-sm text-[16px] border bg-white rounded outline-none"
                         value={districtSearch}
                         onChange={(e) => setDistrictSearch(e.target.value)}
                       />
@@ -597,7 +599,7 @@ const TestBuy = ({ data }) => {
                   placeholder="Enter code"
                   className="w-full px-4 h-9.5 border border-gray-300 rounded outline-none"
                 />
-                <button className="hover:bg-slate-800 text-slate-800 w-50 border-2 border-slate-800 font-semibold px-6 py-1.5 rounded transition-all shadow hover:text-white">
+                <button className="hover:bg-slate-800 text-slate-800 md:w-50 w-60 border-2 border-slate-800 font-semibold md:px-6 px-3 py-1.5 rounded transition-all shadow hover:text-white">
                   Apply Coupon
                 </button>
               </div>
@@ -637,7 +639,7 @@ const TestBuy = ({ data }) => {
                   className="grid grid-cols-12 items-center border-b py-4 px-4 text-sm text-gray-700"
                 >
                   <div className="col-span-6 font-medium text-slate-800">
-                    {item.name} ({item.color})
+                    {item.name} ({item.colors})
                   </div>
                   <div className="col-span-3">
                     {item.price.selling}৳ x {item.qty}

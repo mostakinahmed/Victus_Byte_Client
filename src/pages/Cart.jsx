@@ -19,7 +19,7 @@ export const Cart = () => {
       .map((cartItem) => {
         const product = productData.find((p) => p.pID === cartItem.pID);
         if (!product) return null;
-        return { ...product, qty: cartItem.qty || 1,colors:cartItem.color };
+        return { ...product, qty: cartItem.qty || 1, colors: cartItem.color };
       })
       .filter(Boolean);
     setItems(merged);
@@ -33,7 +33,7 @@ export const Cart = () => {
     (sum, item) => sum + item.price.discount,
     0,
   );
-console.log(items);
+  console.log(items);
 
   const onRemove = (pID) => {
     const updatedItems = items.filter((item) => item.pID !== pID);
@@ -77,15 +77,10 @@ console.log(items);
   };
 
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
-      className="max-w-[1400px] lg:mt-[86px] font-sans mt-[40px] pt-5 mx-auto md:px-4 px-2 mb-60"
-    >
-      <div className="flex flex-col lg:flex-row gap-4">
+    <div className="max-w-[1400px] lg:mt-[86px] font-sans mt-[40px] pt-5 mx-auto md:px-4 px-2 mb-60">
+      <div className="flex bg-white shadow flex-col lg:flex-row">
         {/* --- Left Side: Product List --- */}
-        <motion.div variants={leftSideVariants} className="flex-1">
+        <div variants={leftSideVariants} className="flex-1">
           <div className="bg-white overflow-hidden border border-slate-200">
             {/* Table (Desktop) */}
             <div className="hidden md:block overflow-x-auto">
@@ -226,11 +221,11 @@ console.log(items);
               </div>
             )}
           </div>
-        </motion.div>
+        </div>
 
         {/* --- Right Side: Order Summary --- */}
         {items.length > 0 && (
-          <motion.div variants={rightSideVariants} className="lg:w-[400px]">
+          <div className="lg:w-[400px]">
             <div className="bg-slate-900 p-8 text-white shadow-2xl sticky top-24">
               <h2 className="text-xl font-black mb-6">Order Summary</h2>
               <div className="space-y-4">
@@ -265,9 +260,9 @@ console.log(items);
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         )}
       </div>
-    </motion.div>
+    </div>
   );
 };
