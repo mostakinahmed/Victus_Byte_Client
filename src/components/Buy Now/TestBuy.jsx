@@ -237,7 +237,7 @@ const TestBuy = ({ data }) => {
   };
 
   console.log(data);
-  
+
   return (
     <div className="min-h-screen w-full font-sans   text-white pb-20">
       <div className="w-full md:flex gap-4 ">
@@ -466,6 +466,7 @@ const TestBuy = ({ data }) => {
                       defaultChecked
                       className="w-5 h-5 accent-blue-600"
                     />
+
                     <span className="font-medium text-slate-800">
                       Cash on Delivery
                     </span>
@@ -483,25 +484,48 @@ const TestBuy = ({ data }) => {
                   </label>
                 </div>
                 <div className="mt-6">
-                  <p className="font-bold text-black mb-2">We Accept :</p>
-                  <div className="flex flex-wrap items-center gap-x-4">
-                    <span className="text-[9px] font-bold text-black uppercase">
-                      CASH ON DELIVERY
-                    </span>
-                    <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg"
-                      alt="MC"
-                      className="h-6"
-                    />
-                    <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg"
-                      alt="Visa"
-                      className="h-4"
-                    />
-                    <span className="text-pink-600 font-bold italic">
-                      bKash
-                    </span>
-                    <span className="text-orange-500 font-bold">নগদ</span>
+                  <div className="mt-6">
+                    <p className="text-[16px] font-bold text-black mb-2">
+                      We Accept :
+                    </p>
+
+                    <div className="flex flex-wrap items-center md:gap-x-4 gap-x-1 gap-y-2">
+                      <span className="md:text-[11px] text-[9px] font-bold leading-tight text-black w-14">
+                        CASH ON DELIVERY
+                      </span>
+
+                      {/* Using colored divs as placeholders for the specific logos in your screenshot */}
+
+                      <div className="flex items-center md:gap-4 gap-2">
+                        <img
+                          src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg"
+                          alt="MC"
+                          className=" md:h-6 h-5"
+                        />
+
+                        <img
+                          src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg"
+                          alt="Visa"
+                          className="md:h-4 h-3"
+                        />
+
+                        <span className="text-[#D12053] font-bold italic text-sm">
+                          bKash
+                        </span>
+
+                        <span className="text-[#F7941D] font-bold text-sm">
+                          নগদ
+                        </span>
+
+                        <span className="text-[#005DAA] font-bold text-sm">
+                          উপায়
+                        </span>
+
+                        <span className="text-[#00a651] font-bold text-sm">
+                          TakaPay
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -597,9 +621,9 @@ const TestBuy = ({ data }) => {
                 <input
                   type="text"
                   placeholder="Enter code"
-                  className="w-full px-4 h-9.5 border border-gray-300 rounded outline-none"
+                  className="w-full px-4 md:h-9.5 h-10 border border-gray-300 rounded outline-none"
                 />
-                <button className="hover:bg-slate-800 text-slate-800 md:w-50 w-60 border-2 border-slate-800 font-semibold md:px-6 px-3 py-1.5 rounded transition-all shadow hover:text-white">
+                <button className="md:hover:bg-slate-800 bg-slate-800 md:bg-white md:text-slate-800 text-white md:w-50 w-60 border-2 border-slate-800 font-semibold md:px-6 px-3 py-1.5 rounded transition-all shadow hover:text-white">
                   Apply Coupon
                 </button>
               </div>
@@ -628,7 +652,7 @@ const TestBuy = ({ data }) => {
               </h2>
             </div>
             <div className="p-2">
-              <div className="grid grid-cols-12 bg-gray-50 border-y py-3 px-4 text-xs font-bold text-gray-500 uppercase">
+              <div className="grid grid-cols-12 bg-gray-50 border-b py-3 px-4 text-xs font-bold text-gray-500 uppercase">
                 <div className="col-span-6">Product Name</div>
                 <div className="col-span-3">Price</div>
                 <div className="col-span-3 text-right">Total</div>
