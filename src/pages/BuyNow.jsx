@@ -3,6 +3,7 @@ import { motion } from "framer-motion"; // 1. Import motion
 import { HomeBuy } from "../components/Buy Now/HomeBuy.jsx";
 import { RelatedProduct } from "../components/Product Details/RelatedProduct";
 import { DataContext } from "../components/Context Api/UserContext.jsx";
+import TestBuy from "../components/Buy Now/TestBuy.jsx";
 
 export const BuyNow = () => {
   const { productData } = useContext(DataContext);
@@ -20,8 +21,6 @@ export const BuyNow = () => {
     setItems(merged);
   }, [productData]);
 
-
-  
   const categoryList = items.flatMap((item) =>
     Array.isArray(item.category) ? item.category : [item.category],
   );
@@ -63,22 +62,16 @@ export const BuyNow = () => {
     },
   };
 
+  console.log(items);
+
   return (
-    <motion.div
+    <div
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      className="max-w-[1400px] mx-auto md:pr-4 flex mt-[60px] md:mt-[105px] mb-4 overflow-hidden"
+      className="max-w-[1400px] mx-auto px-2 md:px-4 md:pr-4 flex mt-[60px] md:mt-[105px] mb-4 overflow-hidden"
     >
-      {/* Checkout form (Left Side) */}
-      <motion.div variants={leftSlide} className="flex-1">
-        <HomeBuy data={items} />
-      </motion.div>
-
-      {/* Related products (Right Side - Desktop Only) */}
-      <motion.div variants={rightSlide} className="hidden lg:flex">
-        <RelatedProduct data={allProductsInCategory} />
-      </motion.div>
-    </motion.div>
+      <TestBuy data={items} />
+    </div>
   );
 };

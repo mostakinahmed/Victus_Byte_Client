@@ -70,7 +70,8 @@ body {
   box-shadow: 0 -2px 4px -1px rgba(0, 0, 0, 0.15);
 }
 .shadow-sides {
-  box-shadow: 2px 0 4px -1px rgba(0, 0, 0, 0.15),
+  box-shadow:
+    2px 0 4px -1px rgba(0, 0, 0, 0.15),
     /* Right shadow */ -2px 0 4px -1px rgba(0, 0, 0, 0.15); /* Left shadow */
 }
 
@@ -148,7 +149,12 @@ body {
 
 @layer base {
   html {
-    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    font-family:
+      Inter,
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
       sans-serif;
   }
 
@@ -172,4 +178,10 @@ body {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
+}
+
+/* Custom blur for SweetAlert2 Backdrop */
+.swal2-backdrop-show {
+  backdrop-filter: blur(8px) !important; /* Adjust 8px to your liking */
+  background: rgba(0, 0, 0, 0.5) !important; /* Semi-transparent dark overlay */
 }

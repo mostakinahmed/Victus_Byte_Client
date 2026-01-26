@@ -70,6 +70,8 @@ export function HomeBuy({ data }) {
     ward: "",
   });
 
+  console.log(data);
+
   useEffect(() => {
     const totalPrice = data.reduce(
       (sum, item) => sum + item.price.selling * item.qty,
