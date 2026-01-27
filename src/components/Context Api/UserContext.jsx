@@ -17,9 +17,9 @@ export const UserContext = ({ children }) => {
     const fetchData = async () => {
       try {
         const [productRes, categoryRes, stockRes] = await Promise.all([
-          axios.get("https://api.victusbyte.com/api/product"),
-          axios.get("https://api.victusbyte.com/api/category"),
-          axios.get("https://api.victusbyte.com/api/stock"),
+          axios.get("https://api.victusbyte.com/api/product/client"),
+          axios.get("https://api.victusbyte.com/api/category/client"),
+          axios.get("https://api.victusbyte.com/api/stock/client"),
         ]);
 
         setProductData(productRes.data);
