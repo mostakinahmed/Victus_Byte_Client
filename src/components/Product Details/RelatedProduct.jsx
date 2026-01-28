@@ -6,7 +6,7 @@ export const RelatedProduct = ({ data }) => {
   return (
     <div className="w-full mt-3 md:mt-0 lg:w-[400px] font-sans bg-white border border-slate-200 overflow-hidden animate-in fade-in duration-700">
       {/* Section Header */}
-      <div className="p-4 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
+      <div className="p-4 border-b border-slate-200 bg-slate-50/50 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="p-1.5 bg-amber-500 rounded-lg text-white shadow-lg shadow-amber-200">
             <FiZap size={16} />
@@ -15,7 +15,6 @@ export const RelatedProduct = ({ data }) => {
             Related Product
           </h2>
         </div>
-       
       </div>
 
       <div className="p-3 space-y-4">
@@ -25,16 +24,16 @@ export const RelatedProduct = ({ data }) => {
           const limitedSpecs = flatSpecs.slice(0, 2); // Reduced to 2 for cleaner sidebar look
 
           return (
-            <div key={element._id} className="group relative">
+            <div key={element._id} className="group relative border-b border-slate-200">
               <Link
                 to={`/${element.category}/${element.name
                   .replace(/\s+/g, "-")
                   .toLowerCase()}`}
                 className="block"
               >
-                <div className="flex gap-4 p-3 rounded-2xl border border-transparent hover:border-indigo-100 hover:bg-indigo-100/30 transition-all duration-300">
+                <div className="flex gap-4 p-3 rounded border border-transparent hover:border-indigo-100 hover:bg-indigo-100/30 transition-all duration-300">
                   {/* --- Image Frame --- */}
-                  <div className="w-24 h-24 shrink-0 bg-white rounded-xl border border-slate-100 p-2 shadow-sm group-hover:shadow-md transition-all">
+                  <div className="w-24 h-24 shrink-0 bg-white rounded-xl border-2 border-slate-100 p-2 group-hover:shadow transition-all">
                     <img
                       className="w-full h-full object-contain"
                       src={element.images[0]}
@@ -82,20 +81,18 @@ export const RelatedProduct = ({ data }) => {
               </Link>
 
               {/* --- Integrated Action Button --- */}
-              <Link
+              {/* <Link
                 to={`/product/${element.category}/${element.pID}/buynow`}
                 className="block px-3 -mt-1 pb-2"
               >
                 <button className="w-full flex items-center justify-center gap-2 bg-slate-900 text-white py-2 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-indigo-600 shadow-xl shadow-slate-200 transition-all active:scale-[0.98]">
                   <FiShoppingBag size={12} /> Direct Purchase
                 </button>
-              </Link>
+              </Link> */}
             </div>
           );
         })}
       </div>
-
-   
     </div>
   );
 };

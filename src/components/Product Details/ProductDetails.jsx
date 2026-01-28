@@ -168,7 +168,7 @@ const ProductDetail = () => {
                 key={currentIndex}
                 src={product.images[currentIndex]}
                 alt={product.name}
-                className="w-full h-[250px] md:h-[400px] object-contain"
+                className="w-full h-[250px] md:h-[400px] md:p-5 p-2 object-contain"
               />
 
               {product.images.length > 1 && (
@@ -198,23 +198,32 @@ const ProductDetail = () => {
               </h1>
 
               <div className="flex flex-wrap items-center justify-between  md:justify-start gap-1.5 md:gap-5 mb-4 md:mb-10">
-                <span className="bg-slate-100 text-slate-600 text-[10px] md:text-[11px] md:tracking-wider font-bold px-2 py-0.5 rounded uppercase border border-slate-200">
-                  Cat: <span className="text-[#fe741d]">{CurrCat?.catName}</span>
+                <span className="bg-slate-100 md:hidden text-slate-600 text-[10px] md:text-[11px] md:tracking-wider font-bold px-2 py-0.5 rounded uppercase border border-slate-200">
+                  Cat:{" "}
+                  <span className="text-[#fe741d]">{CurrCat?.catName}</span>
+                </span>
+                <span className="hidden md:block bg-slate-100 text-slate-600 text-[10px] md:text-[11px] md:tracking-wider font-bold px-2 py-0.5 rounded uppercase border border-slate-200">
+                  Type:{" "}
+                  <span className="text-[#fe741d]">{CurrCat?.catName}</span>
                 </span>
                 <span className="bg-slate-100 text-slate-600 text-[10px] md:text-[11px] md:tracking-wider font-bold px-2 py-0.5 rounded uppercase border border-slate-200">
-                  Brand: <span className="text-[#fe741d]">{product.brandName}</span>
+                  Brand:{" "}
+                  <span className="text-[#fe741d]">{product.brandName}</span>
                 </span>
                 <span className="bg-slate-100 text-slate-600 text-[10px] md:text-[12px] md:tracking-wider font-bold px-2 py-0.5 rounded uppercase border border-slate-200">
                   Code: <span className="text-[#fe741d]">{product.pID}</span>
                 </span>
               </div>
 
-              <hr className="border-slate-100 mb-4" />
+              <hr className="border-slate-200 mb-4" />
 
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex flex-col mb-4">
                 <div className="flex items-baseline gap-2">
                   <span className="text-2xl font-black text-slate-900">
-                    ৳{(product.price.selling - product.price.discount).toLocaleString()}
+                    ৳
+                    {(
+                      product.price.selling - product.price.discount
+                    ).toLocaleString()}
                   </span>
                   {product.price.discount > 0 && (
                     <span className="text-sm text-slate-400 line-through">
@@ -222,62 +231,220 @@ const ProductDetail = () => {
                     </span>
                   )}
                 </div>
-                <span className={`text-[10px] font-bold uppercase ${currentStock > 0 ? "text-green-600" : "text-red-600"}`}>
-                  ● {currentStock > 0 ? "In Stock" : "Out of Stock"}
-                </span>
               </div>
 
               <div className="md:space-y-4 space-y-3">
                 <div>
-                  <h3 className="text-[11px] font-bold text-slate-500 uppercase mb-2">
-                    Color: <span className="text-slate-900 ml-1">{selectedColor}</span>
-                  </h3>
-                  <div className="flex flex-wrap gap-3">
-                    {product?.colors?.map((name) => (
-                      <button
-                        key={name}
-                        onClick={() => setSelectedColor(name)}
-                        className={`px-3 py-1 text-xs font-semibold rounded border transition-all ${selectedColor === name ? "bg-[#fe741d] border-[#fe741d] text-white" : "bg-white border-slate-200 text-slate-600 hover:border-slate-300"}`}
-                      >
-                        {name}
-                      </button>
-                    ))}
+                  <div className="mt-6">
+                    <div className="mt-6">
+                      <h3 className="text-[10px] tracking-[0.2em] font-black text-slate-500 uppercase mb-4 ml-1">
+                        Available Colors
+                      </h3>
+
+                      <div className="flex flex-wrap gap-3">
+                        {product?.colors?.map((name) => {
+                          const isSelected = selectedColor === name;
+
+                          return (
+                            <button
+                              key={name}
+                              onClick={() => setSelectedColor(name)}
+                              className={`
+            relative flex items-center gap-3 md:px-3 px-2 md:py-2 py-1 rounded-xl border-2 transition-all duration-300 group
+            ${
+              isSelected
+                ? "border-[#fe741d] bg-orange-50/30 shadow-sm"
+                : "border-slate-100 bg-white hover:border-slate-300 hover:shadow-md active:scale-95"
+            }
+          `}
+                            >
+                              {/* Small Color Circle Indicator */}
+                              <div
+                                className="w-5 h-5 rounded-full border border-black/5 shadow-inner"
+                                style={{ backgroundColor: name.toLowerCase() }}
+                              />
+
+                              {/* Color Name */}
+                              <span
+                                className={`
+            text-[10px] md:text-[11px] font-bold uppercase tracking-wide transition-colors
+            ${isSelected ? "text-[#fe741d]" : "text-slate-600 group-hover:text-slate-900"}
+          `}
+                              >
+                                {name}
+                              </span>
+
+                              {/* Selection "Check" Dot (Hidden but pops up) */}
+                              {isSelected && (
+                                <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-[#fe741d] rounded-full flex items-center justify-center border-2 border-white shadow-sm">
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="8"
+                                    height="8"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="white"
+                                    strokeWidth="4"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                  >
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                  </svg>
+                                </span>
+                              )}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                <div>
-                  <h3 className="text-[11px] font-bold text-slate-500 uppercase mb-2">Quantity</h3>
-                  <div className="flex items-center w-fit border border-slate-200 rounded overflow-hidden">
-                    <button
-                      onClick={() => quantity > 1 && setQuantity(quantity - 1)}
-                      className="w-8 h-8 flex items-center justify-center bg-slate-50 hover:bg-slate-100 text-slate-600 font-bold border-r border-slate-200"
-                    >
-                      -
-                    </button>
-                    <span className="w-10 text-center text-sm font-bold text-slate-800">{quantity}</span>
-                    <button
-                      onClick={() => setQuantity(quantity + 1)}
-                      className="w-8 h-8 flex items-center justify-center bg-slate-50 hover:bg-slate-100 text-slate-600 font-bold border-l border-slate-200"
-                    >
-                      +
-                    </button>
+                <div className="select-none mt-4">
+                  {/* Modernized Label */}
+                  <div className="flex items-center mb-2 px-1">
+                    <h3 className="text-[10px] tracking-[0.2em] font-black text-slate-500 uppercase">
+                      Quantity
+                    </h3>
+                    {quantity >= 5 && (
+                      <span className="text-[10px] ml-1 font-bold text-indigo-500 animate-pulse">
+                        Popular Choice
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="flex gap-5">
+                    <div className="group flex items-center bg-slate-100 p-1.5 rounded-2xl w-fit border border-slate-200/60 shadow-inner">
+                      {/* Decrease Button */}
+                      <button
+                        disabled={quantity <= 1}
+                        onClick={() => setQuantity(quantity - 1)}
+                        className="w-9 h-9 flex items-center justify-center rounded-xl bg-white shadow-sm text-slate-600 transition-all duration-200 
+                 enabled:hover:bg-red-50 enabled:hover:text-red-600 enabled:active:scale-90 
+                 disabled:opacity-40 disabled:cursor-not-allowed"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="18"
+                          height="18"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                      </button>
+
+                      {/* Number Display with "Slot Machine" feel */}
+                      <div className="w-14 flex flex-col items-center justify-center overflow-hidden">
+                        <span
+                          key={quantity}
+                          className="text-lg font-black text-slate-800 tabular-nums animate-in fade-in zoom-in duration-300"
+                        >
+                          {quantity}
+                        </span>
+                      </div>
+
+                      {/* Increase Button */}
+                      <button
+                        onClick={() => setQuantity(quantity + 1)}
+                        className="w-9 h-9 flex items-center justify-center rounded-xl bg-white shadow-sm text-slate-600 transition-all duration-200 
+                 hover:bg-indigo-50 hover:text-indigo-600 active:scale-90"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="18"
+                          height="18"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <line x1="12" y1="5" x2="12" y2="19"></line>
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                      </button>
+                    </div>
+                    <div className="flex justify-center items-center ">
+                      <div>
+                        <div className=" flex items-center justify-center">
+                          <div
+                            className={`
+    inline-flex items-center gap-2 px-2.5 py-1 rounded-full border
+    ${
+      currentStock > 0
+        ? "bg-green-50 border-green-100 text-green-700"
+        : "bg-red-50 border-red-100 text-red-700"
+    }
+  `}
+                          >
+                            {/* Animated Icon Container */}
+                            <div className="relative flex h-2 w-2">
+                              {/* The Slow Pulse */}
+                              <span
+                                className={`
+        absolute inline-flex h-full w-full rounded-full opacity-75 
+        animate-[ping_2s_linear_infinite]
+        ${currentStock > 0 ? "bg-green-500" : "bg-red-500"}
+      `}
+                              ></span>
+
+                              {/* The Solid Center */}
+                              <span
+                                className={`
+        relative inline-flex rounded-full h-2 w-2
+        ${currentStock > 0 ? "bg-green-600" : "bg-red-600"}
+      `}
+                              ></span>
+                            </div>
+
+                            {/* The Text Label */}
+                            <span className="text-[10px] font-black uppercase tracking-widest">
+                              {currentStock > 0 ? "In Stock" : "Sold Out"}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="md:mt-6 mt-4 flex gap-2">
+            <div className="md:mt-6 mt-4 md:w-2/3 flex gap-2">
               <button
                 onClick={() => addToCartBtn(product)}
-                className="flex-1 h-10 text-sm font-bold border-2 border-[#fe741d] text-[#fe741d] rounded hover:bg-orange-50 transition-all active:scale-95"
+                disabled={currentStock <= 0}
+                className={`group ${currentStock <= 0 ? "hidden" : "block"} disabled:cursor-not-allowed disabled:shadow-none relative flex-1 h-12  md:text-[16px] text-sm font-bold border-2 border-[#fe741d] cursor-pointer  text-[#fe741d] rounded overflow-hidden transition-colors duration-300 `}
               >
-                Add to Cart
+                {/* The Sliding Layer */}
+                <span className="absolute inset-0 w-full h-full bg-[#fe741d]  transition-transform duration-500 ease-out -translate-y-full group-hover:translate-y-0"></span>
+
+                {/* The Button Text */}
+                <span className="relative z-10 group-hover:text-white transition-colors duration-500">
+                  Add to Cart
+                </span>
               </button>
+
               <button
                 onClick={() => buyNowBtn(product)}
-                className="flex-1 h-10 text-sm font-bold bg-[#2dc6f4] hover:bg-[#00b4ea] text-white rounded shadow-sm transition-all active:scale-95"
+                // Check if stock is 0 or less
+                disabled={currentStock <= 0}
+                className="group relative flex-1 h-12 md:text-[16px] text-sm font-bold bg-slate-800 text-white rounded overflow-hidden transition-all duration-300 
+             disabled:cursor-not-allowed disabled:shadow-none"
               >
-                Buy Now
+                {/* The Sliding Layer - Only animate if NOT disabled */}
+                <span className="absolute inset-0 w-full h-full bg-slate-700 transition-transform duration-500 ease-out -translate-y-full group-enabled:group-hover:translate-y-0"></span>
+
+                {/* The Button Text */}
+                <span className="relative z-10 transition-colors duration-500">
+                  {currentStock > 0 ? "Buy Now" : "Currently Unavailable"}
+                </span>
               </button>
             </div>
           </div>

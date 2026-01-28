@@ -140,7 +140,7 @@ export default function SearchResult() {
             <Link
               key={product.pID}
               to={`/${product.category}/${product.name.replace(/\s+/g, "-").toLowerCase()}`}
-              className="hover:scale-[1.02] transition-transform duration-300"
+              className=""
             >
               <ProductCard data={product} />
             </Link>

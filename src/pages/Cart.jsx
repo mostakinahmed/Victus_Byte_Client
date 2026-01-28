@@ -136,7 +136,7 @@ export const Cart = () => {
                         </div>
                       </td>
                       <td className="px-4 py-4 text-center">
-                        <span className="text-sm font-semibold text-slate-700 bg-slate-100 px-3 py-1 rounded-md">
+                        <span className="text-sm font-semibold uppercase text-slate-700 bg-slate-100 px-3 py-1 rounded-md">
                           {item.colors}
                         </span>
                       </td>
@@ -226,9 +226,9 @@ export const Cart = () => {
         {/* --- Right Side: Order Summary --- */}
         {items.length > 0 && (
           <div className="lg:w-[400px]">
-            <div className="bg-slate-900 p-8 text-white shadow-2xl sticky top-24">
-              <h2 className="text-xl font-black mb-6">Order Summary</h2>
-              <div className="space-y-4">
+            <div className="bg-slate-900 p-8 text-white shadow-2xl sticky mt-10 md:mt-0 top-24">
+              <h2 className="text-xl font-black md:mb-6 mb-3">Order Summary</h2>
+              <div className="md:space-y-4 space-y-2">
                 <div className="flex justify-between items-center text-slate-400 text-sm">
                   <span>Sub-Total</span>
                   <span className="text-white font-bold">৳{totalPrice}</span>
@@ -239,8 +239,8 @@ export const Cart = () => {
                     -৳{totalDiscount}
                   </span>
                 </div>
-                <div className="pt-6 mt-6 border-t border-white/10">
-                  <div className="flex justify-between items-end mb-8">
+                <div className="md:pt-6 pt-3 md:mt-6 mt-4 border-t border-white/10">
+                  <div className="flex justify-between items-end md:mb-8 mb-5">
                     <div>
                       <p className="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-1">
                         Total Payable

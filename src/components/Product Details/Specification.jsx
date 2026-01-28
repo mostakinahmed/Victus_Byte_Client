@@ -8,12 +8,12 @@ export default function ProductSpecTable({ data }) {
       <h2 className="lg:text-2xl text-xl font-bold text-gray-700 mb-4">
         Product Specifications
       </h2>
-      <table className="w-full border border-gray-200 divide-y divide-gray-200">
+      <table className="w-full divide-y divide-gray-200">
         <tbody>
           {Object.entries(productSpecs).map(([section, items]) => (
             <React.Fragment key={section}>
               {/* Section Header */}
-              <tr className="bg-gray-100">
+              <tr className="bg-slate-100">
                 <td
                   colSpan={2}
                   className="px-4 py-2 font-semibold text-gray-700 lg:text-lg"
