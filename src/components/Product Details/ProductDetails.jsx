@@ -197,7 +197,7 @@ const ProductDetail = () => {
                 {product.name}
               </h1>
 
-              <div className="flex flex-wrap items-center justify-between  md:justify-start gap-1.5 md:gap-5 mb-4 md:mb-10">
+              <div className="flex flex-wrap items-center justify-between  md:justify-start gap-1.5 md:gap-5 mb-4 md:mb-7">
                 <span className="bg-slate-100 md:hidden text-slate-600 text-[10px] md:text-[11px] md:tracking-wider font-bold px-2 py-0.5 rounded uppercase border border-slate-200">
                   Cat:{" "}
                   <span className="text-[#fe741d]">{CurrCat?.catName}</span>
@@ -215,7 +215,7 @@ const ProductDetail = () => {
                 </span>
               </div>
 
-              <hr className="border-slate-200 mb-4" />
+              <hr className="border-slate-100 mb-4" />
 
               <div className="flex flex-col mb-4">
                 <div className="flex items-baseline gap-2">
@@ -260,7 +260,7 @@ const ProductDetail = () => {
                             >
                               {/* Small Color Circle Indicator */}
                               <div
-                                className="w-5 h-5 rounded-full border border-black/5 shadow-inner"
+                                className="w-4 h-4 rounded-full border border-black/5 shadow-inner"
                                 style={{ backgroundColor: name.toLowerCase() }}
                               />
 
@@ -416,7 +416,9 @@ const ProductDetail = () => {
               </div>
             </div>
 
-            <div className="md:mt-6 mt-4 md:w-2/3 flex gap-2">
+            <div
+              className={`md:mt-6 mt-4 ${currentStock <= 0 ? "md:w-1/2" : "md:w-2/3 w-full"} flex gap-2`}
+            >
               <button
                 onClick={() => addToCartBtn(product)}
                 disabled={currentStock <= 0}
