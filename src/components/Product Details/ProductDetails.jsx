@@ -237,7 +237,7 @@ const ProductDetail = () => {
                 <div>
                   <div className="mt-6">
                     <div className="mt-6">
-                      <h3 className="text-[10px] tracking-[0.2em] font-black text-slate-500 uppercase mb-2">
+                      <h3 className="text-[10px] tracking-widest font-black text-slate-500 uppercase mb-2">
                         Available Colors
                       </h3>
 
@@ -303,7 +303,7 @@ const ProductDetail = () => {
                 <div className="select-none mt-4">
                   {/* Modernized Label */}
                   <div className="flex items-center mb-2 px-1">
-                    <h3 className="text-[10px] tracking-[0.2em] font-black text-slate-500 uppercase">
+                    <h3 className="text-[10px] tracking-widest font-black text-slate-500 uppercase">
                       Quantity
                     </h3>
                     {quantity >= 5 && (
