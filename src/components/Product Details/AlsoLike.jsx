@@ -10,7 +10,7 @@ const AlsoLike = () => {
   if (!productData || productData.length === 0) return null;
 
   return (
-    <div className="max-w-[1360px] bg-white mx-auto mt-5  rounded  ">
+    <div className="max-w-[1360px] bg-white mx-auto mt-5  rounded pb-4 ">
       {/* Header Section - Styled like Featured Product */}
       <div className="flex items-center justify-between bg-white shadow-sm border border-gray-100 p-4 mb-4">
         <div className="flex items-center gap-3">
