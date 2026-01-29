@@ -148,7 +148,7 @@ const TestBuy = ({ data }) => {
         : 120;
 
   //  const totalTk = subTotal + deliverTk - discount - (couponValue?.value || 0);
-  const totalTk = subTotal + deliverTk - discount;
+  const totalTk = subTotal + deliverTk - discount - (couponValue?.value || 0);
   useEffect(() => {
     setSubTotalTk(subTotal);
   }, [subTotal]);
@@ -261,10 +261,13 @@ const TestBuy = ({ data }) => {
     console.log(orderPayload);
 
     try {
-      await axios.post(
+      const res = await axios.post(
         "http://localhost:3000/api/order/create-order/client",
         orderPayload,
       );
+
+      console.log(res);
+
       localStorage.removeItem("cart");
       updateCart();
 
@@ -310,7 +313,15 @@ const TestBuy = ({ data }) => {
         }
       });
     } catch (error) {
-      toast.error("Network Synchronization Failed");
+      // 1. Extract the specific message from the backend (if available)
+      const errorMessage =
+        error.response?.data?.message || "Order Submission Failed";
+
+      // 2. Display the specific error via toast
+      toast.error(errorMessage);
+
+      // Optional: Log it for your own debugging
+      console.error("Submission Error:", error.response?.data);
     } finally {
       setIsSubmitting(false);
     }
