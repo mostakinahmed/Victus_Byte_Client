@@ -737,8 +737,8 @@ const TestBuy = ({ data }) => {
                           setCoupon(e.target.value);
                           if (error) setError(false);
                         }}
-                        placeholder="Enter Coupon / Promo Code"
-                        className={`w-full px-4 md:h-9.5 h-10 border rounded outline-none transition-all uppercase ${
+                        placeholder="Enter Coupon"
+                        className={`w-full px-4 md:h-9.5 h-10 border placeholder:normal-case rounded outline-none transition-all uppercase ${
                           error
                             ? "border-red-500 focus:ring-1 focus:ring-red-200"
                             : "border-gray-300 focus:border-slate-400"
@@ -746,7 +746,7 @@ const TestBuy = ({ data }) => {
                       />
                       <button
                         onClick={handleApply}
-                        className="md:hover:bg-slate-800 bg-slate-800 md:bg-white md:text-slate-800 text-white md:w-50 w-60 border-2 border-slate-800 font-semibold px-6 py-1.5 rounded transition-all shadow hover:text-white"
+                        className="md:hover:bg-slate-800 bg-slate-800 md:bg-white md:text-slate-800 text-white md:w-50 w-60 border-2 border-slate-800 font-semibold md:px-6 py-1.5 rounded transition-all shadow hover:text-white"
                       >
                         Apply Coupon
                       </button>
