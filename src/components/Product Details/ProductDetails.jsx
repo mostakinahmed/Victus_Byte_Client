@@ -19,6 +19,7 @@ const ProductDetail = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [selectedColor, setSelectedColor] = useState(null);
+  const [showColorError, setShowColorError] = useState(false);
 
   const { categoryData, productData, stockData } = useContext(DataContext);
   const { cat, name } = useParams();
@@ -67,19 +68,8 @@ const ProductDetail = () => {
 
   const buyNowBtn = (product) => {
     if (!selectedColor) {
-      const isMobile = window.innerWidth < 768;
-      Swal.fire({
-        title: "Wait!",
-        text: "Please select a color.....",
-        icon: "warning",
-        width: isMobile ? "300px" : "460px",
-        padding: "1em",
-        showConfirmButton: false,
-        timer: 1500,
-        timerProgressBar: true,
-        heightAuto: false,
-        scrollbarPadding: false,
-      });
+      setShowColorError(true);
+      // Optional: Scroll to the color section so they see the warning
       return;
     }
 
@@ -233,69 +223,87 @@ const ProductDetail = () => {
                 </div>
               </div>
 
-              <div className="md:space-y-4 space-y-3">
-                <div>
-                  <div className="mt-6">
-                    <div className="mt-6">
-                      <h3 className="text-[10px] tracking-widest font-black text-slate-500 uppercase mb-2">
+              <div className="md:space-y- space-y-3">
+                <div className="">
+                  <div
+                    className={`mt-4 -mb-2 py-2 px-1 rounded-2xl transition-all duration-500 ${
+                      showColorError && !selectedColor
+                        ? "bg-red-50 border-2 border-red-200 animate-pulse-subtle"
+                        : "border-2 border-transparent"
+                    }`}
+                  >
+                    <div className="flex justify-between items-center mb-2">
+                      <h3 className="text-[10px] md:tracking-widest tracking-wider font-black text-slate-500 uppercase">
                         Available Colors
                       </h3>
 
-                      <div className="flex flex-wrap gap-3">
-                        {product?.colors?.map((name) => {
-                          const isSelected = selectedColor === name;
+                      {/* The Warning Alert */}
+                      {showColorError && !selectedColor && (
+                        <span className="text-[10px] mr-2 font-bold text-red-500 animate-bounce">
+                          ⚠️ Please select a color
+                        </span>
+                      )}
+                    </div>
 
-                          return (
-                            <button
-                              key={name}
-                              onClick={() => setSelectedColor(name)}
-                              className={`
+                    <div className="flex flex-wrap gap-3">
+                      {product?.colors?.map((name) => {
+                        const isSelected = selectedColor === name;
+
+                        return (
+                          <button
+                            key={name}
+                            onClick={() => {
+                              setSelectedColor(name);
+                              setShowColorError(false); // Reset error once they pick one
+                            }}
+                            className={`
             relative flex items-center gap-3 md:px-3 px-2 md:py-2 py-1 rounded-xl border-2 transition-all duration-300 group
             ${
               isSelected
                 ? "border-[#fe741d] bg-orange-50/30 shadow-sm"
-                : "border-slate-100 bg-white hover:border-slate-300 hover:shadow-md active:scale-95"
+                : showColorError && !selectedColor
+                  ? "border-red-300 bg-white hover:border-red-400" // Highlighted state
+                  : "border-slate-100 bg-white hover:border-slate-300 active:scale-95"
             }
           `}
-                            >
-                              {/* Small Color Circle Indicator */}
-                              <div
-                                className="w-4 h-4 rounded-full border border-black/5 shadow-inner"
-                                style={{ backgroundColor: name.toLowerCase() }}
-                              />
+                          >
+                            {/* Small Color Circle Indicator */}
+                            <div
+                              className="w-4 h-4 rounded-full border border-black/5 shadow-inner"
+                              style={{ backgroundColor: name.toLowerCase() }}
+                            />
 
-                              {/* Color Name */}
-                              <span
-                                className={`
+                            {/* Color Name */}
+                            <span
+                              className={`
             text-[10px] md:text-[11px] font-bold uppercase tracking-wide transition-colors
             ${isSelected ? "text-[#fe741d]" : "text-slate-600 group-hover:text-slate-900"}
           `}
-                              >
-                                {name}
-                              </span>
+                            >
+                              {name}
+                            </span>
 
-                              {/* Selection "Check" Dot (Hidden but pops up) */}
-                              {isSelected && (
-                                <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-[#fe741d] rounded-full flex items-center justify-center border-2 border-white shadow-sm">
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="8"
-                                    height="8"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="white"
-                                    strokeWidth="4"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                  >
-                                    <polyline points="20 6 9 17 4 12"></polyline>
-                                  </svg>
-                                </span>
-                              )}
-                            </button>
-                          );
-                        })}
-                      </div>
+                            {/* Selection Checkbox */}
+                            {isSelected && (
+                              <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-[#fe741d] rounded-full flex items-center justify-center border-2 border-white shadow-sm">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="8"
+                                  height="8"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="white"
+                                  strokeWidth="4"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                >
+                                  <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                              </span>
+                            )}
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
@@ -303,7 +311,7 @@ const ProductDetail = () => {
                 <div className="select-none mt-4">
                   {/* Modernized Label */}
                   <div className="flex items-center mb-2 px-1">
-                    <h3 className="text-[10px] tracking-widest font-black text-slate-500 uppercase">
+                    <h3 className="text-[10px] md:tracking-widest tracking-wider font-black text-slate-500 uppercase">
                       Quantity
                     </h3>
                     {quantity >= 5 && (

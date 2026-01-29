@@ -52,6 +52,11 @@ const TestBuy = ({ data }) => {
   const [upazilas, setUpazilas] = useState([]);
   const [isUpazilaOpen, setIsUpazilaOpen] = useState(false);
   const [selectedUpazila, setSelectedUpazila] = useState(null);
+  const [coupon, setCoupon] = useState("");
+  const [couponValue, setCouponValue] = useState(null);
+  const [couponArray, setCouponArray] = useState([]);
+  const [isApplied, setIsApplied] = useState(false);
+  const [error, setError] = useState(false);
 
   // --- ORDER LOGIC STATES ---
   const [deliveryMethod, setDeliveryMethod] = useState("regular");
@@ -59,6 +64,7 @@ const TestBuy = ({ data }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [agreed, setAgreed] = useState(false);
   const [discount, setDiscount] = useState(0);
+  const [subTotalTk, setSubTotalTk] = useState(0);
   const [errors, setErrors] = useState({});
   const [isNavigating, setIsNavigating] = useState(false); // New navigation state
 
@@ -72,6 +78,60 @@ const TestBuy = ({ data }) => {
     address: "",
     comment: "",
   });
+
+  //---------------------------------------------------------------------------------
+
+  useEffect(() => {
+    // Create an internal async function
+    const fetchCoupons = async () => {
+      try {
+        const res = await axios.get("http://localhost:3000/api/coupon");
+        setCouponArray(res.data.data);
+      } catch (error) {
+        console.error("Error fetching coupons:", error);
+      }
+    };
+
+    fetchCoupons();
+  }, []);
+
+  //apply coupon button
+  const handleApply = () => {
+    const code = coupon.toUpperCase();
+    const matchedCoupon = couponArray.find((c) => c.couponID === code);
+    setCouponValue(matchedCoupon);
+
+    if (!matchedCoupon) {
+      // Error 1: Wrong Code
+      setIsApplied(false);
+      setError("Invalid Coupon Code"); // Set error as a string for the UI
+      setTimeout(() => setError(false), 2000);
+      return;
+    }
+
+    if (subTotalTk < matchedCoupon.minTK) {
+      // Error 2: Minimum Amount not met
+      setIsApplied(false);
+      setError(`Minimum spend of ৳${matchedCoupon.minTK} required`);
+      setTimeout(() => setError(false), 3000);
+      return;
+    }
+
+    // Success Handshake
+    setCouponValue(matchedCoupon);
+    setIsApplied(true);
+    setError(false);
+
+    console.log(isApplied);
+    console.log(error);
+  };
+
+  const handleRemove = () => {
+    setCouponValue(null);
+    setIsApplied(false);
+    setCoupon("");
+    setError(false);
+  };
 
   // --- CALCULATION LOGIC ---
   const subTotal =
@@ -87,7 +147,11 @@ const TestBuy = ({ data }) => {
         ? 160
         : 120;
 
+  //  const totalTk = subTotal + deliverTk - discount - (couponValue?.value || 0);
   const totalTk = subTotal + deliverTk - discount;
+  useEffect(() => {
+    setSubTotalTk(subTotal);
+  }, [subTotal]);
 
   // 1. Click Outside Logic
   useEffect(() => {
@@ -164,7 +228,7 @@ const TestBuy = ({ data }) => {
     if (Object.values(newErrors).some((error) => error)) {
       return toast.error("Please fill required fields and agree to terms");
     }
-
+    console.log("clcik");
     setIsSubmitting(true);
 
     const orderPayload = {
@@ -178,7 +242,7 @@ const TestBuy = ({ data }) => {
         product_name: item.name,
         product_price: item.price.selling,
         quantity: item.qty,
-        product_comments: item.color,
+        product_comments: item.colors,
       })),
       shipping_address: {
         recipient_name: form.name,
@@ -191,11 +255,14 @@ const TestBuy = ({ data }) => {
       shipping_cost: deliverTk,
       subtotal: subTotal,
       discount: discount,
+      coupon: couponValue,
     };
+
+    console.log(orderPayload);
 
     try {
       await axios.post(
-        "https://api.victusbyte.com/api/order/create-order",
+        "http://localhost:3000/api/order/create-order/client",
         orderPayload,
       );
       localStorage.removeItem("cart");
@@ -249,8 +316,6 @@ const TestBuy = ({ data }) => {
     }
   };
 
-  console.log(data);
-
   return (
     <div className="min-h-screen w-full font-sans   text-white pb-20">
       <div className="w-full md:flex gap-4 ">
@@ -268,37 +333,47 @@ const TestBuy = ({ data }) => {
           <div className="bg-white p-4 text-black">
             <div className="flex flex-col gap-5">
               <div className="flex flex-col">
-                <label className="text-sm font-bold text-slate-800 mb-1">
+                <label className="text-sm font-bold text-slate-800 mb-1 flex items-center gap-1">
                   Full Name
+                  <span className="text-red-500 font-black" aria-hidden="true">
+                    *
+                  </span>
                 </label>
                 <input
                   name="name"
                   value={form.name}
                   onChange={handleInputChange}
                   type="text"
-                  placeholder="Full Name *"
+                  placeholder="Full Name "
                   className={`px-4 py-2 border rounded outline-none transition-all ${errors.name ? "border-red-500 bg-red-50" : "focus:ring-1 focus:ring-slate-400"}`}
                 />
               </div>
 
               <div className="flex flex-col">
-                <label className="text-sm font-bold text-slate-800 mb-1">
+                <label className="text-sm font-bold text-slate-800 mb-1 flex items-center gap-1">
                   Phone Number
+                  <span className="text-red-500 font-black" aria-hidden="true">
+                    *
+                  </span>
                 </label>
                 <input
                   name="phone"
                   value={form.phone}
                   onChange={handleInputChange}
                   type="tel"
-                  placeholder="Phone number*"
+                  placeholder="Phone number"
                   className={`px-4 py-2 border rounded outline-none transition-all ${errors.phone ? "border-red-500 bg-red-50" : "focus:ring-1 focus:ring-slate-400"}`}
                 />
               </div>
 
               <div className="flex flex-col">
-                <label className="text-sm font-bold text-slate-800 mb-1">
+                <label className="text-sm font-bold text-slate-800 mb-1 flex items-center gap-1">
                   Delivery Address
+                  <span className="text-red-500 font-black" aria-hidden="true">
+                    *
+                  </span>
                 </label>
+
                 <input
                   name="address"
                   value={form.address}
@@ -317,15 +392,19 @@ const TestBuy = ({ data }) => {
                   value={form.email}
                   onChange={handleInputChange}
                   type="email"
-                  placeholder="E-mail *"
+                  placeholder="E-mail "
                   className="px-4 py-2 border rounded border-gray-200 outline-none"
                 />
               </div>
 
               <div className="flex flex-col w-full relative" ref={distRef}>
-                <label className="text-sm font-bold text-slate-800 mb-1">
+                <label className="text-sm font-bold text-slate-800 mb-1 flex items-center gap-1">
                   District
+                  <span className="text-red-500 font-black" aria-hidden="true">
+                    *
+                  </span>
                 </label>
+
                 <div
                   onClick={() => setIsDistOpen(!isDistOpen)}
                   className={`px-4 py-2 border rounded bg-white cursor-pointer flex justify-between items-center transition-all ${errors.district ? "border-red-500 bg-red-50" : "border-gray-200"}`}
@@ -354,7 +433,7 @@ const TestBuy = ({ data }) => {
                   </svg>
                 </div>
                 {isDistOpen && (
-                  <div className="absolute z-20 w-full top-full bg-white border rounded shadow max-h-60 flex flex-col mt-1">
+                  <div className="absolute z-20 w-full top-full bg-slate-50 border rounded shadow max-h-60 flex flex-col mt-1">
                     <div className="p-2 border-b sticky top-0 bg-slate-100">
                       <input
                         type="text"
@@ -387,9 +466,13 @@ const TestBuy = ({ data }) => {
               </div>
 
               <div className="flex flex-col w-full relative" ref={upazilaRef}>
-                <label className="text-sm font-bold text-slate-800 mb-1">
+                <label className="text-sm font-bold text-slate-800 mb-1 flex items-center gap-1">
                   Upazila/Thana
+                  <span className="text-red-500 font-black" aria-hidden="true">
+                    *
+                  </span>
                 </label>
+
                 <div
                   onClick={() =>
                     selectedDistrict && setIsUpazilaOpen(!isUpazilaOpen)
@@ -420,7 +503,7 @@ const TestBuy = ({ data }) => {
                   </svg>
                 </div>
                 {isUpazilaOpen && selectedDistrict && (
-                  <div className="absolute z-10 w-full top-full bg-white border rounded shadow-lg max-h-60 overflow-y-auto mt-1 py-2">
+                  <div className="absolute z-10 w-full top-full bg-slate-50 border rounded shadow-lg max-h-60 overflow-y-auto mt-1 py-2">
                     {upazilas.map((item) => (
                       <div
                         key={item.id}
@@ -608,6 +691,7 @@ const TestBuy = ({ data }) => {
           </div>
 
           {/* Coupon Section */}
+          {/* --- COUPON SECTION --- */}
           <div className="w-full bg-white rounded shadow p-3 text-black">
             <div className="flex flex-col md:flex-row md:items-center gap-5">
               <div className="flex items-center gap-3 mr-5 min-w-fit">
@@ -621,24 +705,76 @@ const TestBuy = ({ data }) => {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="text-blue-600"
+                  className={isApplied ? "text-green-600" : "text-blue-600"}
                 >
                   <path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z" />
                   <line x1="7" y1="7" x2="7.01" y2="7" />
                 </svg>
                 <span className="text-slate-800 font-medium">
-                  Have a coupon?
+                  {isApplied ? "Coupon Applied!" : "Have a coupon?"}
                 </span>
               </div>
-              <div className="flex flex-1 gap-2">
-                <input
-                  type="text"
-                  placeholder="Enter code"
-                  className="w-full px-4 md:h-9.5 h-10 border border-gray-300 rounded outline-none"
-                />
-                <button className="md:hover:bg-slate-800 bg-slate-800 md:bg-white md:text-slate-800 text-white md:w-50 w-60 border-2 border-slate-800 font-semibold md:px-6 px-3 py-1.5 rounded transition-all shadow hover:text-white">
-                  Apply Coupon
-                </button>
+
+              <div className="flex flex-1 flex-col gap-1">
+                <div className="flex gap-2">
+                  {!isApplied ? (
+                    <>
+                      <input
+                        type="text"
+                        value={coupon}
+                        onChange={(e) => {
+                          setCoupon(e.target.value);
+                          if (error) setError(false);
+                        }}
+                        placeholder="Enter Coupon / Promo Code"
+                        className={`w-full px-4 md:h-9.5 h-10 border rounded outline-none transition-all uppercase ${
+                          error
+                            ? "border-red-500 focus:ring-1 focus:ring-red-200"
+                            : "border-gray-300 focus:border-slate-400"
+                        }`}
+                      />
+                      <button
+                        onClick={handleApply}
+                        className="md:hover:bg-slate-800 bg-slate-800 md:bg-white md:text-slate-800 text-white md:w-50 w-60 border-2 border-slate-800 font-semibold px-6 py-1.5 rounded transition-all shadow hover:text-white"
+                      >
+                        Apply Coupon
+                      </button>
+                    </>
+                  ) : (
+                    /* Success State Badge */
+                    <div className="flex items-center justify-between w-full bg-green-50 border border-green-200 px-4 md:h-9.5 h-10 rounded animate-in fade-in slide-in-from-right-2">
+                      <span className="text-green-700 font-bold uppercase tracking-widest text-sm">
+                        {coupon} - (Applied)
+                      </span>
+                      <button
+                        onClick={handleRemove}
+                        className="text-green-700 hover:scale-110 transition-transform"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="3"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <line x1="18" y1="6" x2="6" y2="18"></line>
+                          <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                {/* Inline Warning Message */}
+                {error && !isApplied && (
+                  <span className="text-[10px] font-bold text-red-500 uppercase tracking-tighter animate-pulse">
+                    {error || "Invalid or expired coupon code."}
+                  </span>
+                )}
               </div>
             </div>
           </div>
@@ -705,6 +841,36 @@ const TestBuy = ({ data }) => {
                     - {discount}৳
                   </span>
                 </div>
+
+                {isApplied && (
+                  <div className="flex justify-end gap-8">
+                    <div className="flex items-center gap-2">
+                      {/* Success Checkmark Icon */}
+                      <div className="bg-green-500 rounded-full p-0.5">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="12"
+                          height="12"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="white"
+                          strokeWidth="4"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                      </div>
+                      <span className="font-bold text-gray-800  text-sm uppercase tracking-tight">
+                        Coupon Discount:
+                      </span>
+                    </div>
+                    <span className="w-20 text-right font-bold text-green-600">
+                      - {couponValue?.value}৳
+                    </span>
+                  </div>
+                )}
+
                 <div className="flex justify-end gap-8 border-t pt-3">
                   <span className="text-base font-black text-gray-900 uppercase">
                     Total:

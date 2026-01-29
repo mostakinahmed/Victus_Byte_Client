@@ -18,7 +18,7 @@ const ProductCard = ({ data }) => {
 
         {/* Tag / New Badge */}
         {data.status?.isNewArrival && (
-          <div className="absolute top-3 right-3 z-10 bg-slate-100 text-slate-600 text-[10px] font-bold px-2 py-1 rounded">
+          <div className="absolute top-3 right-3 z-10 bg-slate-800 text-white text-[10px] font-bold px-2 py-1 rounded">
             New
           </div>
         )}
