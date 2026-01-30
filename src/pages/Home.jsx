@@ -21,6 +21,8 @@ export const Home = () => {
       <NewArrival />
       <FirstBanner />
       <AllProduct />
+
+      
     </div>
   );
 };

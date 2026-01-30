@@ -3,6 +3,8 @@ import { useLocation, Route, Routes } from "react-router-dom";
 import Navber from "./components/Home/Navber";
 import CatMenu from "./components/Home/CatMenu.jsx";
 import { Home } from "./pages/Home";
+import FloatingWhatsApp from "./components/FloatingWhatsApp";
+import FloatingSocials from "./components/FloatingSocials";
 import AllProduct from "./pages/AllProduct.jsx";
 import ProductDetails from "./components/Product Details/ProductDetails.jsx";
 import { Offer } from "./pages/Offer.jsx";
@@ -130,6 +132,8 @@ function App() {
         {/* Navbar and Category Menu remain visible but move up with the wrapper */}
         <Navber />
         <CatMenu />
+        {/* <FloatingWhatsApp /> */}
+        <FloatingSocials />
       </div>
 
       {/* 3. MAIN CONTENT: Added padding-top (pt-44) so content isn't 
