@@ -85,7 +85,7 @@ const TestBuy = ({ data }) => {
     // Create an internal async function
     const fetchCoupons = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/coupon");
+        const res = await axios.get("https://api.victusbyte.com/api/coupon");
         setCouponArray(res.data.data);
       } catch (error) {
         console.error("Error fetching coupons:", error);
@@ -262,7 +262,7 @@ const TestBuy = ({ data }) => {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/order/create-order/client",
+        "https://api.victusbyte.com/api/order/create-order/client",
         orderPayload,
       );
 
