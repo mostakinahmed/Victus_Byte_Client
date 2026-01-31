@@ -71,8 +71,8 @@ const NavbarTop = () => {
           <div>
             <Link to="/">
               <img
-                className="w-[100px] h-[45px]"
-                src="/logo full final.png"
+                className="w-[100px] h-[48px]"
+                src="/logo desk.png"
                 alt="Logo"
               />
             </Link>
@@ -141,8 +141,8 @@ const NavbarTop = () => {
 
           <Link to="/">
             <img
-              className="h-[35px] ml-15"
-              src="/logo full final.png"
+              className="h-[39px] ml-15"
+              src="/logo desk.png"
               alt="Logo"
             />
           </Link>
