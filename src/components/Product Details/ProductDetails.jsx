@@ -228,8 +228,8 @@ const ProductDetail = () => {
                   Brand:{" "}
                   <span className="text-[#fe741d]">{product.brandName}</span>
                 </span>
-                <span className="bg-slate-100 text-slate-600 text-[10px] md:text-[12px] md:tracking-wider font-bold px-2 py-0.5 rounded uppercase border border-slate-200">
-                  Code: <span className="text-[#fe741d]">{product.pID}</span>
+                <span className="bg-slate-100 text-slate-600 text-[10px] md:text-[11px] md:tracking-wider font-bold px-2 py-0.5 rounded uppercase border border-slate-200">
+                  Code: <span className="text-[#fe741d] md:text-[12px]">{product.pID}</span>
                 </span>
               </div>
 
