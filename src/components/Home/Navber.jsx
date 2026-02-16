@@ -67,11 +67,11 @@ const NavbarTop = () => {
     <>
       <div className="bg-white font-sans shadow lg:shadow-none text-black py-1 md:py-0 border-b ">
         {/* ======= DESKTOP NAV ======= */}
-        <div className="max-w-[1400px] mx-auto items-center justify-between px-4 hidden md:flex h-[56px]">
+        <div className="max-w-[1400px] mx-auto items-center justify-between px-4 hidden md:flex h-[60px]">
           <div>
             <Link to="/">
               <img
-                className="w-[100px] h-[48px]"
+                className="w-[128px] h-[65px] -mt-2.5"
                 src="/logo desk.png"
                 alt="Logo"
               />

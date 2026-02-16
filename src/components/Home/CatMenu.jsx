@@ -31,7 +31,7 @@ const CategoryMenu = () => {
   ];
 
   return (
-    <div className="bg-white font-sans shadow w-full hidden md:flex  h-10 top-0 z-[100] border-b border-slate-300">
+    <div className="bg-white font-sans shadow w-full hidden md:flex  h-8.5 top-0 z-[100] border-b border-slate-300">
       <div className="xl:max-w-[1380px] w-full mx-auto flex justify-between items-center py-1">
         {/* --- LEFT SECTION: Home --- */}
         <div className="flex items-center">
