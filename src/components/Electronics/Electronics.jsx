@@ -1,107 +1,261 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import { FiChevronLeft, FiChevronRight, FiCpu, FiZap, FiShield } from "react-icons/fi";
+import { FiCpu, FiActivity, FiZap, FiChevronRight } from "react-icons/fi";
+
+// Import your existing ProductCard
+import ProductCard from "../ProductCard";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { Link } from "react-router-dom";
 
 const Electronics = () => {
-  // Electronics specific data
-  const techProducts = [
+  // --- DUMMY DATA FOLLOWING YOUR MONGODB STRUCTURE ---
+
+  // Category C001: Microcontrollers
+  const microcontrollers = [
     {
-      id: 1,
-      name: "Logitech MX Master 3S Wireless Mouse",
-      brand: "Logitech",
-      price: "12,500",
-      oldPrice: "14,000",
-      discount: 11,
-      img: "https://m.media-amazon.com/images/I/61ni3t1ryQL._AC_SL1500_.jpg",
-      tag: "Best Seller"
+      _id: "m1",
+      name: "ESP32 DevKit V1 WiFi + Bluetooth Board",
+      brandName: "Espressif",
+      category: "C001",
+      images: [
+        "https://www.electronics.com.bd/12563-large_default/esp32-development-board.webp",
+      ],
+      price: { selling: 650, cost: 450, discount: 5 },
+      status: { isFeatured: true, isFlashSale: false, isNewArrival: true },
     },
     {
-      id: 2,
-      name: "Keychron K2 Mechanical Keyboard V2",
-      brand: "Keychron",
-      price: "8,900",
-      oldPrice: null,
-      discount: null,
-      img: "https://m.media-amazon.com/images/I/71YvYlF7M7L._AC_SL1500_.jpg",
-      tag: "New"
+      _id: "m2",
+      name: "Arduino Uno R3 with USB Cable",
+      brandName: "Arduino",
+      category: "C001",
+      images: [
+        "https://img.drz.lazcdn.com/static/bd/p/6e0944f5ef8bdea726b2b00b71bb6b90.jpg_720x720q80.jpg",
+      ],
+      price: { selling: 850, cost: 600, discount: 0 },
+      status: { isFeatured: true, isFlashSale: false, isNewArrival: false },
     },
     {
-      id: 3,
-      name: "Sony WH-1000XM5 Noise Cancelling Headphones",
-      brand: "Sony",
-      price: "35,000",
-      oldPrice: "38,500",
-      discount: 9,
-      img: "https://m.media-amazon.com/images/I/51aXvjzcukL._AC_SL1500_.jpg",
-      tag: "Wireless"
+      _id: "m3",
+      name: "Raspberry Pi Pico H (Headers Pre-soldered)",
+      brandName: "Raspberry Pi",
+      category: "C001",
+      images: [
+        "https://electropeak.com/media/catalog/product/cache/fd3007d55266f7276c10ebf7f3da2215/m/i/min-01-142-1-raspberry-pi-pico-h.jpg",
+      ],
+      price: { selling: 550, cost: 400, discount: 2 },
+      status: { isFeatured: false, isFlashSale: true, isNewArrival: true },
     },
     {
-      id: 4,
-      name: "Samsung 980 PRO 1TB PCIe 4.0 NVMe SSD",
-      brand: "Samsung",
-      price: "11,200",
-      oldPrice: "12,500",
-      discount: 10,
-      img: "https://m.media-amazon.com/images/I/719hVp96S6L._AC_SL1500_.jpg",
-      tag: "Storage"
+      _id: "m4",
+      name: "NodeMCU Lua Lolin V3 ESP8266",
+      brandName: "AI-Thinker",
+      category: "C001",
+      images: [
+        "https://static-01.daraz.com.bd/p/6d134a5598833d419d19c5824a414ee1.jpg",
+      ],
+      price: { selling: 350, cost: 250, discount: 10 },
+      status: { isFeatured: true, isFlashSale: false, isNewArrival: false },
     },
     {
-      id: 5,
-      name: "Apple Watch Series 9 GPS 45mm",
-      brand: "Apple",
-      price: "48,500",
-      oldPrice: null,
-      discount: null,
-      img: "https://m.media-amazon.com/images/I/71LfnS-Y7rL._AC_SL1500_.jpg",
-      tag: "Premium"
+      _id: "m2",
+      name: "Arduino Uno R3 with USB Cable",
+      brandName: "Arduino",
+      category: "C001",
+      images: [
+        "https://img.drz.lazcdn.com/static/bd/p/6e0944f5ef8bdea726b2b00b71bb6b90.jpg_720x720q80.jpg",
+      ],
+      price: { selling: 850, cost: 600, discount: 0 },
+      status: { isFeatured: true, isFlashSale: false, isNewArrival: false },
     },
     {
-      id: 6,
-      name: "Razer DeathAdder V3 Pro Gaming Mouse",
-      brand: "Razer",
-      price: "15,200",
-      oldPrice: "16,800",
-      discount: 10,
-      img: "https://m.media-amazon.com/images/I/61fIq7o-FDL._AC_SL1500_.jpg",
-      tag: "Gaming"
-    }
+      _id: "m4",
+      name: "NodeMCU Lua Lolin V3 ESP8266",
+      brandName: "AI-Thinker",
+      category: "C001",
+      images: [
+        "https://static-01.daraz.com.bd/p/6d134a5598833d419d19c5824a414ee1.jpg",
+      ],
+      price: { selling: 350, cost: 250, discount: 10 },
+      status: { isFeatured: true, isFlashSale: false, isNewArrival: false },
+    },
+  ];
+
+  // Category C002: Sensors (8 items for 2 rows)
+  const sensors = [
+    {
+      _id: "s1",
+      name: "DHT11 Humidity & Temperature",
+      brandName: "Generic",
+      images: [
+        "https://m.media-amazon.com/images/I/61oK9y53c9L._AC_UF1000,1000_QL80_.jpg",
+      ],
+      price: { selling: 120, discount: 0 },
+      status: { isNewArrival: true },
+    },
+    {
+      _id: "s2",
+      name: "HC-SR04 Ultrasonic Distance",
+      brandName: "Generic",
+      images: [
+        "https://thepihut.com/cdn/shop/products/ultrasonic-distance-sensor-hc-sr04-the-pi-hut-100284-1118255996_grande.jpg?v=1646101268",
+      ],
+      price: { selling: 150, discount: 5 },
+      status: { isFeatured: true },
+    },
+    {
+      _id: "s3",
+      name: "PIR Motion Sensor HC-SR501",
+      brandName: "Generic",
+      images: [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGrq4pa6mMvzApQyIPBH3NO-sCUJXUv-L_sA&s",
+      ],
+      price: { selling: 180, discount: 2 },
+      status: { isFlashSale: true },
+    },
+    {
+      _id: "s4",
+      name: "MQ-2 Gas & Smoke Sensor",
+      brandName: "Generic",
+      images: [
+        "https://fluxworkshop.com/cdn/shop/products/4774e734-fd47-4a0f-bb69-d3395fff8fbd_2048x.jpg?v=1598564353",
+      ],
+      price: { selling: 220, discount: 0 },
+      status: { isNewArrival: false },
+    },
+    {
+      _id: "s5",
+      name: "Soil Moisture Sensor Module",
+      brandName: "Generic",
+      images: [
+        "https://cdn11.bigcommerce.com/s-2fbyfnm8ev/images/stencil/500x659/products/1046/3726/ODSeven_3_e901f9d2-9806-450b-81ff-8b7dc04e84fc_500x__00792.1598895358.jpg?c=2",
+      ],
+      price: { selling: 85, discount: 0 },
+      status: { isNewArrival: true },
+    },
+    {
+      _id: "s6",
+      name: "Raindrop Sensor Module",
+      brandName: "Generic",
+      images: [
+        "https://nabatechshop.com/wp-content/uploads/2021/11/Rain-Sensor-Module.jpg",
+      ],
+      price: { selling: 110, discount: 0 },
+      status: { isFeatured: false },
+    },
+    {
+      _id: "s7",
+      name: "LDR 5mm Photoresistor Kit",
+      brandName: "Generic",
+      images: [
+        "https://www.etstore.in/cdn/shop/files/GI1-1_b6b0640b-477e-42a5-8e6e-09817f871be8.jpg?v=1734335206",
+      ],
+      price: { selling: 60, discount: 0 },
+      status: { isNewArrival: false },
+    },
+    {
+      _id: "s8",
+      name: "Infrared IR Obstacle Avoidance",
+      brandName: "Generic",
+      images: [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRczj1UXHW6EK5_UF5-xNahv2vmRx9-gNwB-A&s",
+      ],
+      price: { selling: 95, discount: 5 },
+      status: { isFlashSale: true },
+    },
+    {
+      _id: "s6",
+      name: "Raindrop Sensor Module",
+      brandName: "Generic",
+      images: [
+        "https://nabatechshop.com/wp-content/uploads/2021/11/Rain-Sensor-Module.jpg",
+      ],
+      price: { selling: 110, discount: 0 },
+      status: { isFeatured: false },
+    },
+    {
+      _id: "s1",
+      name: "DHT11 Humidity & Temperature",
+      brandName: "Generic",
+      images: [
+        "https://m.media-amazon.com/images/I/61oK9y53c9L._AC_UF1000,1000_QL80_.jpg",
+      ],
+      price: { selling: 120, discount: 0 },
+      status: { isNewArrival: true },
+    },
+    {
+      _id: "s2",
+      name: "HC-SR04 Ultrasonic Distance",
+      brandName: "Generic",
+      images: [
+        "https://thepihut.com/cdn/shop/products/ultrasonic-distance-sensor-hc-sr04-the-pi-hut-100284-1118255996_grande.jpg?v=1646101268",
+      ],
+      price: { selling: 150, discount: 5 },
+      status: { isFeatured: true },
+    },
+    {
+      _id: "s3",
+      name: "PIR Motion Sensor HC-SR501",
+      brandName: "Generic",
+      images: [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGrq4pa6mMvzApQyIPBH3NO-sCUJXUv-L_sA&s",
+      ],
+      price: { selling: 180, discount: 2 },
+      status: { isFlashSale: true },
+    },
+  ];
+
+  // Category C003: Power/Actuators
+  const powerActuators = [
+    {
+      _id: "p1",
+      name: "5V Relay Module 1-Channel",
+      brandName: "Songle",
+      images: [
+        "https://m.media-amazon.com/images/I/61qS09v84JL._AC_SL1000_.jpg",
+      ],
+      price: { selling: 90, discount: 10 },
+      status: { isFlashSale: true },
+    },
+    {
+      _id: "p2",
+      name: "SG90 Micro Servo Motor",
+      brandName: "TowerPro",
+      images: [
+        "https://m.media-amazon.com/images/I/51A3I1-9qTL._AC_SL1000_.jpg",
+      ],
+      price: { selling: 220, discount: 0 },
+      status: { isFeatured: true },
+    },
+    {
+      _id: "p3",
+      name: "TP4056 Lipo Battery Charger",
+      brandName: "Generic",
+      images: [
+        "https://m.media-amazon.com/images/I/61X-pX0-nNL._AC_SL1000_.jpg",
+      ],
+      price: { selling: 55, discount: 0 },
+      status: { isNewArrival: true },
+    },
+    {
+      _id: "p4",
+      name: "Solar Panel 6V 1W",
+      brandName: "Victus",
+      images: [
+        "https://m.media-amazon.com/images/I/61j6X2fNfNL._AC_SL1000_.jpg",
+      ],
+      price: { selling: 350, discount: 8 },
+      status: { isFeatured: true },
+    },
   ];
 
   return (
     <div className="max-w-[1400px] md:px-4 px-2 mx-auto min-h-screen pb-12 md:mt-[97px] mt-12 font-sans">
-      
-      {/* --- TECH FEATURES HIGHLIGHT --- */}
-      {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div className="bg-white p-4 rounded-lg flex items-center gap-4 border border-slate-100 shadow-sm">
-          <div className="bg-blue-50 p-3 rounded-full text-blue-600"><FiCpu size={24}/></div>
-          <div>
-            <h4 className="font-bold text-slate-800 text-sm">Authentic Tech</h4>
-            <p className="text-xs text-slate-500">100% Genuine Products</p>
-          </div>
-        </div>
-        <div className="bg-white p-4 rounded-lg flex items-center gap-4 border border-slate-100 shadow-sm">
-          <div className="bg-orange-50 p-3 rounded-full text-orange-600"><FiShield size={24}/></div>
-          <div>
-            <h4 className="font-bold text-slate-800 text-sm">Official Warranty</h4>
-            <p className="text-xs text-slate-500">Up to 24 Months Coverage</p>
-          </div>
-        </div>
-        <div className="bg-white p-4 rounded-lg flex items-center gap-4 border border-slate-100 shadow-sm">
-          <div className="bg-green-50 p-3 rounded-full text-green-600"><FiZap size={24}/></div>
-          <div>
-            <h4 className="font-bold text-slate-800 text-sm">Expert Support</h4>
-            <p className="text-xs text-slate-500">Specialized Tech Assistance</p>
-          </div>
-        </div>
-      </div> */}
-
-      {/* --- HERO BANNER SECTION (Refined for Tech) --- */}
+      {/* --- HERO BANNER (Original UI preserved) --- */}
       <div className="py-2 relative group">
         <Swiper
           modules={[Navigation, Pagination, Autoplay]}
@@ -113,129 +267,116 @@ const Electronics = () => {
         >
           <SwiperSlide>
             <div className="bg-slate-900 h-[300px] md:h-[400px] relative overflow-hidden">
-               {/* Overlay for tech feel */}
+              {/* Overlay for tech feel */}
               <div className="absolute inset-0 bg-gradient-to-r from-slate-900 to-transparent z-10 p-12 flex flex-col justify-center">
-                <span className="text-blue-400 font-bold uppercase tracking-widest text-xs mb-2">Next Gen Performance</span>
-                <h2 className="text-white text-4xl md:text-6xl font-black mb-4">RTX 40-SERIES<br/>LAPTOPS</h2>
-                <button className="bg-blue-600 w-fit text-white px-8 py-3 rounded-md font-bold hover:bg-blue-700 transition-all">Explore Now</button>
+                <span className="text-blue-400 font-bold uppercase tracking-widest text-xs mb-2">
+                  Next Gen Performance
+                </span>
+                <h2 className="text-white text-4xl md:text-6xl font-black mb-4">
+                  RTX 40-SERIES
+                  <br />
+                  LAPTOPS
+                </h2>
+                <button className="bg-blue-600 w-fit text-white px-8 py-3 rounded-md font-bold hover:bg-blue-700 transition-all">
+                  Explore Now
+                </button>
               </div>
-              <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=2000" className="w-full h-full object-cover opacity-60" alt="Tech Banner" />
+              <img
+                src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=2000"
+                className="w-full h-full object-cover opacity-60"
+                alt="Tech Banner"
+              />
             </div>
           </SwiperSlide>
           <SwiperSlide>
             <div className="bg-indigo-900 h-[300px] md:h-[400px] flex items-center justify-center">
-              <img src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?q=80&w=2000" className="w-full h-full object-cover" alt="Banner 2" />
+              <img
+                src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?q=80&w=2000"
+                className="w-full h-full object-cover"
+                alt="Banner 2"
+              />
             </div>
           </SwiperSlide>
         </Swiper>
-      </div>
+      </div>{" "}
+      {/* --- SECTIONS --- */}
+      <div className="mt-6">
+        <div className="flex items-center justify-between bg-white shadow-sm border border-gray-100 md:p-4 px-4 py-2 mb-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2 -ml-4 md:ml-0">
+              <FiCpu className="text-2xl md:-ml-3 text-blue-600 animate-pulse" />
+            </div>
+            <h3 className="text-md md:text-xl -ml-3 md:-ml-1 font-bold text-gray-900">
+              Microcontrollers and Boards
+            </h3>
+          </div>
 
-      {/* --- PRODUCT SECTIONS --- */}
-      <ProductSection title="Trending Tech" products={techProducts} />
-      <ProductSection title="Gaming Essentials" products={[...techProducts].reverse()} showSeeMore={true} />
+          {/* View All Button */}
+          <Link
+            to="/new-arrival"
+            className="flex items-center gap-1 text-[9px] md:text-xs font-bold uppercase tracking-wider text-slate-900 hover:text-white border border-slate-900 hover:bg-slate-900 px-3 py-1.5 md:px-5 md:py-2 rounded-full transition-all duration-300"
+          >
+            View All
+          </Link>
+        </div>
+        <div className="pb-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 md:gap-2.5 gap-2">
+          {microcontrollers.map((product) => (
+            <ProductCard data={product} />
+          ))}
+        </div>
+      </div>
+      <div className="mt-6">
+        <div className="flex items-center justify-between bg-white shadow-sm border border-gray-100 md:p-4 px-4 py-2 mb-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2 -ml-4 md:ml-0">
+              <FiActivity className="text-2xl md:-ml-3 text-emerald-600 animate-pulse" />
+            </div>
+            <h3 className="text-md md:text-xl -ml-3 md:-ml-1 font-bold text-gray-900">
+              Sensors & Inputs
+            </h3>
+          </div>
+
+          {/* View All Button */}
+          <Link
+            to="/new-arrival"
+            className="flex items-center gap-1 text-[9px] md:text-xs font-bold uppercase tracking-wider text-slate-900 hover:text-white border border-slate-900 hover:bg-slate-900 px-3 py-1.5 md:px-5 md:py-2 rounded-full transition-all duration-300"
+          >
+            View All
+          </Link>
+        </div>
+        <div className="pb-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 md:gap-2.5 gap-2">
+          {sensors.map((product) => (
+            <ProductCard data={product} />
+          ))}
+        </div>
+      </div>
+      <div className="mt-6">
+        <div className="flex items-center justify-between bg-white shadow-sm border border-gray-100 md:p-4 px-4 py-2 mb-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2 -ml-4 md:ml-0">
+              <FiZap className="text-2xl md:-ml-3 text-orange-500 animate-pulse" />
+            </div>
+            <h3 className="text-md md:text-xl -ml-3 md:-ml-1 font-bold text-gray-900">
+              Power & Outputs
+            </h3>
+          </div>
+
+          {/* View All Button */}
+          <Link
+            to="/new-arrival"
+            className="flex items-center gap-1 text-[9px] md:text-xs font-bold uppercase tracking-wider text-slate-900 hover:text-white border border-slate-900 hover:bg-slate-900 px-3 py-1.5 md:px-5 md:py-2 rounded-full transition-all duration-300"
+          >
+            View All
+          </Link>
+        </div>
+        <div className="pb-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 md:gap-2.5 gap-2">
+          {powerActuators.map((product) => (
+            <ProductCard data={product} />
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
-
-const ProductSection = ({ title, products, showSeeMore = false }) => (
-  <div className="mt-12">
-    <div className="flex items-center justify-between mb-6 px-1">
-      <div className="flex items-center gap-3">
-        <div className="h-8 w-1.5 bg-blue-600 rounded-full"></div>
-        <h2 className="text-2xl font-black text-slate-800 tracking-tight">
-          {title}.
-        </h2>
-      </div>
-      {showSeeMore && (
-        <button className="group flex items-center gap-2 text-slate-500 font-bold text-sm hover:text-blue-600 transition-colors uppercase tracking-wider">
-          View All
-          <FiChevronRight className="group-hover:translate-x-1 transition-transform" />
-        </button>
-      )}
-    </div>
-
-    <div className="relative group/section">
-      <Swiper
-        modules={[Navigation]}
-        spaceBetween={15}
-        slidesPerView={2}
-        navigation={{ nextEl: ".next-btn", prevEl: ".prev-btn" }}
-        breakpoints={{
-          640: { slidesPerView: 2 },
-          768: { slidesPerView: 3 },
-          1024: { slidesPerView: 4 },
-          1280: { slidesPerView: 5 },
-        }}
-        className="pb-4"
-      >
-        {products.map((item) => (
-          <SwiperSlide key={item.id}>
-
-            
-            <div className="flex flex-col h-[400px] bg-white border border-slate-100 rounded-lg overflow-hidden transition-all duration-300 hover:shadow-xl group/card cursor-pointer">
-              
-              {/* Product Image Section */}
-              <div className="relative h-56 bg-[#fcfcfc] p-6 flex items-center justify-center overflow-hidden">
-                {item.discount && (
-                  <div className="absolute top-3 left-3 z-10 bg-blue-600 text-white text-[10px] font-bold px-2 py-1 rounded">
-                    SALE -{item.discount}%
-                  </div>
-                )}
-                {item.tag && (
-                    <div className="absolute top-3 right-3 z-10 bg-slate-100 text-slate-600 text-[10px] font-bold px-2 py-1 rounded">
-                        {item.tag}
-                    </div>
-                )}
-
-                <img
-                  src={item.img}
-                  alt={item.name}
-                  className="w-full h-full object-contain transition-transform duration-500 group-hover/card:scale-105"
-                />
-              </div>
-
-              {/* Product Info Section */}
-              <div className="p-4 flex flex-col flex-grow bg-white">
-                <span className="text-[10px] font-bold text-blue-500 uppercase tracking-widest mb-1">
-                  {item.brand}
-                </span>
-                <h3 className="text-sm font-bold text-slate-800 line-clamp-2 mb-2 leading-tight h-10 transition-colors group-hover/card:text-blue-600">
-                  {item.name}
-                </h3>
-
-                <div className="mt-auto">
-                  <div className="flex items-center gap-2 mb-4">
-                    <span className="text-lg font-black text-slate-900">
-                      ৳{item.price}
-                    </span>
-                    {item.oldPrice && (
-                      <span className="text-xs text-slate-400 line-through">
-                        ৳{item.oldPrice}
-                      </span>
-                    )}
-                  </div>
-
-                  <button className="w-full py-3 bg-slate-900 text-white text-[11px] font-black uppercase tracking-widest hover:bg-blue-600 transition-colors rounded shadow-lg shadow-slate-200">
-                    Add to Cart
-                  </button>
-                </div>
-              </div>
-            </div>
-
-
-
-          </SwiperSlide>
-        ))}
-      </Swiper>
-
-      <button className="prev-btn absolute -left-4 top-[40%] -translate-y-1/2 z-20 bg-white border border-slate-200 shadow-xl p-3 rounded-full hidden group-hover/section:flex hover:bg-blue-600 hover:text-white transition-all">
-        <FiChevronLeft size={20} />
-      </button>
-      <button className="next-btn absolute -right-4 top-[40%] -translate-y-1/2 z-20 bg-white border border-slate-200 shadow-xl p-3 rounded-full hidden group-hover/section:flex hover:bg-blue-600 hover:text-white transition-all">
-        <FiChevronRight size={20} />
-      </button>
-    </div>
-  </div>
-);
 
 export default Electronics;
