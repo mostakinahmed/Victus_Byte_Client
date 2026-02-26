@@ -13,7 +13,7 @@ import {
 
 const PaymentOptions = () => {
   return (
-    <div className="max-w-[1400px] mx-auto md:px-4 px-2 md:mt-27 mt-15 min-h-screen pb-24">
+    <div className="max-w-[1400px] font-sans mx-auto md:px-4 px-2 md:mt-27 mt-15 min-h-screen pb-24">
       {/* --- 1. HERO HEADER (Unified Style) --- */}
       <section className="relative md:py-20 py-10 bg-slate-900 overflow-hidden">
         <div className="absolute inset-0 opacity-20">
@@ -152,7 +152,7 @@ const SecurityFeature = ({ icon, title, desc }) => (
       <h4 className="text-[11px] font-black text-slate-800 uppercase tracking-widest leading-none mb-1.5">
         {title}
       </h4>
-      <p className="text-[10px] font-bold text-slate-500 uppercase">{desc}</p>
+      <p className="text-[12px] font-medium text-slate-500 ">{desc}</p>
     </div>
   </div>
 );

@@ -3,7 +3,7 @@ import React from "react";
 const FloatingSocials = () => {
   const phone = "8801773820336";
   const fbPageUser = "victusbyte";
-  const igUsername = "victusbytebd";
+  const igUsername = "victusbyte.bd";
 
   const socialLinks = [
     {
@@ -71,7 +71,7 @@ const FloatingSocials = () => {
           target="_blank"
           rel="noopener noreferrer"
           className={`
-            group flex items-center ${social.color} text-white p-3.5 
+            group flex items-center ${social.color} text-white p-3 
             rounded-l-2xl shadow-lg transition-all duration-500 
             ease-[cubic-bezier(0.175,0.885,0.32,1.275)]
             hover:pl-6 hover:translate-x-[-8px] ${social.shadow}

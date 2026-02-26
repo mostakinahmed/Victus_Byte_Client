@@ -177,7 +177,7 @@ const ProductDetail = () => {
             </div>
 
             <div className="order-1 md:order-2 flex-1 relative bg-white h-[250px] md:h-[400px] flex items-center justify-center p-4">
-              <span className="absolute top-3 right-3 z-10 max-h-6 bg-green-400 backdrop-blur-sm px-2 rounded border border-slate-200 py-[2px] md:text-[12px] text-[11px] font-extrabold text-white uppercase tracking-widest pointer-events-none select-none">
+              <span className="absolute top-3 right-3 z-10 max-h-6 bg-slate-800 backdrop-blur-sm px-2 rounded border border-slate-200 py-[2px] md:text-[12px] text-[11px] font-extrabold text-white uppercase tracking-widest pointer-events-none select-none">
                 {product.brandName}
               </span>
 
@@ -264,7 +264,7 @@ const ProductDetail = () => {
                     }`}
                   >
                     <div className="flex justify-between items-center mb-2">
-                      <h3 className="text-[10px] md:tracking-widest tracking-wider font-black text-slate-500 uppercase">
+                      <h3 className="text-xs md:tracking-widest tracking-wider font-medium text-slate-800 uppercase">
                         Available Colors
                       </h3>
 
@@ -288,13 +288,13 @@ const ProductDetail = () => {
                               setShowColorError(false); // Reset error once they pick one
                             }}
                             className={`
-            relative flex items-center gap-3 md:px-3 px-2 md:py-2 py-1 rounded-xl border-2 transition-all duration-300 group
+            relative flex items-center gap-2 px-2.5 md:py-1.5 py-1 rounded-xl border-2 transition-all duration-300 group
             ${
               isSelected
-                ? "border-[#fe741d] bg-orange-50/30 shadow-sm"
+                ? "border-[#fe741d] bg-orange-50/30"
                 : showColorError && !selectedColor
                   ? "border-red-300 bg-white hover:border-red-400" // Highlighted state
-                  : "border-slate-100 bg-white hover:border-slate-300 active:scale-95"
+                  : "border-slate-200 bg-white cursor-pointer hover:border-slate-300 active:scale-95"
             }
           `}
                           >
@@ -307,8 +307,8 @@ const ProductDetail = () => {
                             {/* Color Name */}
                             <span
                               className={`
-            text-[10px] md:text-[11px] font-bold uppercase tracking-wide transition-colors
-            ${isSelected ? "text-[#fe741d]" : "text-slate-600 group-hover:text-slate-900"}
+            text-[10px] md:text-[11px] font-medium uppercase tracking-wide transition-colors
+            ${isSelected ? "text-[#fe741d]" : "text-slate-800 group-hover:text-slate-900"}
           `}
                             >
                               {name}
@@ -342,7 +342,7 @@ const ProductDetail = () => {
                 <div className="select-none mt-4">
                   {/* Modernized Label */}
                   <div className="flex items-center mb-2 px-1">
-                    <h3 className="text-[10px] md:tracking-widest tracking-wider font-black text-slate-500 uppercase">
+                    <h3 className="text-xs md:tracking-widest tracking-wider font-medium text-slate-800 uppercase">
                       Quantity
                     </h3>
                     {quantity >= 5 && (
