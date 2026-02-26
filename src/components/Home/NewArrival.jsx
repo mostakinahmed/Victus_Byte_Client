@@ -48,7 +48,7 @@ export default function NewArrivals() {
     if (isPaused) return;
     const interval = setInterval(() => {
       nextSlide();
-    }, 3000);
+    }, 2500);
     return () => clearInterval(interval);
   }, [currentIndex, isPaused, maxIndex, visibleItems]);
 

@@ -30,7 +30,7 @@ const Electronics = () => {
     },
     {
       _id: "m2",
-      name: "Arduino Uno R3 with USB Cable",
+      name: "Arduino Uno R3 with USB Cable latest version",
       brandName: "Arduino",
       category: "C001",
       images: [
@@ -89,7 +89,7 @@ const Electronics = () => {
   const sensors = [
     {
       _id: "s1",
-      name: "DHT11 Humidity & Temperature",
+      name: "DHT11 Humidity & Temperature sensor (Digital & Analog)",
       brandName: "Generic",
       images: [
         "https://m.media-amazon.com/images/I/61oK9y53c9L._AC_UF1000,1000_QL80_.jpg",
@@ -99,7 +99,7 @@ const Electronics = () => {
     },
     {
       _id: "s2",
-      name: "HC-SR04 Ultrasonic Distance",
+      name: "HC-SR04 Ultrasonic Sensor for Distance",
       brandName: "Generic",
       images: [
         "https://thepihut.com/cdn/shop/products/ultrasonic-distance-sensor-hc-sr04-the-pi-hut-100284-1118255996_grande.jpg?v=1646101268",
@@ -109,7 +109,7 @@ const Electronics = () => {
     },
     {
       _id: "s3",
-      name: "PIR Motion Sensor HC-SR501",
+      name: "PIR Motion Sensor HC-SR501 work with 5V",
       brandName: "Generic",
       images: [
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGrq4pa6mMvzApQyIPBH3NO-sCUJXUv-L_sA&s",
@@ -254,7 +254,7 @@ const Electronics = () => {
   ];
 
   return (
-    <div className="max-w-[1400px] md:px-4 px-2 mx-auto min-h-screen pb-12 md:mt-[97px] mt-12 font-sans">
+    <div className="max-w-[1400px] md:px-4 px-2 mx-auto min-h-screen pb-12 md:mt-[95px] mt-12.5 font-sans">
       {/* --- HERO BANNER (Original UI preserved) --- */}
       <div className="py-2 relative group">
         <Swiper
@@ -301,7 +301,7 @@ const Electronics = () => {
       </div>{" "}
       {/* --- SECTIONS --- */}
       <div className="mt-6">
-        <div className="flex items-center justify-between bg-white shadow-sm border border-gray-100 md:p-4 px-4 py-2 mb-4">
+        <div className="flex  items-center justify-between bg-white shadow-xs border border-gray-100 md:p-4 px-4 py-2 mb-3">
           <div className="flex items-center gap-3">
             <div className="p-2 -ml-4 md:ml-0">
               <FiCpu className="text-2xl md:-ml-3 text-blue-600 animate-pulse" />
@@ -326,7 +326,7 @@ const Electronics = () => {
         </div>
       </div>
       <div className="mt-6">
-        <div className="flex items-center justify-between bg-white shadow-sm border border-gray-100 md:p-4 px-4 py-2 mb-4">
+        <div className="flex items-center justify-between bg-white shadow-xs border border-gray-100 md:p-4 px-4 py-2 mb-3">
           <div className="flex items-center gap-3">
             <div className="p-2 -ml-4 md:ml-0">
               <FiActivity className="text-2xl md:-ml-3 text-emerald-600 animate-pulse" />
@@ -351,7 +351,7 @@ const Electronics = () => {
         </div>
       </div>
       <div className="mt-6">
-        <div className="flex items-center justify-between bg-white shadow-sm border border-gray-100 md:p-4 px-4 py-2 mb-4">
+        <div className="flex items-center justify-between bg-white shadow-xs border border-gray-100 md:p-4 px-4 py-2 mb-3">
           <div className="flex items-center gap-3">
             <div className="p-2 -ml-4 md:ml-0">
               <FiZap className="text-2xl md:-ml-3 text-orange-500 animate-pulse" />

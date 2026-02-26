@@ -20,7 +20,7 @@ const CategoryMenu = () => {
       id: "storage",
       title: "Storage",
       icon: <FiDatabase />,
-      subCats: ["NVMe SSD", "SATA SSD", "Hard Disk", "RAM", "USB Drive"],
+      subCats: ["NVMe SSD", "SATA SSD", "Hard Disk", "RAM", "Pendrive"],
     },
     {
       id: "robotics",
@@ -61,7 +61,7 @@ const CategoryMenu = () => {
             Electronics & IoT
           </Link>
           <Link
-            to="/offers"
+            to="/daily-deals"
             className="flex items-center gap-2 text-gray-700 hover:text-blue-600 font-semibold text-[14px]"
           >
             <FiZap className="text-yellow-500" />
@@ -107,7 +107,7 @@ const CategoryMenu = () => {
                   {menu.subCats.map((sub) => (
                     <li key={sub}>
                       <Link
-                        to={`/category/${sub
+                        to={`/${sub
                           .toLowerCase()
                           .replace(/\s+/g, "-")}`}
                         className="block px-5 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-gray-50 transition-all"

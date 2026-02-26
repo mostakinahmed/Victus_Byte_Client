@@ -36,7 +36,7 @@ const FooterLinks = () => {
         <FaPhoneAlt size={30} className="text-gray-600 mt-2" />
         <div>
           <span className="block font-bold mt-2 text-gray-600">Customer Support</span>
-          <p className="text-sm text-gray-600 mt-1">Call us at 09613800800</p>
+          <p className="text-sm text-gray-600 mt-1">Call us at 0961-342936</p>
         </div>
       </div>
     </div>

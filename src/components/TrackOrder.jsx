@@ -38,18 +38,19 @@ const TrackOrderPage = () => {
         {/* Input Section */}
         <div className="relative flex flex-col sm:flex-row gap-3 w-full max-w-xl mx-auto mb-16">
           <div className="relative flex-grow">
-            <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+            <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-900" />
             <input
               type="text"
-              placeholder="e.g. #ORD-77210"
-              className="w-full pl-11 pr-4 py-3.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all font-medium"
+              placeholder="OID26032548542"
+              
+              className="w-full pl-11 pr-4 py-2.5 uppercase rounded-lg border-1 placeholder:text-slate-400 placeholder:font-normal border-slate-900 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all font-medium"
               value={orderId}
               onChange={(e) => setOrderId(e.target.value)}
             />
           </div>
           <button
             onClick={handleTrack}
-            className="bg-slate-900 text-white px-8 py-3.5 rounded-xl font-bold hover:bg-orange-600 transition-colors active:scale-95 shadow-lg shadow-slate-200"
+            className="bg-slate-900 text-white px-8 py-2 rounded-lg font-bold hover:bg-orange-600 transition-colors active:scale-95 shadow-lg shadow-slate-200"
           >
             Track Now
           </button>

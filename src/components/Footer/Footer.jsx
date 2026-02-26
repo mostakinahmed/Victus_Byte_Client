@@ -17,9 +17,9 @@ const Footer = () => {
 
   return (
     <>
-      <div className="border-t-2 text-white">
+      <div className="border-t-2 text-white font-sans font-light text-sm">
         <footer className="bg-slate-900 text-white py-4">
-          <div className="max-w-[1400px] mt-5 mx-auto px-2 sm:px-6 lg:px-4">
+          <div className="max-w-[1400px] mt- mx-auto px-2">
             <div className="flex justify-between lg:gap-8 gap-4 flex-col md:flex-row">
               {/* LEFT SECTION */}
               <div className="flex flex-col">
@@ -169,7 +169,7 @@ const Footer = () => {
                   </a>
 
                   <a
-                    href="https://www.instagram.com/victusbytebd"
+                    href="https://www.instagram.com/victusbyte.bd"
                     aria-label="Instagram"
                     className="hover:text-indigo-500"
                   >

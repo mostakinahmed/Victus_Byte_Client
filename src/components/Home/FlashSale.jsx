@@ -70,7 +70,7 @@ export default function FlashSale() {
 
     autoSlideTimer.current = setInterval(() => {
       nextSlide();
-    }, 3000);
+    }, 2500);
 
     return () => clearInterval(autoSlideTimer.current);
   }, [currentIndex, isPaused, maxIndex, flashData.length, visibleItems]);

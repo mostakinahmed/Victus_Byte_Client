@@ -21,7 +21,7 @@ const ContactPopup = ({ onClose }) => {
         onClick={(e) => e.stopPropagation()}
       >
         {/* Slimmer Accent Bar */}
-        <div className="h-1.5 bg-emerald-500 w-full" />
+        <div className="h-2 bg-emerald-500 w-full" />
 
         <button
           onClick={onClose}
@@ -31,7 +31,7 @@ const ContactPopup = ({ onClose }) => {
         </button>
 
         {/* Reduced padding on mobile (p-4 vs md:p-8) */}
-        <div className="p-5 md:p-2">
+        <div className="p-5">
           <div className="text-center mb-4 md:mb-6">
             <h2 className="text-xl md:text-2xl font-bold text-slate-800 tracking-tight">
               <span className="text-[#ff751f]">Victus</span> Byte
@@ -121,7 +121,7 @@ const ContactPopup = ({ onClose }) => {
 
           <button
             onClick={onClose}
-            className="w-full mt-5 md:mt-8 py-2.5 md:py-3 bg-slate-900 text-white rounded-xl text-sm md:text-base font-bold hover:bg-emerald-600 shadow-lg shadow-slate-200 transition-all active:scale-95"
+            className="w-2/3 flex items-center justify-center mx-auto mt-5 md:mt-8 py-2.5 md:py-3 bg-slate-900 text-white rounded-xl text-sm md:text-base font-bold hover:bg-emerald-600 shadow-lg shadow-slate-200 transition-all active:scale-95"
           >
             Got it!
           </button>

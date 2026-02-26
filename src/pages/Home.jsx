@@ -8,6 +8,7 @@ import AllProduct from "../components/Home/AllProduct.jsx";
 import TopCategoryCards from "../components/Home/TopCategoryCards.jsx";
 import FirstBanner from "../components/Home/FirstBanner.jsx";
 import NewArrival from "../components/Home/NewArrival.jsx";
+import MobileCategoryRow from "../components/Home/MobileCategoryRow.jsx";
 
 export const Home = () => {
   return (
@@ -15,14 +16,13 @@ export const Home = () => {
       <HeroSection />
       <FeaturedCategory />
       <TopCategoryCards />
+      <MobileCategoryRow />
       <FlashSale />
       <HorizontalAds />
       <FeatureProduct />
       <NewArrival />
       <FirstBanner />
       <AllProduct />
-
-      
     </div>
   );
 };

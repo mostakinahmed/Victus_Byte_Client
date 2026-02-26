@@ -353,19 +353,19 @@ const ProductDetail = () => {
                   </div>
 
                   <div className="flex gap-5">
-                    <div className="group flex items-center bg-slate-100 md:p-1.5 p-1 rounded-2xl w-fit border border-slate-200/60 shadow-inner">
+                    <div className="group flex items-center bg-slate-100  p-1 rounded-2xl w-fit border border-slate-200/60 shadow-inner">
                       {/* Decrease Button */}
                       <button
                         disabled={quantity <= 1}
                         onClick={() => setQuantity(quantity - 1)}
-                        className="md:w-8 w-7 md:h-8 h-7 flex items-center justify-center rounded-xl bg-white shadow-sm text-slate-600 transition-all duration-200 
+                        className=" w-7  h-7 flex items-center justify-center rounded-xl bg-white shadow text-slate-600 transition-all duration-200 
                  enabled:hover:bg-red-50 enabled:hover:text-red-600 enabled:active:scale-90 
                  disabled:opacity-40 disabled:cursor-not-allowed"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          width="18"
-                          height="18"
+                          width="16"
+                          height="16"
                           viewBox="0 0 24 24"
                           fill="none"
                           stroke="currentColor"
@@ -381,7 +381,7 @@ const ProductDetail = () => {
                       <div className="w-14 flex flex-col items-center justify-center overflow-hidden">
                         <span
                           key={quantity}
-                          className="md:text-lg text-md font-black text-slate-800 tabular-nums animate-in fade-in zoom-in duration-300"
+                          className="md:text-lg text-md font-medium text-slate-900 tabular-nums animate-in fade-in zoom-in duration-300"
                         >
                           {quantity}
                         </span>
@@ -390,7 +390,7 @@ const ProductDetail = () => {
                       {/* Increase Button */}
                       <button
                         onClick={() => setQuantity(quantity + 1)}
-                        className="md:w-8 w-7 md:h-8 h-7  flex items-center justify-center rounded-xl bg-white shadow-sm text-slate-600 transition-all duration-200 
+                        className=" w-7 h-7  flex items-center justify-center rounded-xl bg-white shadow text-slate-600 transition-all duration-200 
                  hover:bg-indigo-50 hover:text-indigo-600 active:scale-90"
                       >
                         <svg

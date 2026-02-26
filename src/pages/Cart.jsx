@@ -78,7 +78,7 @@ export const Cart = () => {
 
   return (
     <div className="max-w-[1400px] lg:mt-[86px] font-sans mt-[40px] pt-5 mx-auto md:px-4 px-2 mb-60">
-      <div className="flex bg-white shadow flex-col lg:flex-row">
+      <div className="flex bg-white shadow-xs flex-col lg:flex-row">
         {/* --- Left Side: Product List --- */}
         <div variants={leftSideVariants} className="flex-1">
           <div className="bg-white overflow-hidden border border-slate-200">

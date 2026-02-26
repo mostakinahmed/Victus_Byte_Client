@@ -30,6 +30,7 @@ import Return from "./components/Footer/Return";
 import Payment from "./components/Footer/Payment";
 import KidsZone from "./components/Kids Zone/KidsZone";
 import Electronics from "./components/Electronics/Electronics";
+import DailyDeals from "./components/Daily Deals/DailyDeals";
 import SectionList from "./pages/SectionList";
 import Header from "./components/Home/Header";
 import TestBuy from "./components/Buy Now/TestBuy";
@@ -153,10 +154,12 @@ function App() {
           <Route path="/search-result/:keyword" element={<SearchResult />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
+
           <Route path="/track-order" element={<TrackOrder />} />
           <Route path="/checkout/purchase" element={<BuyNow />} />
           <Route path="/kids-zone" element={<KidsZone />} />
           <Route path="/electronics" element={<Electronics />} />
+          <Route path="/daily-deals" element={<DailyDeals />} />
           <Route path="/section/:section" element={<SectionList />} />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/contact-us" element={<Contact />} />
