@@ -213,24 +213,24 @@ console.log(cat);
           {/* Right: Product Details */}
           <div className="flex-1 bg-white border border-slate-200 p-3 md:p-5 rounded flex flex-col justify-between">
             <div>
-              <h1 className="text-lg md:text-xl font-bold text-slate-800 leading-tight mb-2">
+              <h1 className="text-md md:text-xl font-medium text-slate-800 leading-tight mb-2">
                 {product.name}
               </h1>
 
-              <div className="flex flex-wrap items-center justify-between  md:justify-start gap-1.5 md:gap-5 mb-4 md:mb-7">
+              <div className="flex flex-wrap items-center justify-between  md:justify-start gap-1 md:gap-5 mb-4 md:mb-7">
                 {/* <span className="bg-slate-100 md:hidden text-slate-600 text-[10px] md:text-[11px] md:tracking-wider font-bold px-2 py-0.5 rounded uppercase border border-slate-200">
                   Cat:{" "}
                   <span className="text-[#fe741d]">{CurrCat?.catName}</span>
                 </span> */}
-                <span className=" bg-slate-100 text-slate-600 text-[10px] md:text-[11px] md:tracking-wider font-bold px-2 py-0.5 rounded uppercase border border-slate-200">
+                <span className=" bg-slate-100 text-slate-600 text-[10px] md:text-[11px] md:tracking-wider font-bold px-1.5 md:px-2 py-0.5 rounded uppercase border border-slate-200">
                   Type:{" "}
                   <span className="text-[#fe741d]">{CurrCat?.catName}</span>
                 </span>
-                <span className="bg-slate-100 text-slate-600 text-[10px] md:text-[11px] md:tracking-wider font-bold px-2 py-0.5 rounded uppercase border border-slate-200">
+                <span className="bg-slate-100 text-slate-600 text-[10px] md:text-[11px] md:tracking-wider font-bold px-1.5 md:px-2 py-0.5 rounded uppercase border border-slate-200">
                   Brand:{" "}
                   <span className="text-[#fe741d]">{product.brandName}</span>
                 </span>
-                <span className="bg-slate-100 text-slate-600 text-[10px] md:text-[11px] md:tracking-wider font-bold px-2 py-0.5 rounded uppercase border border-slate-200">
+                <span className="bg-slate-100 text-slate-600 text-[10px] md:text-[11px] md:tracking-wider font-bold px-1.5 md:px-2 py-0.5 rounded uppercase border border-slate-200">
                   Code:{" "}
                   <span className="text-[#fe741d] text-[11px] md:text-[12px]">
                     {product.pID}
