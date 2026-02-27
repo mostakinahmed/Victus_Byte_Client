@@ -35,6 +35,7 @@ import SectionList from "./pages/SectionList";
 import Header from "./components/Home/Header";
 import TestBuy from "./components/Buy Now/TestBuy";
 import ProductLandingPage from "./components/Landing Page/ProductLandingPage";
+import Maintenance from "./components/Maintenance";
 
 const Loader = () => (
   <div className="fixed inset-0 flex items-center justify-center bg-white z-50">
@@ -79,7 +80,7 @@ const Loader = () => (
     `}</style>
   </div>
 );
-
+ 
 function App() {
   const { productData } = useContext(DataContext);
   const location = useLocation();
@@ -158,9 +159,9 @@ function App() {
 
           <Route path="/track-order" element={<TrackOrder />} />
           <Route path="/checkout/purchase" element={<BuyNow />} />
-          <Route path="/kids-zone" element={<KidsZone />} />
+          <Route path="/kids-zone" element={<Maintenance pageName={"Kids Zone"} />} />
           <Route path="/electronics" element={<Electronics />} />
-          <Route path="/daily-deals" element={<DailyDeals />} />
+          <Route path="/daily-deals" element={<Maintenance pageName={"Daily Deals"}  />} />
           <Route path="/section/:section" element={<SectionList />} />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/contact-us" element={<Contact />} />

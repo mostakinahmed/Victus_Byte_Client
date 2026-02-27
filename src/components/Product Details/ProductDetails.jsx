@@ -222,7 +222,7 @@ console.log(cat);
                   Cat:{" "}
                   <span className="text-[#fe741d]">{CurrCat?.catName}</span>
                 </span> */}
-                <span className=" bg-slate-100 text-slate-600 text-[10px] md:text-[11px] md:tracking-wider font-medium px-1.5 md:px-2 py-0.5 rounded uppercase border border-slate-200">
+                <span className=" bg-slate-100 text-slate-600 text-[10px] md:text-[11px] md:tracking-wider font-bold px-1.5 md:px-2 py-0.5 rounded uppercase border border-slate-200">
                   Type:{" "}
                   <span className="text-[#fe741d]">{CurrCat?.catName}</span>
                 </span>
