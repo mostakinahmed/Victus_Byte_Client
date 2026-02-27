@@ -12,7 +12,7 @@ const CategoryDropdown = () => {
   const handleMouseEnter = () => {
     hoverTimeout.current = setTimeout(() => {
       setIsOpen(true);
-    }, 200); // delay before opening
+    }, 200);
   };
 
   const handleMouseLeave = () => {
@@ -84,7 +84,9 @@ const CategoryDropdown = () => {
 
           {/* Categories */}
           <div className="p-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 max-h-[420px] overflow-y-auto pr-1 custom-scrollbar">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 max-h-[420px] overflow-y-auto 
+              scrollbar scrollbar-thin scrollbar-thumb-emerald-500 scrollbar-track-transparent
+              hover:scrollbar-thumb-emerald-600 transition-colors">
               {categoryData && categoryData.length > 0 ? (
                 categoryData.map((cat, index) => (
                   <Link
@@ -105,7 +107,7 @@ const CategoryDropdown = () => {
                       )}
                     </div>
 
-                    <span className="text-xs font-semibold text-gray-700 group-hover:text-emerald-600 truncate">
+                    <span className="text-sm font-semibold text-gray-700 group-hover:text-emerald-600 truncate">
                       {cat.catName}
                     </span>
                   </Link>

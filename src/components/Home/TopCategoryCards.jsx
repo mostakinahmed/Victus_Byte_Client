@@ -49,7 +49,7 @@ const TopCategoryCards = () => {
                   </div>
 
                   {/* Text */}
-                  <span className="text-[10px] md:text-[11px] lg:text-sm font-bold text-gray-800 group-hover:text-[#fe741d] transition-colors leading-tight px-1 line-clamp-2">
+                  <span className="text-[10px] md:text-[11px] lg:text-sm font-medium text-gray-800 group-hover:text-[#fe741d] transition-colors leading-tight px-1 line-clamp-2">
                     {cat.catName}
                   </span>
                 </div>
