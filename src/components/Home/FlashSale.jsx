@@ -48,7 +48,7 @@ export default function FlashSale() {
       } else {
         emblaApi.scrollTo(0); // Loop back to start
       }
-    }, 2500);
+    }, 2000);
 
     return () => clearInterval(interval);
   }, [emblaApi, isPaused]);

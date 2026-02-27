@@ -18,25 +18,25 @@ const TopCategoryCards = () => {
         - lg:grid-cols-6: 6 cards per row on desktops.
         - xl:grid-cols-8: 8 cards per row on large screens.
       */}
-      <div className="grid grid-cols-5 lg:grid-cols-6 xl:grid-cols-12 border-l  md:mx-3.5 mx-2 border-gray-200">
+      <div className="grid grid-cols-5 lg:grid-cols-6 xl:grid-cols-12 border-l border-t md:mx-3.5 mx-2 border-gray-200 shadow-sm">
         {categoryData && categoryData.length > 0 ? (
           categoryData
-            // .filter((item) => item.topCategory === true)
-             .slice(0, 12) // Example: if you have 12 cards and 6 cols, it makes 2 rows perfectly
+            .filter((cat) => cat.topCategory === true) // Filter first so .slice gets the right items
+            .slice(0, 12)
             .map((cat, index) => (
               <Link
-                key={index}
+                key={cat._id || index} // Use a unique ID if available for better React performance
                 to={`/${cat.catName.toLowerCase()}`}
                 className="group w-full"
               >
                 <div
                   className="bg-white flex flex-col items-center justify-center 
-                  aspect-square text-center 
-                  border-r border-b border-t border-gray-200
-                  transition-colors duration-300 cursor-pointer p-2"
+            aspect-square text-center 
+            border-r border-b border-gray-200
+            transition-all duration-300 cursor-pointer p-2 hover:bg-orange-50/30"
                 >
                   {/* Icon Area */}
-                  <div className="h-10 w-10 lg:h-12 lg:w-12 mb-2 flex items-center justify-center">
+                  <div className="h-10 w-10 lg:h-12 lg:w-12 mb-2 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
                     {cat.icon ? (
                       <img
                         src={cat.icon}
@@ -49,14 +49,16 @@ const TopCategoryCards = () => {
                   </div>
 
                   {/* Text */}
-                  <span className="text-[11px] lg:text-sm font-bold text-gray-800 group-hover:text-[#fe741d] transition-colors leading-tight px-1">
+                  <span className="text-[10px] md:text-[11px] lg:text-sm font-bold text-gray-800 group-hover:text-[#fe741d] transition-colors leading-tight px-1 line-clamp-2">
                     {cat.catName}
                   </span>
                 </div>
               </Link>
             ))
         ) : (
-          <div className="p-5 col-span-full text-center">Loading...</div>
+          <div className="p-10 col-span-full text-center text-gray-400 font-medium">
+            No Categories Found
+          </div>
         )}
       </div>
     </div>

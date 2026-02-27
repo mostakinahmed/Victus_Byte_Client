@@ -128,7 +128,10 @@ const CategoryBox = ({ data }) => {
             key={idx}
             className="flex text-center flex-col items-center cursor-pointer group/item"
           >
-            <Link to={`/${item.name.toLowerCase()}`} className="w-full">
+            <Link
+              to={`/${item.name.toLowerCase().replace(/\s+/g, "-")}`}
+              className="w-full"
+            >
               <div className="bg-gray-100 md:p-4 p-5  mb-1 rounded w-full aspect-square flex items-center justify-center overflow-hidden">
                 <img
                   src={item.img}

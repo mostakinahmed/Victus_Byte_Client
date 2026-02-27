@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  FiDatabase,
   FiCpu,
   FiZap,
   FiChevronDown,
@@ -9,19 +8,13 @@ import {
   FiShoppingBag,
   FiLayers,
 } from "react-icons/fi";
-import DropDownCategory from "./DropDownCategory";
+import CategoryDropdown from "./CategoryDropdown";
 
 const CategoryMenu = () => {
   const [activeMenu, setActiveMenu] = useState(null);
 
-  // Custom Dropdown Data
+  // Focus on specific niche menus that need custom links
   const customMenus = [
-    {
-      id: "storage",
-      title: "Storage",
-      icon: <FiDatabase />,
-      subCats: ["NVMe SSD", "SATA SSD", "Hard Disk", "RAM", "Pendrive"],
-    },
     {
       id: "robotics",
       title: "Robotics",
@@ -31,46 +24,51 @@ const CategoryMenu = () => {
   ];
 
   return (
-    <div className="bg-white font-sans shadow w-full hidden md:flex  h-8.5 top-0 z-[100] border-b border-slate-300">
-      <div className="xl:max-w-[1380px] w-full mx-auto flex justify-between items-center py-1">
-        {/* --- LEFT SECTION: Home --- */}
-        <div className="flex items-center">
+    <nav className="bg-white font-sans shadow-sm w-full pb- hidden md:flex h-8.5 sticky top-0 z-[100] border-b border-slate-200">
+      <div className="xl:max-w-[1380px] w-full mx-auto flex justify-between items-center px-2">
+        {/* --- LEFT SECTION: Primary Navigation --- */}
+        <div className="flex items-center h-full gap-2">
+          {/* Main Mega Menu Trigger */}
+          <CategoryDropdown />
+          {/* <div className="h-6 w-[1px] bg-gray-200 mx-2"></div> Separator */}
+          {/* 
           <Link
             to={"/"}
-            className="flex items-center gap-2 px-5 py-2 text-slate-900 hover:text-blue-600 font-bold lg:text-[15px] transition-all border-r border-gray-100"
+            className="flex items-center gap-2 px-4 py-2 text-slate-900 hover:text-emerald-600 font-bold text-[14px] transition-all"
           >
-            <FiHome className="text-lg text-blue-600" />
+            <FiHome className="text-lg text-emerald-600" />
             Home
-          </Link>
+          </Link> */}
         </div>
 
-        {/* --- MIDDLE SECTION: Dummy / General Products --- */}
-        <div className="flex-grow flex items-center xl:gap-10 lg:gap-3 ml-4">
-          <Link
-            to="/kids-zone"
-            className="flex items-center gap-2 text-gray-700 hover:text-blue-600 font-semibold text-[14px]"
-          >
-            <FiShoppingBag className="opacity-70" />
-            <span className="line-clamp-1">Kids Zone</span>
-          </Link>
+        {/* --- MIDDLE SECTION: Trending / Direct Links --- */}
+        <div className="flex-grow flex items-center xl:gap-8 lg:gap-4 ml-6">
           <Link
             to="/electronics"
-            className="flex items-center gap-2 text-gray-700 hover:text-blue-600 font-semibold text-[14px]"
+            className="flex items-center gap-2 text-slate-600 hover:text-emerald-600 font-semibold text-[13px]  tracking-wide transition-colors"
           >
-            <FiLayers className="opacity-70" />
-            Electronics & IoT
+            <FiLayers className="opacity-80" />
+            IoT & Electronics
           </Link>
+
+          <Link
+            to="/kids-zone"
+            className="flex items-center gap-2 text-slate-600 hover:text-emerald-600 font-semibold text-[13px]  tracking-wide transition-colors"
+          >
+            <FiShoppingBag className="opacity-80" />
+            Kids Zone
+          </Link>
+
           <Link
             to="/daily-deals"
-            className="flex items-center gap-2 text-gray-700 hover:text-blue-600 font-semibold text-[14px]"
+            className="flex items-center gap-2 text-slate-600 hover:text-emerald-600 font-semibold text-[13px]  tracking-wide transition-colors"
           >
-            <FiZap className="text-yellow-500" />
-            <span className="line-clamp-1">Daily Deals</span>
+            <FiZap className="text-yellow-500 animate-pulse" />
+            Daily Deals
           </Link>
-       
         </div>
 
-        {/* --- RIGHT SECTION: Robotics & Storage Dropdowns --- */}
+        {/* --- RIGHT SECTION: Custom Niche Dropdowns --- */}
         <div className="flex items-center h-full">
           {customMenus.map((menu) => (
             <div
@@ -80,10 +78,10 @@ const CategoryMenu = () => {
               onMouseLeave={() => setActiveMenu(null)}
             >
               <button
-                className={`flex items-center gap-2 px-3 py-3 text-[14px] font-bold transition-colors ${
+                className={`flex items-center gap-2 px-4 h-full text-[14px] font-bold transition-all duration-300 ${
                   activeMenu === menu.id
-                    ? "text-blue-600 bg-blue-50/50"
-                    : "text-gray-700"
+                    ? "text-emerald-600 bg-emerald-50/50"
+                    : "text-gray-700 hover:text-emerald-600"
                 }`}
               >
                 <span className="text-lg">{menu.icon}</span>
@@ -95,22 +93,20 @@ const CategoryMenu = () => {
                 />
               </button>
 
-              {/* Dropdown Panel */}
+              {/* Individual Niche Dropdown Panel */}
               <div
-                className={`absolute top-full right-0 w-52 bg-white shadow-xl py-2 rounded-b-md border-t-2 border-blue-600 transition-all duration-200 origin-top z-50 ${
+                className={`absolute top-full right-0 w-52 bg-white shadow-2xl py-3 rounded-b-xl border-t-2 border-emerald-500 transition-all duration-300 origin-top z-50 ${
                   activeMenu === menu.id
-                    ? "opacity-100 scale-y-100"
-                    : "opacity-0 scale-y-0 pointer-events-none"
+                    ? "opacity-100 scale-y-100 visible"
+                    : "opacity-0 scale-y-95 invisible"
                 }`}
               >
                 <ul className="flex flex-col">
                   {menu.subCats.map((sub) => (
                     <li key={sub}>
                       <Link
-                        to={`/${sub
-                          .toLowerCase()
-                          .replace(/\s+/g, "-")}`}
-                        className="block px-5 py-2 text-sm font-medium text-gray-600 hover:text-blue-600 hover:bg-gray-50 transition-all"
+                        to={`/${sub.toLowerCase().replace(/\s+/g, "-")}`}
+                        className="block px-6 py-2.5 text-[13px] font-medium text-gray-600 hover:text-emerald-600 hover:bg-emerald-50 transition-all border-l-2 border-transparent hover:border-emerald-500"
                       >
                         {sub}
                       </Link>
@@ -122,7 +118,7 @@ const CategoryMenu = () => {
           ))}
         </div>
       </div>
-    </div>
+    </nav>
   );
 };
 

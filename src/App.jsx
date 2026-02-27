@@ -34,6 +34,7 @@ import DailyDeals from "./components/Daily Deals/DailyDeals";
 import SectionList from "./pages/SectionList";
 import Header from "./components/Home/Header";
 import TestBuy from "./components/Buy Now/TestBuy";
+import ProductLandingPage from "./components/Landing Page/ProductLandingPage";
 
 const Loader = () => (
   <div className="fixed inset-0 flex items-center justify-center bg-white z-50">
@@ -168,6 +169,12 @@ function App() {
           <Route path="/return-policy" element={<Return />} />
           <Route path="/payment-info" element={<Payment />} />
           <Route path="/test-buy" element={<TestBuy />} />
+
+          {/* Landing page */}
+          <Route
+            path="/order/ultimate-eSP32-smart-griculture-kit"
+            element={<ProductLandingPage />}
+          />
         </Routes>
       </main>
 
