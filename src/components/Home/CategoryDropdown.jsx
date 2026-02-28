@@ -1,11 +1,12 @@
-import React, { useContext, useState, useRef } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FiGrid, FiChevronDown, FiHome, FiBox } from "react-icons/fi";
 import { DataContext } from "../Context Api/UserContext";
 
 const CategoryDropdown = () => {
-  const { categoryData } = useContext(DataContext);
+  const { categoryData, productData } = useContext(DataContext);
   const [isOpen, setIsOpen] = useState(false);
+  const [catList, setCatList] = useState([]);
 
   const hoverTimeout = useRef(null);
 
@@ -19,6 +20,18 @@ const CategoryDropdown = () => {
     clearTimeout(hoverTimeout.current);
     setIsOpen(false);
   };
+
+  useEffect(() => {
+    if (productData.length && categoryData.length) {
+      const formattedData = productData.map((element) => {
+        const category = categoryData.find((c) => c.catID === element.category);
+        return category.catName;
+      });
+      setCatList([...new Set(formattedData)]);
+    }
+  }, [productData, categoryData]);
+
+
 
   return (
     <div className="flex items-center">
@@ -84,22 +97,24 @@ const CategoryDropdown = () => {
 
           {/* Categories */}
           <div className="p-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 max-h-[420px] overflow-y-auto 
+            <div
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 max-h-[420px] overflow-y-auto 
               scrollbar scrollbar-thin scrollbar-thumb-emerald-500 scrollbar-track-transparent
-              hover:scrollbar-thumb-emerald-600 transition-colors">
+              hover:scrollbar-thumb-emerald-600 transition-colors"
+            >
               {categoryData && categoryData.length > 0 ? (
-                categoryData.map((cat, index) => (
+                catList.map((cat, index) => (
                   <Link
-                    key={cat._id || index}
-                    to={`/${cat.catName.toLowerCase().replace(/\s+/g, "-")}`}
+                    key={cat || index}
+                    to={`/${cat.toLowerCase().replace(/\s+/g, "-")}`}
                     onClick={() => setIsOpen(false)}
                     className="flex items-center gap-2 px-3 py-2 bg-white border border-gray-100 rounded-lg hover:border-emerald-400 hover:bg-emerald-50 transition-all duration-200 group"
                   >
                     <div className="w-8 h-8 flex-shrink-0 bg-gray-100 rounded-md flex items-center justify-center">
-                      {cat.icon ? (
+                      {cat ? (
                         <img
-                          src={cat.icon}
-                          alt={cat.catName}
+                          src={cat}
+                          alt={cat}
                           className="w-5 h-5 object-contain"
                         />
                       ) : (
@@ -108,7 +123,7 @@ const CategoryDropdown = () => {
                     </div>
 
                     <span className="text-sm font-semibold text-gray-700 group-hover:text-emerald-600 truncate">
-                      {cat.catName}
+                      {cat}
                     </span>
                   </Link>
                 ))
