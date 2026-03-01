@@ -23,15 +23,25 @@ const CategoryDropdown = () => {
 
   useEffect(() => {
     if (productData.length && categoryData.length) {
-      const formattedData = productData.map((element) => {
-        const category = categoryData.find((c) => c.catID === element.category);
-        return category.catName;
-      });
-      setCatList([...new Set(formattedData)]);
+      const formattedData = productData
+        .map((element) => {
+          const category = categoryData.find(
+            (c) => c.catID === element.category,
+          );
+          // Return an object containing both properties
+          return category
+            ? { name: category.catName, icon: category.catIcon }
+            : null;
+        })
+        .filter(Boolean);
+
+      const uniqueCategories = Array.from(
+        new Map(formattedData.map((item) => [item.name, item])).values(),
+      );
+
+      setCatList(uniqueCategories);
     }
   }, [productData, categoryData]);
-
-
 
   return (
     <div className="flex items-center">
@@ -103,33 +113,44 @@ const CategoryDropdown = () => {
               hover:scrollbar-thumb-emerald-600 transition-colors"
             >
               {categoryData && categoryData.length > 0 ? (
-                catList.map((cat, index) => (
-                  <Link
-                    key={cat || index}
-                    to={`/${cat.toLowerCase().replace(/\s+/g, "-")}`}
-                    onClick={() => setIsOpen(false)}
-                    className="flex items-center gap-2 px-3 py-2 bg-white border border-gray-100 rounded-lg hover:border-emerald-400 hover:bg-emerald-50 transition-all duration-200 group"
-                  >
-                    <div className="w-8 h-8 flex-shrink-0 bg-gray-100 rounded-md flex items-center justify-center">
-                      {cat ? (
-                        <img
-                          src={cat}
-                          alt={cat}
-                          className="w-5 h-5 object-contain"
-                        />
-                      ) : (
-                        <FiBox className="text-gray-500 text-sm group-hover:text-emerald-500" />
-                      )}
-                    </div>
+                catList.map((cat, index) => {
+                  // Generate a clean URL: "Mobile Phone" -> "mobile-phone"
+                  const categoryUrl = cat.name
+                    .toLowerCase()
+                    .trim()
+                    .replace(/\s+/g, "-");
 
-                    <span className="text-sm font-semibold text-gray-700 group-hover:text-emerald-600 truncate">
-                      {cat}
-                    </span>
-                  </Link>
-                ))
+                  return (
+                    <Link
+                      key={cat.name || index}
+                      to={`/${categoryUrl}`}
+                      onClick={() => setIsOpen(false)}
+                      className="flex items-center gap-2 px-3 py-2 bg-white border border-slate-100 rounded-lg hover:border-emerald-400 hover:bg-emerald-50 transition-all duration-200 group"
+                    >
+                      <div className="w-9 h-9 flex-shrink-0 bg-slate-50 rounded-md flex items-center justify-center group-hover:bg-white transition-colors">
+                        {cat.icon ? (
+                          <img
+                            src={cat.icon}
+                            alt={cat.name}
+                            className="w-8 h-8 object-contain group-hover:scale-110 transition-transform"
+                          />
+                        ) : (
+                          <FiBox className="text-slate-400 text-sm group-hover:text-emerald-500" />
+                        )}
+                      </div>
+
+                      <span className="text-sm font-medium text-slate-700 group-hover:text-emerald-600 truncate">
+                        {cat.name}
+                      </span>
+                    </Link>
+                  );
+                })
               ) : (
-                <div className="col-span-full py-10 text-center text-gray-400">
-                  No categories found.
+                <div className="col-span-full py-10 text-center text-slate-400">
+                  <FiBox className="mx-auto mb-2 opacity-20" size={32} />
+                  <p className="text-xs font-bold uppercase tracking-widest">
+                    No categories found
+                  </p>
                 </div>
               )}
             </div>
