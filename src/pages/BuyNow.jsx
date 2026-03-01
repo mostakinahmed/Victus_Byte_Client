@@ -10,7 +10,7 @@ export const BuyNow = () => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+    const cartItems = JSON.parse(sessionStorage.getItem("cart")) || [];
     const merged = cartItems
       .map((cartItem) => {
         const product = productData.find((p) => p.pID === cartItem.pID);

@@ -317,7 +317,7 @@ const TestBuy = ({ data }) => {
       toast.error(errorMessage);
 
       // Optional: Log it for your own debugging
-      console.error("Submission Error:", error.response?.data);
+      // console.error("Submission Error:", error.response?.data);
     } finally {
       setIsSubmitting(false);
     }
