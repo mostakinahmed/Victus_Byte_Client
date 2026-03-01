@@ -147,7 +147,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/:cat" element={<AllProduct />} />
           <Route path="/:cat/:name" element={<ProductDetails />} />
-          <Route path="/offer" element={<Offer />} />
+          <Route path="/offer" element={<Maintenance pageName={"Live Offer is"} />} />
           <Route path="/product/:cat/:id/buynow" element={<BuyNow />} />
           <Route path="/checkout/cart" element={<Cart />} />
           <Route path="/profile/:card" element={<ProfileHome />} />
@@ -159,7 +159,7 @@ function App() {
 
           <Route path="/track-order" element={<TrackOrder />} />
           <Route path="/checkout/purchase" element={<BuyNow />} />
-          <Route path="/kids-zone" element={<Maintenance pageName={"Kids Zone"} />} />
+          <Route path="/kids-zone" element={<Maintenance pageName={"Kids Zone is" } />} />
           <Route path="/electronics" element={<Electronics />} />
           <Route path="/daily-deals" element={<Maintenance pageName={"Daily Deals"}  />} />
           <Route path="/section/:section" element={<SectionList />} />

@@ -122,8 +122,7 @@ const TestBuy = ({ data }) => {
     setIsApplied(true);
     setError(false);
 
-    console.log(isApplied);
-    console.log(error);
+  
   };
 
   const handleRemove = () => {
@@ -228,7 +227,7 @@ const TestBuy = ({ data }) => {
     if (Object.values(newErrors).some((error) => error)) {
       return toast.error("Please fill required fields and agree to terms");
     }
-    console.log("clcik");
+  
     setIsSubmitting(true);
 
     const orderPayload = {
@@ -258,7 +257,6 @@ const TestBuy = ({ data }) => {
       coupon: couponValue,
     };
 
-    console.log(orderPayload);
 
     try {
       const res = await axios.post(
@@ -266,9 +264,7 @@ const TestBuy = ({ data }) => {
         orderPayload,
       );
 
-      console.log(res);
-
-      localStorage.removeItem("cart");
+      sessionStorage.removeItem("cart");
       updateCart();
 
       Swal.fire({

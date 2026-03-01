@@ -11,8 +11,9 @@ import Header from "../Home/Header";
 const NavbarTop = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { cartItems } = useContext(CartContext);
+  const { cartItems, updateCart } = useContext(CartContext);
   const { categoryData, productData } = useContext(DataContext);
+
 
   const [values, setValue] = useState(false);
   const [sBar, setSbar] = useState(false);
@@ -21,8 +22,8 @@ const NavbarTop = () => {
 
   const toggle = () => setValue(!values);
 
+
   // Navbar height for positioning sidebar
-  //const navHeight = "top-[80px]"; // Adjust this value to match your navbar's height exactly
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -140,11 +141,7 @@ const NavbarTop = () => {
           </div>
 
           <Link to="/">
-            <img
-              className="h-[39px] ml-15"
-              src="/logo desk.png"
-              alt="Logo"
-            />
+            <img className="h-[39px] ml-15" src="/logo desk.png" alt="Logo" />
           </Link>
 
           <div className="flex items-center gap-3 w-[100px] justify-end">

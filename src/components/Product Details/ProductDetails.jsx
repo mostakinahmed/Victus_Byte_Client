@@ -30,9 +30,10 @@ const ProductDetail = () => {
       item.name.replace(/-/g, "").toLowerCase().trim() ===
       normalizedProductName,
   );
-console.log(cat);
 
-  const CurrCat = categoryData?.find((item) => item.catID === cat.toUpperCase());
+  const CurrCat = categoryData?.find(
+    (item) => item.catID === cat.toUpperCase(),
+  );
 
   const allProductsInCategory =
     productData
@@ -66,16 +67,16 @@ console.log(cat);
     setCurrentIndex((prev) =>
       prev === product.images.length - 1 ? 0 : prev + 1,
     );
-  const saveCart = (cart) => localStorage.setItem("cart", JSON.stringify(cart));
 
+
+  const saveCart = (cart) => sessionStorage.setItem("cart", JSON.stringify(cart));
   const buyNowBtn = (product) => {
     if (!selectedColor) {
       setShowColorError(true);
-      // Optional: Scroll to the color section so they see the warning
       return;
     }
 
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
     const index = cart.findIndex((item) => item.pID === product.pID);
     if (index === -1) {
       cart.push({
@@ -94,23 +95,12 @@ console.log(cat);
 
   const addToCartBtn = (product) => {
     if (!selectedColor) {
-      const isMobile = window.innerWidth < 768;
-      Swal.fire({
-        title: "Wait!",
-        text: "Please select a color.....",
-        icon: "warning",
-        width: isMobile ? "300px" : "460px",
-        padding: "1em",
-        showConfirmButton: false,
-        timer: 1500,
-        timerProgressBar: true,
-        heightAuto: false,
-        scrollbarPadding: false,
-      });
+      setShowColorError(true);
+      // Optional: Scroll to the color section so they see the warning
       return;
     }
 
-    const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
+    const existingCart = JSON.parse(sessionStorage.getItem("cart")) || [];
     const found = existingCart.find((item) => item.pID === product.pID);
     if (found) {
       toast.success("Already Added!");
@@ -123,7 +113,7 @@ console.log(cat);
         qty: quantity,
         color: selectedColor,
       });
-      localStorage.setItem("cart", JSON.stringify(existingCart));
+      sessionStorage.setItem("cart", JSON.stringify(existingCart));
       updateCart();
       toast.success("Added to Cart!");
     }

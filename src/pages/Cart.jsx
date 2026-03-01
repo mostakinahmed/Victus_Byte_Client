@@ -13,8 +13,8 @@ export const Cart = () => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
-    console.log(cartItems);
+    const cartItems = JSON.parse(sessionStorage.getItem("cart")) || [];
+ 
     const merged = cartItems
       .map((cartItem) => {
         const product = productData.find((p) => p.pID === cartItem.pID);
@@ -33,12 +33,11 @@ export const Cart = () => {
     (sum, item) => sum + item.price.discount,
     0,
   );
-  console.log(items);
 
   const onRemove = (pID) => {
     const updatedItems = items.filter((item) => item.pID !== pID);
     setItems(updatedItems);
-    localStorage.setItem(
+    sessionStorage.setItem(
       "cart",
       JSON.stringify(
         updatedItems.map((item) => ({ pID: item.pID, qty: item.qty })),

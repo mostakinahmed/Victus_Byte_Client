@@ -3,48 +3,52 @@ import { createContext, useState, useEffect } from "react";
 export const CartContext = createContext();
 
 export function CartProvider({ children }) {
-  const [cart, setCart] = useState([]);
+  // 1. Single Source of Truth: Initialize immediately from storage
+  const [cartItems, setCartItems] = useState(() => {
+    try {
+      const stored = sessionStorage.getItem("cart");
+      return stored ? JSON.parse(stored) : [];
+    } catch (error) {
+      return [];
+    }
+  });
 
-  // Load cart from sessionStorage when app starts
+  // 2. Sync sessionStorage whenever cartItems changes
+  // This handles the "last item removed" (empty array) correctly
   useEffect(() => {
-    const storedCart = JSON.parse(sessionStorage.getItem("cart")) || [];
-    setCart(storedCart);
-  }, []);
+    sessionStorage.setItem("cart", JSON.stringify(cartItems));
+  }, [cartItems]);
 
-  // Save cart to sessionStorage whenever it changes
-  useEffect(() => {
-    sessionStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
-
-  // Add item to cart
+  // 3. Add item logic
   function addToCart(pID, name) {
-    setCart((prevCart) => {
+    setCartItems((prevCart) => {
       const existing = prevCart.find((item) => item.pID === pID);
       if (existing) {
-        // increase quantity
         return prevCart.map((item) =>
           item.pID === pID ? { ...item, qty: (item.qty || 1) + 1 } : item
         );
-      } else {
-        return [...prevCart, { pID, name, qty: 1 }];
       }
+      return [...prevCart, { pID, name, qty: 1 }];
     });
   }
 
-  //for update value
-  const [cartItems, setCartItems] = useState([]);
-  useEffect(() => {
-    updateCart();
-  }, []);
+  // 4. Remove item logic (This fixes your "last item" bug)
+  function removeFromCart(pID) {
+    setCartItems((prevItems) => prevItems.filter(item => item.pID !== pID));
+  }
 
+  // 5. Update method (Triggered by Navbar or refresh)
   const updateCart = () => {
-    const stored = JSON.parse(localStorage.getItem("cart")) || [];
-    setCartItems(stored);
+    const stored = sessionStorage.getItem("cart");
+    if (stored) {
+      setCartItems(JSON.parse(stored));
+    } else {
+      setCartItems([]); // If storage is empty, state MUST be empty
+    }
   };
 
-
   return (
-    <CartContext.Provider value={{ cart, addToCart, updateCart, cartItems }}>
+    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateCart }}>
       {children}
     </CartContext.Provider>
   );
