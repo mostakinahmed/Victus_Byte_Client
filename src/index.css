@@ -43,6 +43,28 @@
   --sidebar-ring: oklch(0.705 0.015 286.067);
 }
 
+@keyframes infinityWobble {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-4px) rotate(-5deg);
+  }
+  50% {
+    transform: translateX(4px) rotate(5deg);
+  }
+  75% {
+    transform: translateX(-2px) rotate(-3deg);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-wobble {
+  animation: infinityWobble 2s ease-in-out infinite;
+}
+
 body {
   background-color: #f0f4f8;
   margin: var(--root-margin);

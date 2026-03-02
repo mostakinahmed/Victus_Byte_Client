@@ -1,6 +1,12 @@
 import React, { useContext, useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FiGrid, FiChevronDown,FiArrowRight, FiHome, FiBox } from "react-icons/fi";
+import {
+  FiGrid,
+  FiChevronDown,
+  FiArrowRight,
+  FiHome,
+  FiBox,
+} from "react-icons/fi";
 import { DataContext } from "../Context Api/UserContext";
 
 const CategoryDropdown = () => {
@@ -78,7 +84,7 @@ const CategoryDropdown = () => {
         {/* Dropdown */}
         <div
           className={`absolute top-full left-0
-    w-[320px] md:w-[650px] lg:w-[900px] xl:w-[1000px]
+    w-[320px] md:w-[650px] lg:w-[900px]
     bg-slate-100
     shadow-2xl
     rounded-b-2xl
@@ -129,26 +135,23 @@ const CategoryDropdown = () => {
                       key={cat.name || index}
                       to={`/${categoryUrl}`}
                       onClick={() => setIsOpen(false)}
-                      className="flex items-center gap-3 px-4 py-3 bg-white border border-slate-300/80 rounded-xl hover:border-emerald-400 hover:shadow-md hover:shadow-emerald-500/5 transition-all duration-200 group"
+                      className="flex items-center gap-3 h-18 py-1 px-2 bg-white border border-slate-300/80 rounded-xl hover:border-emerald-400 hover:shadow-md hover:shadow-emerald-500/5 transition-all duration-200 group"
                     >
-                      <div className="w-10 h-10 flex-shrink-0  rounded-lg flex items-center justify-center group-hover:bg-emerald-50 transition-colors border border-slate-100 group-hover:border-emerald-100">
+                      <div className="w-1/3 h-ful ml-2 p-2 flex-shrink-0 rounded-lg flex items-center justify-center group-hover:bg-emerald-50 transition-colors">
                         {cat.icon ? (
                           <img
                             src={cat.icon}
                             alt={cat.name}
-                            className="w-6 h-6 object-contain group-hover:scale-110 transition-transform duration-300"
+                            className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
                           />
                         ) : (
                           <FiBox className="text-slate-400 text-lg group-hover:text-emerald-500" />
                         )}
                       </div>
 
-                      <div className="flex flex-col min-w-0">
-                        <span className="text-[13px] font-medium text-slate-700 group-hover:text-emerald-600 truncate transition-colors">
+                      <div className="flex w-2/3 flex-col min-w-0 text-center">
+                        <span className="text-[15px] font-medium text-slate-800 group-hover:text-emerald-600 truncate transition-colors">
                           {cat.name}
-                        </span>
-                        <span className="text-[9px] font-medium text-slate-400 uppercase tracking-tighter opacity-0 group-hover:opacity-100 transition-opacity">
-                          Explore Inventory
                         </span>
                       </div>
                     </Link>

@@ -85,7 +85,7 @@ const NavbarTop = () => {
 
           <div className="flex items-center gap-4">
             <Link to="/offer" className="group">
-              <div className="relative flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-rose-600 to-red-500 rounded-full shadow-[0_0_15px_rgba(225,29,72,0.4)] hover:shadow-[0_0_25px_rgba(225,29,72,0.6)] transition-all duration-300 active:scale-95 overflow-hidden">
+              <div className="relative flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-rose-600 to-red-500 rounded-full  transition-all duration-300 active:scale-95 overflow-hidden">
                 {/* Pulse Animation Layer */}
                 <span className="absolute inset-0 bg-white/20 animate-pulse group-hover:animate-none" />
 

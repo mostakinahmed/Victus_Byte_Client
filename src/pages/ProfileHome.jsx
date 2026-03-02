@@ -14,10 +14,7 @@ function ProfileHome() {
     switch (card) {
       case "edit-profile":
         return <EditProfile />;
-      // case "my-orders":
-      //   return <Orders />;
-      // case "settings":
-      //   return <Settings />;
+    
       default:
         return <ProfileCards />;
     }

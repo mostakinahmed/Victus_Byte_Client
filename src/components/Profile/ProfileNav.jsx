@@ -14,18 +14,19 @@ import { useNavigate } from "react-router-dom";
 import { FaGem } from "react-icons/fa";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-
-const MySwal = withReactContent(Swal);
+import { useAuth } from "../Context Api/AuthContext";
 
 export const Profile = () => {
+  const { user, loading, logout } = useAuth();
   const navigate = useNavigate();
-  const [login, setLogin] = useState(true);
+  const [login, setLogin] = useState(false);
   const [open, setOpen] = useState(false); // dropdown
   const [trackModal, setTrackModal] = useState(false); // Tracking Modal state
   const [orderId, setOrderId] = useState("");
   const [trackingResult, setTrackingResult] = useState(null);
 
   const menuRef = useRef(null);
+  console.log(user);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -43,18 +44,17 @@ export const Profile = () => {
     navigate("/profile");
   };
 
-
-
   return (
     <div className="relative font-sans" ref={menuRef}>
       {/* --- User Icon / Sign In Trigger --- */}
-      {login ? (
+      {user ? (
         <div
           onClick={() => setOpen(!open)}
           className="cursor-pointer border border-slate-300 hover:border-slate-500 lg:py-[7px] lg:px-2 py-[4px] px-1 rounded-3xl transition-all"
         >
           <button className="flex gap-2 cursor-pointer justify-center items-center">
-            <User className="w-6 h-6 hover:text-indigo-600 text-slate-800" />
+            <img src={user.images} alt="" className="h-6 w-6" />
+            {/* <User className="w-6 h-6 hover:text-indigo-600 text-slate-800" /> */}
           </button>
         </div>
       ) : (
@@ -72,7 +72,7 @@ export const Profile = () => {
       )}
 
       {/* --- Logged In Dropdown (Compact Version) --- */}
-      {login && open && (
+      {user && open && (
         <div className="relative z-[100]">
           {/* Reduced width from 320px to 260px and padding from p-4 to p-3 */}
           <div className="absolute md:top-2 top-2 md:right-0 -right-2 w-max md:min-w-[260px] min-w-[240px] bg-white backdrop-blur-md shadow-xl rounded-b border border-slate-300 z-[100] p-3 animate-in fade-in zoom-in-95 duration-200">
@@ -154,10 +154,7 @@ export const Profile = () => {
                 <div className="my-1.5 border-t border-slate-100" />
 
                 <li
-                  onClick={() => {
-                    setLogin(false);
-                    setOpen(false);
-                  }}
+                  onClick={logout}
                   className="group px-2 py-1.5 rounded-lg hover:bg-rose-100 bg-rose-200/70 md:bg-rose-50 flex items-center gap-2.5 cursor-pointer transition-all"
                 >
                   <div className="p-1.5 bg-rose-100/50 rounded-md group-hover:bg-rose-500 transition-all">

@@ -21,7 +21,7 @@ export const UserContext = ({ children }) => {
           axios.get("https://api.victusbyte.com/api/category/client"),
           axios.get("https://api.victusbyte.com/api/stock/client"),
         ]);
-
+ 
         setProductData(productRes.data);
         setCategoryData(categoryRes.data);
         setStockData(stockRes.data);
