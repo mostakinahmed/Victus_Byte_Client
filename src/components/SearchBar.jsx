@@ -123,7 +123,7 @@ export const SearchBar = () => {
 
       {/* --- SEARCH DROPDOWN --- */}
       <div
-        className={`absolute left-0 top-full mt-1 w-full bg-white border-x-2 border-b-2 border-[#f4813a] shadow-2xl overflow-hidden z-[100] transition-all duration-300 ease-out origin-top ${
+        className={`absolute left-0 top-full mt-1 w-full bg-white border-x-2 border-b-2 border-[#f4813a] shadow-2xl overflow-hidden z-[110] transition-all duration-300 ease-out origin-top ${
           search
             ? "opacity-100 scale-y-100"
             : "opacity-0 scale-y-95 pointer-events-none"

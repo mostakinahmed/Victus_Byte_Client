@@ -1,6 +1,6 @@
 import React, { useContext, useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { FiGrid, FiChevronDown, FiHome, FiBox } from "react-icons/fi";
+import { FiGrid, FiChevronDown,FiArrowRight, FiHome, FiBox } from "react-icons/fi";
 import { DataContext } from "../Context Api/UserContext";
 
 const CategoryDropdown = () => {
@@ -78,43 +78,47 @@ const CategoryDropdown = () => {
         {/* Dropdown */}
         <div
           className={`absolute top-full left-0
-  w-[320px] md:w-[650px] lg:w-[900px] xl:w-[1050px]
-  bg-white border border-gray-200 
-  shadow-[0_20px_60px_rgba(0,0,0,0.08)] 
-  rounded-b-2xl
-  transform-gpu origin-top
-  transition-all duration-300 ease-out
-  ${
-    isOpen
-      ? "opacity-100 scale-100 translate-y-0 pointer-events-auto"
-      : "opacity-0 scale-95 -translate-y-3 pointer-events-none"
-  }
-  z-[999] overflow-hidden`}
+    w-[320px] md:w-[650px] lg:w-[900px] xl:w-[1000px]
+    bg-slate-100
+    shadow-2xl
+    rounded-b-2xl
+    border border-slate-200
+    transform-gpu origin-top
+    transition-all duration-300 ease-out
+    ${
+      isOpen
+        ? "opacity-100 scale-100 translate-y-0 pointer-events-auto"
+        : "opacity-0 scale-95 -translate-y-3 pointer-events-none"
+    }
+    z-[999] overflow-hidden`}
         >
-          {/* Header */}
-          <div className="flex items-center justify-between px-6 py-4 border-b bg-gradient-to-r from-emerald-100 to-white">
-            <h3 className="text-sm font-bold text-gray-800 tracking-wide">
-              Browse Categories
-            </h3>
+          {/* Header: Deep Slate for a High-End Tech Feel */}
+          <div className="flex items-center justify-between px-6 py-4 bg-slate-900 border-b border-white/5">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
+              <h3 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em]">
+                Hardware List
+              </h3>
+            </div>
             <Link
               to="/shop"
               onClick={() => setIsOpen(false)}
-              className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 hover:underline"
+              className="text-[10px] font-black text-emerald-400 hover:text-emerald-300 transition-colors uppercase tracking-widest flex items-center gap-1 group/all"
             >
-              View All
+              View All Manifest{" "}
+              <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
 
-          {/* Categories */}
-          <div className="p-4">
+          {/* Content Area: Light Slate for clarity */}
+          <div className="p-5 bg-slate-50/50">
             <div
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 max-h-[420px] overflow-y-auto 
-              scrollbar scrollbar-thin scrollbar-thumb-emerald-500 scrollbar-track-transparent
-              hover:scrollbar-thumb-emerald-600 transition-colors"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 max-h-[450px] overflow-y-auto 
+      scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-transparent
+      hover:scrollbar-thumb-emerald-500 transition-colors"
             >
               {categoryData && categoryData.length > 0 ? (
                 catList.map((cat, index) => {
-                  // Generate a clean URL: "Mobile Phone" -> "mobile-phone"
                   const categoryUrl = cat.name
                     .toLowerCase()
                     .trim()
@@ -125,48 +129,62 @@ const CategoryDropdown = () => {
                       key={cat.name || index}
                       to={`/${categoryUrl}`}
                       onClick={() => setIsOpen(false)}
-                      className="flex items-center gap-2 px-3 py-2 bg-white border border-slate-100 rounded-lg hover:border-emerald-400 hover:bg-emerald-50 transition-all duration-200 group"
+                      className="flex items-center gap-3 px-4 py-3 bg-white border border-slate-300/80 rounded-xl hover:border-emerald-400 hover:shadow-md hover:shadow-emerald-500/5 transition-all duration-200 group"
                     >
-                      <div className="w-9 h-9 flex-shrink-0 bg-slate-50 rounded-md flex items-center justify-center group-hover:bg-white transition-colors">
+                      <div className="w-10 h-10 flex-shrink-0  rounded-lg flex items-center justify-center group-hover:bg-emerald-50 transition-colors border border-slate-100 group-hover:border-emerald-100">
                         {cat.icon ? (
                           <img
                             src={cat.icon}
                             alt={cat.name}
-                            className="w-8 h-8 object-contain group-hover:scale-110 transition-transform"
+                            className="w-6 h-6 object-contain group-hover:scale-110 transition-transform duration-300"
                           />
                         ) : (
-                          <FiBox className="text-slate-400 text-sm group-hover:text-emerald-500" />
+                          <FiBox className="text-slate-400 text-lg group-hover:text-emerald-500" />
                         )}
                       </div>
 
-                      <span className="text-sm font-medium text-slate-700 group-hover:text-emerald-600 truncate">
-                        {cat.name}
-                      </span>
+                      <div className="flex flex-col min-w-0">
+                        <span className="text-[13px] font-medium text-slate-700 group-hover:text-emerald-600 truncate transition-colors">
+                          {cat.name}
+                        </span>
+                        <span className="text-[9px] font-medium text-slate-400 uppercase tracking-tighter opacity-0 group-hover:opacity-100 transition-opacity">
+                          Explore Inventory
+                        </span>
+                      </div>
                     </Link>
                   );
                 })
               ) : (
-                <div className="col-span-full py-10 text-center text-slate-400">
-                  <FiBox className="mx-auto mb-2 opacity-20" size={32} />
-                  <p className="text-xs font-bold uppercase tracking-widest">
-                    No categories found
+                <div className="col-span-full py-16 text-center">
+                  <FiBox className="mx-auto mb-3 text-slate-200" size={48} />
+                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
+                    Database Empty
                   </p>
                 </div>
               )}
             </div>
           </div>
 
-          {/* Bottom Banner */}
-          <div className="bg-gradient-to-r from-emerald-600 to-emerald-500 text-white px-6 py-4 flex items-center justify-between">
-            <div>
-              <p className="text-xs opacity-80">Special Deals</p>
-              <p className="text-sm font-bold">Shop Latest Tech Gadgets</p>
+          {/* Bottom Banner: Darker Slate to wrap the design */}
+          <div className="bg-slate-900 border-t border-white/5 px-6 py-5 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="hidden sm:block p-2 bg-slate-800 rounded-lg border border-white/5">
+                <FiBox className="text-emerald-500" size={20} />
+              </div>
+              <div>
+                <p className="text-[10px] font-black text-emerald-500 uppercase tracking-[0.2em] mb-0.5">
+                  Specialized Hardware
+                </p>
+                <p className="text-sm font-medium text-slate-300">
+                  Robotics & IoT Solutions
+                </p>
+              </div>
             </div>
 
             <Link
-              to="/shop"
+              to="/electronics"
               onClick={() => setIsOpen(false)}
-              className="bg-white text-emerald-600 text-xs font-bold px-4 py-2 rounded-lg hover:bg-gray-100 transition"
+              className="bg-emerald-600 text-white text-[11px] font-black px-6 py-2.5 rounded-lg hover:bg-emerald-500 shadow-lg shadow-emerald-900/20 transition-all active:scale-95 uppercase tracking-widest"
             >
               Explore
             </Link>

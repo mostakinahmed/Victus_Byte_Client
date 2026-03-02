@@ -106,7 +106,7 @@ const NavbarTop = () => {
 
             <div
               onClick={() => navigate("/track-order")}
-              className="cursor-pointer p-2 rounded hover:bg-gray-100 transition"
+              className="cursor-pointer p-2 rounded hover:bg-gray-100  transition"
               title="Track Order"
             >
               <FiTruck size={24} className="text-gray-800" />

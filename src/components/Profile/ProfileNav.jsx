@@ -46,25 +46,25 @@ export const Profile = () => {
 
 
   return (
-    <div className="relative" ref={menuRef}>
+    <div className="relative font-sans" ref={menuRef}>
       {/* --- User Icon / Sign In Trigger --- */}
       {login ? (
         <div
           onClick={() => setOpen(!open)}
-          className="cursor-pointer border border-transparent hover:border-slate-400 lg:py-[7px] lg:px-2 py-[4px] px-1 rounded-3xl transition-all"
+          className="cursor-pointer border border-slate-300 hover:border-slate-500 lg:py-[7px] lg:px-2 py-[4px] px-1 rounded-3xl transition-all"
         >
           <button className="flex gap-2 cursor-pointer justify-center items-center">
             <User className="w-6 h-6 hover:text-indigo-600 text-slate-800" />
           </button>
         </div>
       ) : (
-        <div className=" md:hover:border-indigo-300 py-[6px] md:px-2 md:rounded-2xl md:border p-1.5 hover:bg-slate-100 transition-all">
+        <div className=" md:hover:border-indigo-300 py-[6px] md:px-2 md:rounded-2xl md:border border-slate-300 p-1.5 hover:bg-slate-100 transition-all">
           <button
             onClick={() => navigate("/signin")}
             className="flex gap-2 justify-center items-center  md:px-2 cursor-pointer "
           >
-            <User className="w-6 h-6 text-indigo-600" />
-            <h2 className="hidden lg:flex text-sm font-black  tracking-widest text-slate-700">
+            <User className="md:w-5 md:h-5 w-6 h-6 text-slate-700" />
+            <h2 className="hidden lg:flex text-sm font-medium  tracking-wider text-slate-700">
               Sign in
             </h2>
           </button>
@@ -111,8 +111,8 @@ export const Profile = () => {
             </div>
 
             {/* Navigation Links - Reduced py and gap */}
-            <nav className="mt-3">
-              <ul className="flex flex-col gap-0.5">
+            <nav className="mt-3 font-sans">
+              <ul className="flex flex-col gap-0.5 ">
                 {[
                   { label: "Profile", icon: <User />, onClick: goProfile },
                   {
@@ -144,7 +144,7 @@ export const Profile = () => {
                             "w-4 h-4 text-slate-700 group-hover:text-indigo-600",
                         })}
                       </div>
-                      <span className="text-[14px] font-semibold text-slate-700 group-hover:text-slate-900  tracking-wide">
+                      <span className="text-[14px] font-medium text-slate-700 group-hover:text-slate-900  tracking-wide">
                         {item.label}
                       </span>
                     </div>

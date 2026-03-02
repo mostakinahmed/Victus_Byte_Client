@@ -24,21 +24,11 @@ const CategoryMenu = () => {
   ];
 
   return (
-    <nav className="bg-white font-sans shadow-sm w-full pb- hidden md:flex h-8.5 sticky top-0 z-[100] border-b border-slate-200">
+    <nav className="bg-white font-sans shadow-sm w-full pb- hidden md:flex h-8.5 sticky top-0 z-[80] border-b border-slate-200">
       <div className="xl:max-w-[1380px] w-full mx-auto flex justify-between items-center px-2">
         {/* --- LEFT SECTION: Primary Navigation --- */}
         <div className="flex items-center h-full gap-2">
-          {/* Main Mega Menu Trigger */}
           <CategoryDropdown />
-          {/* <div className="h-6 w-[1px] bg-gray-200 mx-2"></div> Separator */}
-          {/* 
-          <Link
-            to={"/"}
-            className="flex items-center gap-2 px-4 py-2 text-slate-900 hover:text-emerald-600 font-bold text-[14px] transition-all"
-          >
-            <FiHome className="text-lg text-emerald-600" />
-            Home
-          </Link> */}
         </div>
 
         {/* --- MIDDLE SECTION: Trending / Direct Links --- */}

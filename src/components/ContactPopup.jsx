@@ -13,7 +13,7 @@ const ContactPopup = ({ onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center px-4 bg-slate-900/60 backdrop-blur-sm"
+      className="fixed inset-0 z-[120] flex items-center justify-center px-4 bg-slate-900/60 backdrop-blur-sm"
       onClick={onClose}
     >
       <div
