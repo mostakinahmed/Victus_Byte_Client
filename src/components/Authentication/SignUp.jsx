@@ -119,7 +119,7 @@ export default function SignUp() {
   return (
     <div
       ref={topRef}
-      className="min-h-screen bg-[#fafafa] flex items-center justify-center p-5 font-sans leading-relaxed"
+      className="min-h-screen bg-[#fafafa] flex items-center justify-center p-3 font-sans leading-relaxed"
     >
       <style>{`
         input { font-size: 16px !important; }
@@ -128,10 +128,10 @@ export default function SignUp() {
       `}</style>
 
       <div className="w-full max-w-[400px]">
-        <div className="bg-white rounded-lg px-8 pt-10 pb-9 shadow-[0_2px_4px_rgba(0,0,0,0.1),0_8px_16px_rgba(0,0,0,0.1)] relative overflow-hidden transition-all duration-300">
+        <div className="bg-white rounded-lg px-8 pt-3 pb-4 shadow-[0_2px_4px_rgba(0,0,0,0.1),0_8px_16px_rgba(0,0,0,0.1)] relative overflow-hidden transition-all duration-300">
           {/* HEADER */}
           {!verified && (
-            <div className="text-center mb-8">
+            <div className="text-center mb-4">
               <div className="flex justify-center mb-4 group cursor-pointer">
                 <div className="relative w-12 h-12">
                   <div className="absolute inset-0 rounded-full bg-[#1976d2] shadow-[0_2px_4px_rgba(25,118,210,0.3)] transition-transform duration-300 group-hover:scale-110"></div>
