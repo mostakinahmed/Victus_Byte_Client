@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react"; // Added useRef
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../Context Api/AuthContext";
@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 export default function SignUp() {
   const { checkUserStatus } = useAuth();
   const navigate = useNavigate();
-  const topRef = useRef(null); // Reference for the top of the page
+  const topRef = useRef(null);
 
   // --- STATE ---
   const [step, setStep] = useState(1);
@@ -25,14 +25,18 @@ export default function SignUp() {
     otp: "",
   });
 
-  // --- FORCE SCROLL TO TOP ON STEP CHANGE ---
+  // --- MOBILE-ONLY SCROLL TO TOP ---
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    // If you want it even more precise for the card:
-    if (topRef.current) {
-      topRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    // Check if the screen is mobile (less than 768px)
+    const isMobile = window.innerWidth < 768;
+
+    if (isMobile) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      if (topRef.current) {
+        topRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     }
-  }, [step, verified]); // Triggers when step changes to 2 or when verified becomes true
+  }, [step, verified]);
 
   // Resend Timer
   useEffect(() => {
@@ -126,7 +130,7 @@ export default function SignUp() {
       `}</style>
 
       <div className="w-full max-w-[400px]">
-        <div className="bg-white rounded-lg px-8 pt-4 pb-4 shadow md:shadow-[0_2px_4px_rgba(0,0,0,0.1),0_8px_16px_rgba(0,0,0,0.1)] relative overflow-hidden transition-all duration-300">
+        <div className="bg-white rounded-lg px-8 pt-5 pb-9 shadow md:shadow-[0_2px_4px_rgba(0,0,0,0.1),0_8px_16px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_8px_rgba(0,0,0,0.12),0_12px_28px_rgba(0,0,0,0.15)] transition-all duration-300 relative overflow-hidden">
           <AnimatePresence mode="wait">
             {verified ? (
               <motion.div

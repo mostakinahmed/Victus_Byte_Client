@@ -16,6 +16,8 @@ import ProfileHome from "./pages/ProfileHome.jsx";
 import SearchResult from "./pages/SearchResult";
 import SignUp from "./components/Authentication/SignUp";
 import SignIn from "./components/Authentication/SignIn";
+import ForgotPassword from "./components/Authentication/ForgotPassword";
+
 import Profile from "./components/Profile/Profile";
 import TrackOrder from "./components/TrackOrder";
 import { DataContext } from "./components/Context Api/UserContext";
@@ -80,7 +82,7 @@ const Loader = () => (
     `}</style>
   </div>
 );
- 
+
 function App() {
   const { productData } = useContext(DataContext);
   const location = useLocation();
@@ -147,7 +149,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/:cat" element={<AllProduct />} />
           <Route path="/:cat/:name" element={<ProductDetails />} />
-          <Route path="/offer" element={<Maintenance pageName={"Live Offer is"} />} />
+          <Route
+            path="/offer"
+            element={<Maintenance pageName={"Live Offer is"} />}
+          />
           <Route path="/product/:cat/:id/buynow" element={<BuyNow />} />
           <Route path="/checkout/cart" element={<Cart />} />
           <Route path="/profile/:card" element={<ProfileHome />} />
@@ -156,12 +161,19 @@ function App() {
           <Route path="/search-result/:keyword" element={<SearchResult />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
 
           <Route path="/track-order" element={<TrackOrder />} />
           <Route path="/checkout/purchase" element={<BuyNow />} />
-          <Route path="/kids-zone" element={<Maintenance pageName={"Kids Zone is" } />} />
+          <Route
+            path="/kids-zone"
+            element={<Maintenance pageName={"Kids Zone is"} />}
+          />
           <Route path="/electronics" element={<Electronics />} />
-          <Route path="/daily-deals" element={<Maintenance pageName={"Daily Deals"}  />} />
+          <Route
+            path="/daily-deals"
+            element={<Maintenance pageName={"Daily Deals"} />}
+          />
           <Route path="/section/:section" element={<SectionList />} />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/contact-us" element={<Contact />} />
