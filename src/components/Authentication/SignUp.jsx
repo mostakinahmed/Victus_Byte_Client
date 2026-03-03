@@ -113,7 +113,7 @@ export default function SignUp() {
   return (
     <div
       ref={topRef}
-      className="min-h-screen bg-[#fafafa] mt-1 md:mt-0 flex items-center justify-center p-3 px-4 font-sans leading-relaxed"
+      className="min-h-screen md:bg-[#fafafa] mt-1 md:mt-0 flex items-center justify-center p-3 px-4 font-sans leading-relaxed"
     >
       <style>{`
         input { font-size: 16px !important; }
