@@ -126,7 +126,7 @@ export default function SignUp() {
       `}</style>
 
       <div className="w-full max-w-[400px]">
-        <div className="bg-white rounded-lg px-8 pt-10 pb-9 shadow md:shadow-[0_2px_4px_rgba(0,0,0,0.1),0_8px_16px_rgba(0,0,0,0.1)] relative overflow-hidden transition-all duration-300">
+        <div className="bg-white rounded-lg px-8 pt-4 pb-4 shadow md:shadow-[0_2px_4px_rgba(0,0,0,0.1),0_8px_16px_rgba(0,0,0,0.1)] relative overflow-hidden transition-all duration-300">
           <AnimatePresence mode="wait">
             {verified ? (
               <motion.div
