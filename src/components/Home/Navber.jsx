@@ -14,14 +14,12 @@ const NavbarTop = () => {
   const { cartItems, updateCart } = useContext(CartContext);
   const { categoryData, productData } = useContext(DataContext);
 
-
   const [values, setValue] = useState(false);
   const [sBar, setSbar] = useState(false);
   const [searchIcon, setSearchIcon] = useState(true);
   const [catData, setCatData] = useState([]);
 
   const toggle = () => setValue(!values);
-
 
   // Navbar height for positioning sidebar
   const [isScrolled, setIsScrolled] = useState(false);
@@ -87,11 +85,14 @@ const NavbarTop = () => {
             <Link to="/offer" className="group">
               <div className="relative flex items-center gap-2 px-4 py-1.5 bg-[#1976d2] rounded-full overflow-hidden">
                 {/* Pulse Animation Layer */}
-               
 
                 {/* Icon Container */}
-                <div className="relative z-10 flex items-center justify-center w-5 h-5 bg-white/20 rounded-full backdrop-blur-sm group-hover:rotate-12 transition-transform">
-                  <FiPercent className="text-white text-[10px]" />
+                <div className="bg-blue-50 rounded-full text-center">
+                  <div className="flex justify-center items-center p-[2px]">
+                    <FiPercent size={18} className="text-[#1976d2]" />
+                  </div>
+                
+                
                 </div>
 
                 {/* Text Label */}

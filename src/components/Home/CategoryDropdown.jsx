@@ -71,7 +71,7 @@ const CategoryDropdown = () => {
         {/* Button */}
         <button className="flex items-center cursor-pointer gap-2 px-4 py-1.5 rounded-r text-slate-800 hover:text-emerald-600 transition-all duration-200 font-medium">
           <FiGrid className="text-sm text-slate-500" />
-          <span className="whitespace-nowrap text-sm text-slate-600">
+          <span className="whitespace-nowrap flex items-center gap-2 text-gray-600 hover:text-emerald-600 font-medium  text-sm  tracking-wide transition-colors">
             All Categories
           </span>
           <FiChevronDown

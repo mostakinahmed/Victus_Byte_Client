@@ -35,7 +35,7 @@ const CategoryMenu = () => {
         <div className="flex-grow flex items-center xl:gap-8 lg:gap-4 ml-6">
           <Link
             to="/electronics"
-            className="flex items-center gap-2 text-slate-600 hover:text-emerald-600 font-semibold text-[13px]  tracking-wide transition-colors"
+            className="flex items-center gap-2 text-gray-600 hover:text-emerald-600 font-medium  text-sm  tracking-wide transition-colors"
           >
             <FiLayers className="opacity-80" />
             IoT & Electronics
@@ -43,7 +43,7 @@ const CategoryMenu = () => {
 
           <Link
             to="/kids-zone"
-            className="flex items-center gap-2 text-slate-600 hover:text-emerald-600 font-semibold text-[13px]  tracking-wide transition-colors"
+            className="flex items-center gap-2 text-gray-600 hover:text-emerald-600 font-medium  text-sm  tracking-wide transition-colors"
           >
             <FiShoppingBag className="opacity-80" />
             Kids Zone
@@ -51,7 +51,7 @@ const CategoryMenu = () => {
 
           <Link
             to="/daily-deals"
-            className="flex items-center gap-2 text-slate-600 hover:text-emerald-600 font-semibold text-[13px]  tracking-wide transition-colors"
+            className="flex items-center gap-2 text-gray-600 hover:text-emerald-600 font-medium  text-sm  tracking-wide transition-colors"
           >
             <FiZap className="text-yellow-500 animate-pulse" />
             Daily Deals
@@ -59,7 +59,7 @@ const CategoryMenu = () => {
         </div>
 
         {/* --- RIGHT SECTION: Custom Niche Dropdowns --- */}
-        <div className="flex items-center h-full">
+        <div className=" items-center h-full hidden">
           {customMenus.map((menu) => (
             <div
               key={menu.id}

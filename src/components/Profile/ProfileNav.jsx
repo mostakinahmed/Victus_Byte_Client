@@ -12,21 +12,15 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { FaGem } from "react-icons/fa";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
 import { useAuth } from "../Context Api/AuthContext";
 
 export const Profile = () => {
   const { user, loading, logout } = useAuth();
   const navigate = useNavigate();
-  const [login, setLogin] = useState(false);
   const [open, setOpen] = useState(false); // dropdown
-  const [trackModal, setTrackModal] = useState(false); // Tracking Modal state
-  const [orderId, setOrderId] = useState("");
-  const [trackingResult, setTrackingResult] = useState(null);
+
 
   const menuRef = useRef(null);
-  console.log(user);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -39,9 +33,9 @@ export const Profile = () => {
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
-  const goProfile = () => {
+  const goDashboard = () => {
     setOpen(false);
-    navigate("/profile");
+    navigate("/dashboard");
   };
 
   return (
@@ -50,7 +44,7 @@ export const Profile = () => {
       {user ? (
         <div
           onClick={() => setOpen(!open)}
-          className="cursor-pointer border border-slate-300 hover:border-slate-500 lg:py-[7px] lg:px-2 py-[4px] px-1 rounded-3xl transition-all"
+          className="cursor-pointer border border-slate-400 hover:border-slate-500 lg:py-[7px] lg:px-2 py-[4px] px-1 rounded-3xl transition-all"
         >
           <button className="flex gap-2 cursor-pointer justify-center items-center">
             <img src={user.images} alt="" className="h-6 w-6" />
@@ -114,7 +108,7 @@ export const Profile = () => {
             <nav className="mt-3 font-sans">
               <ul className="flex flex-col gap-0.5 ">
                 {[
-                  { label: "Profile", icon: <User />, onClick: goProfile },
+                  { label: "Dashboard", icon: <User />, onClick: goDashboard },
                   {
                     label: "My Orders",
                     icon: <ShoppingBag />,

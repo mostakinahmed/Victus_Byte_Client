@@ -18,7 +18,7 @@ import SignUp from "./components/Authentication/SignUp";
 import SignIn from "./components/Authentication/SignIn";
 import ForgotPassword from "./components/Authentication/ForgotPassword";
 
-import Profile from "./components/Profile/Profile";
+import Dashboard from "./components/Profile/Dashboard";
 import TrackOrder from "./components/TrackOrder";
 import { DataContext } from "./components/Context Api/UserContext";
 import { MyOrders } from "./components/Profile/MyOrder";
@@ -156,7 +156,7 @@ function App() {
           <Route path="/product/:cat/:id/buynow" element={<BuyNow />} />
           <Route path="/checkout/cart" element={<Cart />} />
           <Route path="/profile/:card" element={<ProfileHome />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile/my-order" element={<MyOrders />} />
           <Route path="/search-result/:keyword" element={<SearchResult />} />
           <Route path="/signin" element={<SignIn />} />
