@@ -58,7 +58,7 @@ export default function SignIn() {
     <div className="min-h-screen md:bg-[#fafafa] flex items-center justify-center p-3 px-4 font-sans leading-relaxed">
       <div className="w-full max-w-[400px]">
         {/* Simple Material Card without forced scroll refs */}
-        <div className="bg-white rounded-lg px-8 pt-5 pb-9 shadow md:shadow-[0_2px_4px_rgba(0,0,0,0.1),0_8px_16px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_8px_rgba(0,0,0,0.12),0_12px_28px_rgba(0,0,0,0.15)] transition-all duration-300 relative overflow-hidden">
+        <div className="bg-white rounded-lg md:px-8 px-9 pt-5 pb-9 shadow md:shadow-[0_2px_4px_rgba(0,0,0,0.1),0_8px_16px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_8px_rgba(0,0,0,0.12),0_12px_28px_rgba(0,0,0,0.15)] transition-all duration-300 relative overflow-hidden">
           {/* LOGO & HEADER */}
           <div className="text-center mb-8">
             <div className="flex justify-center mb-6 group cursor-pointer">
