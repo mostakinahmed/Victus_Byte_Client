@@ -95,7 +95,7 @@ export default function SignUp() {
     try {
       const response = await axios.post(
         "https://api.victusbyte.com/api/customer/varify-otp",
-        { phone: formData.phone, otp: formData.otp },
+        { phone: formData.phone, otp: formData.otp, isSignupFlow: true },
         { withCredentials: true },
       );
       if (response.data.success) {

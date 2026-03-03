@@ -63,7 +63,7 @@ export default function ForgotPassword() {
     setLoading(true);
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/customer/forgot-password-search",
+        "https://api.victusbyte.com/api/customer/forgot-password-search",
         { phone: formData.phone },
       );
       if (res.data.success) {
@@ -87,7 +87,7 @@ export default function ForgotPassword() {
     setLoading(true);
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/customer/varify-otp",
+        "https://api.victusbyte.com/api/customer/varify-otp",
         { phone: userData.phone, otp: formData.otp, isSignupFlow: false },
       );
       if (res.data.success) setStep(3);
@@ -107,7 +107,7 @@ export default function ForgotPassword() {
     setLoading(true);
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/customer/reset-password",
+        "https://api.victusbyte.com/api/customer/reset-password",
         { phone: userData.phone, password: formData.password },
       );
       if (res.data.success) {
