@@ -17,7 +17,7 @@ const BannerSection = () => {
   }, []);
 
   return (
-    <div className="max-w-[1400px] mx-auto mt-[35px] md:mt-[70px] lg:mt-[80px] px-2 lg:px-4 pt-6 grid grid-cols-1 md:grid-cols-3 md:gap-2 gap-1.5">
+    <div className="max-w-[1400px] mx-auto mt-[35px] md:mt-[70px] lg:mt-[86px] px-2 lg:px-4 pt-6 grid grid-cols-1 md:grid-cols-3 md:gap-2 gap-1.5">
       {/* Main Banner */}
       {/* //search box */}
       <div className="md:hidden">

@@ -5,7 +5,7 @@ import ContactPopup from "../ContactPopup";
 const Header = () => {
   const [scrollDirection, setScrollDirection] = useState("up");
   const [prevOffset, setPrevOffset] = useState(0);
-  
+
   // 1. Create a state to control the popup visibility
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
@@ -38,27 +38,27 @@ const Header = () => {
       >
         <div className="md:text-sm text-xs md:max-w-[1400px] md:mx-auto md:px-5 flex justify-between md:justify-start md:gap-10 tracking-widest w-full">
           <span className="hidden md:block">Welcome to Victus Byte.</span>
-          
+
           {/* 3. Added onClick to the phone section */}
           <span
             onClick={togglePopup}
             className="flex items-center gap-2 group cursor-pointer"
           >
             <IoCall
-              className="text-emerald-500 group-hover:animate-bounce"
+              className="text-[#1976d2] group-hover:animate-bounce"
               size={17}
             />
-            <span className="hover:text-emerald-400 tracking-wider transition-colors">
+            <span className="hover:text-[#1976d2] tracking-wider transition-colors">
               09611-342936
             </span>
           </span>
 
           <span className="flex items-center gap-2 group cursor-pointer transition-colors">
             <IoMail
-              className="text-emerald-500 group-hover:scale-110 transition-transform"
+              className="text-[#1976d2] group-hover:scale-110 transition-transform"
               size={18}
             />
-            <span className="hover:text-emerald-400 transition-colors">
+            <span className="hover:text-[#1976d2] transition-colors">
               support@victusbyte.com
             </span>
           </span>
@@ -66,9 +66,7 @@ const Header = () => {
       </header>
 
       {/* 4. Render the popup only when isPopupOpen is true */}
-      {isPopupOpen && (
-        <ContactPopup onClose={() => setIsPopupOpen(false)} />
-      )}
+      {isPopupOpen && <ContactPopup onClose={() => setIsPopupOpen(false)} />}
     </>
   );
 };

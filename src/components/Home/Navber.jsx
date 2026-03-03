@@ -87,7 +87,7 @@ const NavbarTop = () => {
                 {/* Pulse Animation Layer */}
 
                 {/* Icon Container */}
-                <div className="bg-blue-50 rounded-full text-center">
+                <div className="bg-white rounded-full text-center">
                   <div className="flex justify-center items-center p-[2px]">
                     <FiPercent size={18} className="text-[#1976d2]" />
                   </div>

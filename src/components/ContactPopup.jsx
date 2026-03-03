@@ -9,52 +9,55 @@ import {
 
 const ContactPopup = ({ onClose }) => {
   const phoneNumber = "09611-342936";
-  const whatsappNumber = "+8801XXXXXXXXX"; // Replace with your WhatsApp number
+  const whatsappNumber = "+8801XXXXXXXXX"; // Replace with your actual WhatsApp number
+
+  // Victus Byte Primary Color
+  const brandColor = "#1976d2";
 
   return (
     <div
-      className="fixed inset-0 z-[120] flex items-center justify-center px-4 bg-slate-900/60 backdrop-blur-sm"
+      className="fixed inset-0 z-[120] flex items-center justify-center px-4 bg-[#0f172a]/70 backdrop-blur-sm"
       onClick={onClose}
     >
       <div
         className="relative w-full max-w-[340px] md:max-w-sm bg-white rounded-2xl shadow-2xl overflow-hidden transform transition-all animate-in fade-in zoom-in duration-300"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Slimmer Accent Bar */}
-        <div className="h-2 bg-emerald-500 w-full" />
+        {/* Brand Accent Bar */}
+        <div className={`h-2 bg-[#1976d2] w-full`} />
 
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 p-1 text-slate-900 hover:text-emerald-500 transition-colors"
+          className="absolute top-4 right-4 p-1 text-slate-400 hover:text-[#1976d2] transition-colors"
         >
-          <IoClose size={22} />
+          <IoClose size={24} />
         </button>
 
-        {/* Reduced padding on mobile (p-4 vs md:p-8) */}
-        <div className="p-5">
-          <div className="text-center mb-4 md:mb-6">
-            <h2 className="text-xl md:text-2xl font-bold text-slate-800 tracking-tight">
-              <span className="text-[#ff751f]">Victus</span> Byte
+        <div className="p-6 md:p-8">
+          <div className="text-center mb-6 md:mb-8">
+            <h2 className="text-2xl font-bold text-slate-800 tracking-tight uppercase">
+              <span className="text-[#1976d2]">Victus</span> Byte
             </h2>
-            <p className="text-[12px] md:text-sm text-slate-500">
-              Official Contact Information
+            <div className="h-1 w-12 bg-[#1976d2]/20 mx-auto mt-2 rounded-full" />
+            <p className="text-[11px] md:text-xs text-slate-400 uppercase tracking-widest mt-3 font-bold">
+              Customer Support Desk
             </p>
           </div>
 
-          <div className="">
+          <div className="space-y-1">
             {/* Phone Item */}
             <a
               href={`tel:${phoneNumber}`}
-              className="flex items-center gap-3 md:gap-4 p-2 md:p-3 hover:bg-slate-50 rounded-xl transition-colors group"
+              className="flex items-center gap-4 p-3 hover:bg-slate-50 rounded-xl transition-all group"
             >
-              <div className="bg-emerald-100 p-1.5 md:p-2 rounded-lg text-emerald-600 group-hover:bg-emerald-500 group-hover:text-white transition-all">
-                <IoCall size={18} />
+              <div className="bg-blue-50 p-2.5 rounded-lg text-[#1976d2] group-hover:bg-[#1976d2] group-hover:text-white transition-all shadow-sm">
+                <IoCall size={20} />
               </div>
               <div>
-                <p className="text-[9px] md:text-[10px] uppercase font-bold text-slate-400">
-                  Phone
+                <p className="text-[9px] uppercase font-bold text-slate-400 tracking-wider">
+                  Direct Line
                 </p>
-                <p className="text-[13px] md:text-[15px] text-slate-700 font-semibold leading-tight">
+                <p className="text-[14px] md:text-[16px] text-slate-700 font-bold leading-tight">
                   {phoneNumber}
                 </p>
               </div>
@@ -65,17 +68,17 @@ const ContactPopup = ({ onClose }) => {
               href={`https://wa.me/${whatsappNumber.replace(/\D/g, "")}`}
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-3 md:gap-4 p-2 md:p-3 hover:bg-slate-50 rounded-xl transition-colors group"
+              className="flex items-center gap-4 p-3 hover:bg-slate-50 rounded-xl transition-all group"
             >
-              <div className="bg-green-100 p-1.5 md:p-2 rounded-lg text-green-600 group-hover:bg-green-500 group-hover:text-white transition-all">
-                <IoLogoWhatsapp size={18} />
+              <div className="bg-green-50 p-2.5 rounded-lg text-green-600 group-hover:bg-green-500 group-hover:text-white transition-all shadow-sm">
+                <IoLogoWhatsapp size={20} />
               </div>
               <div>
-                <p className="text-[9px] md:text-[10px] uppercase font-bold text-slate-400">
+                <p className="text-[9px] uppercase font-bold text-slate-400 tracking-wider">
                   WhatsApp
                 </p>
-                <p className="text-[13px] md:text-[15px] text-slate-700 font-semibold leading-tight">
-                  Message Us
+                <p className="text-[14px] md:text-[16px] text-slate-700 font-bold leading-tight">
+                  Live Chat Support
                 </p>
               </div>
             </a>
@@ -83,16 +86,16 @@ const ContactPopup = ({ onClose }) => {
             {/* Email Item */}
             <a
               href="mailto:support@victusbyte.com"
-              className="flex items-center gap-3 md:gap-4 p-2 md:p-3 hover:bg-slate-50 rounded-xl transition-colors group"
+              className="flex items-center gap-4 p-3 hover:bg-slate-50 rounded-xl transition-all group"
             >
-              <div className="bg-blue-100 p-1.5 md:p-2 rounded-lg text-blue-600 group-hover:bg-blue-500 group-hover:text-white transition-all">
-                <IoMail size={18} />
+              <div className="bg-blue-50 p-2.5 rounded-lg text-[#1976d2] group-hover:bg-[#1976d2] group-hover:text-white transition-all shadow-sm">
+                <IoMail size={20} />
               </div>
               <div>
-                <p className="text-[9px] md:text-[10px] uppercase font-bold text-slate-400">
+                <p className="text-[9px] uppercase font-bold text-slate-400 tracking-wider">
                   Email
                 </p>
-                <p className="text-[13px] md:text-[15px] text-slate-700 font-semibold leading-tight truncate max-w-[180px] md:max-w-full">
+                <p className="text-[14px] md:text-[16px] text-slate-700 font-bold leading-tight truncate">
                   support@victusbyte.com
                 </p>
               </div>
@@ -103,17 +106,17 @@ const ContactPopup = ({ onClose }) => {
               href="https://victusbyte.com"
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-3 md:gap-4 p-2 md:p-3 hover:bg-slate-50 rounded-xl transition-colors group"
+              className="flex items-center gap-4 p-3 hover:bg-slate-50 rounded-xl transition-all group"
             >
-              <div className="bg-purple-100 p-1.5 md:p-2 rounded-lg text-purple-600 group-hover:bg-purple-500 group-hover:text-white transition-all">
-                <IoGlobeOutline size={18} />
+              <div className="bg-slate-100 p-2.5 rounded-lg text-slate-600 group-hover:bg-slate-800 group-hover:text-white transition-all shadow-sm">
+                <IoGlobeOutline size={20} />
               </div>
               <div>
-                <p className="text-[9px] md:text-[10px] uppercase font-bold text-slate-400">
-                  Website
+                <p className="text-[9px] uppercase font-bold text-slate-400 tracking-wider">
+                  Official Web
                 </p>
-                <p className="text-[13px] md:text-[15px] text-slate-700 font-semibold leading-tight">
-                  victusbyte.com
+                <p className="text-[14px] md:text-[16px] text-slate-700 font-bold leading-tight">
+                  www.victusbyte.com
                 </p>
               </div>
             </a>
@@ -121,9 +124,9 @@ const ContactPopup = ({ onClose }) => {
 
           <button
             onClick={onClose}
-            className="w-2/3 flex items-center justify-center mx-auto mt-5 md:mt-8 py-2.5 md:py-3 bg-slate-900 text-white rounded-xl text-sm md:text-base font-bold hover:bg-emerald-600 shadow-lg shadow-slate-200 transition-all active:scale-95"
+            className="w-full flex items-center justify-center mt-8 py-3.5 bg-[#1976d2] text-white rounded-xl text-sm font-bold hover:bg-[#1565c0] shadow-lg shadow-blue-200 transition-all active:scale-95 uppercase tracking-widest"
           >
-            Got it!
+            Close Window
           </button>
         </div>
       </div>

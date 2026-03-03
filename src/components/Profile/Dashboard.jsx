@@ -18,10 +18,13 @@ import {
   Edit,
   Key,
 } from "lucide-react";
+import { useAuth } from "../Context Api/AuthContext";
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const { user } = useAuth();
 
   // Sidebar Menu Items
   const menuItems = [
@@ -43,12 +46,12 @@ const Profile = () => {
   ];
 
   return (
-    <div className="max-w-[1400px] lg:mt-[80px] mt-[47px] px-2 lg:px-4 mx-auto md:py-6 py-3 font-sans">
-      <div className="flex flex-col lg:flex-row gap-4">
+    <div className="max-w-[1400px] lg:mt-[86px] mt-[49px] px-2 lg:px-4 mx-auto md:py-6 py-3 font-sans">
+      <div className="flex flex-col lg:flex-row md:gap-4 gap-2">
         {/* --- MOBILE SIDEBAR TOGGLE --- */}
         <button
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-          className="lg:hidden flex items-center gap-2 bg-white p-3 rounded shadow mb-2 text-[#1976d2] font-bold"
+          className="lg:hidden flex items-center gap-2 bg-white p-3 rounded shadow text-[#1976d2] font-bold"
         >
           {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
           <span>Dashboard Menu</span>
@@ -98,29 +101,120 @@ const Profile = () => {
         </div>
 
         {/* --- RIGHT SIDE CONTENT --- */}
-        <div className="lg:w-3/4 w-full bg-white shadow p-6 rounded min-h-[calc(100vh-12rem)]">
+        <div className="lg:w-3/4 w-full bg-white shadow p-4 rounded min-h-[calc(100vh-12rem)]">
           {/* TAB: OVERVIEW */}
           {activeTab === "overview" && (
             <div className="animate-in fade-in duration-300">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6 border-b pb-2 uppercase tracking-tight">
+              <h2 className="text-lg bg-white p-2 font-bold text-gray-800 md:mb-6 border-b pb-2 uppercase tracking-tight">
                 Account Overview
               </h2>
-              <div className="flex flex-col md:flex-row items-center gap-6 p-6 bg-gray-50 rounded-xl mb-8">
-                <img
-                  src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
-                  alt="Profile"
-                  className="w-24 h-24 rounded-full border-4 border-white shadow-sm"
-                />
-                <div className="text-center md:text-left">
-                  <h3 className="text-xl font-bold text-gray-800 uppercase">
-                    Mostakin Ahmed
-                  </h3>
-                  <p className="text-gray-500">mostakin@victusbyte.com</p>
-                  <span className="mt-2 inline-block px-3 py-1 bg-[#1976d2]/10 text-[#1976d2] text-xs font-bold rounded-full">
-                    Customer ID: VB-9921
-                  </span>
+              <div className="flex flex-col md:flex-row items-center gap-8 p-8 bg-slate-50/50 rounded-2xl md:mb-8 mb-3 border border-slate-100 relative overflow-hidden group">
+                {/* Subtle Background Brand Tint */}
+                <div className="absolute -right-10 -top-10 w-40 h-40 bg-[#1976d2]/5 rounded-full blur-3xl group-hover:bg-[#1976d2]/10 transition-colors" />
+
+                {/* Profile Image Section */}
+                <div className="relative">
+                  <img
+                    src={
+                      user.images ||
+                      "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                    }
+                    alt="Profile"
+                    className="w-28 h-28 rounded-full border-4 border-white shadow-md object-cover"
+                  />
+                  {user.isVerified && (
+                    <div
+                      className="absolute bottom-1 right-1 bg-blue-500 text-white p-1 rounded-full border-2 border-white shadow-sm"
+                      title="Verified Account"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.64.304 1.24.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </div>
+                  )}
+                </div>
+
+                {/* Information Content */}
+                <div className="flex-grow text-center md:text-left z-10">
+                  <div className="flex flex-col md:flex-row md:items-center gap-2 mb-1">
+                    <h3 className="text-xl font-black text-slate-800 uppercase tracking-tight">
+                      {user.userName}
+                    </h3>
+                    {user.isVerified ? (
+                      <span className="text-[10px] font-extrabold text-blue-600 bg-blue-50 px-2 py-0.5 rounded uppercase tracking-widest border border-blue-100 w-fit mx-auto md:mx-0">
+                        Verified
+                      </span>
+                    ) : (
+                      <span className="text-[10px] font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded uppercase tracking-widest border border-slate-200 w-fit mx-auto md:mx-0">
+                        Unverified
+                      </span>
+                    )}
+                  </div>
+
+                  <p className="text-slate-600 md:mb-4">{user.email}</p>
+                </div>
+
+                {/* Info Grid */}
+                <div className="flex md:w-1/2 flex-col gap-y-4 border-t border-slate-200/60 md:pt-4 pt-2">
+                  <div className=" flex justify-between gap-10">
+                    <div className="space-y-1">
+                      <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">
+                        Phone Number
+                      </p>
+                      <p className="text-sm font-medium text-slate-700">
+                        {user.phone || "N/A"}
+                      </p>
+                    </div>
+
+                    <div className="space-y-1">
+                      <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">
+                        Gender
+                      </p>
+                      <p className="text-sm font-medium text-slate-700">
+                        {user.gender || "Not Specified"}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex justify-between  gap-10 ">
+                    <div className="space-y-1">
+                      <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">
+                        Member Since
+                      </p>
+                      <p className="text-sm font-medium text-slate-700">
+                        {user.createdAt
+                          ? new Date(user.createdAt).toLocaleDateString(
+                              "en-GB",
+                              {
+                                day: "numeric",
+                                month: "short",
+                                year: "numeric",
+                              },
+                            )
+                          : "Jan 2026"}
+                      </p>
+                    </div>
+
+                    <div className="space-y-1">
+                      <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">
+                        Customer ID
+                      </p>
+                      <p className="text-sm font-bold text-[#1976d2]">
+                        {user.cID}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
+
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
                   { label: "Total Orders", value: "12", color: "bg-blue-50" },
@@ -147,7 +241,7 @@ const Profile = () => {
           {/* TAB: EDIT PROFILE */}
           {activeTab === "edit-profile" && (
             <div className="animate-in slide-in-from-bottom-2 duration-300">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6 border-b pb-2 uppercase tracking-tight">
+              <h2 className="text-lg font-bold text-gray-800 mb-6 border-b pb-2 uppercase tracking-tight">
                 Edit Profile
               </h2>
               <form className="max-w-2xl space-y-5">
