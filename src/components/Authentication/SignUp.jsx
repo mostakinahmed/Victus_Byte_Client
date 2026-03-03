@@ -2,17 +2,20 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../Context Api/AuthContext";
+import { motion, AnimatePresence } from "framer-motion";
 
-const SignUp = () => {
+export default function SignUp() {
   const { checkUserStatus } = useAuth();
   const navigate = useNavigate();
-  const topRef = useRef(null); // Reference to force top position
+  const topRef = useRef(null);
 
-  const [step, setStep] = useState(1); // 1 = Signup Form, 2 = OTP Form
+  // --- STATE ---
+  const [step, setStep] = useState(1); // 1 = Signup, 2 = OTP
   const [loading, setLoading] = useState(false);
   const [verified, setVerified] = useState(false);
-  const [statusMsg, setStatusMsg] = useState({ type: "", text: "" });
+  const [errorInfo, setErrorInfo] = useState("");
   const [timer, setTimer] = useState(30);
+  const [showPassword, setShowPassword] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -22,21 +25,30 @@ const SignUp = () => {
     otp: "",
   });
 
-  // --- FORCE TOP POSITION ON STEP CHANGE ---
+  const handleMobileScrollFix = () => {
+    // Only execute if the screen width is less than 768px (Mobile)
+    if (window.innerWidth < 768) {
+      setTimeout(() => {
+        if (topRef.current) {
+          topRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 100);
+    }
+  };
+
+  // --- UI HELPERS ---
   useEffect(() => {
-    if (topRef.current) {
+    // Only force top position on mobile devices
+    if (window.innerWidth < 768 && topRef.current) {
       window.scrollTo({ top: 0, behavior: "instant" });
       topRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [step, verified]);
 
-  // --- RESEND TIMER ---
   useEffect(() => {
     let interval = null;
     if (step === 2 && timer > 0) {
-      interval = setInterval(() => {
-        setTimer((prev) => prev - 1);
-      }, 1000);
+      interval = setInterval(() => setTimer((prev) => prev - 1), 1000);
     } else {
       clearInterval(interval);
     }
@@ -44,20 +56,20 @@ const SignUp = () => {
   }, [step, timer]);
 
   const handleChange = (e) => {
-    // Only allow 11 digits for phone
-    if (e.target.id === "phone") {
+    if (e.target.name === "phone") {
       const val = e.target.value.replace(/\D/g, "").slice(0, 11);
       setFormData({ ...formData, phone: val });
     } else {
-      setFormData({ ...formData, [e.target.id]: e.target.value });
+      setFormData({ ...formData, [e.target.name]: e.target.value });
     }
-    if (statusMsg.text) setStatusMsg({ type: "", text: "" });
+    if (errorInfo) setErrorInfo("");
   };
 
+  // --- LOGIC ---
   const handleSignUpSubmit = async (e) => {
     e?.preventDefault();
     if (formData.phone.length !== 11) {
-      setStatusMsg({ type: "error", text: "Phone must be 11 digits" });
+      setErrorInfo("Phone must be 11 digits");
       return;
     }
     setLoading(true);
@@ -72,16 +84,12 @@ const SignUp = () => {
         },
         { withCredentials: true },
       );
-
       if (response.data.success) {
         setStep(2);
         setTimer(30);
       }
     } catch (error) {
-      setStatusMsg({
-        type: "error",
-        text: error.response?.data?.message || "Something went wrong",
-      });
+      setErrorInfo(error.response?.data?.message || "Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -96,14 +104,13 @@ const SignUp = () => {
         { phone: formData.phone, otp: formData.otp },
         { withCredentials: true },
       );
-
       if (response.data.success) {
         await checkUserStatus();
         setVerified(true);
         setTimeout(() => navigate("/"), 1500);
       }
     } catch (error) {
-      setStatusMsg({ type: "error", text: "Invalid Code. Please try again." });
+      setErrorInfo("Invalid Code. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -112,41 +119,46 @@ const SignUp = () => {
   return (
     <div
       ref={topRef}
-      className="max-w-[1400px] font-sans lg:mt-[80px] mt-[47px] px-2 lg:px-4 mx-auto md:py-6 py-3"
+      className="min-h-screen bg-[#fafafa] flex items-center justify-center p-5 font-sans leading-relaxed"
     >
       <style>{`
-        /* Prevent mobile auto-zoom */
         input { font-size: 16px !important; }
-        .btn-loader { width: 20px; height: 20px; border: 3px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #fff; animation: spin 0.8s linear infinite; }
+        .btn-loader { width: 20px; height: 20px; border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #fff; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .otp-input-mobile { font-size: 24px !important; letter-spacing: 1.2rem; }
-        @media (min-width: 768px) { .otp-input-mobile { font-size: 36px !important; letter-spacing: 1.7rem; } }
       `}</style>
 
-      <div className="bg-white p-6 flex w-full justify-center shadow rounded min-h-[calc(100vh-12rem)]">
-        <div className="lg:mt-[20px] rounded w-full max-w-md p-4 sm:p-10">
+      <div className="w-full max-w-[400px]">
+        <div className="bg-white rounded-lg px-8 pt-10 pb-9 shadow-[0_2px_4px_rgba(0,0,0,0.1),0_8px_16px_rgba(0,0,0,0.1)] relative overflow-hidden transition-all duration-300">
+          {/* HEADER */}
           {!verified && (
-            <h1 className="text-center text-xl mb-10">
-              {step === 1 ? "SignUp to " : "Verify "}
-              <span className="text-[#fe741d] text-2xl font-bold">
-                Victus <span className="text-black">Byte</span>
-              </span>
-            </h1>
-          )}
-
-          {statusMsg.text && !verified && (
-            <div
-              className={`mb-4 p-3 rounded text-sm text-center font-medium ${statusMsg.type === "error" ? "bg-red-50 text-red-600 border border-red-200" : "bg-green-50 text-green-600 border border-green-200"}`}
-            >
-              {statusMsg.text}
+            <div className="text-center mb-8">
+              <div className="flex justify-center mb-4 group cursor-pointer">
+                <div className="relative w-12 h-12">
+                  <div className="absolute inset-0 rounded-full bg-[#1976d2] shadow-[0_2px_4px_rgba(25,118,210,0.3)] transition-transform duration-300 group-hover:scale-110"></div>
+                  <div className="absolute top-1.5 left-1.5 w-9 h-9 rounded-full bg-[#2196f3] shadow-[0_1px_3px_rgba(0,0,0,0.1)]"></div>
+                </div>
+              </div>
+              <h2 className="text-[#212121] text-2xl font-normal tracking-[0.15px]">
+                {step === 1 ? "Create Account" : "Verify Phone"}
+              </h2>
+              <p className="text-[#757575] text-sm mt-1">
+                to join{" "}
+                <span className="text-[#1976d2] font-semibold">
+                  Victus Byte
+                </span>
+              </p>
             </div>
           )}
 
           {verified ? (
-            <div className="flex flex-col items-center justify-center py-10 text-center">
-              <div className="bg-green-100 p-5 rounded-full mb-4 animate-bounce">
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="text-center py-6"
+            >
+              <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-green-500">
                 <svg
-                  className="w-16 h-16 text-green-600"
+                  className="w-12 h-12 text-green-500"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -160,181 +172,180 @@ const SignUp = () => {
                 </svg>
               </div>
               <h2 className="text-2xl font-bold text-gray-800">Verified!</h2>
-              <p className="text-gray-500 mt-2 font-medium">
-                Redirecting to Victus Byte...
-              </p>
-            </div>
+              <p className="text-gray-500 mt-1">Taking you home...</p>
+            </motion.div>
           ) : (
-            <>
-              {step === 1 && (
-                <form className="space-y-4" onSubmit={handleSignUpSubmit}>
-                  <div>
-                    <label className="block mb-1 text-sm font-medium text-gray-700">
-                      Full Name
-                    </label>
+            <form
+              onSubmit={step === 1 ? handleSignUpSubmit : handleVerifyOTP}
+              className="space-y-6"
+            >
+              {step === 1 ? (
+                <>
+                  {/* FULL NAME */}
+                  <div className="relative group">
                     <input
-                      id="name"
                       type="text"
-                      placeholder="Enter Full Name"
+                      name="name"
                       required
                       value={formData.name}
                       onChange={handleChange}
-                      className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fe741d] outline-none"
+                      className="peer w-full bg-transparent border-b-2 border-[#e0e0e0] py-3 text-base outline-none transition-colors focus:border-[#1976d2] relative z-10"
+                      placeholder=" "
                     />
-                  </div>
-                  <div>
-                    <label className="block mb-1 text-sm font-medium text-gray-700">
-                      Email
+                    <label className="absolute left-0 top-3 text-[#757575] text-base transition-all duration-200 pointer-events-none origin-left peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[#1976d2] peer-[:not(:placeholder-shown)]:-translate-y-6 peer-[:not(:placeholder-shown)]:scale-75 z-20">
+                      Full Name
                     </label>
+                    <div className="absolute bottom-0 left-0 h-0.5 bg-[#1976d2] w-0 transition-all duration-300 peer-focus:w-full z-30"></div>
+                  </div>
+
+                  {/* EMAIL */}
+                  <div className="relative group">
                     <input
-                      id="email"
                       type="email"
-                      placeholder="Enter Email"
+                      name="email"
                       required
                       value={formData.email}
                       onChange={handleChange}
-                      className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fe741d] outline-none"
+                      className="peer w-full bg-transparent border-b-2 border-[#e0e0e0] py-3 text-base outline-none transition-colors focus:border-[#1976d2] relative z-10"
+                      placeholder=" "
                     />
-                  </div>
-                  <div>
-                    <label className="block mb-1 text-sm font-medium text-gray-700">
-                      Phone
+                    <label className="absolute left-0 top-3 text-[#757575] text-base transition-all duration-200 pointer-events-none origin-left peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[#1976d2] peer-[:not(:placeholder-shown)]:-translate-y-6 peer-[:not(:placeholder-shown)]:scale-75 z-20">
+                      Email
                     </label>
+                    <div className="absolute bottom-0 left-0 h-0.5 bg-[#1976d2] w-0 transition-all duration-300 peer-focus:w-full z-30"></div>
+                  </div>
+
+                  {/* PHONE */}
+                  <div className="relative group">
                     <input
-                      id="phone"
                       type="text"
+                      name="phone"
                       inputMode="numeric"
-                      placeholder="017XXXXXXXX"
                       required
                       value={formData.phone}
                       onChange={handleChange}
-                      className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fe741d] outline-none"
+                      className="peer w-full bg-transparent border-b-2 border-[#e0e0e0] py-3 text-base outline-none transition-colors focus:border-[#1976d2] relative z-10"
+                      placeholder=" "
                     />
-                  </div>
-                  <div>
-                    <label className="block mb-1 text-sm font-medium text-gray-700">
-                      Password
+                    <label className="absolute left-0 top-3 text-[#757575] text-base transition-all duration-200 pointer-events-none origin-left peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[#1976d2] peer-[:not(:placeholder-shown)]:-translate-y-6 peer-[:not(:placeholder-shown)]:scale-75 z-20">
+                      Phone Number
                     </label>
+                    <div className="absolute bottom-0 left-0 h-0.5 bg-[#1976d2] w-0 transition-all duration-300 peer-focus:w-full z-30"></div>
+                  </div>
+
+                  {/* PASSWORD */}
+                  <div className="relative group">
                     <input
-                      id="password"
-                      type="password"
-                      placeholder="Enter Password"
+                      type={showPassword ? "text" : "password"}
+                      name="password"
                       required
                       value={formData.password}
                       onChange={handleChange}
-                      className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fe741d] outline-none"
+                      className="peer w-full bg-transparent border-b-2 border-[#e0e0e0] py-3 text-base outline-none transition-colors focus:border-[#1976d2] relative z-10"
+                      placeholder=" "
                     />
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="w-full h-12 flex items-center justify-center bg-[#fe741d] uppercase text-white font-bold rounded-lg hover:bg-[#f5640a] transition-all active:scale-95 disabled:bg-gray-400 mt-4"
-                  >
-                    {loading ? (
-                      <div className="btn-loader"></div>
-                    ) : (
-                      "Create Account"
-                    )}
-                  </button>
-                </form>
-              )}
-
-              {step === 2 && (
-                <form
-                  className="space-y-8 w-full animate-in fade-in duration-500"
-                  onSubmit={handleVerifyOTP}
-                >
-                  <div className="text-center">
-                    <h3 className="text-lg font-bold text-gray-800">
-                      Check your phone
-                    </h3>
-                    <p className="text-sm text-gray-500">
-                      Waiting for code sent to{" "}
-                      <span className="text-black font-semibold">
-                        {formData.phone}
-                      </span>
-                    </p>
-                  </div>
-
-                  <div className="relative">
-                    <input
-                      id="otp"
-                      type="text"
-                      inputMode="numeric"
-                      pattern="\d*"
-                      maxLength="6"
-                      required
-                      autoFocus
-                      value={formData.otp}
-                      onChange={handleChange}
-                      className="w-full bg-slate-50 border-b-4 border-gray-200 py-4 text-center otp-input-mobile font-black text-[#fe741d] focus:border-[#fe741d] focus:bg-orange-50 outline-none transition-all rounded-t-lg"
-                    />
-                    <div className="flex justify-between px-2 mt-2">
-                      {[1, 2, 3, 4, 5, 6].map((i) => (
-                        <div
-                          key={i}
-                          className={`h-1.5 w-8 rounded-full transition-all duration-300 ${formData.otp.length >= i ? "bg-[#fe741d]" : "bg-gray-200"}`}
-                        ></div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="w-full h-14 bg-black text-white font-bold rounded-xl shadow-lg hover:bg-gray-900 active:scale-95 transition-all flex items-center justify-center"
-                  >
-                    {loading ? (
-                      <div className="btn-loader"></div>
-                    ) : (
-                      "ACTIVATE ACCOUNT"
-                    )}
-                  </button>
-
-                  <div className="text-center space-y-3">
-                    {timer > 0 ? (
-                      <p className="text-sm text-gray-400 font-medium">
-                        Resend in{" "}
-                        <span className="text-[#fe741d] font-mono">
-                          {timer}s
-                        </span>
-                      </p>
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={() => {
-                          handleSignUpSubmit();
-                          setTimer(30);
-                        }}
-                        className="text-[#fe741d] font-bold text-sm hover:underline"
-                      >
-                        Resend Code Now
-                      </button>
-                    )}
+                    <label className="absolute left-0 top-3 text-[#757575] text-base transition-all duration-200 pointer-events-none origin-left peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[#1976d2] peer-[:not(:placeholder-shown)]:-translate-y-6 peer-[:not(:placeholder-shown)]:scale-75 z-20">
+                      Password
+                    </label>
                     <button
                       type="button"
-                      onClick={() => setStep(1)}
-                      className="block w-full text-[10px] text-gray-400 uppercase tracking-widest font-bold hover:text-black"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-0 top-3 text-[#757575] hover:text-[#1976d2] z-40"
                     >
-                      ← Change Phone Number
+                      {showPassword ? "Hide" : "Show"}
                     </button>
+                    <div className="absolute bottom-0 left-0 h-0.5 bg-[#1976d2] w-0 transition-all duration-300 peer-focus:w-full z-30"></div>
                   </div>
-                </form>
+                </>
+              ) : (
+                <>
+                  {/* OTP INPUT */}
+                  <div className="text-center py-2">
+                    <p className="text-xs text-[#757575] mb-6">
+                      Enter code sent to <b>{formData.phone}</b>
+                    </p>
+                    <div className="relative">
+                      <input
+                        type="text"
+                        name="otp"
+                        maxLength="6"
+                        required
+                        autoFocus
+                        value={formData.otp}
+                        onChange={handleChange}
+                        className="w-full bg-transparent border-b-2 border-[#1976d2] py-2 text-center text-3xl tracking-[0.5em] font-bold outline-none text-[#1976d2]"
+                      />
+                    </div>
+                  </div>
+                </>
               )}
-            </>
+
+              {/* ERROR INFO */}
+              <AnimatePresence>
+                {errorInfo && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="text-red-500 text-[10px] font-bold uppercase text-center"
+                  >
+                    {errorInfo}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* SUBMIT BUTTON */}
+              <button
+                disabled={loading}
+                className="w-full bg-[#1976d2] text-white py-3 rounded shadow-md hover:bg-[#1565c0] active:scale-95 transition-all uppercase font-medium tracking-wider flex items-center justify-center disabled:opacity-50"
+              >
+                {loading ? (
+                  <div className="btn-loader" />
+                ) : step === 1 ? (
+                  "Create Account"
+                ) : (
+                  "Activate"
+                )}
+              </button>
+
+              {/* RESEND / BACK ACTIONS */}
+              {step === 2 && (
+                <div className="text-center space-y-3 pt-2">
+                  {timer > 0 ? (
+                    <p className="text-xs text-gray-400">
+                      Resend in{" "}
+                      <span className="font-mono text-[#1976d2]">{timer}s</span>
+                    </p>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={handleSignUpSubmit}
+                      className="text-xs text-[#1976d2] font-bold hover:underline"
+                    >
+                      Resend OTP Now
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => setStep(1)}
+                    className="block w-full text-[10px] text-gray-400 font-bold uppercase tracking-widest hover:text-black"
+                  >
+                    ← Change Details
+                  </button>
+                </div>
+              )}
+            </form>
           )}
 
+          {/* FOOTER */}
           {!verified && step === 1 && (
-            <div className="mt-8 text-center border-t border-gray-50 pt-6">
-              <p className="text-gray-500 text-sm font-light">
+            <div className="mt-8 text-center pt-6 border-t border-[#f0f0f0]">
+              <p className="text-gray-500 text-sm">
                 Already have an account?{" "}
                 <span
                   onClick={() => navigate("/signin")}
-                  className="ml-1.5 font-bold text-[#fe741d] cursor-pointer relative inline-block group"
+                  className="ml-1 font-bold text-[#1976d2] cursor-pointer hover:underline"
                 >
                   Sign in
-                  <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#fe741d] transition-all duration-300 group-hover:w-full"></span>
                 </span>
               </p>
             </div>
@@ -343,6 +354,4 @@ const SignUp = () => {
       </div>
     </div>
   );
-};
-
-export default SignUp;
+}
