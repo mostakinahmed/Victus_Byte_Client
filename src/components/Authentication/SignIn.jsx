@@ -2,31 +2,38 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../Context Api/AuthContext";
+import { motion } from "framer-motion";
 
 const SignIn = () => {
   const navigate = useNavigate();
   const { checkUserStatus } = useAuth();
-  const topRef = useRef(null); // Reference to force top position
+  const topRef = useRef(null);
 
   const [formData, setFormData] = useState({ phone: "", password: "" });
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-  // --- FORCE TOP POSITION ON MOUNT ---
+  // --- Force top position on load ---
   useEffect(() => {
-    if (topRef.current) {
-      window.scrollTo({ top: 0, behavior: "instant" });
-      topRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    window.scrollTo(0, 0);
   }, []);
 
+  // --- Mobile Scroll Fix: Snap back to top when keyboard closes ---
+  const handleMobileScrollFix = () => {
+    setTimeout(() => {
+      if (topRef.current) {
+        topRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 100);
+  };
+
   const handleChange = (e) => {
-    // Only allow digits for phone to keep numeric keyboard clean
-    if (e.target.id === "phone") {
+    if (e.target.name === "phone") {
       const val = e.target.value.replace(/\D/g, "").slice(0, 11);
       setFormData({ ...formData, phone: val });
     } else {
-      setFormData({ ...formData, [e.target.id]: e.target.value });
+      setFormData({ ...formData, [e.target.name]: e.target.value });
     }
     if (error) setError("");
   };
@@ -36,15 +43,10 @@ const SignIn = () => {
     setError("");
     setIsSubmitting(true);
 
-    if (formData.phone.length > 0 && formData.phone.length < 11) {
-      setError("Phone number must be exactly 11 digits.");
-      setIsSubmitting(false);
-      return;
-    }
-
+    // Bangladeshi Phone Validation
     const bdPhoneRegex = /^01[3-9]\d{8}$/;
     if (!bdPhoneRegex.test(formData.phone)) {
-      setError("Please enter a valid 11-digit Bangladeshi phone number.");
+      setError("Please enter a valid 11-digit phone number");
       setIsSubmitting(false);
       return;
     }
@@ -53,114 +55,117 @@ const SignIn = () => {
       const res = await axios.post(
         "https://api.victusbyte.com/api/customer/signin",
         formData,
-        { withCredentials: true },
+        { withCredentials: true }
       );
       if (res.data.success) {
         await checkUserStatus();
         navigate("/");
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Invalid phone or password");
+      setError(err.response?.data?.message || "Invalid credentials");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div
-      ref={topRef}
-      className="max-w-[1400px] font-sans lg:mt-[80px] mt-[47px] px-2 lg:px-4 mx-auto md:py-6 py-3"
-    >
+    <div ref={topRef} className="min-h-screen bg-[#fafafa] flex items-center justify-center p-5 font-sans leading-relaxed">
       <style>{`
-        /* Prevent mobile auto-zoom */
         input { font-size: 16px !important; }
         .btn-loader { width: 20px; height: 20px; border: 3px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #fff; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
       `}</style>
 
-      <div className="bg-white p-6 flex w-full justify-center shadow rounded min-h-[calc(100vh-12rem)]">
-        <div className="lg:mt-[20px] rounded w-full max-w-md p-4 sm:p-10">
-          <h1 className="text-center text-xl mb-10">
-            Login to{" "}
-            <span className="text-[#fe741d] text-2xl font-bold">
-              Victus <span className="text-black">Byte</span>
-            </span>
-          </h1>
-
-          <form className="space-y-5" onSubmit={handleSubmit}>
-            {error && (
-              <div className="bg-red-50 border-l-4 border-red-500 p-3 mb-4">
-                <p className="text-red-700 text-sm font-medium">{error}</p>
+      <div className="w-full max-w-[400px]">
+        <div className="bg-white rounded-lg px-10 pt-12 pb-9 shadow-[0_2px_4px_rgba(0,0,0,0.1),0_8px_16px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_8px_rgba(0,0,0,0.12),0_12_28px_rgba(0,0,0,0.15)] transition-all duration-300 relative overflow-hidden">
+          
+          {/* LOGO & HEADER */}
+          <div className="text-center mb-8">
+            <div className="flex justify-center mb-6 group cursor-pointer">
+              <div className="relative w-14 h-14">
+                <div className="absolute inset-0 rounded-full bg-[#fe741d] shadow-[0_2px_4px_rgba(254,116,29,0.3)] transition-transform duration-300 group-hover:scale-110"></div>
+                <div className="absolute top-2 left-2 w-10 h-10 rounded-full bg-[#f5640a] shadow-[0_1px_3px_rgba(0,0,0,0.1)] transition-transform duration-300 group-hover:scale-115"></div>
+                <div className="absolute top-4 left-4 w-6 h-6 rounded-full bg-white shadow-[0_1px_2px_rgba(0,0,0,0.1)] transition-transform duration-300 group-hover:scale-120"></div>
               </div>
-            )}
+            </div>
+            <h2 className="text-[#212121] text-2xl font-normal mb-2 tracking-[0.15px]">Sign in</h2>
+            <p className="text-[#757575] text-sm">to <span className="text-[#fe741d] font-bold">Victus Byte</span></p>
+          </div>
 
-            <div>
-              <label
-                htmlFor="phone"
-                className="block mb-1 text-sm font-medium text-gray-700"
-              >
-                Phone
-              </label>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* PHONE INPUT */}
+            <div className="relative group">
               <input
-                id="phone"
                 type="text"
+                name="phone"
                 inputMode="numeric"
+                required
                 value={formData.phone}
                 onChange={handleChange}
-                placeholder="01xxxxxxxxx"
-                required
-                className={`w-full p-2.5 border rounded-lg focus:ring-2 focus:ring-[#fe741d] outline-none transition-all ${
-                  error ? "border-red-500 bg-red-50" : "border-gray-300"
-                }`}
+                onBlur={handleMobileScrollFix}
+                className="peer w-full bg-transparent border-b-2 border-[#e0e0e0] py-4 pb-2 text-base outline-none transition-colors focus:border-[#fe741d] z-10 relative"
+                placeholder=" "
               />
+              <label className="absolute left-0 top-4 text-[#757575] text-base transition-all duration-200 pointer-events-none origin-left peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[#fe741d] peer-[:not(:placeholder-shown)]:-translate-y-6 peer-[:not(:placeholder-shown)]:scale-75 z-20">
+                Phone Number
+              </label>
+              <div className="absolute bottom-0 left-0 h-0.5 bg-[#fe741d] w-0 transition-all duration-300 peer-focus:w-full z-30"></div>
             </div>
 
-            <div>
-              <label
-                htmlFor="password"
-                className="block mb-1 text-sm font-medium text-gray-700"
-              >
-                Password
-              </label>
+            {/* PASSWORD INPUT */}
+            <div className="relative group">
               <input
-                id="password"
-                type="password"
+                type={showPassword ? "text" : "password"}
+                name="password"
+                required
                 value={formData.password}
                 onChange={handleChange}
-                placeholder="Enter Password"
-                required
-                className={`w-full p-2.5 border rounded-lg focus:ring-2 focus:ring-[#fe741d] outline-none transition-all ${
-                  error ? "border-red-500 bg-red-50" : "border-gray-300"
-                }`}
+                onBlur={handleMobileScrollFix}
+                className="peer w-full bg-transparent border-b-2 border-[#e0e0e0] py-4 pb-2 pr-14 text-base outline-none transition-colors focus:border-[#fe741d] z-10 relative"
+                placeholder=" "
               />
-              <div className="flex justify-end mt-2">
-                <span
-                  onClick={() => navigate("/forgot-password")}
-                  className="text-xs text-gray-400 hover:text-[#fe741d] cursor-pointer transition-colors duration-300 italic"
-                >
-                  Forgot Password?
-                </span>
-              </div>
+              <label className="absolute left-0 top-4 text-[#757575] text-base transition-all duration-200 pointer-events-none origin-left peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-[#fe741d] peer-[:not(:placeholder-shown)]:-translate-y-6 peer-[:not(:placeholder-shown)]:scale-75 z-20">
+                Password
+              </label>
+              
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/5 text-[#757575] hover:text-[#fe741d] transition-colors z-40"
+              >
+                {showPassword ? (
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 11-4.243-4.243m4.242 4.242L9.88 9.88" /></svg>
+                ) : (
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                )}
+              </button>
+              <div className="absolute bottom-0 left-0 h-0.5 bg-[#fe741d] w-0 transition-all duration-300 peer-focus:w-full z-30"></div>
             </div>
 
+            {/* ERROR MESSAGE */}
+            {error && (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-red-500 text-[10px] font-bold uppercase tracking-tight">
+                {error}
+              </motion.div>
+            )}
+
             <button
-              type="submit"
               disabled={isSubmitting}
-              className="w-full h-12 flex items-center justify-center bg-[#fe741d] uppercase text-white font-bold rounded-lg hover:bg-[#f5640a] transition-all active:scale-95 disabled:bg-gray-400 disabled:cursor-not-allowed mt-4"
+              className="w-full bg-[#fe741d] text-white py-3 rounded shadow-[0_2px_4px_rgba(0,0,0,0.2)] hover:bg-[#f5640a] active:scale-95 transition-all uppercase font-medium tracking-wider min-h-[48px] flex items-center justify-center disabled:opacity-50"
             >
-              {isSubmitting ? <div className="btn-loader"></div> : "SIGN IN"}
+              {isSubmitting ? <div className="btn-loader" /> : "Sign In"}
             </button>
           </form>
 
-          <div className="mt-8 text-center border-t border-gray-50 pt-6">
+          <div className="relative text-center my-6 before:content-[''] before:absolute before:top-1/2 before:left-0 before:right-0 before:h-[1px] before:bg-[#e0e0e0] before:-translate-y-1/2">
+            <span className="relative bg-white px-4 text-[#757575] text-sm">or</span>
+          </div>
+
+          <div className="text-center">
             <p className="text-gray-500 text-sm font-light">
               Don't have an account?{" "}
-              <span
-                onClick={() => navigate("/signup")}
-                className="ml-1.5 font-bold text-[#fe741d] cursor-pointer relative inline-block group"
-              >
+              <span onClick={() => navigate("/signup")} className="ml-1 font-bold text-[#fe741d] cursor-pointer hover:underline">
                 Sign up
-                <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#fe741d] transition-all duration-300 group-hover:w-full"></span>
               </span>
             </p>
           </div>
