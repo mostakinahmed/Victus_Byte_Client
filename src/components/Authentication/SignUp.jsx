@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react"; // Added useRef
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../Context Api/AuthContext";
@@ -7,7 +7,9 @@ import { motion, AnimatePresence } from "framer-motion";
 export default function SignUp() {
   const { checkUserStatus } = useAuth();
   const navigate = useNavigate();
+  const topRef = useRef(null); // Reference for the top of the page
 
+  // --- STATE ---
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [verified, setVerified] = useState(false);
@@ -23,6 +25,16 @@ export default function SignUp() {
     otp: "",
   });
 
+  // --- FORCE SCROLL TO TOP ON STEP CHANGE ---
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    // If you want it even more precise for the card:
+    if (topRef.current) {
+      topRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [step, verified]); // Triggers when step changes to 2 or when verified becomes true
+
+  // Resend Timer
   useEffect(() => {
     let interval = null;
     if (step === 2 && timer > 0) {
@@ -49,6 +61,7 @@ export default function SignUp() {
       setErrorInfo("Phone must be 11 digits");
       return;
     }
+    formData.otp = "";
     setLoading(true);
     try {
       const response = await axios.post(
@@ -66,7 +79,7 @@ export default function SignUp() {
         setTimer(30);
       }
     } catch (error) {
-      setErrorInfo(error.response?.data?.message || "Something went wrong");
+      setErrorInfo(error.response?.data?.message || "Check your details");
     } finally {
       setLoading(false);
     }
@@ -94,7 +107,10 @@ export default function SignUp() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fafafa] flex items-center justify-center p-3 font-sans leading-relaxed">
+    <div
+      ref={topRef}
+      className="min-h-screen bg-[#fafafa] flex items-center justify-center p-3 font-sans leading-relaxed"
+    >
       <style>{`
         input { font-size: 16px !important; }
         .btn-loader { width: 20px; height: 20px; border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #fff; animation: spin 0.8s linear infinite; }
@@ -110,7 +126,6 @@ export default function SignUp() {
       `}</style>
 
       <div className="w-full max-w-[400px]">
-        {/* Removed min-h-[500px] and flex-col for a compact, auto-sizing height */}
         <div className="bg-white rounded-lg px-8 pt-10 pb-9 shadow-[0_2px_4px_rgba(0,0,0,0.1),0_8px_16px_rgba(0,0,0,0.1)] relative overflow-hidden transition-all duration-300">
           <AnimatePresence mode="wait">
             {verified ? (
@@ -141,19 +156,12 @@ export default function SignUp() {
             ) : (
               <motion.div
                 key={step}
-                initial={{ opacity: 0, x: 20 }}
+                initial={{ opacity: 0, x: 10 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.3 }}
+                exit={{ opacity: 0, x: -10 }}
+                transition={{ duration: 0.2 }}
               >
-                {/* HEADER */}
                 <div className="text-center mb-8">
-                  <div className="md:flex justify-center mb-6 group cursor-pointer hidden">
-                    <div className="relative w-14 h-14">
-                      <div className="absolute inset-0 rounded-full bg-[#1976d2] shadow-[0_2px_4px_rgba(25,118,210,0.3)] transition-transform duration-300 group-hover:scale-110"></div>
-                      <div className="absolute top-2 left-2 w-10 h-10 rounded-full bg-[#2196f3] shadow-[0_1px_3px_rgba(33,150,243,0.3)]"></div>
-                    </div>
-                  </div>
                   <h2 className="text-[#212121] text-2xl font-normal tracking-[0.15px]">
                     {step === 1 ? "Create Account" : "Verify Phone"}
                   </h2>
@@ -196,12 +204,11 @@ export default function SignUp() {
                               ? "Full Name"
                               : field.charAt(0).toUpperCase() + field.slice(1)}
                           </label>
-
                           {field === "password" && (
                             <button
                               type="button"
                               onClick={() => setShowPassword(!showPassword)}
-                              className="absolute right-0 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full hover:bg-black/5 text-[#757575] transition-colors z-30"
+                              className="absolute right-0 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full hover:bg-black/5 text-[#757575] z-30 transition-colors"
                             >
                               {showPassword ? (
                                 <svg
@@ -245,9 +252,10 @@ export default function SignUp() {
                       ))}
                     </div>
                   ) : (
-                    <div className="text-center py-2">
-                      <p className="text-sm text-[#757575] mb-6">
-                        Enter code sent to <b>{formData.phone}</b>
+                    <div className="text-center py-4">
+                      <p className="text-xs text-[#757575] mb-6 tracking-wide">
+                        Enter the 6-digit code sent to <br />
+                        <b className="text-black">{formData.phone}</b>
                       </p>
                       <div className="relative">
                         <input
@@ -259,6 +267,7 @@ export default function SignUp() {
                           value={formData.otp}
                           onChange={handleChange}
                           className="w-full bg-transparent border-b-2 border-[#1976d2] py-2 text-center text-4xl tracking-[0.5em] font-bold outline-none text-[#1976d2] z-10 relative"
+                          placeholder="000000"
                         />
                       </div>
                     </div>
@@ -272,7 +281,7 @@ export default function SignUp() {
                     )}
                     <button
                       disabled={loading}
-                      className="w-full bg-[#1976d2] text-white py-3 rounded shadow-md hover:bg-[#1565c0] active:scale-95 transition-all uppercase font-medium tracking-wider flex items-center justify-center disabled:opacity-50"
+                      className="w-full bg-[#1976d2] text-white py-3 rounded shadow-md hover:bg-[#1565c0] active:scale-95 transition-all uppercase font-medium tracking-wider flex items-center justify-center disabled:opacity-50 min-h-[48px]"
                     >
                       {loading ? (
                         <div className="btn-loader" />
@@ -285,9 +294,9 @@ export default function SignUp() {
                     {step === 2 && (
                       <div className="text-center space-y-3 mt-6">
                         {timer > 0 ? (
-                          <p className="text-xs text-gray-400">
-                            Resend in{" "}
-                            <span className="font-mono text-[#1976d2]">
+                          <p className="text-xs text-gray-400 font-medium tracking-tight">
+                            Resend code in{" "}
+                            <span className="font-mono text-[#1976d2] font-bold">
                               {timer}s
                             </span>
                           </p>
@@ -303,13 +312,13 @@ export default function SignUp() {
                         <button
                           type="button"
                           onClick={() => setStep(1)}
-                          className="block w-full text-[10px] text-gray-400 font-bold uppercase tracking-widest hover:text-black"
+                          className="block w-full text-[10px] text-gray-400 font-bold uppercase tracking-widest hover:text-black transition-colors"
                         >
                           ← Change Details
                         </button>
                       </div>
                     )}
-                    {!verified && step === 1 && (
+                    {step === 1 && (
                       <div className="mt-8 text-center pt-6 border-t border-[#f0f0f0]">
                         <p className="text-gray-500 text-sm">
                           Already have an account?{" "}
