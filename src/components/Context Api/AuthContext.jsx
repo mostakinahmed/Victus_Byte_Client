@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 // This ensures every request from now on automatically carries your cookies
-axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.baseURL = "https://api.victusbyte.com";
 axios.defaults.withCredentials = true;
 
 const AuthContext = createContext();

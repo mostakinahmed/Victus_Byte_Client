@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../Context Api/AuthContext";
@@ -6,10 +6,13 @@ import { useAuth } from "../Context Api/AuthContext";
 const SignUp = () => {
   const { checkUserStatus } = useAuth();
   const navigate = useNavigate();
+  const topRef = useRef(null); // Reference to force top position
+
   const [step, setStep] = useState(1); // 1 = Signup Form, 2 = OTP Form
   const [loading, setLoading] = useState(false);
   const [verified, setVerified] = useState(false);
   const [statusMsg, setStatusMsg] = useState({ type: "", text: "" });
+  const [timer, setTimer] = useState(30);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -19,71 +22,15 @@ const SignUp = () => {
     otp: "",
   });
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
-    if (statusMsg.text) setStatusMsg({ type: "", text: "" });
-  };
-
-  // --- STEP 1: SUBMIT SIGNUP ---
-  const handleSignUpSubmit = async (e) => {
-    e?.preventDefault();
-    setLoading(true);
-    setStatusMsg({ type: "", text: "" });
-
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/api/customer/signup",
-        {
-          userName: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          password: formData.password,
-        },
-        { withCredentials: true },
-      );
-
-      if (response.data.success) {
-        setStep(2);
-      }
-    } catch (error) {
-      setStatusMsg({
-        type: "error",
-        text: error.response?.data?.message || "Something went wrong",
-      });
-    } finally {
-      setLoading(false);
+  // --- FORCE TOP POSITION ON STEP CHANGE ---
+  useEffect(() => {
+    if (topRef.current) {
+      window.scrollTo({ top: 0, behavior: "instant" });
+      topRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-  };
+  }, [step, verified]);
 
-  // --- STEP 2: VERIFY OTP ---
-  const handleVerifyOTP = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/api/customer/varify-otp",
-        { phone: formData.phone, otp: formData.otp },
-        { withCredentials: true }, // THIS IS MANDATORY
-      );
-
-      if (response.data.success) {
-        await checkUserStatus();
-        console.log(response.data);
-
-        setVerified(true);
-        setTimeout(() => navigate("/"), 1000);
-      }
-    } catch (error) {
-      setStatusMsg({ type: "error", text: "Invalid Code. Please try again." });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  //resend wait
-  const [timer, setTimer] = useState(30); // Initial 30s wait
-
+  // --- RESEND TIMER ---
   useEffect(() => {
     let interval = null;
     if (step === 2 && timer > 0) {
@@ -96,17 +43,88 @@ const SignUp = () => {
     return () => clearInterval(interval);
   }, [step, timer]);
 
+  const handleChange = (e) => {
+    // Only allow 11 digits for phone
+    if (e.target.id === "phone") {
+      const val = e.target.value.replace(/\D/g, "").slice(0, 11);
+      setFormData({ ...formData, phone: val });
+    } else {
+      setFormData({ ...formData, [e.target.id]: e.target.value });
+    }
+    if (statusMsg.text) setStatusMsg({ type: "", text: "" });
+  };
+
+  const handleSignUpSubmit = async (e) => {
+    e?.preventDefault();
+    if (formData.phone.length !== 11) {
+      setStatusMsg({ type: "error", text: "Phone must be 11 digits" });
+      return;
+    }
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        "https://api.victusbyte.com/api/customer/signup",
+        {
+          userName: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          password: formData.password,
+        },
+        { withCredentials: true },
+      );
+
+      if (response.data.success) {
+        setStep(2);
+        setTimer(30);
+      }
+    } catch (error) {
+      setStatusMsg({
+        type: "error",
+        text: error.response?.data?.message || "Something went wrong",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleVerifyOTP = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        "https://api.victusbyte.com/api/customer/varify-otp",
+        { phone: formData.phone, otp: formData.otp },
+        { withCredentials: true },
+      );
+
+      if (response.data.success) {
+        await checkUserStatus();
+        setVerified(true);
+        setTimeout(() => navigate("/"), 1500);
+      }
+    } catch (error) {
+      setStatusMsg({ type: "error", text: "Invalid Code. Please try again." });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="max-w-[1400px] lg:mt-[80px] mt-[47px] px-2 lg:px-4 mx-auto md:py-6 py-3">
-      {/* CSS for the Loader */}
+    <div
+      ref={topRef}
+      className="max-w-[1400px] font-sans lg:mt-[80px] mt-[47px] px-2 lg:px-4 mx-auto md:py-6 py-3"
+    >
       <style>{`
+        /* Prevent mobile auto-zoom */
+        input { font-size: 16px !important; }
         .btn-loader { width: 20px; height: 20px; border: 3px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #fff; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
+        .otp-input-mobile { font-size: 24px !important; letter-spacing: 1.2rem; }
+        @media (min-width: 768px) { .otp-input-mobile { font-size: 36px !important; letter-spacing: 1.7rem; } }
       `}</style>
 
-      <div className="bg-white p-6 flex w-full justify-center shadow rounded min-h-[calc(100vh-10rem)]">
-        <div className="lg:mt-[20px] rounded w-full max-w-md p-6 sm:p-10">
-          {/* LOGO / HEADER (Hidden if verified) */}
+      <div className="bg-white p-6 flex w-full justify-center shadow rounded min-h-[calc(100vh-12rem)]">
+        <div className="lg:mt-[20px] rounded w-full max-w-md p-4 sm:p-10">
           {!verified && (
             <h1 className="text-center text-xl mb-10">
               {step === 1 ? "SignUp to " : "Verify "}
@@ -116,23 +134,17 @@ const SignUp = () => {
             </h1>
           )}
 
-          {/* STATUS MESSAGE */}
           {statusMsg.text && !verified && (
             <div
-              className={`mb-4 p-3 rounded text-sm text-center font-medium ${
-                statusMsg.type === "error"
-                  ? "bg-red-50 text-red-600 border border-red-200"
-                  : "bg-green-50 text-green-600 border border-green-200"
-              }`}
+              className={`mb-4 p-3 rounded text-sm text-center font-medium ${statusMsg.type === "error" ? "bg-red-50 text-red-600 border border-red-200" : "bg-green-50 text-green-600 border border-green-200"}`}
             >
               {statusMsg.text}
             </div>
           )}
 
-          {/* --- VIEW 3: SUCCESS REDIRECT --- */}
           {verified ? (
-            <div className="flex flex-col items-center justify-center py-10 animate-in zoom-in duration-500 text-center">
-              <div className="bg-green-100 p-5 rounded-full mb-4">
+            <div className="flex flex-col items-center justify-center py-10 text-center">
+              <div className="bg-green-100 p-5 rounded-full mb-4 animate-bounce">
                 <svg
                   className="w-16 h-16 text-green-600"
                   fill="none"
@@ -144,7 +156,7 @@ const SignUp = () => {
                     strokeLinejoin="round"
                     strokeWidth="3"
                     d="M5 13l4 4L19 7"
-                  ></path>
+                  />
                 </svg>
               </div>
               <h2 className="text-2xl font-bold text-gray-800">Verified!</h2>
@@ -154,7 +166,6 @@ const SignUp = () => {
             </div>
           ) : (
             <>
-              {/* --- VIEW 1: PREVIOUS SIGNUP DESIGN --- */}
               {step === 1 && (
                 <form className="space-y-4" onSubmit={handleSignUpSubmit}>
                   <div>
@@ -168,7 +179,7 @@ const SignUp = () => {
                       required
                       value={formData.name}
                       onChange={handleChange}
-                      className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-[#fe741d] outline-none"
+                      className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fe741d] outline-none"
                     />
                   </div>
                   <div>
@@ -182,7 +193,7 @@ const SignUp = () => {
                       required
                       value={formData.email}
                       onChange={handleChange}
-                      className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-[#fe741d] outline-none"
+                      className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fe741d] outline-none"
                     />
                   </div>
                   <div>
@@ -192,11 +203,12 @@ const SignUp = () => {
                     <input
                       id="phone"
                       type="text"
+                      inputMode="numeric"
                       placeholder="017XXXXXXXX"
                       required
                       value={formData.phone}
                       onChange={handleChange}
-                      className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-[#fe741d] outline-none"
+                      className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fe741d] outline-none"
                     />
                   </div>
                   <div>
@@ -210,44 +222,30 @@ const SignUp = () => {
                       required
                       value={formData.password}
                       onChange={handleChange}
-                      className="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-[#fe741d] outline-none"
+                      className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#fe741d] outline-none"
                     />
                   </div>
 
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full h-12 flex items-center justify-center bg-[#fe741d] uppercase text-white font-semibold rounded hover:bg-[#f5640a] transition-transform duration-300 disabled:bg-gray-400"
+                    className="w-full h-12 flex items-center justify-center bg-[#fe741d] uppercase text-white font-bold rounded-lg hover:bg-[#f5640a] transition-all active:scale-95 disabled:bg-gray-400 mt-4"
                   >
-                    {loading ? <div className="btn-loader"></div> : "Create Account"}
+                    {loading ? (
+                      <div className="btn-loader"></div>
+                    ) : (
+                      "Create Account"
+                    )}
                   </button>
                 </form>
               )}
 
-              {/* --- VIEW 2: OTP VERIFICATION --- */}
               {step === 2 && (
                 <form
-                  className="space-y-8 animate-in zoom-in duration-300 w-full"
+                  className="space-y-8 w-full animate-in fade-in duration-500"
                   onSubmit={handleVerifyOTP}
                 >
-                  <div className="text-center w-full">
-                    <div className="inline-block p-4 rounded-full bg-orange-50 mb-4  shadow-inner animate-wobble">
-                      <svg
-                        className="w-8 h-8 text-[#fe741d] drop-shadow-sm"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
-                        />
-                      </svg>
-                    </div>
-
+                  <div className="text-center">
                     <h3 className="text-lg font-bold text-gray-800">
                       Check your phone
                     </h3>
@@ -259,24 +257,24 @@ const SignUp = () => {
                     </p>
                   </div>
 
-                  <div className="relative group">
-                    {/* Individual Box Underline Design */}
+                  <div className="relative">
                     <input
                       id="otp"
                       type="text"
+                      inputMode="numeric"
+                      pattern="\d*"
                       maxLength="6"
-                      placeholder="      "
                       required
                       autoFocus
                       value={formData.otp}
                       onChange={handleChange}
-                      className="w-full bg-slate-100 border-b-4 border-gray-200 py-4 text-center md:text-4xl pl-3 md:pl-4 text-3xl tracking-[1.3rem] md:tracking-[1.7rem] font-black text-[#fe741d] focus:border-[#fe741d] focus:bg-orange-50/50 outline-none transition-all duration-300 rounded-t-lg"
+                      className="w-full bg-slate-50 border-b-4 border-gray-200 py-4 text-center otp-input-mobile font-black text-[#fe741d] focus:border-[#fe741d] focus:bg-orange-50 outline-none transition-all rounded-t-lg"
                     />
-                    <div className="flex justify-between px-2 mt-1">
+                    <div className="flex justify-between px-2 mt-2">
                       {[1, 2, 3, 4, 5, 6].map((i) => (
                         <div
                           key={i}
-                          className={`h-1 w-8 rounded-full ${formData.otp.length >= i ? "bg-[#fe741d]" : "bg-gray-200"}`}
+                          className={`h-1.5 w-8 rounded-full transition-all duration-300 ${formData.otp.length >= i ? "bg-[#fe741d]" : "bg-gray-200"}`}
                         ></div>
                       ))}
                     </div>
@@ -285,7 +283,7 @@ const SignUp = () => {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full h-14 flex items-center justify-center bg-black text-white font-bold rounded-2xl shadow-lg hover:shadow-xl active:scale-95 transition-all duration-300"
+                    className="w-full h-14 bg-black text-white font-bold rounded-xl shadow-lg hover:bg-gray-900 active:scale-95 transition-all flex items-center justify-center"
                   >
                     {loading ? (
                       <div className="btn-loader"></div>
@@ -294,35 +292,32 @@ const SignUp = () => {
                     )}
                   </button>
 
-                  <div className="text-center space-y-2">
-                    <div className="text-sm">
-                      {timer > 0 ? (
-                        <p className="text-gray-400">
-                          Resend code in{" "}
-                          <span className="text-[#fe741d] font-mono font-bold">
-                            {timer}s
-                          </span>
-                        </p>
-                      ) : (
-                        <button
-                          type="button"
-                          onClick={() => {
-                            handleSignUpSubmit(); // Resends the OTP
-                            setTimer(30); // Resets the clock
-                          }}
-                          className="text-[#fe741d] font-bold hover:underline decoration-2 underline-offset-4"
-                        >
-                          Resend Code Now
-                        </button>
-                      )}
-                    </div>
-
+                  <div className="text-center space-y-3">
+                    {timer > 0 ? (
+                      <p className="text-sm text-gray-400 font-medium">
+                        Resend in{" "}
+                        <span className="text-[#fe741d] font-mono">
+                          {timer}s
+                        </span>
+                      </p>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          handleSignUpSubmit();
+                          setTimer(30);
+                        }}
+                        className="text-[#fe741d] font-bold text-sm hover:underline"
+                      >
+                        Resend Code Now
+                      </button>
+                    )}
                     <button
                       type="button"
                       onClick={() => setStep(1)}
-                      className="text-[10px] text-gray-500 hover:text-black uppercase font-black tracking-widest transition-colors"
+                      className="block w-full text-[10px] text-gray-400 uppercase tracking-widest font-bold hover:text-black"
                     >
-                      ← Wrong Number? Change it
+                      ← Change Phone Number
                     </button>
                   </div>
                 </form>
@@ -330,31 +325,19 @@ const SignUp = () => {
             </>
           )}
 
-          {/* FOOTER (Hidden if verified) */}
           {!verified && step === 1 && (
-            <p className="text-center mt-5 text-sm text-gray-600">
-              Already have an account?{" "}
-              <span
-                onClick={() => navigate("/signin")}
-                className="text-[#fe741d] cursor-pointer hover:underline"
-              >
-                Sign in
-              </span>
-            </p>
-          )}
-
-          {!verified && (
-            <p className="text-center text-gray-500 text-xs mt-6">
-              By continuing, you agree to our{" "}
-              <a href="#" className="text-[#fe741d] hover:underline">
-                Terms
-              </a>{" "}
-              and{" "}
-              <a href="#" className="text-[#fe741d] hover:underline">
-                Privacy Policy
-              </a>
-              .
-            </p>
+            <div className="mt-8 text-center border-t border-gray-50 pt-6">
+              <p className="text-gray-500 text-sm font-light">
+                Already have an account?{" "}
+                <span
+                  onClick={() => navigate("/signin")}
+                  className="ml-1.5 font-bold text-[#fe741d] cursor-pointer relative inline-block group"
+                >
+                  Sign in
+                  <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#fe741d] transition-all duration-300 group-hover:w-full"></span>
+                </span>
+              </p>
+            </div>
           )}
         </div>
       </div>

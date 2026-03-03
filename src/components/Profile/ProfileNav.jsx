@@ -58,10 +58,10 @@ export const Profile = () => {
           </button>
         </div>
       ) : (
-        <div className=" md:hover:border-indigo-300 py-[6px] md:px-2 md:rounded-2xl md:border border-slate-300 p-1.5 hover:bg-slate-100 transition-all">
+        <div className=" md:hover:border-indigo-300 py-[6px] cursor-pointer md:px-2 md:rounded-2xl md:border border-slate-400 p-1.5 hover:bg-slate-100 transition-all">
           <button
             onClick={() => navigate("/signin")}
-            className="flex gap-2 justify-center items-center  md:px-2 cursor-pointer "
+            className="flex gap-2 justify-center items-center cursor-pointer md:px-2  "
           >
             <User className="md:w-5 md:h-5 w-6 h-6 text-slate-700" />
             <h2 className="hidden lg:flex text-sm font-medium  tracking-wider text-slate-700">
