@@ -99,7 +99,7 @@ function ChangedPassword() {
           },
         ].map((field) => (
           <div key={field.id} className="relative">
-            <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-widest">
+            <label className="block text-[11px] font-semibold text-gray-500 uppercase mb-1 tracking-widest">
               {field.label}
             </label>
             <div className="relative">
@@ -109,7 +109,7 @@ function ChangedPassword() {
                 value={passwords[field.name]}
                 onChange={handleChange}
                 placeholder="••••••••"
-                className="w-full border-b-2 border-gray-100 py-2 pr-10 outline-none focus:border-[#1976d2] transition-colors font-medium text-slate-800"
+                className="w-full border-b-2 border-slate-200 py-2 pr-10 placeholder:text-gray-300 outline-none focus:border-[#1976d2] transition-colors font-medium text-slate-800"
                 required
               />
               <button

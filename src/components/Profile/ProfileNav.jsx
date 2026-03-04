@@ -129,13 +129,13 @@ export const Profile = () => {
                     className="group px-2 py-1.5 rounded-lg hover:bg-slate-100 flex items-center justify-between cursor-pointer transition-all active:scale-95"
                   >
                     <div className="flex items-center gap-2.5">
-                      <div className="p-1.5 bg-slate-100 rounded-md group-hover:bg-white group-hover:shadow-sm transition-all">
+                      <div className="p-1.5 bg-slate-200 rounded-md group-hover:bg-white group-hover:shadow-sm transition-all">
                         {React.cloneElement(item.icon, {
                           className:
                             "w-4 h-4 text-slate-700 group-hover:text-indigo-600",
                         })}
                       </div>
-                      <span className="text-[14px] font-medium text-slate-800 group-hover:text-slate-900 tracking-wide">
+                      <span className="text-xs font-bold  text-slate-800 uppercase group-hover:text-slate-900 tracking-wide">
                         {item.label}
                       </span>
                     </div>

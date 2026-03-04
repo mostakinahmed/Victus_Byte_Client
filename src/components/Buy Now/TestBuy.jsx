@@ -5,6 +5,7 @@ import { CartContext } from "../Context Api/CartContext";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import { useAuth } from "../Context Api/AuthContext";
 
 // Utility: Generate Professional Unique Order ID (12 Digits)
 function generateOrderId() {
@@ -42,6 +43,7 @@ function getOrderDateTime12h() {
 const TestBuy = ({ data }) => {
   const navigate = useNavigate();
   const { updateCart } = useContext(CartContext);
+  const { user } = useAuth();
 
   // --- DISTRICT & UPAZILA STATES ---
   const [districts, setDistricts] = useState([]);
@@ -71,9 +73,9 @@ const TestBuy = ({ data }) => {
   const upazilaRef = useRef(null);
 
   const [form, setForm] = useState({
-    name: "",
-    email: "",
-    phone: "",
+    name: user?.userName || "",
+    email: user?.email || "",
+    phone: user?.phone || "",
     address: "",
     comment: "",
   });
@@ -231,7 +233,7 @@ const TestBuy = ({ data }) => {
       order_date: getOrderDateTime12h(),
       status: "Pending",
       mode: "Online",
-      customer_id: "GUEST_USER",
+      customer_id: user?.cID || "GUEST_USER",
       items: data.map((item) => ({
         product_id: item.pID,
         product_name: item.name,

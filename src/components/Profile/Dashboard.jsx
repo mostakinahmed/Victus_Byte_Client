@@ -22,6 +22,9 @@ import { useAuth } from "../Context Api/AuthContext";
 import EditProfile from "./EditProfile";
 import ChangedPassword from "./ChangedPassword";
 import { MyOrder } from "../Profile/MyOrder";
+import LoyaltyPage from "./LoyalityPage";
+import SupportPage from "./SupportPage";
+import ReturnPage from "./ReturnPage";
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState("overview");
@@ -34,17 +37,17 @@ const Profile = () => {
     { id: "overview", label: "Overview", icon: <User size={20} /> },
     { id: "edit-profile", label: "Edit Profile", icon: <Edit size={20} /> }, // Added
     { id: "myorder", label: "My Orders", icon: <Package size={20} /> },
-    { id: "return", label: "Returns", icon: <RefreshCw size={20} /> },
+
     { id: "points", label: "Loyalty Points", icon: <Award size={20} /> },
     {
       id: "change-password",
       label: "Change Password",
       icon: <Key size={20} />,
     }, // Added
+    { id: "return", label: "Return Orders", icon: <RefreshCw size={20} /> },
 
     { id: "wishlist", label: "Wishlist", icon: <Heart size={20} /> },
 
-    { id: "review", label: "My Reviews", icon: <Star size={20} /> },
     { id: "support", label: "Support", icon: <Headphones size={20} /> },
   ];
 
@@ -257,19 +260,22 @@ const Profile = () => {
           {/* TAB: CHANGE PASSWORD */}
           {activeTab === "change-password" && <ChangedPassword />}
 
-          {/* TAB: CHANGE PASSWORD */}
+          {/* TAB: My Order */}
           {activeTab === "myorder" && <MyOrder />}
+
+          {/* TAB: Loyality Point */}
+          {activeTab === "points" && <LoyaltyPage user={user} />}
+
+          {/* //support tab */}
+
+          {activeTab === "support" && <SupportPage />}
+          {activeTab === "return" && <ReturnPage />}
 
           {/* TAB: OTHER PLACEHOLDERS */}
           {[
-            "return",
             "wishlist",
-            "address",
-            "points",
-            "payment",
-            "review",
-            "security",
-            "support",
+
+      
           ].includes(activeTab) && (
             <div className="flex flex-col items-center justify-center h-full text-center py-20 animate-in fade-in">
               <div className="p-4 bg-gray-50 rounded-full mb-4 text-[#1976d2]">

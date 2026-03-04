@@ -70,7 +70,7 @@ function EditProfile({ data, checkUserStatus }) {
             <input
               name="userName"
               type="text"
-              className="w-full border-b-2 border-gray-100 p-2 outline-none focus:border-[#1976d2] transition-colors font-medium text-slate-800"
+              className="w-full border-b-2 border-slate-200 p-2 outline-none focus:border-[#1976d2] transition-colors font-medium text-slate-800"
               value={formData.userName}
               onChange={handleChange}
             />
@@ -82,7 +82,7 @@ function EditProfile({ data, checkUserStatus }) {
             <input
               name="email"
               type="email"
-              className="w-full border-b-2 border-gray-100 p-2 outline-none focus:border-[#1976d2] transition-colors font-medium text-slate-800"
+              className="w-full border-b-2 border-slate-200  p-2 outline-none focus:border-[#1976d2] transition-colors font-medium text-slate-800"
               value={formData.email}
               onChange={handleChange}
             />
@@ -93,7 +93,7 @@ function EditProfile({ data, checkUserStatus }) {
             </label>
             <input
               type="text"
-              className="w-full border-b-2 border-gray-100 text-slate-500 p-2 outline-none bg-gray-50/50 cursor-not-allowed font-medium"
+              className="w-full border-b-2 border-slate-200  text-slate-500 p-2 outline-none bg-gray-50/50 cursor-not-allowed font-medium"
               defaultValue={data.phone}
               readOnly
             />
@@ -106,7 +106,7 @@ function EditProfile({ data, checkUserStatus }) {
               name="gender"
               value={formData.gender}
               onChange={handleChange}
-              className="w-full border-b-2 border-gray-100 p-2 outline-none focus:border-[#1976d2] transition-colors font-medium text-slate-800 bg-transparent"
+              className="w-full border-b-2 border-slate-200  p-2 outline-none focus:border-[#1976d2] transition-colors font-medium text-slate-800 bg-transparent"
             >
               <option value="" disabled hidden>
                 Select Gender
