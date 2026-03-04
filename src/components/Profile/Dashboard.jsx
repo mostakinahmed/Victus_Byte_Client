@@ -19,12 +19,14 @@ import {
   Key,
 } from "lucide-react";
 import { useAuth } from "../Context Api/AuthContext";
+import EditProfile from "./EditProfile";
+import ChangedPassword from "./ChangedPassword";
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const { user } = useAuth();
+  const { user, checkUserStatus } = useAuth();
 
   // Sidebar Menu Items
   const menuItems = [
@@ -75,7 +77,7 @@ const Profile = () => {
                 className={`flex items-center justify-between p-2.5 rounded transition-all ${
                   activeTab === item.id
                     ? "bg-[#1976d2] text-white shadow-md"
-                    : "text-gray-700 hover:bg-slate-100"
+                    : "text-slate-900 hover:bg-slate-100"
                 }`}
               >
                 <div className="flex items-center gap-3">
@@ -240,103 +242,12 @@ const Profile = () => {
 
           {/* TAB: EDIT PROFILE */}
           {activeTab === "edit-profile" && (
-            <div className="animate-in slide-in-from-bottom-2 duration-300">
-              <h2 className="text-lg font-bold text-gray-800 mb-6 border-b pb-2 uppercase tracking-tight">
-                Edit Profile
-              </h2>
-              <form className="max-w-2xl space-y-5">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                  <div>
-                    <label className="block text-xs font-bold text-gray-500 uppercase mb-2">
-                      Full Name
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full border-b-2 border-gray-100 p-2 outline-none focus:border-[#1976d2] transition-colors"
-                      defaultValue="Mostakin Ahmed"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-bold text-gray-500 uppercase mb-2">
-                      Email Address
-                    </label>
-                    <input
-                      type="email"
-                      className="w-full border-b-2 border-gray-100 p-2 outline-none focus:border-[#1976d2] transition-colors"
-                      defaultValue="mostakin@victusbyte.com"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-bold text-gray-500 uppercase mb-2">
-                      Phone Number
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full border-b-2 border-gray-100 p-2 outline-none focus:border-[#1976d2] transition-colors bg-gray-50 cursor-not-allowed"
-                      defaultValue="01XXXXXXXXX"
-                      readOnly
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-bold text-gray-500 uppercase mb-2">
-                      Gender
-                    </label>
-                    <select className="w-full border-b-2 border-gray-100 p-2 outline-none focus:border-[#1976d2] transition-colors">
-                      <option>Male</option>
-                      <option>Female</option>
-                      <option>Other</option>
-                    </select>
-                  </div>
-                </div>
-                <button className="bg-[#1976d2] text-white px-8 py-3 rounded font-bold uppercase tracking-wider hover:bg-[#1565c0] transition-all shadow-md active:scale-95">
-                  Save Changes
-                </button>
-              </form>
-            </div>
+            <EditProfile data={user} checkUserStatus={checkUserStatus} />
           )}
 
           {/* TAB: CHANGE PASSWORD */}
           {activeTab === "change-password" && (
-            <div className="animate-in slide-in-from-bottom-2 duration-300">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6 border-b pb-2 uppercase tracking-tight">
-                Change Password
-              </h2>
-              <form className="max-w-md space-y-6">
-                <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase mb-2">
-                    Current Password
-                  </label>
-                  <input
-                    type="password"
-                    placeholder="••••••••"
-                    className="w-full border-b-2 border-gray-100 p-2 outline-none focus:border-[#1976d2] transition-colors"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase mb-2">
-                    New Password
-                  </label>
-                  <input
-                    type="password"
-                    placeholder="••••••••"
-                    className="w-full border-b-2 border-gray-100 p-2 outline-none focus:border-[#1976d2] transition-colors"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase mb-2">
-                    Confirm New Password
-                  </label>
-                  <input
-                    type="password"
-                    placeholder="••••••••"
-                    className="w-full border-b-2 border-gray-100 p-2 outline-none focus:border-[#1976d2] transition-colors"
-                  />
-                </div>
-                <button className="bg-[#1976d2] text-white px-8 py-3 rounded font-bold uppercase tracking-wider hover:bg-[#1565c0] transition-all shadow-md active:scale-95">
-                  Update Password
-                </button>
-              </form>
-            </div>
+            <ChangedPassword />
           )}
 
           {/* TAB: OTHER PLACEHOLDERS */}
