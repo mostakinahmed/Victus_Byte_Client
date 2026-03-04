@@ -63,7 +63,7 @@ const ReturnPage = ({ order }) => {
       {/* 1. Header Section */}
       <div className="relative mb-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-[14px] font-black text-slate-800 uppercase tracking-[0.2em] flex items-center gap-3">
+          <h2 className="text-[13px] font-black text-slate-800 uppercase tracking-[0.1em] flex items-center gap-3">
             <span className="w-1.5 h-5 bg-[#1976d2] rounded-full"></span>
             Return Request
           </h2>

@@ -44,13 +44,15 @@ const LoyaltyPage = ({ user }) => {
 
   // Logic to decide the user's tier based on loyaltyPoints
   const userPoints = user?.loyaltyPoints || 0;
-  const currentTier = tiers.find((t) => userPoints >= t.min) || tiers[tiers.length - 1];
-  const nextTier = tiers[tiers.indexOf(currentTier) - 1]; 
+  const currentTier =
+    tiers.find((t) => userPoints >= t.min) || tiers[tiers.length - 1];
+  const nextTier = tiers[tiers.indexOf(currentTier) - 1];
 
   // Calculate dynamic progress
   const progress = nextTier
     ? Math.min(
-        ((userPoints - currentTier.min) / (nextTier.min - currentTier.min)) * 100,
+        ((userPoints - currentTier.min) / (nextTier.min - currentTier.min)) *
+          100,
         100,
       )
     : 100;
@@ -79,7 +81,7 @@ const LoyaltyPage = ({ user }) => {
     >
       {/* 1. Header Section */}
       <div className="relative mb-5">
-        <h2 className="text-[14px] font-black text-slate-800 uppercase tracking-[0.2em] flex items-center gap-3">
+        <h2 className="text-[13px] font-black text-slate-800 uppercase tracking-[0.1em] flex items-center gap-3">
           <span className="w-1.5 h-5 bg-[#1976d2] rounded-full"></span>
           Loyalty Rewards
         </h2>
@@ -96,7 +98,9 @@ const LoyaltyPage = ({ user }) => {
             <div className="relative z-10 flex flex-col md:flex-row justify-between items-center gap-8">
               <div className="text-center md:text-left">
                 {/* Dynamic Tier Badge */}
-                <p className={`text-[10px] font-black uppercase tracking-[0.4em] mb-2 px-3 py-1 rounded-full border w-fit mx-auto md:mx-0 ${currentTier.bg} ${currentTier.color} ${currentTier.border}`}>
+                <p
+                  className={`text-[10px] font-black uppercase tracking-[0.4em] mb-2 px-3 py-1 rounded-full border w-fit mx-auto md:mx-0 ${currentTier.bg} ${currentTier.color} ${currentTier.border}`}
+                >
                   {currentTier.name}
                 </p>
                 <h1 className="text-3xl md:text-5xl font-black tracking-tighter mb-2">
@@ -108,7 +112,17 @@ const LoyaltyPage = ({ user }) => {
                 <p className="text-slate-400 text-sm max-w-xs leading-relaxed">
                   {nextTier ? (
                     <>
-                      You are only <span className="text-white font-bold">{nextTier.min - userPoints} points</span> away from becoming a <span className={`${nextTier.color} font-black underline underline-offset-4 decoration-blue-500/30`}>{nextTier.name}</span>.
+                      You are only{" "}
+                      <span className="text-white font-bold">
+                        {nextTier.min - userPoints} points
+                      </span>{" "}
+                      away from becoming a{" "}
+                      <span
+                        className={`${nextTier.color} font-black underline underline-offset-4 decoration-blue-500/30`}
+                      >
+                        {nextTier.name}
+                      </span>
+                      .
                     </>
                   ) : (
                     "You've reached our highest tier! Enjoy your Platinum benefits."
@@ -127,7 +141,9 @@ const LoyaltyPage = ({ user }) => {
             <div className="mt-7">
               <div className="flex justify-between items-end mb-2">
                 <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">
-                  {nextTier ? `Progress to ${nextTier.name}` : "Max Tier Reached"}
+                  {nextTier
+                    ? `Progress to ${nextTier.name}`
+                    : "Max Tier Reached"}
                 </span>
                 <span className="text-[10px] font-black text-blue-400 uppercase tracking-widest">
                   {Math.round(progress)}%
@@ -159,12 +175,18 @@ const LoyaltyPage = ({ user }) => {
                 }`}
               >
                 <div className="flex items-center gap-5">
-                  <div className={`p-4 rounded-xl ${reward.status === "Unlocked" ? "bg-amber-100 text-amber-600" : "bg-slate-200 text-slate-400"}`}>
+                  <div
+                    className={`p-4 rounded-xl ${reward.status === "Unlocked" ? "bg-amber-100 text-amber-600" : "bg-slate-200 text-slate-400"}`}
+                  >
                     <FiGift size={24} />
                   </div>
                   <div>
-                    <h4 className="font-bold text-slate-800 text-sm">{reward.label}</h4>
-                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{reward.points} Points Required</p>
+                    <h4 className="font-bold text-slate-800 text-sm">
+                      {reward.label}
+                    </h4>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                      {reward.points} Points Required
+                    </p>
                   </div>
                 </div>
                 {reward.status === "Unlocked" ? (
@@ -172,7 +194,9 @@ const LoyaltyPage = ({ user }) => {
                     Claim <FiArrowRight />
                   </button>
                 ) : (
-                  <div className="text-slate-500 font-black text-[10px] uppercase tracking-widest">Locked</div>
+                  <div className="text-slate-500 font-black text-[10px] uppercase tracking-widest">
+                    Locked
+                  </div>
                 )}
               </div>
             ))}
@@ -186,7 +210,9 @@ const LoyaltyPage = ({ user }) => {
               <div className="p-2 bg-blue-100 rounded-lg text-[#1976d2]">
                 <FiTrendingUp size={20} />
               </div>
-              <h4 className="font-black text-slate-800 uppercase text-[11px] tracking-[0.2em]">Earning Rules</h4>
+              <h4 className="font-black text-slate-800 uppercase text-[11px] tracking-[0.2em]">
+                Earning Rules
+              </h4>
             </div>
             <ul className="space-y-6">
               <li className="flex gap-4 group">
@@ -194,7 +220,10 @@ const LoyaltyPage = ({ user }) => {
                   <span className="text-xs font-black">৳</span>
                 </div>
                 <p className="text-xs text-slate-500 leading-relaxed self-center">
-                  Earn <span className="text-emerald-600 font-black">5 points</span> for every <span className="text-slate-800 font-bold">৳100 spent</span>.
+                  Earn{" "}
+                  <span className="text-emerald-600 font-black">5 points</span>{" "}
+                  for every{" "}
+                  <span className="text-slate-800 font-bold">৳100 spent</span>.
                 </p>
               </li>
               <li className="flex gap-4 group">
@@ -202,7 +231,13 @@ const LoyaltyPage = ({ user }) => {
                   <FiStar size={16} />
                 </div>
                 <p className="text-xs text-slate-500 leading-relaxed self-center">
-                  Get <span className="text-amber-600 font-black">100 bonus pts</span> for your <span className="text-slate-800 font-bold">first review</span>.
+                  Get{" "}
+                  <span className="text-amber-600 font-black">
+                    100 bonus pts
+                  </span>{" "}
+                  for your{" "}
+                  <span className="text-slate-800 font-bold">first review</span>
+                  .
                 </p>
               </li>
               <li className="flex gap-4 group">
@@ -210,7 +245,9 @@ const LoyaltyPage = ({ user }) => {
                   <FiClock size={16} />
                 </div>
                 <p className="text-xs text-slate-500 leading-relaxed self-center">
-                  Points expire after <span className="text-rose-500 font-black">12 months</span> of inactivity.
+                  Points expire after{" "}
+                  <span className="text-rose-500 font-black">12 months</span> of
+                  inactivity.
                 </p>
               </li>
             </ul>

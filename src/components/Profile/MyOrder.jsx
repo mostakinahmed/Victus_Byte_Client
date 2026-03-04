@@ -45,13 +45,11 @@ export const MyOrder = () => {
     fetchOrders();
   }, []);
 
-
-
   return (
     <div className="animate-in slide-in-from-bottom-2 duration-300">
       {/* Header Section */}
       <div className="relative mb-2">
-        <h2 className="text-[14px] font-black text-slate-800 uppercase tracking-[0.2em] flex items-center gap-3">
+        <h2 className="text-[13px] font-black text-slate-800 uppercase tracking-[0.1em] flex items-center gap-3">
           <span className="w-1.5 h-5 bg-[#1976d2] rounded-full"></span>
           My Orders
         </h2>

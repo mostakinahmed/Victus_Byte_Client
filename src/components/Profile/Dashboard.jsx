@@ -114,13 +114,13 @@ const Profile = () => {
           {activeTab === "overview" && (
             <div className="animate-in fade-in duration-300">
               <div className="relative mb-8">
-                <h2 className="text-[14px] font-black text-slate-800 uppercase tracking-[0.2em] flex items-center gap-3">
+                <h2 className="text-[13px] font-black text-slate-800 uppercase tracking-[0.1em] flex items-center gap-3">
                   {/* Blue accent line */}
                   <span className="w-1.5 h-5 bg-[#1976d2] rounded-full"></span>
                   Account Overview
                 </h2>
                 {/* Elegant thin border with a gradient feel */}
-                <div className="mt-3 w-full h-[1px] bg-linear-to-r from-slate-200 via-slate-100 to-transparent"></div>
+                <div className="mt-3 w-full -mb-4 h-[1px] bg-linear-to-r from-slate-200 via-slate-100 to-transparent"></div>
               </div>
               <div className="flex flex-col md:flex-row items-center gap-8 px-8 mt-3 bg-slate-50/50 rounded-2xl md:mb-8 mb-3  relative overflow-hidden group">
                 {/* Subtle Background Brand Tint */}
@@ -134,7 +134,7 @@ const Profile = () => {
                       user.images
                     }
                     alt="Profile"
-                    className="w-28 h-28 rounded-full object-cover"
+                    className="md:w-28 md:h-28 w-23 h-23 rounded-full object-cover"
                   />
                   {user.isVerified && (
                     <div
@@ -160,7 +160,7 @@ const Profile = () => {
                 {/* Information Content */}
                 <div className="flex-grow text-center md:text-left z-10">
                   <div className="flex flex-col md:flex-row md:items-center gap-2 mb-1">
-                    <h3 className="text-xl font-black text-slate-800 uppercase tracking-tight">
+                    <h3 className="md:text-xl text-md font-black text-slate-800 uppercase tracking-tight">
                       {user.userName}
                     </h3>
                     {user.isVerified ? (

@@ -51,7 +51,7 @@ function EditProfile({ data, checkUserStatus }) {
   return (
     <div className="animate-in slide-in-from-bottom-2 duration-300">
       <div className="relative mb-8">
-        <h2 className="text-[14px] font-black text-slate-800 uppercase tracking-[0.2em] flex items-center gap-3">
+        <h2 className="ttext-[13px] font-black text-slate-800 uppercase tracking-[0.1em] flex items-center gap-3">
           {/* Blue accent line */}
           <span className="w-1.5 h-5 bg-[#1976d2] rounded-full"></span>
           Edit Profile
