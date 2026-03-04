@@ -17,7 +17,6 @@ function generateOrderId() {
   const dateStr = `${year}${month}${day}`;
 
   // 2. Milliseconds: (4 digits)
-  // We take the last 4 digits of the timestamp
   const msStr = now.getTime().toString().slice(-4);
 
   // 3. Random Number: (2 digits)
@@ -121,8 +120,6 @@ const TestBuy = ({ data }) => {
     setCouponValue(matchedCoupon);
     setIsApplied(true);
     setError(false);
-
-  
   };
 
   const handleRemove = () => {
@@ -180,17 +177,17 @@ const TestBuy = ({ data }) => {
   }, [data]);
 
   // 4. Fetch Upazilas
-  useEffect(() => {
-    if (selectedDistrict?.id) {
-      setSelectedUpazila(null);
-      fetch(
-        `https://bdopenapi.vercel.app/api/geo/upazilas/${selectedDistrict.id}`,
-      )
-        .then((res) => res.json())
-        .then((res) => setUpazilas(res.data || []))
-        .catch((err) => console.error("Upazila Fetch Error:", err));
-    }
-  }, [selectedDistrict]);
+  // useEffect(() => {
+  //   if (selectedDistrict?.id) {
+  //     setSelectedUpazila(null);
+  //     fetch(
+  //       `https://bdopenapi.vercel.app/api/geo/upazilas/${selectedDistrict.id}`,
+  //     )
+  //       .then((res) => res.json())
+  //       .then((res) => setUpazilas(res.data || []))
+  //       .catch((err) => console.error("Upazila Fetch Error:", err));
+  //   }
+  // }, [selectedDistrict]);
 
   // 5. Default delivery logic
   useEffect(() => {
@@ -218,7 +215,6 @@ const TestBuy = ({ data }) => {
       phone: !form.phone,
       address: !form.address,
       district: !selectedDistrict,
-      upazila: !selectedUpazila,
       agreed: !agreed,
     };
 
@@ -227,7 +223,7 @@ const TestBuy = ({ data }) => {
     if (Object.values(newErrors).some((error) => error)) {
       return toast.error("Please fill required fields and agree to terms");
     }
-  
+
     setIsSubmitting(true);
 
     const orderPayload = {
@@ -247,7 +243,7 @@ const TestBuy = ({ data }) => {
         recipient_name: form.name,
         phone: form.phone,
         email: form.email,
-        address_line1: `${form.address}, (Dist: ${selectedDistrict.name}, Upa: ${selectedUpazila.name})`,
+        address_line1: `${form.address}, (District: ${selectedDistrict.name})`,
       },
       payment: { method: "COD", status: "Pending" },
       total_amount: totalTk,
@@ -256,7 +252,6 @@ const TestBuy = ({ data }) => {
       discount: discount,
       coupon: couponValue,
     };
-
 
     try {
       const res = await axios.post(
@@ -406,7 +401,7 @@ const TestBuy = ({ data }) => {
 
               <div className="flex flex-col w-full relative" ref={distRef}>
                 <label className="text-sm font-bold text-slate-800 mb-1 flex items-center gap-1">
-                  District
+                  District/ City
                   <span className="text-red-500 font-black" aria-hidden="true">
                     *
                   </span>
@@ -472,7 +467,10 @@ const TestBuy = ({ data }) => {
                 )}
               </div>
 
-              <div className="flex flex-col w-full relative" ref={upazilaRef}>
+              <div
+                className=" flex-col w-full relative hidden"
+                ref={upazilaRef}
+              >
                 <label className="text-sm font-bold text-slate-800 mb-1 flex items-center gap-1">
                   Upazila/Thana
                   <span className="text-red-500 font-black" aria-hidden="true">

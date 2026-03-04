@@ -60,7 +60,7 @@ const CategoryMenu = () => {
         </div>
 
         {/* --- RIGHT SECTION: Custom Niche Dropdowns (Enabled and Styled) --- */}
-        <div className="flex items-center h-full">
+        <div className="flex items-center h-full hidden">
           {customMenus.map((menu) => (
             <div
               key={menu.id}

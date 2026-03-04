@@ -152,7 +152,7 @@ const ProductDetail = () => {
       <ResponsiveToaster />
 
       {/* Top section */}
-      <section className="max-w-[1400px] lg:mt-[50px] p-3 md:px-5 px-2 mx-auto">
+      <section className="max-w-[1400px] lg:mt-[54px] p-3 md:px-5 px-2 mx-auto">
         <div className="flex flex-col lg:flex-row mt-11 justify-between gap-3 mx-auto">
           {/* Left: Image Gallery */}
           <div className="lg:w-[45%] flex flex-col md:flex-row bg-white rounded border border-slate-200 overflow-hidden">

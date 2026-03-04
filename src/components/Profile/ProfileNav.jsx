@@ -114,7 +114,7 @@ export const Profile = () => {
                     icon: <ShoppingBag />,
                     onClick: () => {
                       setOpen(false);
-                      navigate("/profile/my-order");
+                      navigate("/dashboard");
                     },
                   },
                   {

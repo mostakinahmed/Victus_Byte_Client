@@ -12,7 +12,6 @@ import Footer from "./components/Footer/Footer.jsx";
 import { BuyNow } from "./pages/BuyNow.jsx";
 import { Cart } from "./pages/Cart.jsx";
 import { CartProvider } from "./components/Context Api/CartContext.jsx";
-import ProfileHome from "./pages/ProfileHome.jsx";
 import SearchResult from "./pages/SearchResult";
 import SignUp from "./components/Authentication/SignUp";
 import SignIn from "./components/Authentication/SignIn";
@@ -21,7 +20,6 @@ import ForgotPassword from "./components/Authentication/ForgotPassword";
 import Dashboard from "./components/Profile/Dashboard";
 import TrackOrder from "./components/TrackOrder";
 import { DataContext } from "./components/Context Api/UserContext";
-import { MyOrders } from "./components/Profile/MyOrder";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import FooterLinks from "./components/PolicyCard";
 import AboutUs from "./components/Footer/AboutUs";
@@ -155,15 +153,14 @@ function App() {
           />
           <Route path="/product/:cat/:id/buynow" element={<BuyNow />} />
           <Route path="/checkout/cart" element={<Cart />} />
-          <Route path="/profile/:card" element={<ProfileHome />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/profile/my-order" element={<MyOrders />} />
           <Route path="/search-result/:keyword" element={<SearchResult />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
 
-          <Route path="/track-order" element={<TrackOrder />} />
+          <Route path="/track-order/" element={<TrackOrder />} />
+          <Route path="/track-order/:oid" element={<TrackOrder />} />
           <Route path="/checkout/purchase" element={<BuyNow />} />
           <Route
             path="/kids-zone"

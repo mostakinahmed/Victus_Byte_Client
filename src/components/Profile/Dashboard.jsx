@@ -21,6 +21,7 @@ import {
 import { useAuth } from "../Context Api/AuthContext";
 import EditProfile from "./EditProfile";
 import ChangedPassword from "./ChangedPassword";
+import { MyOrder } from "../Profile/MyOrder";
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState("overview");
@@ -246,13 +247,13 @@ const Profile = () => {
           )}
 
           {/* TAB: CHANGE PASSWORD */}
-          {activeTab === "change-password" && (
-            <ChangedPassword />
-          )}
+          {activeTab === "change-password" && <ChangedPassword />}
+
+          {/* TAB: CHANGE PASSWORD */}
+          {activeTab === "myorder" && <MyOrder />}
 
           {/* TAB: OTHER PLACEHOLDERS */}
           {[
-            "myorder",
             "return",
             "wishlist",
             "address",

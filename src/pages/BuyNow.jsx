@@ -69,7 +69,7 @@ export const BuyNow = () => {
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      className="max-w-[1400px] mx-auto px-2 md:px-4 md:pr-4 flex mt-[60px] md:mt-[105px] mb-4 overflow-hidden"
+      className="max-w-[1400px] mx-auto px-2 md:px-4 md:pr-4 flex mt-[60px] md:mt-[111px] mb-4 overflow-hidden"
     >
       <TestBuy data={items} />
     </div>
