@@ -37,8 +37,6 @@ export const MyOrder = () => {
     fetchOrders();
   }, []);
 
-  console.log(orders);
-  
   return (
     <div className="animate-in slide-in-from-bottom-2 duration-300">
       <h2 className="text-lg font-bold text-gray-800 border-b pb-2 uppercase tracking-tight">
@@ -66,23 +64,31 @@ export const MyOrder = () => {
             </button>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+          <div
+            className="overflow-x-scroll border border-slate-100 rounded md:p-1
+     [&::-webkit-scrollbar]:h-1.5 
+     [&::-webkit-scrollbar]:block
+     [&::-webkit-scrollbar-track]:bg-slate-50
+     [&::-webkit-scrollbar-thumb]:bg-slate-300
+     [&::-webkit-scrollbar-thumb]:rounded-full
+     hover:[&::-webkit-scrollbar-thumb]:bg-[#1976d2] transition-all"
+          >
+            <table className="w-full text-left border-collapse whitespace-nowrap font-sans">
               <thead className="bg-slate-50 border-b">
                 <tr>
-                  <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                  <th className="md:px-6 px-4 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
                     Order ID
                   </th>
-                  <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                  <th className="md:px-6 px-4 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
                     Date
                   </th>
-                  <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest text-center">
+                  <th className="md:px-6 px-2 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest text-center">
                     Tracking
                   </th>
-                  <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                  <th className="md:px-6 px-2 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
                     Total
                   </th>
-                  <th className="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest text-center">
+                  <th className="md:px-6 px-2  py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest text-center">
                     Actions
                   </th>
                 </tr>
@@ -91,17 +97,26 @@ export const MyOrder = () => {
                 {orders.map((order) => (
                   <tr
                     key={order._id}
-                    className="hover:bg-gray-50/50 transition-colors"
+                    className="hover:bg-slate-100 transition-colors"
                   >
-                    <td className="px-6 py-4 text-sm font-bold text-slate-700">
+                    <td className="md:px-6 px-2 py-3 text-sm font-bold text-slate-700">
                       {order.order_id}
                     </td>
-                    <td className="px-6 py-4 text-xs text-gray-500">
-                      {order.order_date}
+
+                    <td className="md:px-6 px-4 py-3">
+                      <div className="flex flex-col">
+                        {/* Date Styling */}
+                        <span className="text-xs font-bold text-slate-700">
+                          {order.order_date.slice(0, 10)}
+                        </span>
+                        {/* Time Styling - center aligned under date as requested */}
+                        <span className="text-[10px] uppercase font-bold text-slate-400 tracking-tighter">
+                          {order.order_date.slice(10).trim()}
+                        </span>
+                      </div>
                     </td>
 
-                    {/* MODIFIED TRACK COLUMN */}
-                    <td className="px-6 py-4 text-center">
+                    <td className="md:px-6 px-2 py-3 text-center">
                       <button
                         onClick={() =>
                           window.open(
@@ -116,13 +131,14 @@ export const MyOrder = () => {
                       </button>
                     </td>
 
-                    <td className="px-6 py-4 text-sm font-bold text-gray-900">
+                    <td className="md:px-6 px-4 py-3 text-sm font-medium text-gray-900">
                       ৳{order.total_amount}
                     </td>
-                    <td className="px-6 py-4 text-center">
+
+                    <td className="md:px-6 px-2 py-3 text-center">
                       <button
                         onClick={() => setSelectedOrder(order)}
-                        className="text-[10px] font-bold uppercase tracking-widest py-2 px-4 border rounded hover:bg-[#1976d2] hover:text-white transition-all active:scale-95"
+                        className="text-[10px] font-bold uppercase tracking-widest py-2 px-4 border rounded hover:bg-[#1976d2] hover:text-white transition-all active:scale-95 bg-white"
                       >
                         Details
                       </button>

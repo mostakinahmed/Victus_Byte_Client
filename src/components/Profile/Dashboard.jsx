@@ -27,7 +27,7 @@ const Profile = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const { user, checkUserStatus } = useAuth();
+  const { user, checkUserStatus, logout } = useAuth();
 
   // Sidebar Menu Items
   const menuItems = [
@@ -63,7 +63,7 @@ const Profile = () => {
         {/* --- LEFT SIDEBAR --- */}
         <div
           className={`
-          lg:w-1/4 w-full bg-white shadow rounded p-4 h-fit
+          lg:w-1/4 w-full bg-white shadow-xs rounded p-4 h-fit
           ${isSidebarOpen ? "block" : "hidden lg:block"}
         `}
         >
@@ -98,32 +98,34 @@ const Profile = () => {
 
             <button className="flex items-center gap-3 p-3 text-red-500 hover:bg-red-100 bg-red-50/70 rounded transition-all w-full text-left">
               <LogOut size={20} />
-              <span className="font-medium">Logout</span>
+              <span onClick={logout} className="font-medium">
+                Logout
+              </span>
             </button>
           </div>
         </div>
 
         {/* --- RIGHT SIDE CONTENT --- */}
-        <div className="lg:w-3/4 w-full bg-white shadow p-4 rounded min-h-[calc(100vh-12rem)]">
+        <div className="lg:w-3/4 w-full bg-white shadow-xs p-4 rounded min-h-[calc(100vh-12rem)]">
           {/* TAB: OVERVIEW */}
           {activeTab === "overview" && (
             <div className="animate-in fade-in duration-300">
               <h2 className="text-lg bg-white p-2 font-bold text-gray-800 md:mb-6 border-b pb-2 uppercase tracking-tight">
                 Account Overview
               </h2>
-              <div className="flex flex-col md:flex-row items-center gap-8 p-8 bg-slate-50/50 rounded-2xl md:mb-8 mb-3 border border-slate-100 relative overflow-hidden group">
+              <div className="flex flex-col md:flex-row items-center gap-8 px-8 mt-3 bg-slate-50/50 rounded-2xl md:mb-8 mb-3  relative overflow-hidden group">
                 {/* Subtle Background Brand Tint */}
-                <div className="absolute -right-10 -top-10 w-40 h-40 bg-[#1976d2]/5 rounded-full blur-3xl group-hover:bg-[#1976d2]/10 transition-colors" />
+                <div className="absolute -right-10 -top-10 w-40 h-40 rounded-full blur-3xl transition-colors" />
 
                 {/* Profile Image Section */}
                 <div className="relative">
                   <img
                     src={
-                      user.images ||
-                      "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                      "https://7vgva7cju0vcfvwf.public.blob.vercel-storage.com/user.png" ||
+                      user.images
                     }
                     alt="Profile"
-                    className="w-28 h-28 rounded-full border-4 border-white shadow-md object-cover"
+                    className="w-28 h-28 rounded-full object-cover"
                   />
                   {user.isVerified && (
                     <div
@@ -153,7 +155,7 @@ const Profile = () => {
                       {user.userName}
                     </h3>
                     {user.isVerified ? (
-                      <span className="text-[10px] font-extrabold text-blue-600 bg-blue-50 px-2 py-0.5 rounded uppercase tracking-widest border border-blue-100 w-fit mx-auto md:mx-0">
+                      <span className="text-[10px] font-extrabold text-blue-600 bg-green-50 px-2 py-0.5 rounded uppercase tracking-wider border border-blue-100 w-fit mx-auto md:mx-0">
                         Verified
                       </span>
                     ) : (
@@ -167,7 +169,7 @@ const Profile = () => {
                 </div>
 
                 {/* Info Grid */}
-                <div className="flex md:w-1/2 flex-col gap-y-4 border-t border-slate-200/60 md:pt-4 pt-2">
+                <div className="flex md:w-1/2 md:bg-slate-100/30 p-2 rounded-xl md:border border-slate-200 flex-col gap-y-4 md:pt-4 pt-2">
                   <div className=" flex justify-between gap-10">
                     <div className="space-y-1">
                       <p className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">

@@ -87,7 +87,7 @@ function EditProfile({ data, checkUserStatus }) {
             </label>
             <input
               type="text"
-              className="w-full border-b-2 border-gray-100 text-slate-400 p-2 outline-none bg-gray-50/50 cursor-not-allowed font-bold"
+              className="w-full border-b-2 border-gray-100 text-slate-500 p-2 outline-none bg-gray-50/50 cursor-not-allowed font-medium"
               defaultValue={data.phone}
               readOnly
             />
@@ -117,7 +117,7 @@ function EditProfile({ data, checkUserStatus }) {
           <button
             type="submit"
             disabled={loading}
-            className="bg-[#1976d2] text-white px-10 py-3 rounded font-semibold  text-xs uppercase tracking-widest hover:bg-[#1565c0] transition-all shadow-lg shadow-blue-100 active:scale-95 disabled:bg-slate-300 disabled:cursor-not-allowed"
+            className="bg-[#1976d2] text-white md:px-10 px-5 py-3 rounded font-semibold  text-xs uppercase tracking-widest hover:bg-[#1565c0] transition-all shadow-lg shadow-blue-100 active:scale-95 disabled:bg-slate-300 disabled:cursor-not-allowed"
           >
             {loading ? "Processing..." : "Save Changes"}
           </button>

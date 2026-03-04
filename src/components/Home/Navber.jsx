@@ -142,10 +142,10 @@ const NavbarTop = () => {
           </div>
 
           <Link to="/">
-            <img className="h-[39px] ml-15" src="/logo desk.png" alt="Logo" />
+            <img className="h-[39px] ml-20" src="/logo desk.png" alt="Logo" />
           </Link>
 
-          <div className="flex items-center gap-3 w-[100px] justify-end">
+          <div className="flex items-center gap-3 w-[110px] justify-end">
             {searchIcon && (
               <i
                 className="ri-search-line text-xl"

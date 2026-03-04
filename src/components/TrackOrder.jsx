@@ -121,8 +121,9 @@ const TrackOrderPage = () => {
             />
             <input
               type="text"
-              placeholder="260325656565"
-              className="w-full pl-12 pr-4 py-3 uppercase rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:outline-none placeholder:font-medium focus:ring-4 focus:ring-blue-500/10 focus:border-[#1976d2] transition-all font-bold text-slate-700 tracking-wider"
+              placeholder="OID260325656565"
+              maxLength={15}
+              className="w-full pl-12 pr-4 py-3 uppercase rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:outline-none placeholder:font-normal focus:ring-4 focus:ring-blue-500/10 focus:border-[#1976d2] transition-all font-bold text-slate-700 tracking-wider"
               value={orderId}
               onChange={(e) => setOrderId(e.target.value)}
             />

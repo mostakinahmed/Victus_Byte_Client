@@ -116,7 +116,7 @@ function ChangedPassword() {
           <button
             type="submit"
             disabled={loading}
-            className="bg-[#1976d2] text-white px-10 py-3 rounded font-semibold text-xs uppercase tracking-widest hover:bg-[#1565c0] transition-all active:scale-95 disabled:bg-slate-300 shadow-lg shadow-blue-100"
+            className="bg-[#1976d2] text-white md:px-10 px-5 py-3 rounded font-semibold text-xs uppercase tracking-widest hover:bg-[#1565c0] transition-all active:scale-95 disabled:bg-slate-300 shadow-lg shadow-blue-100"
           >
             {loading ? "Processing..." : "Change Password"}
           </button>

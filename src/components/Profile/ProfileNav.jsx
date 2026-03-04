@@ -8,6 +8,7 @@ import {
   Package,
   Truck,
   CheckCircle,
+  LayoutDashboard,
   X,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -18,7 +19,6 @@ export const Profile = () => {
   const { user, loading, logout } = useAuth();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false); // dropdown
-
 
   const menuRef = useRef(null);
 
@@ -69,7 +69,7 @@ export const Profile = () => {
       {user && open && (
         <div className="relative z-[100]">
           {/* Reduced width from 320px to 260px and padding from p-4 to p-3 */}
-          <div className="absolute md:top-2 top-2 md:right-0 -right-2 w-max md:min-w-[260px] min-w-[240px] bg-white backdrop-blur-md shadow-xl rounded-b border border-slate-300 z-[100] p-3 animate-in fade-in zoom-in-95 duration-200">
+          <div className="absolute md:top-2 top-2 md:right-0 -right-2 w-max md:min-w-[260px] min-w-[220px] bg-white backdrop-blur-md shadow-xl rounded-b border border-slate-300 z-[100] p-3 animate-in fade-in zoom-in-95 duration-200">
             {/* User Identity Header - Compacted gap and padding */}
             <div className="flex items-center gap-3 pb-3 border-b border-slate-300">
               {/* Smaller Avatar Icon (w-10 h-10) */}
@@ -78,10 +78,10 @@ export const Profile = () => {
               </div>
               <div className="flex flex-col min-w-0">
                 <span className="text-sm font-black text-slate-800 uppercase tracking-tight truncate">
-                  Mostakin Ahmed
+                  {user.userName}
                 </span>
                 <span className="text-[12px] text-slate-500 font-mono">
-                  +880 1773-820336
+                  +88{user.phone}
                 </span>
               </div>
             </div>
@@ -104,32 +104,29 @@ export const Profile = () => {
               </p>
             </div>
 
-            {/* Navigation Links - Reduced py and gap */}
+            {/* Navigation Links - Victus Byte Optimized */}
             <nav className="mt-3 font-sans">
-              <ul className="flex flex-col gap-0.5 ">
+              <ul className="flex flex-col gap-1">
                 {[
-                  { label: "Dashboard", icon: <User />, onClick: goDashboard },
                   {
-                    label: "My Orders",
-                    icon: <ShoppingBag />,
-                    onClick: () => {
-                      setOpen(false);
-                      navigate("/dashboard");
-                    },
+                    label: "Dashboard",
+                    icon: <LayoutDashboard />, // Changed from User to LayoutDashboard
+                    onClick: goDashboard,
                   },
+
                   {
                     label: "Track Order",
                     icon: <UserCog />,
                     onClick: () => {
                       setOpen(false);
-                      setTrackModal(true);
+                      navigate("/track-order");
                     },
                   },
                 ].map((item, idx) => (
                   <li
                     key={idx}
                     onClick={item.onClick}
-                    className="group px-2 py-1.5 rounded-lg hover:bg-slate-100 flex items-center justify-between cursor-pointer transition-all"
+                    className="group px-2 py-1.5 rounded-lg hover:bg-slate-100 flex items-center justify-between cursor-pointer transition-all active:scale-95"
                   >
                     <div className="flex items-center gap-2.5">
                       <div className="p-1.5 bg-slate-100 rounded-md group-hover:bg-white group-hover:shadow-sm transition-all">
@@ -138,7 +135,7 @@ export const Profile = () => {
                             "w-4 h-4 text-slate-700 group-hover:text-indigo-600",
                         })}
                       </div>
-                      <span className="text-[14px] font-medium text-slate-700 group-hover:text-slate-900  tracking-wide">
+                      <span className="text-[14px] font-medium text-slate-800 group-hover:text-slate-900 tracking-wide">
                         {item.label}
                       </span>
                     </div>
@@ -149,7 +146,7 @@ export const Profile = () => {
 
                 <li
                   onClick={logout}
-                  className="group px-2 py-1.5 rounded-lg hover:bg-rose-100 bg-rose-200/70 md:bg-rose-50 flex items-center gap-2.5 cursor-pointer transition-all"
+                  className="group px-2 py-1.5 rounded-lg hover:bg-rose-100 bg-rose-200/70 md:bg-rose-50 flex items-center gap-2.5 cursor-pointer transition-all active:scale-95"
                 >
                   <div className="p-1.5 bg-rose-100/50 rounded-md group-hover:bg-rose-500 transition-all">
                     <LogOut className="w-3.5 h-3.5 text-rose-600 group-hover:text-white" />
