@@ -71,7 +71,7 @@ const CategoryDropdown = () => {
         onMouseLeave={handleMouseLeave}
       >
         {/* Dropdown Toggle Button */}
-        <button className="flex items-center cursor-pointer gap-2 px-4 py-1.5 rounded-r text-slate-700 hover:text-[#1976d2] transition-all duration-200 font-bold uppercase tracking-wide text-[14px]">
+        <button className="flex items-center cursor-pointer gap-2 px-4 py-1.5 rounded-r text-slate-700 hover:text-[#1976d2] transition-all duration-200 font-bold uppercase tracking-wide text-[13px]">
           <FiGrid className="text-sm text-slate-400" />
           <span className="whitespace-nowrap flex items-center gap-2">
             All Categories

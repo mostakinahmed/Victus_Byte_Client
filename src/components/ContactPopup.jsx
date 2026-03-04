@@ -16,7 +16,7 @@ const ContactPopup = ({ onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 z-[120] flex items-center justify-center px-4 bg-[#0f172a]/70 backdrop-blur-sm"
+      className="fixed inset-0 z-[120] flex items-center justify-center px-4 backdrop-blur-sm"
       onClick={onClose}
     >
       <div
@@ -33,8 +33,8 @@ const ContactPopup = ({ onClose }) => {
           <IoClose size={24} />
         </button>
 
-        <div className="p-6 md:p-8">
-          <div className="text-center mb-6 md:mb-8">
+        <div className="p-6 md:px-8">
+          <div className="text-center mb-4">
             <h2 className="text-2xl font-bold text-slate-800 tracking-tight uppercase">
               <span className="text-[#1976d2]">Victus</span> Byte
             </h2>
@@ -48,7 +48,7 @@ const ContactPopup = ({ onClose }) => {
             {/* Phone Item */}
             <a
               href={`tel:${phoneNumber}`}
-              className="flex items-center gap-4 p-3 hover:bg-slate-50 rounded-xl transition-all group"
+              className="flex items-center gap-4 px-3 py-2 hover:bg-slate-50 rounded-xl transition-all group"
             >
               <div className="bg-blue-50 p-2.5 rounded-lg text-[#1976d2] group-hover:bg-[#1976d2] group-hover:text-white transition-all shadow-sm">
                 <IoCall size={20} />
@@ -68,7 +68,7 @@ const ContactPopup = ({ onClose }) => {
               href={`https://wa.me/${whatsappNumber.replace(/\D/g, "")}`}
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-4 p-3 hover:bg-slate-50 rounded-xl transition-all group"
+              className="flex items-center gap-4 px-3 py-2 hover:bg-slate-50 rounded-xl transition-all group"
             >
               <div className="bg-green-50 p-2.5 rounded-lg text-green-600 group-hover:bg-green-500 group-hover:text-white transition-all shadow-sm">
                 <IoLogoWhatsapp size={20} />
@@ -86,7 +86,7 @@ const ContactPopup = ({ onClose }) => {
             {/* Email Item */}
             <a
               href="mailto:support@victusbyte.com"
-              className="flex items-center gap-4 p-3 hover:bg-slate-50 rounded-xl transition-all group"
+              className="flex items-center gap-4 px-3 py-2 hover:bg-slate-50 rounded-xl transition-all group"
             >
               <div className="bg-blue-50 p-2.5 rounded-lg text-[#1976d2] group-hover:bg-[#1976d2] group-hover:text-white transition-all shadow-sm">
                 <IoMail size={20} />
@@ -106,7 +106,7 @@ const ContactPopup = ({ onClose }) => {
               href="https://victusbyte.com"
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-4 p-3 hover:bg-slate-50 rounded-xl transition-all group"
+              className="flex items-center gap-4 px-3 py-2 hover:bg-slate-50 rounded-xl transition-all group"
             >
               <div className="bg-slate-100 p-2.5 rounded-lg text-slate-600 group-hover:bg-slate-800 group-hover:text-white transition-all shadow-sm">
                 <IoGlobeOutline size={20} />
@@ -126,7 +126,7 @@ const ContactPopup = ({ onClose }) => {
             onClick={onClose}
             className="w-full flex items-center justify-center mt-8 py-3.5 bg-[#1976d2] text-white rounded-xl text-sm font-bold hover:bg-[#1565c0] shadow-lg shadow-blue-200 transition-all active:scale-95 uppercase tracking-widest"
           >
-            Close Window
+            Close 
           </button>
         </div>
       </div>

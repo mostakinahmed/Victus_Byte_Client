@@ -28,7 +28,8 @@ function ChangedPassword() {
     setPasswords((prev) => ({ ...prev, [name]: value }));
 
     setVisibleFields((prev) => ({ ...prev, [fieldId]: true }));
-    if (timeoutRefs.current[fieldId]) clearTimeout(timeoutRefs.current[fieldId]);
+    if (timeoutRefs.current[fieldId])
+      clearTimeout(timeoutRefs.current[fieldId]);
     timeoutRefs.current[fieldId] = setTimeout(() => {
       setVisibleFields((prev) => ({ ...prev, [fieldId]: false }));
     }, 500);
@@ -60,7 +61,7 @@ function ChangedPassword() {
           oldPassword: passwords.oldPassword,
           newPassword: passwords.newPassword,
         },
-        { withCredentials: true }
+        { withCredentials: true },
       );
 
       if (res.data.success) {
@@ -77,15 +78,25 @@ function ChangedPassword() {
 
   return (
     <div className="animate-in slide-in-from-bottom-2 duration-300">
-      <h2 className="text-xl font-bold text-gray-800 mb-6 border-b pb-2 uppercase tracking-tight">
-        Change Password
-      </h2>
+      <div className="relative mb-8">
+        <h2 className="text-[14px] font-black text-slate-800 uppercase tracking-[0.2em] flex items-center gap-3">
+          {/* Blue accent line */}
+          <span className="w-1.5 h-5 bg-[#1976d2] rounded-full"></span>
+          Change Password
+        </h2>
+        {/* Elegant thin border with a gradient feel */}
+        <div className="mt-3 w-full h-[1px] bg-linear-to-r from-slate-200 via-slate-100 to-transparent"></div>
+      </div>
 
       <form onSubmit={handleSubmit} className="max-w-md space-y-6">
         {[
           { id: "old", name: "oldPassword", label: "Current Password" },
           { id: "new", name: "newPassword", label: "New Password" },
-          { id: "confirm", name: "confirmPassword", label: "Confirm New Password" },
+          {
+            id: "confirm",
+            name: "confirmPassword",
+            label: "Confirm New Password",
+          },
         ].map((field) => (
           <div key={field.id} className="relative">
             <label className="block text-[10px] font-bold text-gray-400 uppercase mb-1 tracking-widest">
@@ -106,36 +117,50 @@ function ChangedPassword() {
                 onClick={() => toggleManualVisibility(field.id)}
                 className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-300 hover:text-[#1976d2]"
               >
-                {visibleFields[field.id] ? <FiEyeOff size={16} /> : <FiEye size={16} />}
+                {visibleFields[field.id] ? (
+                  <FiEyeOff size={16} />
+                ) : (
+                  <FiEye size={16} />
+                )}
               </button>
             </div>
           </div>
         ))}
 
-        <div className="flex items-center gap-4 mt-8">
+        <div className="relative flex flex-col items-center justify-center md:justify-self-start mt-10 min-h-[50px]">
+          {/* Absolute Notification Wrapper - Floating above the button */}
+          <div className="absolute -top-8 flex justify-center w-full whitespace-nowrap pointer-events-none">
+            <AnimatePresence>
+              {showNotification && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  className={`flex items-center gap-2 mt-2 font-bold text-[10px] uppercase tracking-widest ${
+                    notification.type === "success"
+                      ? "text-emerald-600"
+                      : "text-rose-500"
+                  }`}
+                >
+                  {notification.type === "success" ? (
+                    <FiCheckCircle className="text-sm" />
+                  ) : (
+                    <FiAlertCircle className="text-sm" />
+                  )}
+                  <span>{notification.msg}</span>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* The Button - Its position is now locked */}
           <button
             type="submit"
             disabled={loading}
-            className="bg-[#1976d2] text-white md:px-10 px-5 py-3 rounded font-semibold text-xs uppercase tracking-widest hover:bg-[#1565c0] transition-all active:scale-95 disabled:bg-slate-300 shadow-lg shadow-blue-100"
+            className="bg-[#1976d2] text-white mt-1 md:px-10 px-5 py-3 rounded font-semibold text-xs uppercase tracking-widest hover:bg-[#1565c0] transition-all active:scale-95 disabled:bg-slate-300 shadow-lg shadow-blue-100"
           >
             {loading ? "Processing..." : "Change Password"}
           </button>
-
-          <AnimatePresence>
-            {showNotification && (
-              <motion.div
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 10 }}
-                className={`flex items-center gap-2 font-bold text-[10px] uppercase tracking-widest ${
-                  notification.type === "success" ? "text-emerald-600" : "text-rose-500"
-                }`}
-              >
-                {notification.type === "success" ? <FiCheckCircle /> : <FiAlertCircle />}
-                <span>{notification.msg}</span>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
       </form>
     </div>

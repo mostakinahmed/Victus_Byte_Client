@@ -110,9 +110,15 @@ const Profile = () => {
           {/* TAB: OVERVIEW */}
           {activeTab === "overview" && (
             <div className="animate-in fade-in duration-300">
-              <h2 className="text-lg bg-white p-2 font-bold text-gray-800 md:mb-6 border-b pb-2 uppercase tracking-tight">
-                Account Overview
-              </h2>
+              <div className="relative mb-8">
+                <h2 className="text-[14px] font-black text-slate-800 uppercase tracking-[0.2em] flex items-center gap-3">
+                  {/* Blue accent line */}
+                  <span className="w-1.5 h-5 bg-[#1976d2] rounded-full"></span>
+                  Account Overview
+                </h2>
+                {/* Elegant thin border with a gradient feel */}
+                <div className="mt-3 w-full h-[1px] bg-linear-to-r from-slate-200 via-slate-100 to-transparent"></div>
+              </div>
               <div className="flex flex-col md:flex-row items-center gap-8 px-8 mt-3 bg-slate-50/50 rounded-2xl md:mb-8 mb-3  relative overflow-hidden group">
                 {/* Subtle Background Brand Tint */}
                 <div className="absolute -right-10 -top-10 w-40 h-40 rounded-full blur-3xl transition-colors" />

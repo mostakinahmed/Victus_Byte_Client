@@ -50,9 +50,15 @@ function EditProfile({ data, checkUserStatus }) {
 
   return (
     <div className="animate-in slide-in-from-bottom-2 duration-300">
-      <h2 className="text-lg font-bold text-gray-800 mb-6 border-b pb-2 uppercase tracking-tight">
-        Edit Profile
-      </h2>
+      <div className="relative mb-8">
+        <h2 className="text-[14px] font-black text-slate-800 uppercase tracking-[0.2em] flex items-center gap-3">
+          {/* Blue accent line */}
+          <span className="w-1.5 h-5 bg-[#1976d2] rounded-full"></span>
+          Edit Profile
+        </h2>
+        {/* Elegant thin border with a gradient feel */}
+        <div className="mt-3 w-full h-[1px] bg-linear-to-r from-slate-200 via-slate-100 to-transparent"></div>
+      </div>
 
       <form onSubmit={handleSubmit} className="max-w-2xl space-y-5">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -113,28 +119,32 @@ function EditProfile({ data, checkUserStatus }) {
         </div>
 
         {/* BUTTON SECTION WITH INLINE NOTIFICATION */}
-        <div className="flex items-center gap-4 mt-8">
+        <div className="relative flex flex-col items-center justify-center md:justify-self-start mt-14">
+          {/* Success Tag - Positioned Absolutely */}
+          <div className="absolute -top-8 left-0 right-0 flex justify-center h-6">
+            <AnimatePresence>
+              {showSuccessTag && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="flex items-center gap-2 mb-3 text-emerald-600 font-bold text-[11px] uppercase tracking-widest bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100"
+                >
+                  <FiCheckCircle className="text-sm" />
+                  <span>Data Updated</span>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Button - Now stays in one spot */}
           <button
             type="submit"
             disabled={loading}
-            className="bg-[#1976d2] text-white md:px-10 px-5 py-3 rounded font-semibold  text-xs uppercase tracking-widest hover:bg-[#1565c0] transition-all shadow-lg shadow-blue-100 active:scale-95 disabled:bg-slate-300 disabled:cursor-not-allowed"
+            className="bg-[#1976d2] text-white md:px-10 px-5 py-3 rounded font-semibold text-xs uppercase tracking-widest hover:bg-[#1565c0] transition-all shadow-lg shadow-blue-100 active:scale-95 disabled:bg-slate-300 disabled:cursor-not-allowed w-fit"
           >
             {loading ? "Processing..." : "Save Changes"}
           </button>
-
-          <AnimatePresence>
-            {showSuccessTag && (
-              <motion.div
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 10 }}
-                className="flex items-center gap-2 text-emerald-600 font-bold text-[11px] uppercase tracking-widest"
-              >
-                <FiCheckCircle className="text-base" />
-                <span>Data Updated</span>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
       </form>
     </div>

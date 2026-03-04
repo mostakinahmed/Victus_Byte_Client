@@ -39,10 +39,15 @@ export const MyOrder = () => {
 
   return (
     <div className="animate-in slide-in-from-bottom-2 duration-300">
-      <h2 className="text-lg font-bold text-gray-800 border-b pb-2 uppercase tracking-tight">
-        My Orders
-      </h2>
-
+      <div className="relative mb-8">
+        <h2 className="text-[14px] font-black text-slate-800 uppercase tracking-[0.2em] flex items-center gap-3">
+          {/* Blue accent line */}
+          <span className="w-1.5 h-5 bg-[#1976d2] rounded-full"></span>
+          My Orders
+        </h2>
+        {/* Elegant thin border with a gradient feel */}
+        <div className="mt-3 w-full h-[1px] bg-linear-to-r from-slate-200 via-slate-100 to-transparent"></div>
+      </div>
       <div className="bg-white min-h-[400px] rounded-b-lg overflow-hidden">
         {loading ? (
           <div className="flex flex-col items-center justify-center h-64 space-y-4">
@@ -124,7 +129,7 @@ export const MyOrder = () => {
                             "_blank",
                           )
                         }
-                        className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-amber-600 bg-amber-50 px-3 py-1.5 rounded-full hover:bg-amber-600 hover:text-white transition-all border border-amber-200 shadow-sm shadow-amber-100"
+                        className="inline-flex cursor-pointer items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-amber-600 bg-amber-50 px-3 py-1.5 rounded-full hover:bg-amber-600 hover:text-white transition-all border border-amber-200 shadow-sm shadow-amber-100"
                       >
                         <FiMapPin size={12} />
                         Track
@@ -153,7 +158,7 @@ export const MyOrder = () => {
 
       <AnimatePresence>
         {selectedOrder && (
-          <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-black/20 backdrop-blur-sm">
+          <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 backdrop-blur-sm">
             <motion.div
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -163,7 +168,10 @@ export const MyOrder = () => {
               <div className="sticky top-0 bg-white border-b p-4 flex justify-between items-center z-10">
                 <div>
                   <h3 className="font-bold text-lg text-slate-800">
-                    Order {selectedOrder.order_id}
+                    Order:{" "}
+                    <span className="text-[#1976d2]">
+                      {selectedOrder.order_id}
+                    </span>
                   </h3>
                   <p className="text-[10px] text-gray-400 uppercase font-bold tracking-widest">
                     {selectedOrder.order_date}
@@ -173,11 +181,11 @@ export const MyOrder = () => {
                   onClick={() => setSelectedOrder(null)}
                   className="p-2 hover:bg-gray-200 cursor-pointer rounded-full transition-colors"
                 >
-                  <FiX size={20} />
+                  <FiX size={24} />
                 </button>
               </div>
 
-              <div className="p-6 space-y-8">
+              <div className="px-6 py-4 space-y-2">
                 <section>
                   <h4 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4 flex items-center gap-2">
                     <FiPackage /> Ordered Items
