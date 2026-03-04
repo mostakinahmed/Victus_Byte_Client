@@ -74,6 +74,7 @@ export default function ForgotPassword() {
         });
         setStep(2);
         setTimer(30);
+        console.log(res.data);
       }
     } catch (err) {
       setErrorInfo(err.response?.data?.message || "User not found");

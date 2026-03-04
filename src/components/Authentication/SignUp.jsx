@@ -81,6 +81,7 @@ export default function SignUp() {
       if (response.data.success) {
         setStep(2);
         setTimer(30);
+        console.log(response.data);
       }
     } catch (error) {
       setErrorInfo(error.response?.data?.message || "Check your details");

@@ -263,6 +263,7 @@ const TestBuy = ({ data }) => {
 
       sessionStorage.removeItem("cart");
       updateCart();
+      console.log(res.data);
 
       Swal.fire({
         title: "Order Placed Successfully!",
