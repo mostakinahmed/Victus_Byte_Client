@@ -254,7 +254,7 @@ const Electronics = () => {
   ];
 
   return (
-    <div className="max-w-[1400px] md:px-4 px-2 mx-auto min-h-screen pb-12 md:mt-[95px] mt-12.5 font-sans">
+    <div className="max-w-[1400px] md:px-4 px-2 mx-auto min-h-screen pb-12 md:mt-[101px] mt-12.5 font-sans">
       {/* --- HERO BANNER (Original UI preserved) --- */}
       <div className="py-2 relative group">
         <Swiper

@@ -41,7 +41,7 @@ const SupportPage = () => {
       className="font-sans"
     >
       {/* 1. Heading Style from Account Overview */}
-      <div className="relative mb-8">
+      <div className="relative mb-4">
         <h2 className="text-[13px] font-black text-slate-800 uppercase tracking-[0.1em] flex items-center gap-3">
           <span className="w-1.5 h-5 bg-[#1976d2] rounded-full"></span>
           Support & Help Center
@@ -50,7 +50,7 @@ const SupportPage = () => {
       </div>
 
       {/* 2. Hero Support Section */}
-      <div className="flex flex-col lg:flex-row items-center gap-8 p-8 bg-slate-50/50 rounded-2xl border border-slate-100 relative overflow-hidden group mb-8">
+      <div className="flex flex-col lg:flex-row items-center gap-8 px-8 p-3 pb-8 bg-slate-50/50 rounded-2xl border border-slate-100 relative overflow-hidden group mb-8">
         {/* Background Decorative Tint */}
         <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl" />
 

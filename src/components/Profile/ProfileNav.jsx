@@ -47,7 +47,7 @@ export const Profile = () => {
           className="cursor-pointer border border-slate-400 hover:border-slate-500 lg:py-[7px] lg:px-2 py-[4px] px-1 rounded-3xl transition-all"
         >
           <button className="flex gap-2 cursor-pointer justify-center items-center">
-            <img src={user.images} alt="" className="h-6 w-6" />
+            <img src="usericon.png" alt="" className="h-6 w-6" />
             {/* <User className="w-6 h-6 hover:text-indigo-600 text-slate-800" /> */}
           </button>
         </div>
@@ -100,7 +100,7 @@ export const Profile = () => {
                 </span>
               </div>
               <p className="text-lg font-black text-white mt-0.5">
-                10 <span className="text-[10px] opacity-90 uppercase">Pts</span>
+                {user.loyaltyPoints} <span className="text-[10px] opacity-90 uppercase">Pts</span>
               </p>
             </div>
 
