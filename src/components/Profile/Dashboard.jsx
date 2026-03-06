@@ -450,7 +450,7 @@ const Profile = () => {
               </div>
 
               {/* Label with improved typography */}
-              <span className="text-[11.55px] font-medium text-slate-700  tracking-tighter leading-tight px-1">
+              <span className="text-[11.55px] font-medium text-slate-800  tracking-tighter leading-tight px-1">
                 {item.label}
               </span>
 
