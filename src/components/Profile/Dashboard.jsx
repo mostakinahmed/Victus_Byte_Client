@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// Add this import line
 import axios from "axios";
 import {
   User,
@@ -42,7 +41,12 @@ const Profile = () => {
 
   const { user, checkUserStatus, logout } = useAuth();
 
-  // Sidebar Menu Items
+  const handleTabChange = (tabId) => {
+    setActiveTab(tabId);
+    setIsSidebarOpen(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   const menuItems = [
     { id: "overview", label: "Overview", icon: <User size={20} /> },
     { id: "edit-profile", label: "Edit Profile", icon: <Edit size={20} /> },
@@ -58,56 +62,68 @@ const Profile = () => {
     { id: "support", label: "Support", icon: <Headphones size={20} /> },
   ];
 
+  // UPDATED: Added explicit border and bg classes for Tailwind JIT
   const MobileMenuItems = [
     {
+      id: "myorder",
       label: "My Orders",
       icon: <ShoppingBag size={22} />,
       color: "text-blue-500",
-      path: "/orders",
+      border: "border-blue-200",
+      bg: "bg-blue-50",
     },
     {
+      id: "edit-profile",
       label: "Edit Profile",
       icon: <UserPen size={22} />,
       color: "text-emerald-500",
-      path: "/profile",
+      border: "border-emerald-200",
+      bg: "bg-emerald-50",
     },
     {
+      id: "wishlist",
       label: "Wishlist",
       icon: <Heart size={22} />,
       color: "text-rose-500",
-      path: "/wishlist",
+      border: "border-rose-200",
+      bg: "bg-rose-50",
     },
-
     {
+      id: "change-password",
       label: "Change Password",
       icon: <Lock size={22} />,
       color: "text-purple-500",
-      path: "/password",
+      border: "border-purple-200",
+      bg: "bg-purple-50",
     },
     {
+      id: "points",
       label: "Loyalty Points",
       icon: <Award size={22} />,
       color: "text-indigo-500",
-      path: "/loyalty",
+      border: "border-indigo-200",
+      bg: "bg-indigo-50",
     },
     {
+      id: "return",
       label: "Returns",
       icon: <RefreshCcw size={22} />,
       color: "text-orange-500",
-      path: "/returns",
+      border: "border-orange-200",
+      bg: "bg-orange-50",
     },
     {
+      id: "support",
       label: "Support",
       icon: <Headset size={22} />,
       color: "text-amber-500",
-      path: "/support",
+      border: "border-amber-200",
+      bg: "bg-amber-50",
     },
   ];
 
-  // --- API LOGIC: FETCH ORDERS ---
   const fetchOrders = async () => {
     try {
-      // axios is now imported and will work
       const res = await axios.get(
         "https://api.victusbyte.com/api/customer/my-orders",
         { withCredentials: true },
@@ -116,7 +132,6 @@ const Profile = () => {
         setOrders(res.data.orders || []);
       }
     } catch (error) {
-      // Only show error toast if it's not a generic auth failure
       if (error.response?.status !== 401) {
         toast.error(
           error.response?.data?.message || "Failed to sync order history",
@@ -131,7 +146,6 @@ const Profile = () => {
     }
   }, [user]);
 
-  // Loading state guard to prevent "undefined" errors on user properties
   if (!user) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -142,9 +156,9 @@ const Profile = () => {
 
   return (
     <div>
+      {/* --- DESKTOP VERSION --- */}
       <div className="hidden md:block max-w-[1400px] lg:mt-[86px] mt-[49px] px-2 lg:px-4 mx-auto md:py-6 py-3 font-sans">
         <div className="flex flex-col lg:flex-row md:gap-4 gap-2">
-          {/* --- MOBILE SIDEBAR TOGGLE --- */}
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
             className="lg:hidden flex items-center gap-2 bg-white p-3 rounded shadow text-[#1976d2] font-bold"
@@ -153,30 +167,18 @@ const Profile = () => {
             <span>Dashboard Menu</span>
           </button>
 
-          {/* --- LEFT SIDEBAR --- */}
           <div
-            className={`
-          lg:w-1/4 w-full bg-white shadow-xs rounded p-4 h-fit
-          ${isSidebarOpen ? "block" : "hidden lg:block"}
-        `}
+            className={`lg:w-1/4 w-full bg-white shadow-xs rounded p-4 h-fit ${isSidebarOpen ? "block" : "hidden lg:block"}`}
           >
             <div className="flex flex-col gap-1">
               {menuItems.map((item) => (
                 <button
                   key={item.id}
-                  onClick={() => {
-                    setActiveTab(item.id);
-                    setIsSidebarOpen(false);
-                  }}
-                  className={`flex items-center justify-between p-2.5 rounded transition-all ${
-                    activeTab === item.id
-                      ? "bg-[#1976d2] text-white shadow-md"
-                      : "text-slate-900 hover:bg-slate-100"
-                  }`}
+                  onClick={() => handleTabChange(item.id)}
+                  className={`flex items-center justify-between p-2.5 rounded transition-all ${activeTab === item.id ? "bg-[#1976d2] text-white shadow-md" : "text-slate-900 hover:bg-slate-100"}`}
                 >
                   <div className="flex items-center gap-3">
-                    {item.icon}
-                    <span className="">{item.label}</span>
+                    {item.icon} <span className="">{item.label}</span>
                   </div>
                   <ChevronRight
                     size={16}
@@ -186,26 +188,22 @@ const Profile = () => {
                   />
                 </button>
               ))}
-
               <hr className="my-3 border-gray-100" />
-
               <button
                 onClick={logout}
                 className="flex items-center gap-3 p-3 text-red-500 hover:bg-red-100 bg-red-50/70 rounded transition-all w-full text-left"
               >
-                <LogOut size={20} />
-                <span className="font-medium">Logout</span>
+                <LogOut size={20} /> <span className="font-medium">Logout</span>
               </button>
             </div>
           </div>
 
-          {/* --- RIGHT SIDE CONTENT --- */}
           <div className="lg:w-3/4 w-full bg-white shadow-xs p-4 rounded min-h-[calc(100vh-12rem)]">
             {activeTab === "overview" && (
               <div className="animate-in fade-in duration-300">
                 <div className="relative mb-8">
                   <h2 className="text-[13px] font-black text-slate-800 uppercase tracking-[0.1em] flex items-center gap-3">
-                    <span className="w-1.5 h-5 bg-[#1976d2] rounded-full"></span>
+                    <span className="w-1.5 h-5 bg-[#1976d2] rounded-full"></span>{" "}
                     Account Overview
                   </h2>
                   <div className="mt-3 w-full -mb-4 h-[1px] bg-linear-to-r from-slate-200 via-slate-100 to-transparent"></div>
@@ -227,25 +225,19 @@ const Profile = () => {
                       </div>
                     )}
                   </div>
-
                   <div className="flex-grow text-center md:text-left z-10">
                     <div className="flex flex-col md:flex-row md:items-center gap-2 mb-1">
                       <h3 className="md:text-xl text-md font-black text-slate-800 uppercase tracking-tight">
                         {user.userName}
                       </h3>
-                      {user.isVerified ? (
-                        <span className="text-[10px] font-extrabold text-blue-600 bg-green-50 px-2 py-0.5 rounded uppercase border border-blue-100 w-fit mx-auto md:mx-0">
-                          Verified
-                        </span>
-                      ) : (
-                        <span className="text-[10px] font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded uppercase border border-slate-200 w-fit mx-auto md:mx-0">
-                          Unverified
-                        </span>
-                      )}
+                      <span
+                        className={`text-[10px] font-extrabold px-2 py-0.5 rounded uppercase border w-fit mx-auto md:mx-0 ${user.isVerified ? "text-blue-600 bg-green-50 border-blue-100" : "text-slate-400 bg-slate-100 border-slate-200"}`}
+                      >
+                        {user.isVerified ? "Verified" : "Unverified"}
+                      </span>
                     </div>
                     <p className="text-slate-600 md:mb-4">{user.email}</p>
                   </div>
-
                   <div className="flex md:w-1/2 md:bg-slate-100/30 p-2 rounded-xl md:border border-slate-200 flex-col gap-y-4 md:pt-4 pt-2">
                     <div className="flex justify-between gap-10">
                       <div className="space-y-1">
@@ -290,7 +282,7 @@ const Profile = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
                   {[
                     {
                       label: "Total Orders",
@@ -316,7 +308,6 @@ const Profile = () => {
                 </div>
               </div>
             )}
-
             {activeTab === "edit-profile" && (
               <EditProfile data={user} checkUserStatus={checkUserStatus} />
             )}
@@ -325,143 +316,174 @@ const Profile = () => {
             {activeTab === "points" && <LoyaltyPage user={user} />}
             {activeTab === "support" && <SupportPage />}
             {activeTab === "return" && <ReturnPage />}
-
-            {["wishlist"].includes(activeTab) && (
-              <div className="flex flex-col items-center justify-center h-full text-center py-20 animate-in fade-in">
-                <div className="p-4 bg-gray-50 rounded-full mb-4 text-[#1976d2]">
-                  {menuItems.find((m) => m.id === activeTab)?.icon}
-                </div>
-                <h2 className="text-xl font-bold text-gray-800 uppercase">
-                  {menuItems.find((m) => m.id === activeTab)?.label}
-                </h2>
-                <p className="text-gray-500">Coming soon to your dashboard.</p>
-              </div>
-            )}
           </div>
         </div>
       </div>
-      {/* for mobile */}
-      <div className="px-2  mt-15 min-h-screen md:hidden">
-        {/* Title for Context */}
-        <div className="animate-in fade-in duration-300">
-          <div className="relative mb-2 bg-white border p-2">
-            <h2 className="text-[13px] font-bold text-[#1976d2] uppercase tracking-[0.1em] flex items-center gap-3">
-              <span className="w-1.5 h-5 bg-[#1976d2] rounded-full"></span>
-              Dashboard
-            </h2>
-          </div>
 
-          <div className="flex items-center gap-4 p-3 bg-white border border-slate-200 rounded mb-3 relative overflow-hidden">
-            {/* Left Column: Image & Name (Fixed Width) */}
-            <div className="flex flex-col items-center shrink-0 w-28 border-r border-slate-100 pr-2">
-              <div className="relative mb-2.5 ">
-                <img
-                  src={
-                    "https://7vgva7cju0vcfvwf.public.blob.vercel-storage.com/user.png" ||
-                    user.images
-                  }
-                  alt="Profile"
-                  className="w-16 h-16 p-1.5 rounded-full object-cover border border-blue-100"
-                />
-                {user?.isVerified && (
-                  <div className="absolute -bottom-1 -right-1 bg-blue-600 text-white p-0.5 rounded-full border-2 border-white">
-                    <ShieldCheck size={12} />
+      {/* --- MOBILE VERSION --- */}
+      <div className="px-2 mt-15 min-h-screen md:hidden">
+        {activeTab === "overview" ? (
+          <div className="animate-in fade-in duration-300">
+            <div className="relative mb-2 bg-white border border-slate-200 p-2">
+              <h2 className="text-[13px] font-bold text-[#1976d2] uppercase tracking-[0.1em] flex items-center gap-3">
+                <span className="w-1 h-5 bg-[#1976d2] rounded-full"></span>{" "}
+                Dashboard
+              </h2>
+            </div>
+
+            <div className="flex items-center gap-4 p-3 bg-white border border-slate-100 rounded mb-3 relative overflow-hidden">
+              <div className="flex flex-col items-center shrink-0 w-28 border-r border-slate-100 pr-2">
+                <div className="relative mb-2.5">
+                  <img
+                    src={
+                      "https://7vgva7cju0vcfvwf.public.blob.vercel-storage.com/user.png" ||
+                      user.images
+                    }
+                    alt="Profile"
+                    className="w-16 h-16 p-1.5 rounded-full object-cover border border-blue-100"
+                  />
+                  {user?.isVerified && (
+                    <div className="absolute -bottom-1 -right-1 bg-blue-600 text-white p-0.5 rounded-full border-2 border-white">
+                      <ShieldCheck size={12} />
+                    </div>
+                  )}
+                </div>
+                <h3 className="text-xs font-semibold text-slate-800 text-center truncate w-full">
+                  {user.userName}
+                </h3>
+                <span className="text-[8px] font-bold text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded mt-1 border border-blue-100 uppercase">
+                  {user.isVerified ? "Verified" : "User"}
+                </span>
+              </div>
+              <div className="flex-grow grid grid-cols-2 gap-x-8">
+                <div className="space-y-4">
+                  <div className="flex flex-col">
+                    <p className="text-[9px] uppercase font-bold text-slate-400">
+                      ID
+                    </p>
+                    <p className="text-[11px] font-bold text-blue-600">
+                      #{user.cID || "000"}
+                    </p>
                   </div>
-                )}
+                  <div className="flex flex-col">
+                    <p className="text-[8px] uppercase font-bold text-slate-400">
+                      Gender
+                    </p>
+                    <p className="text-[11px] font-medium text-slate-700">
+                      {user.gender || "N/A"}
+                    </p>
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  <div className="flex flex-col col-span-2 border-t border-slate-50 pt-1">
+                    <p className="text-[8px] uppercase font-bold text-slate-400">
+                      Phone
+                    </p>
+                    <p className="text-[11px] font-medium text-slate-700">
+                      {user.phone || "N/A"}
+                    </p>
+                  </div>
+                  <div className="flex flex-col col-span-2">
+                    <p className="text-[8px] uppercase font-bold text-slate-400">
+                      Member Since
+                    </p>
+                    <p className="text-[10px] font-medium text-slate-700">
+                      {user.createdAt
+                        ? new Date(user.createdAt).toLocaleDateString("en-GB")
+                        : "N/A"}
+                    </p>
+                  </div>
+                </div>
               </div>
-              <h3 className="text-xs font-semibold text-slate-800  text-center truncate  w-full">
-                {user.userName}
-                {/* Show first name only for extreme compactness */}
-              </h3>
-              <span className="text-[8px] font-bold text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded mt-1 border border-blue-100 uppercase">
-                {user.isVerified ? "Verified" : "User"}
-              </span>
             </div>
 
-            {/* Right Column: Other Info (Grid) */}
-            <div className="flex-grow grid grid-cols-2 gap-x-8">
-              {/* Row 1 */}
-
-              <div className="space-y-4">
-                <div className="flex flex-col">
-                  <p className="text-[9px] uppercase font-bold text-slate-400">
-                    ID
-                  </p>
-                  <p className="text-[11px] font-bold text-blue-600">
-                    #{user.cID || "000"}
-                  </p>
-                </div>
-                <div className="flex flex-col">
-                  <p className="text-[8px] uppercase font-bold text-slate-400">
-                    Gender
-                  </p>
-                  <p className="text-[11px] font-medium text-slate-700">
-                    {user.gender || "N/A"}
-                  </p>
-                </div>
+            <div className="flex h-10 w-full mb-4 items-center bg-[#1976d2] rounded shadow-[1px_1px_2px_rgba(25,118,210,0.2),2px_2px_4px_rgba(25,118,210,0.2)]">
+              {/* Left Side: Membership */}
+              <div className="flex-1 flex items-center justify-center  gap-2">
+                <ShieldCheck size={16} className="text-white" />
+                <span className="text-sm font-bold text-white whitespace-nowrap">
+                  Platinum
+                </span>
               </div>
 
-              {/* Row 2 */}
-              <div className="space-y-4">
-                <div className="flex flex-col col-span-2 border-t border-slate-50 pt-1">
-                  <p className="text-[8px] uppercase font-bold text-slate-400">
-                    Phone
-                  </p>
-                  <p className="text-[11px] font-medium text-slate-700">
-                    {user.phone || "N/A"}
-                  </p>
-                </div>
+              {/* The Divider: Semi-transparent white to blend with #1976d2 */}
+              <div className="h-5 w-px bg-white/30 shrink-0"></div>
 
-                {/* Row 3 */}
-                <div className="flex flex-col col-span-2">
-                  <p className="text-[8px] uppercase font-bold text-slate-400">
-                    Member Since
-                  </p>
-                  <p className="text-[10px] font-medium text-slate-700">
-                    {user.createdAt
-                      ? new Date(user.createdAt).toLocaleDateString("en-GB")
-                      : "N/A"}
-                  </p>
-                </div>
+              {/* Right Side: Points */}
+              <div className="flex-1 flex items-center justify-center pl-4 gap-1">
+                <span className="text-[10px] font-bold text-blue-100 uppercase tracking-tight">
+                  Points:
+                </span>
+                <span className="text-sm font-black text-white">150</span>
               </div>
+            </div>
+
+            <div className="grid grid-cols-3 gap-3 px-2">
+              {MobileMenuItems.map((item, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleTabChange(item.id)}
+                    className={`group py-3 flex flex-col items-center justify-center bg-white rounded-md border active:scale-95 active:shadow-inner transition-all duration-200 overflow-hidden relative ${item.border}`}
+                  >
+                    <div
+                      className={`absolute inset-0 opacity-0 group-active:opacity-10 bg-current ${item.color}`}
+                    />
+
+                    <div
+                      className={`mb-3 p-2.5 rounded-xl transition-colors group-active:bg-transparent ${item.bg} ${item.color}`}
+                    >
+                      {React.cloneElement(item.icon, {
+                        size: 20,
+                        strokeWidth: 2,
+                      })}
+                    </div>
+
+                    <span className="text-[11.55px] font-medium text-slate-800 tracking-tighter leading-tight px-1 text-center">
+                      {item.label}
+                    </span>
+
+                    <div
+                      className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-1 rounded-t-full opacity-40 ${item.bg}`}
+                    />
+                  </button>
+                )
+              )}
+
+              <button
+                onClick={logout}
+                className="flex flex-col items-center justify-center bg-white rounded-lg border border-red-200 active:scale-95 py-3"
+              >
+                <div className="mb-3 p-2.5 rounded-xl bg-red-50 text-red-500">
+                   <LogOut size={20} strokeWidth={2} />
+                </div>
+                <span className="text-[11.55px] font-medium text-red-600">
+                  Logout
+                </span>
+              </button>
             </div>
           </div>
-        </div>
-
-      
-        {/* The 3-Column Grid */}
-        <div className="grid grid-cols-3 gap-3">
-          {MobileMenuItems.map((item, index) => (
+        ) : (
+          <div className="animate-in slide-in-from-bottom-5 duration-300">
             <button
-              key={index}
-              onClick={() => navigate(item.path)}
-              className="group aspect-square flex flex-col items-center justify-center bg-white rounded-md border border-slate-200 shadow-[0_2px_8px_-3px_rgba(0,0,0,0.05)] active:scale-95 active:shadow-inner transition-all duration-200 overflow-hidden relative"
+              onClick={() => handleTabChange("overview")}
+              className="mb-2 flex items-center gap-2 text-[#1976d2] font-bold text-sm bg-white p-2 rounded border border-slate-200"
             >
-              {/* Subtle Background Glow on Hover/Active */}
-              <div
-                className={`absolute inset-0 opacity-0 group-active:opacity-5 bg-current ${item.color}`}
-              />
-
-              {/* Icon Container with soft background */}
-              <div
-                className={`mb-3 p-2.5 rounded-xl bg-slate-50 transition-colors group-active:bg-transparent ${item.color}`}
-              >
-                {React.cloneElement(item.icon, { size: 22, strokeWidth: 2.2 })}
-              </div>
-
-              {/* Label with improved typography */}
-              <span className="text-[11.55px] font-medium text-slate-800  tracking-tighter leading-tight px-1">
-                {item.label}
-              </span>
-
-              {/* Bottom accent bar for a premium feel */}
-              <div
-                className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-1 rounded-t-full opacity-20 ${item.color.replace("text", "bg")}`}
-              />
+              <ChevronRight size={20} className="rotate-180" /> Back to
+              Dashboard
             </button>
-          ))}
-        </div>
-      </div>{" "}
+            <div className="bg-white p-2 rounded shadow-sm border border-slate-100">
+              {activeTab === "edit-profile" && (
+                <EditProfile data={user} checkUserStatus={checkUserStatus} />
+              )}
+              {activeTab === "change-password" && <ChangedPassword />}
+              {activeTab === "myorder" && <MyOrder />}
+              {activeTab === "points" && <LoyaltyPage user={user} />}
+              {activeTab === "support" && <SupportPage />}
+              {activeTab === "return" && <ReturnPage />}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

@@ -46,15 +46,17 @@ export const MyOrder = () => {
   }, []);
 
   return (
-    <div className="animate-in slide-in-from-bottom-2 duration-300">
+    <div className="animate-in slide-in-from-bottom-2 duration-300 pb-7 md:mb-0">
       {/* Header Section */}
       <div className="relative mb-2">
-        <h2 className="text-[13px] font-black text-slate-800 uppercase tracking-[0.1em] flex items-center gap-3">
-          <span className="w-1.5 h-5 bg-[#1976d2] rounded-full"></span>
+        <h2 className="text-[13px] font-bold md:font-black text-slate-800 uppercase tracking-[0.1em] flex items-center gap-3">
+          <span className="w-1 h-5 bg-[#1976d2] rounded-full"></span>
           My Orders
         </h2>
         <div className="mt-3 w-full h-[1px] bg-linear-to-r from-slate-200 via-slate-100 to-transparent"></div>
       </div>
+
+      
 
       <div className="bg-white min-h-[400px] rounded-b-lg overflow-hidden">
         {loading ? (
@@ -84,7 +86,7 @@ export const MyOrder = () => {
              [&::-webkit-scrollbar-track]:bg-slate-50
              [&::-webkit-scrollbar-thumb]:bg-slate-300
              [&::-webkit-scrollbar-thumb]:rounded-full
-             hover:[&::-webkit-scrollbar-thumb]:bg-[#1976d2] transition-all"
+             hover:[&::-webkit-scrollbar-thumb]:bg-[#1976d2] transition-all h-[660px]"
           >
             <table className="w-full text-left border-collapse whitespace-nowrap font-sans">
               <thead className="bg-slate-50 border-b">

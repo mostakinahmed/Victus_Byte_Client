@@ -173,41 +173,54 @@ const Footer = () => {
 
         {/* PAYMENT & COPYRIGHT */}
         <div className="pt-8 border-t border-slate-800 flex flex-col items-center gap-8">
-          <div className="flex flex-wrap justify-center items-center gap-3 lg:gap-4 grayscale hover:grayscale-0 transition-all duration-500 opacity-70 hover:opacity-100">
-            <img
-              src="https://freelogopng.com/images/all_img/1656227518bkash-logo-png.png"
-              alt="bKash"
-              className="h-6 lg:h-7 rounded bg-white object-contain p-1"
-            />
-            <img
-              src="https://download.logo.wine/logo/Nagad/Nagad-Logo.wine.png"
-              alt="Nagad"
-              className="h-6 lg:h-7 rounded bg-white object-contain"
-            />
-            <img
-              src="https://sajidshop.com/public/frontend/images/payment_method/rocket.png"
-              alt="Rocket"
-              className="h-6 lg:h-7 rounded bg-white object-contain p-1"
-            />
-            <img
-              src="https://logowik.com/content/uploads/images/visa-payment-card1873.jpg"
-              alt="Visa"
-              className="h-6 lg:h-7 rounded bg-white object-contain"
-            />
-            <img
-              src="https://p1.hiclipart.com/preview/110/429/95/visa-mastercard-logo-credit-card-payment-card-number-atm-card-automated-teller-machine-mousepad-computer-accessory-circle-png-clipart.jpg"
-              alt="Mastercard"
-              className="h-6 lg:h-7 rounded bg-white object-contain"
-            />
+          {/* Clear View Payment Icons */}
+          <div className="flex flex-wrap justify-center items-center gap-3 lg:gap-6">
+            <div className="bg-white p-0.5 rounded-md shadow-sm border border-slate-700/50 flex items-center justify-center w-12 lg:w-16 h-7 lg:h-9">
+              <img
+                src="https://freelogopng.com/images/all_img/1656227518bkash-logo-png.png"
+                alt="bKash"
+                className="max-h-full object-contain"
+              />
+            </div>
+            <div className="bg-white p-0.5 rounded-md shadow-sm border border-slate-700/50 flex items-center justify-center w-12 lg:w-16 h-7 lg:h-9">
+              <img
+                src="https://download.logo.wine/logo/Nagad/Nagad-Logo.wine.png"
+                alt="Nagad"
+                className="max-h-full object-contain scale-125"
+              />
+            </div>
+            <div className="bg-white p-0.5 rounded-md shadow-sm border border-slate-700/50 flex items-center justify-center w-12 lg:w-16 h-7 lg:h-9">
+              <img
+                src="https://sajidshop.com/public/frontend/images/payment_method/rocket.png"
+                alt="Rocket"
+                className="max-h-full object-contain"
+              />
+            </div>
+            <div className="bg-white p-0.5 rounded-md shadow-sm border border-slate-700/50 flex items-center justify-center w-12 lg:w-16 h-7 lg:h-9">
+              <img
+                src="https://i.pinimg.com/736x/5f/79/a6/5f79a6defe837d721dd2e3b2dba041e1.jpg"
+                alt="Visa"
+                className="max-h-full"
+              />
+            </div>
+            <div className="bg-white p-0.5 rounded-md shadow-sm border border-slate-700/50 flex items-center justify-center w-12 lg:w-16 h-7 lg:h-9">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png"
+                alt="Mastercard"
+                className="max-h-full object-contain p-0.5"
+              />
+            </div>
           </div>
 
           <div className="text-center space-y-2">
             <p className="text-xs text-gray-500">
               © {new Date().getFullYear()}{" "}
-              <span className="text-[#1976d2] font-bold">Victus Byte</span>. All
-              rights reserved.
+              <span className="text-[#1976d2] font-bold tracking-wide">
+                Victus Byte
+              </span>
+              . All rights reserved.
             </p>
-            <p className="text-[9px] text-gray-600 uppercase tracking-[0.3em] font-medium">
+            <p className="text-[9px] text-gray-600 uppercase tracking-[0.3em] font-bold">
               Designed & Developed by Mostakin Ahmed
             </p>
           </div>

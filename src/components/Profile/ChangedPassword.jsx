@@ -77,11 +77,11 @@ function ChangedPassword() {
   };
 
   return (
-    <div className="animate-in slide-in-from-bottom-2 duration-300">
+    <div className="animate-in slide-in-from-bottom-2 duration-300 pb-7 md:mb-0">
       <div className="relative mb-8">
-        <h2 className="text-[13px] font-black text-slate-800 uppercase tracking-[0.1em] flex items-center gap-3">
+        <h2 className="text-[13px]  font-bold md:font-black text-slate-800 uppercase tracking-[0.1em] flex items-center gap-3">
           {/* Blue accent line */}
-          <span className="w-1.5 h-5 bg-[#1976d2] rounded-full"></span>
+          <span className="w-1 h-5 bg-[#1976d2] rounded-full"></span>
           Change Password
         </h2>
         {/* Elegant thin border with a gradient feel */}

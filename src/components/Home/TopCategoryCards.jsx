@@ -18,7 +18,7 @@ const TopCategoryCards = () => {
         - lg:grid-cols-6: 6 cards per row on desktops.
         - xl:grid-cols-8: 8 cards per row on large screens.
       */}
-      <div className="grid grid-cols-5 lg:grid-cols-6 xl:grid-cols-12 border-l border-t md:mx-3.5 mx-2 border-gray-200 shadow-sm">
+      <div className="grid grid-cols-5 lg:grid-cols-6 xl:grid-cols-12 border-l border-t md:mx-3.5 mx-2 border-gray-200 ">
         {categoryData && categoryData.length > 0 ? (
           categoryData
             .filter((cat) => cat.topCategory === true) // Filter first so .slice gets the right items
@@ -36,10 +36,10 @@ const TopCategoryCards = () => {
             transition-all duration-300 cursor-pointer p-2 hover:bg-orange-50/30"
                 >
                   {/* Icon Area */}
-                  <div className="h-10 w-10 lg:h-12 lg:w-12 mb-2 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
+                  <div className="h-9 w-10 lg:h-12 lg:w-12 mb-2 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
                     {cat.icon ? (
                       <img
-                        src={cat.icon}
+                        src={cat.catIcon}
                         alt={cat.catName}
                         className="h-full w-full object-contain"
                       />

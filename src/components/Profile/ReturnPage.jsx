@@ -59,12 +59,12 @@ const ReturnPage = ({ order }) => {
   }
 
   return (
-    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 pb-7 md:mb-0">
       {/* 1. Header Section */}
       <div className="relative mb-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-[13px] font-black text-slate-800 uppercase tracking-[0.1em] flex items-center gap-3">
-            <span className="w-1.5 h-5 bg-[#1976d2] rounded-full"></span>
+          <h2 className="text-[13px]  font-bold md:font-black text-slate-800 uppercase tracking-[0.1em] flex items-center gap-3">
+            <span className="w-1 h-5 bg-[#1976d2] rounded-full"></span>
             Return Request
           </h2>
           <button className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1 hover:text-[#1976d2] transition-colors">

@@ -36,6 +36,7 @@ import Header from "./components/Home/Header";
 import TestBuy from "./components/Buy Now/TestBuy";
 import ProductLandingPage from "./components/Landing Page/ProductLandingPage";
 import Maintenance from "./components/Maintenance";
+import OrderRedirect from "./components/OrderRedirect";
 
 const Loader = () => (
   <div className="fixed inset-0 flex items-center justify-center bg-white z-50">
@@ -179,6 +180,7 @@ function App() {
           <Route path="/return-policy" element={<Return />} />
           <Route path="/payment-info" element={<Payment />} />
           <Route path="/test-buy" element={<TestBuy />} />
+          {/* <Route path="/:shortId" element={<OrderRedirect />} /> */}
 
           {/* Landing page */}
           <Route

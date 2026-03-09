@@ -47,7 +47,7 @@ export const Profile = () => {
           className="cursor-pointer border border-slate-400 hover:border-slate-500 lg:py-[7px] lg:px-2 py-[4px] px-1 rounded-3xl transition-all"
         >
           <button className="flex gap-2 cursor-pointer justify-center items-center">
-            <img src="usericon.png" alt="" className="h-6 w-6" />
+            <img src="usericon.png" alt="" className="h-6 w-6 p-0.5 md:p-0" />
             {/* <User className="w-6 h-6 hover:text-indigo-600 text-slate-800" /> */}
           </button>
         </div>
@@ -71,11 +71,9 @@ export const Profile = () => {
           {/* Reduced width from 320px to 260px and padding from p-4 to p-3 */}
           <div className="absolute md:top-2 top-2 md:right-0 -right-2 w-max md:min-w-[260px] min-w-[220px] bg-white backdrop-blur-md shadow-xl rounded-b border border-slate-300 z-[100] p-3 animate-in fade-in zoom-in-95 duration-200">
             {/* User Identity Header - Compacted gap and padding */}
-            <div className="flex items-center gap-3 pb-3 border-b border-slate-300">
+            <div className="flex items-center justify-center gap-3 pb-3 border-b border-slate-300">
               {/* Smaller Avatar Icon (w-10 h-10) */}
-              <div className="bg-indigo-600 w-9 h-9 flex justify-center items-center rounded-xl shadow-md shrink-0">
-                <User className="w-5 h-5 text-white" />
-              </div>
+              
               <div className="flex flex-col min-w-0">
                 <span className="text-sm font-black text-slate-800 uppercase tracking-tight truncate">
                   {user.userName}
@@ -135,7 +133,7 @@ export const Profile = () => {
                             "w-4 h-4 text-slate-700 group-hover:text-indigo-600",
                         })}
                       </div>
-                      <span className="text-xs font-bold  text-slate-800 uppercase group-hover:text-slate-900 tracking-wide">
+                      <span className="text-xs font-bold  text-slate-700 uppercase group-hover:text-slate-900 tracking-wide">
                         {item.label}
                       </span>
                     </div>
