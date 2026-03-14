@@ -57,11 +57,11 @@ const TrackOrderPage = () => {
     }
 
     // Auto-prefix OID logic
-    targetId = targetId.trim().toUpperCase();
-    if (!targetId.startsWith("OID")) {
-      targetId = `OID${targetId}`;
-      setOrderId(targetId);
-    }
+    // targetId = targetId.trim().toUpperCase();
+    // if (!targetId.startsWith("OID")) {
+    //   targetId = `OID${targetId}`;
+    //   setOrderId(targetId);
+    // }
 
     setLoading(true);
     setNotFound(false); // Reset UI before search
@@ -113,19 +113,31 @@ const TrackOrderPage = () => {
         </div>
 
         {/* Input Section */}
-        <div className="relative flex flex-col sm:flex-row gap-3 w-full max-w-2xl mx-auto md:mb-20 mb-10">
+        <div className="relative flex flex-col sm:flex-row gap-3 w-full max-w-xl mx-auto md:mb-20 mb-10">
           <div className="relative flex-grow group">
-            <FiSearch
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[#1976d2] transition-colors"
-              size={20}
-            />
+            {/* Icon and Fixed Prefix Container */}
+            <div className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center gap-2 pointer-events-none">
+              <FiSearch
+                className="text-slate-400 group-focus-within:text-[#1976d2] transition-colors"
+                size={20}
+              />
+              {/* Fixed OID Text */}
+              <span className="text-slate-900 font-bold tracking-wider border-r border-slate-300 pr-2">
+                OID
+              </span>
+            </div>
+
             <input
               type="text"
-              placeholder="OID260325656565"
-              maxLength={15}
-              className="w-full pl-12 pr-4 py-3 uppercase rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:outline-none placeholder:font-normal focus:ring-4 focus:ring-blue-500/10 focus:border-[#1976d2] transition-all font-bold text-slate-700 tracking-wider"
+              placeholder="123456" // Just the 6 digits in placeholder
+              maxLength={6} // Changed to 6 for your 6-digit plan
+              className="w-full pl-24 pr-4 py-3 uppercase rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-[#1976d2] transition-all font-bold text-[#1976d2] tracking-widest"
               value={orderId}
-              onChange={(e) => setOrderId(e.target.value)}
+              onChange={(e) => {
+                // Only allow numbers to be typed
+                const val = e.target.value.replace(/\D/g, "");
+                setOrderId(val);
+              }}
             />
           </div>
           <button

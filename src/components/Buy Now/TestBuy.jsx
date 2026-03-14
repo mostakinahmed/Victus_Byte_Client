@@ -8,22 +8,28 @@ import Swal from "sweetalert2";
 import { useAuth } from "../Context Api/AuthContext";
 
 // Utility: Generate Professional Unique Order ID (12 Digits)
+
+// function generateOrderId() {
+//   const now = new Date();
+
+//   // 1. Today's Date: YYMMDD (6 digits)
+//   const year = now.getFullYear().toString().slice(-2);
+//   const month = String(now.getMonth() + 1).padStart(2, "0");
+//   // const day = String(now.getDate()).padStart(2, "0");
+
+//   // We take the last 4 digits of the timestamp
+//   const msStr = now.getTime().toString().slice(-4);
+
+//   // 3. Random Number: (2 digits)
+//   const randomStr = Math.floor(1000 + Math.random() * 9000).toString();
+//   return `OID${year}${msStr}${month}${randomStr}`;
+// }
+
 function generateOrderId() {
-  const now = new Date();
-
-  // 1. Today's Date: YYMMDD (6 digits)
-  const year = now.getFullYear().toString().slice(-2);
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const day = String(now.getDate()).padStart(2, "0");
-  const dateStr = `${year}${month}${day}`;
-
-  // 2. Milliseconds: (4 digits)
-  const msStr = now.getTime().toString().slice(-4);
-
-  // 3. Random Number: (2 digits)
-  const randomStr = Math.floor(10 + Math.random() * 90).toString();
-
-  return `OID${dateStr}${msStr}${randomStr}`;
+  const now = Date.now().toString();
+  const ms = now.slice(-3); // Last 3 digits (000-999)
+  const random = Math.floor(100 + Math.random() * 900).toString(); // 3 random digits
+  return ms + random; // Total 6 digits
 }
 
 // Utility: Format date & time (12-hour)
@@ -228,19 +234,54 @@ const TestBuy = ({ data }) => {
 
     setIsSubmitting(true);
 
+    // const orderPayload = {
+    //   order_id: generateOrderId(),
+    //   order_date: getOrderDateTime12h(),
+    //   status: "Pending",
+    //   mode: "Online",
+    //   customer_id: user?.cID || "GUEST_USER",
+    //   items: data.map((item) => ({
+    //     product_id: item.pID,
+    //     discount: discount,
+    //     product_name: item.name,
+    //     product_price: item.price.selling,
+    //     quantity: item.qty,
+    //     product_comments: item.colors,
+    //   })),
+    //   shipping_address: {
+    //     recipient_name: form.name,
+    //     phone: form.phone,
+    //     email: form.email,
+    //     address_line1: `${form.address}, (District: ${selectedDistrict.name})`,
+    //   },
+    //   payment: { method: "COD", status: "Pending" },
+    //   total_amount: totalTk,
+    //   shipping_cost: deliverTk,
+    //   subtotal: subTotal,
+
+    //   coupon: couponValue,
+    // };
     const orderPayload = {
       order_id: generateOrderId(),
       order_date: getOrderDateTime12h(),
       status: "Pending",
       mode: "Online",
       customer_id: user?.cID || "GUEST_USER",
-      items: data.map((item) => ({
-        product_id: item.pID,
-        product_name: item.name,
-        product_price: item.price.selling,
-        quantity: item.qty,
-        product_comments: item.colors,
-      })),
+
+      // ✅ Flat Mapping: Splits Qty 2 into 2 separate rows
+      items: data.flatMap((item) =>
+        Array.from({ length: item.qty }).map(() => ({
+          product_id: item.pID,
+          product_name: item.name,
+          product_price: item.price.selling, // Full Web Price
+          discount: item.price.discount || 0, // Static Item Discount
+          quantity: 1, // Always 1 for unique tracking
+          product_comments: item.color || item.colors,
+          skuID: "",
+          imei: "",
+        })),
+      ),
+
       shipping_address: {
         recipient_name: form.name,
         phone: form.phone,
@@ -248,11 +289,10 @@ const TestBuy = ({ data }) => {
         address_line1: `${form.address}, (District: ${selectedDistrict.name})`,
       },
       payment: { method: "COD", status: "Pending" },
-      total_amount: totalTk,
+      subtotal: subTotal, // Sum of (product_price * qty)
       shipping_cost: deliverTk,
-      subtotal: subTotal,
-      discount: discount,
-      coupon: couponValue,
+      coupon: couponValue, // The full coupon object
+      total_amount: totalTk, // subtotal - itemDiscounts - coupon + shipping
     };
 
     try {
@@ -272,7 +312,7 @@ const TestBuy = ({ data }) => {
       <p style="margin-bottom: 15px; color: #475569;">Welcome to the <b style="color: #1e293b;">Victus Byte</b> family!</p>
       <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 2px dashed #cbd5e1;">
         <p style="font-size: 14px; color: #64748b; margin: 0; text-transform: uppercase; letter-spacing: 1px;">Your Order ID</p>
-        <p style="color: #fe741d; font-size: 24px; font-weight: 800; margin: 8px 0;">${orderPayload.order_id}</p>
+        <p style="color: #fe741d; font-size: 24px; font-weight: 800; margin: 8px 0;">#${orderPayload.order_id}</p>
       </div>
       <p style="margin-top: 15px; font-size: 13px; color: #94a3b8;">
         We will contact you shortly at <br/>

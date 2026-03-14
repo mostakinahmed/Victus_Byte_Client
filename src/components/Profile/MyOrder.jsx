@@ -115,7 +115,7 @@ export const MyOrder = () => {
                     className="hover:bg-slate-100 transition-colors"
                   >
                     <td className="md:px-6 px-2 py-3 text-sm font-semibold text-slate-800">
-                      {order.order_id}
+                      #{order.order_id}
                     </td>
                     <td className="md:px-6 px-4 py-3">
                       <div className="flex flex-col">
@@ -177,7 +177,7 @@ export const MyOrder = () => {
                     <h3 className="font-bold text-lg text-slate-800">
                       Order:{" "}
                       <span className="text-[#1976d2]">
-                        {selectedOrder.order_id}
+                        #{selectedOrder.order_id}
                       </span>
                     </h3>
                     <p className="text-[10px] text-gray-600 uppercase font-medium tracking-widest">

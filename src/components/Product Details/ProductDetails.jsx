@@ -68,8 +68,31 @@ const ProductDetail = () => {
       prev === product.images.length - 1 ? 0 : prev + 1,
     );
 
+  const saveCart = (cart) =>
+    sessionStorage.setItem("cart", JSON.stringify(cart));
 
-  const saveCart = (cart) => sessionStorage.setItem("cart", JSON.stringify(cart));
+  // const buyNowBtn = (product) => {
+  //   if (!selectedColor) {
+  //     setShowColorError(true);
+  //     return;
+  //   }
+
+  //   let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+  //   const index = cart.findIndex((item) => item.pID === product.pID);
+  //   if (index === -1) {
+  //     cart.push({
+  //       pID: product.pID,
+  //       name: product.name,
+  //       price: product.price.selling,
+  //       image: product.images[0],
+  //       qty: quantity,
+  //       color: selectedColor,
+  //     });
+  //   }
+  //   saveCart(cart);
+  //   updateCart();
+  //   navigate("/checkout/cart");
+  // };
   const buyNowBtn = (product) => {
     if (!selectedColor) {
       setShowColorError(true);
@@ -77,17 +100,21 @@ const ProductDetail = () => {
     }
 
     let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
-    const index = cart.findIndex((item) => item.pID === product.pID);
-    if (index === -1) {
+
+    // ✅ Logic: Loop based on 'quantity' to add multiple unique rows
+    for (let i = 0; i < quantity; i++) {
       cart.push({
         pID: product.pID,
         name: product.name,
         price: product.price.selling,
         image: product.images[0],
-        qty: quantity,
+        qty: 1, // Always 1 because each row is a unique unit
         color: selectedColor,
+        // Optional: you can add a temporary unique ID to help React keys in the cart page
+        cartItemId: Date.now() + Math.random(),
       });
     }
+
     saveCart(cart);
     updateCart();
     navigate("/checkout/cart");
@@ -96,28 +123,59 @@ const ProductDetail = () => {
   const addToCartBtn = (product) => {
     if (!selectedColor) {
       setShowColorError(true);
-      // Optional: Scroll to the color section so they see the warning
       return;
     }
 
     const existingCart = JSON.parse(sessionStorage.getItem("cart")) || [];
-    const found = existingCart.find((item) => item.pID === product.pID);
-    if (found) {
-      toast.success("Already Added!");
-    } else {
+
+    // ✅ Logic: Add 'quantity' number of individual rows to the cart
+    for (let i = 0; i < quantity; i++) {
       existingCart.push({
         pID: product.pID,
         name: product.name,
         price: product.price.selling,
         image: product.images[0],
-        qty: quantity,
+        qty: 1, // Each entry represents 1 physical unit
         color: selectedColor,
+        cartItemId: Date.now() + Math.random(),
       });
-      sessionStorage.setItem("cart", JSON.stringify(existingCart));
-      updateCart();
-      toast.success("Added to Cart!");
     }
+
+    sessionStorage.setItem("cart", JSON.stringify(existingCart));
+    updateCart();
+    toast.success(
+      `${quantity} ${quantity > 1 ? "units" : "unit"} added to cart!`,
+    );
+
+    // Reset quantity back to 1 after adding
+    setQuantity(1);
   };
+
+  // const addToCartBtn = (product) => {
+  //   if (!selectedColor) {
+  //     setShowColorError(true);
+  //     // Optional: Scroll to the color section so they see the warning
+  //     return;
+  //   }
+
+  //   const existingCart = JSON.parse(sessionStorage.getItem("cart")) || [];
+  //   const found = existingCart.find((item) => item.pID === product.pID);
+  //   if (found) {
+  //     toast.success("Already Added!");
+  //   } else {
+  //     existingCart.push({
+  //       pID: product.pID,
+  //       name: product.name,
+  //       price: product.price.selling,
+  //       image: product.images[0],
+  //       qty: quantity,
+  //       color: selectedColor,
+  //     });
+  //     sessionStorage.setItem("cart", JSON.stringify(existingCart));
+  //     updateCart();
+  //     toast.success("Added to Cart!");
+  //   }
+  // };
 
   const WhatsAppButton = ({ productName }) => {
     const phoneNumber = "8801773820336"; // Replace with your actual WhatsApp number
