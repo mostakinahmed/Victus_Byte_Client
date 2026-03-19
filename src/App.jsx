@@ -37,6 +37,7 @@ import TestBuy from "./components/Buy Now/TestBuy";
 import ProductLandingPage from "./components/Landing Page/ProductLandingPage";
 import Maintenance from "./components/Maintenance";
 import OrderRedirect from "./components/OrderRedirect";
+import TrackOrderSttedFast from "./components/TrackOrderSteedFast";
 
 const Loader = () => (
   <div className="fixed inset-0 flex items-center justify-center bg-white z-50">
@@ -143,6 +144,7 @@ function App() {
       {/* 3. MAIN CONTENT: Added padding-top (pt-44) so content isn't 
           hidden behind the fixed navigation on load.
       */}
+
       <main className="md:pt-10 pt-6">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -163,6 +165,11 @@ function App() {
           <Route path="/track-order/" element={<TrackOrder />} />
           <Route path="/track-order/:oid" element={<TrackOrder />} />
           <Route path="/checkout/purchase" element={<BuyNow />} />
+          <Route
+            path="/track/test/steed-fast"
+            element={<TrackOrderSttedFast />}
+          />
+
           <Route
             path="/kids-zone"
             element={<Maintenance pageName={"Kids Zone is"} />}

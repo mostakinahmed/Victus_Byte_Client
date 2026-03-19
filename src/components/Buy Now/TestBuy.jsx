@@ -6,24 +6,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 import { useAuth } from "../Context Api/AuthContext";
-
-// Utility: Generate Professional Unique Order ID (12 Digits)
-
-// function generateOrderId() {
-//   const now = new Date();
-
-//   // 1. Today's Date: YYMMDD (6 digits)
-//   const year = now.getFullYear().toString().slice(-2);
-//   const month = String(now.getMonth() + 1).padStart(2, "0");
-//   // const day = String(now.getDate()).padStart(2, "0");
-
-//   // We take the last 4 digits of the timestamp
-//   const msStr = now.getTime().toString().slice(-4);
-
-//   // 3. Random Number: (2 digits)
-//   const randomStr = Math.floor(1000 + Math.random() * 9000).toString();
-//   return `OID${year}${msStr}${month}${randomStr}`;
-// }
+import adress from "../adress.json";
 
 function generateOrderId() {
   const now = Date.now().toString();
@@ -51,8 +34,10 @@ const TestBuy = ({ data }) => {
   const { updateCart } = useContext(CartContext);
   const { user } = useAuth();
 
+  const [address, setAddress] = useState(adress);
+
   // --- DISTRICT & UPAZILA STATES ---
-  const [districts, setDistricts] = useState([]);
+  const [districts, setDistricts] = useState(adress);
   const [isDistOpen, setIsDistOpen] = useState(false);
   const [districtSearch, setDistrictSearch] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState(null);
@@ -68,6 +53,7 @@ const TestBuy = ({ data }) => {
   // --- ORDER LOGIC STATES ---
   const [deliveryMethod, setDeliveryMethod] = useState("regular");
   const [paymentMethod, setPaymentMethod] = useState("COD");
+  const isDhakaRegion = selectedDistrict?.district.includes("Dhaka");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [agreed, setAgreed] = useState(false);
   const [discount, setDiscount] = useState(0);
@@ -140,16 +126,15 @@ const TestBuy = ({ data }) => {
   // --- CALCULATION LOGIC ---
   const subTotal =
     data?.reduce((acc, item) => acc + item.price.selling * item.qty, 0) || 0;
-  const deliverTk =
-    selectedDistrict?.name === "Dhaka"
-      ? deliveryMethod === "home"
-        ? 60
-        : deliveryMethod === "express"
-          ? 160
-          : 120
+  const deliverTk = isDhakaRegion
+    ? deliveryMethod === "home"
+      ? 60
       : deliveryMethod === "express"
         ? 160
-        : 120;
+        : 120
+    : deliveryMethod === "express"
+      ? 160
+      : 120;
 
   //  const totalTk = subTotal + deliverTk - discount - (couponValue?.value || 0);
   const totalTk = subTotal + deliverTk - discount - (couponValue?.value || 0);
@@ -169,14 +154,6 @@ const TestBuy = ({ data }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // 2. Fetch Districts
-  useEffect(() => {
-    fetch("https://bdopenapi.vercel.app/api/geo/districts")
-      .then((res) => res.json())
-      .then((res) => setDistricts(res.data || []))
-      .catch((err) => console.error("District Fetch Error:", err));
-  }, []);
-
   // 3. Discount sync
   useEffect(() => {
     const totalDiscount =
@@ -184,30 +161,17 @@ const TestBuy = ({ data }) => {
     setDiscount(totalDiscount);
   }, [data]);
 
-  // 4. Fetch Upazilas
-  // useEffect(() => {
-  //   if (selectedDistrict?.id) {
-  //     setSelectedUpazila(null);
-  //     fetch(
-  //       `https://bdopenapi.vercel.app/api/geo/upazilas/${selectedDistrict.id}`,
-  //     )
-  //       .then((res) => res.json())
-  //       .then((res) => setUpazilas(res.data || []))
-  //       .catch((err) => console.error("Upazila Fetch Error:", err));
-  //   }
-  // }, [selectedDistrict]);
-
   // 5. Default delivery logic
   useEffect(() => {
-    if (selectedDistrict?.name === "Dhaka") {
+    if (isDhakaRegion) {
       setDeliveryMethod("home");
     } else {
       setDeliveryMethod("regular");
     }
-  }, [selectedDistrict?.name]);
+  }, [isDhakaRegion]);
 
   const filteredDistricts = districts.filter((d) =>
-    (d?.name || "").toLowerCase().includes(districtSearch.toLowerCase()),
+    (d?.district || "").toLowerCase().includes(districtSearch.toLowerCase()),
   );
 
   const handleInputChange = (e) => {
@@ -223,6 +187,7 @@ const TestBuy = ({ data }) => {
       phone: !form.phone,
       address: !form.address,
       district: !selectedDistrict,
+      upazila: !selectedUpazila,
       agreed: !agreed,
     };
 
@@ -234,33 +199,6 @@ const TestBuy = ({ data }) => {
 
     setIsSubmitting(true);
 
-    // const orderPayload = {
-    //   order_id: generateOrderId(),
-    //   order_date: getOrderDateTime12h(),
-    //   status: "Pending",
-    //   mode: "Online",
-    //   customer_id: user?.cID || "GUEST_USER",
-    //   items: data.map((item) => ({
-    //     product_id: item.pID,
-    //     discount: discount,
-    //     product_name: item.name,
-    //     product_price: item.price.selling,
-    //     quantity: item.qty,
-    //     product_comments: item.colors,
-    //   })),
-    //   shipping_address: {
-    //     recipient_name: form.name,
-    //     phone: form.phone,
-    //     email: form.email,
-    //     address_line1: `${form.address}, (District: ${selectedDistrict.name})`,
-    //   },
-    //   payment: { method: "COD", status: "Pending" },
-    //   total_amount: totalTk,
-    //   shipping_cost: deliverTk,
-    //   subtotal: subTotal,
-
-    //   coupon: couponValue,
-    // };
     const orderPayload = {
       order_id: generateOrderId(),
       order_date: getOrderDateTime12h(),
@@ -286,8 +224,10 @@ const TestBuy = ({ data }) => {
         recipient_name: form.name,
         phone: form.phone,
         email: form.email,
-        address_line1: `${form.address}, (District: ${selectedDistrict.name})`,
+        // selectedUpazila is a string, selectedDistrict.district is the name
+        address_line1: `${form.address}, ${selectedUpazila}, ${selectedDistrict.district}`,
       },
+
       payment: { method: "COD", status: "Pending" },
       subtotal: subTotal, // Sum of (product_price * qty)
       shipping_cost: deliverTk,
@@ -412,23 +352,6 @@ const TestBuy = ({ data }) => {
               </div>
 
               <div className="flex flex-col">
-                <label className="text-sm font-bold text-slate-800 mb-1 flex items-center gap-1">
-                  Delivery Address
-                  <span className="text-red-500 font-black" aria-hidden="true">
-                    *
-                  </span>
-                </label>
-
-                <input
-                  name="address"
-                  value={form.address}
-                  onChange={handleInputChange}
-                  placeholder="Full Address *"
-                  className={`px-4 py-2 border rounded outline-none transition-all ${errors.address ? "border-red-500 bg-red-50" : "focus:ring-1 focus:ring-slate-400"}`}
-                />
-              </div>
-
-              <div className="flex flex-col">
                 <label className="text-sm font-bold text-slate-800 mb-1">
                   Email Address
                 </label>
@@ -442,132 +365,191 @@ const TestBuy = ({ data }) => {
                 />
               </div>
 
-              <div className="flex flex-col w-full relative" ref={distRef}>
-                <label className="text-sm font-bold text-slate-800 mb-1 flex items-center gap-1">
-                  District/ City
-                  <span className="text-red-500 font-black" aria-hidden="true">
-                    *
-                  </span>
-                </label>
-
-                <div
-                  onClick={() => setIsDistOpen(!isDistOpen)}
-                  className={`px-4 py-2 border rounded bg-white cursor-pointer flex justify-between items-center transition-all ${errors.district ? "border-red-500 bg-red-50" : "border-gray-200"}`}
-                >
-                  <span
-                    className={
-                      selectedDistrict ? "text-black" : "text-gray-400"
-                    }
-                  >
-                    {selectedDistrict
-                      ? selectedDistrict.name
-                      : "Select a District"}
-                  </span>
-                  <svg
-                    className={`w-4 h-4 transition-transform ${isDistOpen ? "rotate-180" : ""}`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
+              {/* --- HIGHLIGHTED ADDRESS GROUP --- */}
+              <div className="bg-emerald-50 border border-slate-200 rounded p-3 space-y-5 shadow-sm">
+                {/* Header for the group */}
+                <div className="flex items-center gap-2 pb-2 border-b border-slate-200">
+                  <div className="w-2 h-6 bg-[#1976d2] rounded-full"></div>
+                  <h3 className="text-sm font-black uppercase tracking-widest text-slate-600">
+                    Shipping Destination
+                  </h3>
                 </div>
-                {isDistOpen && (
-                  <div className="absolute z-20 w-full top-full bg-slate-50 border rounded shadow max-h-60 flex flex-col mt-1">
-                    <div className="p-2 border-b sticky top-0 bg-slate-100">
-                      <input
-                        type="text"
-                        autoFocus
-                        placeholder="Search..."
-                        className="w-full p-2 md:text-sm text-[16px] border bg-white rounded outline-none"
-                        value={districtSearch}
-                        onChange={(e) => setDistrictSearch(e.target.value)}
-                      />
-                    </div>
-                    <ul className="overflow-y-auto mb-2 mt-2">
-                      {filteredDistricts.map((item) => (
-                        <li
-                          key={item.id}
-                          className="px-4 py-2 hover:bg-slate-100 cursor-pointer text-slate-800"
-                          onClick={() => {
-                            setSelectedDistrict(item);
-                            setIsDistOpen(false);
-                            setDistrictSearch("");
-                            if (errors.district)
-                              setErrors((p) => ({ ...p, district: false }));
-                          }}
-                        >
-                          {item.name}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
 
-              <div
-                className=" flex-col w-full relative hidden"
-                ref={upazilaRef}
-              >
-                <label className="text-sm font-bold text-slate-800 mb-1 flex items-center gap-1">
-                  Upazila/Thana
-                  <span className="text-red-500 font-black" aria-hidden="true">
-                    *
-                  </span>
-                </label>
-
-                <div
-                  onClick={() =>
-                    selectedDistrict && setIsUpazilaOpen(!isUpazilaOpen)
-                  }
-                  className={`px-4 py-2 border rounded flex justify-between items-center transition-all ${!selectedDistrict ? "bg-gray-50 cursor-not-allowed" : "bg-white cursor-pointer"} ${errors.upazila ? "border-red-500 bg-red-50" : "border-gray-200"}`}
-                >
-                  <span
-                    className={selectedUpazila ? "text-black" : "text-gray-400"}
-                  >
-                    {!selectedDistrict
-                      ? "Select District first"
-                      : selectedUpazila
-                        ? selectedUpazila.name
-                        : "Select Upazila"}
-                  </span>
-                  <svg
-                    className={`w-4 h-4 transition-transform ${isUpazilaOpen ? "rotate-180" : ""}`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </div>
-                {isUpazilaOpen && selectedDistrict && (
-                  <div className="absolute z-10 w-full top-full bg-slate-50 border rounded shadow-lg max-h-60 overflow-y-auto mt-1 py-2">
-                    {upazilas.map((item) => (
-                      <div
-                        key={item.id}
-                        className="px-4 py-2 hover:bg-slate-100 cursor-pointer text-slate-800"
-                        onClick={() => {
-                          setSelectedUpazila(item);
-                          setIsUpazilaOpen(false);
-                          if (errors.upazila)
-                            setErrors((p) => ({ ...p, upazila: false }));
-                        }}
+                {/* 1. DISTRICT & 2. UPAZILA ROW */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* District Dropdown */}
+                  <div className="flex flex-col w-full relative" ref={distRef}>
+                    <label className="text-sm font-bold text-slate-800 mb-1 flex items-center gap-1">
+                      District / City
+                      <span
+                        className="text-red-500 font-black"
+                        aria-hidden="true"
                       >
-                        {item.name}
+                        *
+                      </span>
+                    </label>
+                    <div
+                      onClick={() => setIsDistOpen(!isDistOpen)}
+                      className={`px-4 py-2 border rounded bg-white cursor-pointer flex justify-between items-center transition-all ${
+                        errors.district
+                          ? "border-red-500 bg-red-50"
+                          : "border-gray-300 hover:border-slate-400"
+                      }`}
+                    >
+                      <span
+                        className={` font ${selectedDistrict ? "text-slate-900" : "text-gray-400"}`}
+                      >
+                        {selectedDistrict
+                          ? selectedDistrict.district
+                          : "Select a District"}
+                      </span>
+                      <svg
+                        className={`w-4 h-4 transition-transform ${isDistOpen ? "rotate-180" : ""}`}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M19 9l-7 7-7-7"
+                        />
+                      </svg>
+                    </div>
+
+                    {isDistOpen && (
+                      <div className="absolute z-50 w-full top-full bg-white border border-slate-200 rounded max-h-70 flex flex-col mt-1 overflow-hidden shadow-2xl">
+                        <div className="p-2 border-b sticky top-0 bg-slate-50">
+                          <input
+                            type="text"
+                            autoFocus
+                            placeholder="Search district..."
+                            className="w-full p-2  border bg-white rounded outline-none focus:ring-2 focus:ring-blue-100"
+                            value={districtSearch}
+                            onChange={(e) => setDistrictSearch(e.target.value)}
+                          />
+                        </div>
+                        <ul className="overflow-y-auto py-1">
+                          {filteredDistricts.map((item, index) => (
+                            <li
+                              key={index}
+                              className="px-4 py-2 hover:bg-blue-50 cursor-pointer text-md font-medium text-slate-700 transition-colors"
+                              onClick={() => {
+                                setSelectedDistrict(item);
+                                setSelectedUpazila(null);
+                                setIsDistOpen(false);
+                                setDistrictSearch("");
+                                if (errors.district)
+                                  setErrors((p) => ({ ...p, district: false }));
+                              }}
+                            >
+                              {item.district}
+                            </li>
+                          ))}
+                        </ul>
                       </div>
-                    ))}
+                    )}
                   </div>
-                )}
+
+                  {/* Upazila Dropdown */}
+                  <div
+                    className="flex flex-col w-full relative"
+                    ref={upazilaRef}
+                  >
+                    <label className="text-sm font-bold text-slate-800 mb-1 flex items-center gap-1">
+                      Upazila / Thana
+                      <span
+                        className="text-red-500 font-black"
+                        aria-hidden="true"
+                      >
+                        *
+                      </span>
+                    </label>
+
+                    <div
+                      onClick={() =>
+                        selectedDistrict && setIsUpazilaOpen(!isUpazilaOpen)
+                      }
+                      className={`px-4 py-2 border rounded flex justify-between items-center transition-all ${
+                        !selectedDistrict
+                          ? "bg-slate-100 cursor-not-allowed border-slate-200"
+                          : "bg-white cursor-pointer border-gray-300 hover:border-slate-400"
+                      } ${errors.upazila ? "border-red-500 bg-red-50" : ""}`}
+                    >
+                      <span
+                        className={` font ${selectedUpazila ? "text-slate-900" : "text-gray-400"}`}
+                      >
+                        {!selectedDistrict
+                          ? "Select District first"
+                          : selectedUpazila
+                            ? selectedUpazila
+                            : "Select Upazila"}
+                      </span>
+
+                      <svg
+                        className={`w-4 h-4 transition-transform ${isUpazilaOpen ? "rotate-180" : ""}`}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M19 9l-7 7-7-7"
+                        />
+                      </svg>
+                    </div>
+
+                    {isUpazilaOpen && selectedDistrict && (
+                      <div className="absolute z-50 w-full top-full bg-white border border-slate-200 rounded shadow-2xl max-h-70 overflow-y-auto mt-1 py-1">
+                        {(
+                          selectedDistrict.thana__name ||
+                          selectedDistrict.thana_name
+                        ).map((thana, index) => (
+                          <div
+                            key={index}
+                            className="px-4 py-2 hover:bg-blue-50 cursor-pointer font-medium text-slate-700"
+                            onClick={() => {
+                              setSelectedUpazila(thana);
+                              setIsUpazilaOpen(false);
+                              if (errors.upazila)
+                                setErrors((p) => ({ ...p, upazila: false }));
+                            }}
+                          >
+                            {thana}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* 3. AREA INPUT (Full Width) */}
+                <div className="flex flex-col">
+                  <label className="text-sm font-bold text-slate-800 mb-1 flex items-center gap-1">
+                    Area / Village / House Details{" "}
+                    <span
+                      className="text-red-500 font-black"
+                      aria-hidden="true"
+                    >
+                      *
+                    </span>
+                  </label>
+
+                  <input
+                    name="address"
+                    value={form.address}
+                    onChange={handleInputChange}
+                    placeholder="e.g. House 12, Road 4, or Miah Bari, Char Chandia"
+                    className={`px-4 py-2 border bg-white rounded outline-none transition-all  font ${
+                      errors.address
+                        ? "border-red-500 bg-red-50"
+                        : "border-gray-300 focus:border-[#1976d2] focus:ring-4 focus:ring-blue-500/5"
+                    }`}
+                  />
+                </div>
               </div>
 
               <div className="flex flex-col">
@@ -638,8 +620,6 @@ const TestBuy = ({ data }) => {
                         CASH ON DELIVERY
                       </span>
 
-                      {/* Using colored divs as placeholders for the specific logos in your screenshot */}
-
                       <div className="flex items-center md:gap-4 gap-2">
                         <img
                           src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg"
@@ -691,11 +671,11 @@ const TestBuy = ({ data }) => {
                 </p>
                 <div className="flex flex-col gap-2">
                   <label
-                    className={`flex items-center gap-3 cursor-pointer rounded transition-all ${selectedDistrict?.name === "Dhaka" ? "bg-white opacity-100" : "bg-gray-50 opacity-50 cursor-not-allowed"}`}
+                    className={`flex items-center gap-3 cursor-pointer rounded transition-all ${isDhakaRegion ? "bg-white opacity-100" : "bg-gray-50 opacity-50 cursor-not-allowed"}`}
                   >
                     <input
                       type="radio"
-                      disabled={selectedDistrict?.name !== "Dhaka"}
+                      disabled={!isDhakaRegion}
                       checked={deliveryMethod === "home"}
                       onChange={() => setDeliveryMethod("home")}
                       className="w-5 h-5 accent-blue-600"
@@ -704,7 +684,7 @@ const TestBuy = ({ data }) => {
                       <span className="font-medium text-slate-800">
                         Home Delivery - 60৳
                       </span>
-                      {selectedDistrict?.name !== "Dhaka" && (
+                      {!isDhakaRegion && (
                         <span className="text-[10px] text-red-500 font-bold uppercase">
                           Only available in Dhaka
                         </span>
@@ -739,7 +719,6 @@ const TestBuy = ({ data }) => {
           </div>
 
           {/* Coupon Section */}
-          {/* --- COUPON SECTION --- */}
           <div className="w-full bg-white rounded shadow p-3 text-black">
             <div className="flex flex-col md:flex-row md:items-center gap-5">
               <div className="flex items-center gap-3 mr-5 min-w-fit">
@@ -783,13 +762,12 @@ const TestBuy = ({ data }) => {
                       />
                       <button
                         onClick={handleApply}
-                        className="md:hover:bg-slate-800 bg-slate-800 md:bg-white md:text-slate-800 text-white md:w-50 w-60 border-2 border-slate-800 font-semibold md:px-6 py-1.5 rounded transition-all shadow hover:text-white"
+                        className="md:hover:bg-slate-800 bg-slate-800 md:bg-white md:text-slate-800 text-sm md:text-[16px] text-white md:w-50 w-50 border-2 border-slate-800 font-semibold md:px-6 py-1.5 rounded transition-all shadow hover:text-white"
                       >
                         Apply Coupon
                       </button>
                     </>
                   ) : (
-                    /* Success State Badge */
                     <div className="flex items-center justify-between w-full bg-green-50 border border-green-200 px-4 md:h-9.5 h-10 rounded animate-in fade-in slide-in-from-right-2">
                       <span className="text-green-700 font-bold uppercase tracking-widest text-sm">
                         {coupon} - (Applied)
@@ -817,7 +795,6 @@ const TestBuy = ({ data }) => {
                   )}
                 </div>
 
-                {/* Inline Warning Message */}
                 {error && !isApplied && (
                   <span className="text-[10px] font-bold text-red-500 uppercase tracking-tighter animate-pulse">
                     {error || "Invalid or expired coupon code."}
@@ -893,7 +870,6 @@ const TestBuy = ({ data }) => {
                 {isApplied && (
                   <div className="flex justify-end gap-8">
                     <div className="flex items-center gap-2">
-                      {/* Success Checkmark Icon */}
                       <div className="bg-green-500 rounded-full p-0.5">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
