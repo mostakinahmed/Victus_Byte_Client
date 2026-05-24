@@ -56,8 +56,6 @@ export const MyOrder = () => {
         <div className="mt-3 w-full h-[1px] bg-linear-to-r from-slate-200 via-slate-100 to-transparent"></div>
       </div>
 
-      
-
       <div className="bg-white min-h-[400px] rounded-b-lg overflow-hidden">
         {loading ? (
           <div className="flex flex-col items-center justify-center h-64 space-y-4">
@@ -212,7 +210,7 @@ export const MyOrder = () => {
                             </p>
                           </div>
                           <p className="font-bold text-sm text-slate-800">
-                            ৳{selectedOrder.subtotal}
+                            ৳{item.product_price * item.quantity}
                           </p>
                         </div>
                       ))}
@@ -240,17 +238,29 @@ export const MyOrder = () => {
                         Summary
                       </h4>
                       <div className="space-y-2 text-sm">
-                        <div className="flex justify-between text-slate-800">
-                          <span>Method</span>
+                        <div className="flex justify-between text-slate-800 border-b">
+                          <span className="mb-1">Delivery Type</span>
                           <span className="font-bold text-slate-800">
-                            {selectedOrder.payment.method}
+                            {selectedOrder.courier.del_type}
+                          </span>
+                        </div>
+                        <div className="flex justify-between text-slate-800">
+                          <span>Payment Status</span>
+                          <span className="font-bold text-slate-800">
+                            {selectedOrder.courier.payment_status}
+                          </span>
+                        </div>
+                        <div className="flex justify-between text-slate-800">
+                          <span>Payment Method</span>
+                          <span className="font-bold text-slate-800">
+                            {selectedOrder.courier.payment_method}
                           </span>
                         </div>
 
                         <div className="flex justify-between text-slate-800">
                           <span>Shipping</span>
                           <span className="font-bold text-slate-800">
-                            ৳{selectedOrder?.shipping_cost || 0}
+                            ৳{selectedOrder?.courier.delivery_charge || 0}
                           </span>
                         </div>
                         {selectedOrder.coupon?.value > 0 && (

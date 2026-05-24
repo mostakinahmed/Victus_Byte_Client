@@ -34,10 +34,8 @@ const TestBuy = ({ data }) => {
   const { updateCart } = useContext(CartContext);
   const { user } = useAuth();
 
-  const [address, setAddress] = useState(adress);
-
   // --- DISTRICT & UPAZILA STATES ---
-  const [districts, setDistricts] = useState(adress);
+  const [districts, setDistricts] = useState([]);
   const [isDistOpen, setIsDistOpen] = useState(false);
   const [districtSearch, setDistrictSearch] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState(null);
@@ -53,7 +51,7 @@ const TestBuy = ({ data }) => {
   // --- ORDER LOGIC STATES ---
   const [deliveryMethod, setDeliveryMethod] = useState("regular");
   const [paymentMethod, setPaymentMethod] = useState("COD");
-  const isDhakaRegion = selectedDistrict?.district.includes("Dhaka");
+  const isDhakaRegion = selectedDistrict?.name.includes("Dhaka City");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [agreed, setAgreed] = useState(false);
   const [discount, setDiscount] = useState(0);
@@ -63,6 +61,31 @@ const TestBuy = ({ data }) => {
 
   const distRef = useRef(null);
   const upazilaRef = useRef(null);
+
+
+
+  useEffect(() => {
+    const fetchStations = async () => {
+      try {
+        const response = await fetch(
+          "https://api.victusbyte.com/api/steadfast/police-station",
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const result = await response.json();
+        setDistricts(result.data);
+      } catch (error) {
+        console.error("Error fetching police stations:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStations();
+  }, []);
+
+ 
 
   const [form, setForm] = useState({
     name: user?.userName || "",
@@ -171,7 +194,7 @@ const TestBuy = ({ data }) => {
   }, [isDhakaRegion]);
 
   const filteredDistricts = districts.filter((d) =>
-    (d?.district || "").toLowerCase().includes(districtSearch.toLowerCase()),
+    (d.name || "").toLowerCase().includes(districtSearch.toLowerCase()),
   );
 
   const handleInputChange = (e) => {
@@ -179,6 +202,8 @@ const TestBuy = ({ data }) => {
     setForm((prev) => ({ ...prev, [name]: value }));
     if (errors[name]) setErrors((prev) => ({ ...prev, [name]: false }));
   };
+
+
 
   // 6. Submit Logic
   const handleSubmit = async (e) => {
@@ -202,11 +227,10 @@ const TestBuy = ({ data }) => {
     const orderPayload = {
       order_id: generateOrderId(),
       order_date: getOrderDateTime12h(),
-      status: "Pending",
       mode: "Online",
       customer_id: user?.cID || "GUEST_USER",
 
-      // ✅ Flat Mapping: Splits Qty 2 into 2 separate rows
+      // Flat Mapping: Splits Qty 2 into 2 separate rows
       items: data.flatMap((item) =>
         Array.from({ length: item.qty }).map(() => ({
           product_id: item.pID,
@@ -225,13 +249,15 @@ const TestBuy = ({ data }) => {
         phone: form.phone,
         email: form.email,
         // selectedUpazila is a string, selectedDistrict.district is the name
-        address_line1: `${form.address}, ${selectedUpazila}, ${selectedDistrict.district}`,
+        address_line1: `${form.address}, ${selectedUpazila}, ${selectedDistrict.name}`,
       },
 
-      payment: { method: "COD", status: "Pending" },
-      subtotal: subTotal, // Sum of (product_price * qty)
-      shipping_cost: deliverTk,
-      coupon: couponValue, // The full coupon object
+      courier: {
+        delivery_charge: deliverTk,
+      },
+
+      subtotal: subTotal,
+      coupon: couponValue,
       total_amount: totalTk, // subtotal - itemDiscounts - coupon + shipping
     };
 
@@ -243,7 +269,7 @@ const TestBuy = ({ data }) => {
 
       sessionStorage.removeItem("cart");
       updateCart();
-      console.log(res.data);
+   
 
       Swal.fire({
         title: "Order Placed Successfully!",
@@ -400,7 +426,7 @@ const TestBuy = ({ data }) => {
                         className={` font ${selectedDistrict ? "text-slate-900" : "text-gray-400"}`}
                       >
                         {selectedDistrict
-                          ? selectedDistrict.district
+                          ? selectedDistrict.name
                           : "Select a District"}
                       </span>
                       <svg
@@ -444,7 +470,7 @@ const TestBuy = ({ data }) => {
                                   setErrors((p) => ({ ...p, district: false }));
                               }}
                             >
-                              {item.district}
+                              {item.name}
                             </li>
                           ))}
                         </ul>
@@ -504,21 +530,18 @@ const TestBuy = ({ data }) => {
 
                     {isUpazilaOpen && selectedDistrict && (
                       <div className="absolute z-50 w-full top-full bg-white border border-slate-200 rounded shadow-2xl max-h-70 overflow-y-auto mt-1 py-1">
-                        {(
-                          selectedDistrict.thana__name ||
-                          selectedDistrict.thana_name
-                        ).map((thana, index) => (
+                        {selectedDistrict.policestations.map((thana, index) => (
                           <div
                             key={index}
                             className="px-4 py-2 hover:bg-blue-50 cursor-pointer font-medium text-slate-700"
                             onClick={() => {
-                              setSelectedUpazila(thana);
+                              setSelectedUpazila(thana.name);
                               setIsUpazilaOpen(false);
                               if (errors.upazila)
                                 setErrors((p) => ({ ...p, upazila: false }));
                             }}
                           >
-                            {thana}
+                            {thana.name}
                           </div>
                         ))}
                       </div>
