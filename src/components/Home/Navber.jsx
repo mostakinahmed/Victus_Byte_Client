@@ -66,12 +66,19 @@ const NavbarTop = () => {
     <>
       <div className="bg-white font-sans shadow lg:shadow-none text-black py-1 md:py-0 border-b ">
         {/* ======= DESKTOP NAV ======= */}
-        <div className="max-w-[1400px] mx-auto items-center justify-between px-4 hidden md:flex h-[60px]">
+        <div className="max-w-[1400px] mx-auto items-center justify-between px-4 hidden md:flex h-[65px]">
           <div>
-            <Link to="/">
+            {/* <Link to="/">
               <img
                 className="w-[128px] h-[65px] -mt-2.5"
                 src="/logo desk.png"
+                alt="Logo"
+              />
+            </Link> */}
+            <Link to="/">
+              <img
+                className="w-[120px] h-[55px] mb-1.5"
+                src="https://7vgva7cju0vcfvwf.public.blob.vercel-storage.com/c5c44365-8659-46b0-8653-d5af8a80a399.png"
                 alt="Logo"
               />
             </Link>
@@ -142,7 +149,7 @@ const NavbarTop = () => {
           </div>
 
           <Link to="/">
-            <img className="h-[39px] ml-20" src="/logo desk.png" alt="Logo" />
+            <img className="h-[39px]  ml-18" src="https://7vgva7cju0vcfvwf.public.blob.vercel-storage.com/c5c44365-8659-46b0-8653-d5af8a80a399.png" alt="Logo" />
           </Link>
 
           <div className="flex items-center gap-3 w-[110px] justify-end">
