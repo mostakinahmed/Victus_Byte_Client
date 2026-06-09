@@ -220,17 +220,17 @@ const ProductDetail = () => {
                   </h1>
 
                   <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-4">
-                    <span className="bg-slate-100 text-slate-600 text-[10px]  md:text-[12px] font-bold md:px-2 px-1 py-1 rounded uppercase border border-slate-200">
+                    <span className="bg-slate-100 text-slate-600 text-[11px]  md:text-[12px] font-bold md:px-2 px-1 py-1 rounded uppercase border border-slate-200">
                       Type:{" "}
                       <span className="text-[#fe741d]">{CurrCat?.catName}</span>
                     </span>
-                    <span className="bg-slate-100 text-slate-600 text-[10px]  md:text-[12px] font-bold  md:px-2 px-1 p py-1 rounded uppercase border border-slate-200">
+                    <span className="bg-slate-100 text-slate-600 text-[11px]  md:text-[12px] font-bold  md:px-2 px-1 p py-1 rounded uppercase border border-slate-200">
                       Brand:{" "}
                       <span className="text-[#fe741d]">
                         {product.brandName}
                       </span>
                     </span>
-                    <span className="bg-slate-100 text-slate-600 text-[10px]  md:text-[12px] font-bold  md:px-2 px-1 ppy-1 rounded uppercase border border-slate-200">
+                    <span className="bg-slate-100 text-slate-600 text-[11px]  md:text-[12px] font-bold  md:px-2 px-1 py-1 rounded uppercase border border-slate-200">
                       Code:{" "}
                       <span className="text-[#fe741d]">{product.pID}</span>
                     </span>
