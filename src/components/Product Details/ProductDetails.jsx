@@ -174,7 +174,7 @@ const ProductDetail = () => {
                       className={`w-14 h-14 md:w-16  md:h-16 flex-shrink-0 object-contain p-1 rounded border-2  transition-all cursor-pointer ${
                         idx === currentIndex
                           ? "border-[#fe741d] bg-white"
-                          : "  hover:opacity-100"
+                          : "opacity-60  hover:opacity-100"
                       }`}
                     />
                   ))}
@@ -230,9 +230,9 @@ const ProductDetail = () => {
                         {product.brandName}
                       </span>
                     </span>
-                    <span className="bg-slate-100 text-slate-600 text-[11px]  md:text-[12px] font-bold  md:px-2 px-1 py-1 rounded uppercase border border-slate-200">
+                    <span className="bg-slate-100 text-slate-600 text-[11px]  md:text-[12px] font-bold  md:px-2 px-1 py-1 md:py-0 rounded uppercase border border-slate-200">
                       Code:{" "}
-                      <span className="text-[#fe741d]">{product.pID}</span>
+                      <span className="text-[#fe741d] md:text-[15px] text-[12px] ">{product.pID}</span>
                     </span>
                   </div>
 

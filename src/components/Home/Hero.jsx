@@ -4,7 +4,7 @@ import { SearchBar } from "../SearchBar";
 
 const BannerSection = () => {
   // const { categoryData, productData } = useContext(DataContext);
-  const images = ["ads-1.png", "ads-2.png", "ads-3.png"];
+  const images = ["ads-1.png", "ads-2.png", "ads-4.webp"];
 
   const [index, setIndex] = useState(0);
 
@@ -39,9 +39,9 @@ const BannerSection = () => {
               <button
                 key={i}
                 onClick={() => setIndex(i)} // Assuming your state function is setIndex
-                className={`h-2 transition-all duration-300 rounded-full ${index === i
-                  ? "w-6 bg-white" // Active dot: wider and white
-                  : "w-2 bg-white/70 hover:bg-white/90" // Inactive: small and semi-transparent
+                className={`md:h-2.5 h-2 transition-all duration-300 rounded-full ${index === i
+                  ? "md:w-10 w-6 bg-white rounded-sm" // Active dot: wider and white
+                  : "md:w-2.5 w-2 bg-white/70 hover:bg-white/90" // Inactive: small and semi-transparent
                   }`}
                 aria-label={`Go to slide ${i + 1}`}
               />
@@ -128,7 +128,7 @@ const BannerSection = () => {
         </div>
       </div>
 
-      <div class="hidden md:block max-w-[1375px] bg-[#E8EDF2] border mt-5 rounded mx-auto  py-6">
+      <div class="hidden md:block max-w-[1370px] bg-[#E8EDF2] border mt-5 rounded mx-auto  py-6">
 
         <div class=" flex flex-col px-4 md:flex-row items-stretch justify-between gap-4 md:gap-6">
 

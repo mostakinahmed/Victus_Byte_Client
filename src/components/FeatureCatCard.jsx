@@ -117,45 +117,47 @@ const dummyCategories = [
 
 const CategoryBox = ({ data }) => {
   return (
-    <div className="bg-white md:p-4 p-2 border border-gray-100 h-full hover:shadow-lg transition-all duration-300 rounded-sm">
-      <h3 className="text-gray-700 font-semibold mb-4 text-[16px] truncate border-b pb-2">
-        {data.title}
-      </h3>
+    <div className="bg-white p-4 border border-slate-200/80 h-full hover:shadow-md transition-all duration-300 rounded flex flex-col justify-between">
+      <div>
+        <h3 className="text-slate-800 font-bold mb-4 text-base tracking-tight truncate border-b border-slate-100 pb-2.5">
+          {data.title}
+        </h3>
 
-      <div className="grid grid-cols-2 md:gap-3 gap-2">
-        {data.items.slice(0, 4).map((item, idx) => (
-          <div
-            key={idx}
-            className="flex text-center flex-col items-center cursor-pointer group/item"
-          >
-            <Link
-              to={`/${item.name.toLowerCase().replace(/\s+/g, "-")}`}
-              className="w-full"
-            >
-              <div className="bg-gray-100 md:p-4 p-5  mb-1 rounded w-full aspect-square flex items-center justify-center overflow-hidden">
-                <img
-                  src={item.img}
-                  alt={item.name}
-                  className="object-contain transition-transform duration-500 group-hover/item:scale-110"
-                />
+        <div className="grid grid-cols-2 gap-3">
+          {data.items.slice(0, 4).map((item, idx) => {
+            const itemPath = `/${item.name.toLowerCase().replace(/\s+/g, "-")}`;
+            return (
+              <div key={idx} className="group/item min-w-0">
+                <Link to={itemPath} className="block w-full">
+                  <div className="bg-slate-50 border border-slate-100 p-3 mb-1.5 rounded-lg w-full aspect-square flex items-center justify-center overflow-hidden transition-colors group-hover/item:border-orange-100 group-hover/item:bg-orange-50/10">
+                    <img
+                      src={item.img}
+                      alt={item.name}
+                      className="w-full h-full object-contain mix-blend-multiply transition-transform duration-500 ease-out group-hover/item:scale-105"
+                      loading="lazy"
+                    />
+                  </div>
+                  <span className="text-[11px] md:text-xs text-slate-600 transition-colors group-hover/item:text-[#fe741d] leading-tight block truncate font-medium">
+                    {item.name}
+                  </span>
+                </Link>
               </div>
-              <span className="text-[12px] md:text-[13px] text-center text-gray-600 hover:text-blue-600 mt-1 leading-tight block truncate font-medium">
-                {item.name}
-              </span>
-            </Link>
-          </div>
-        ))}
+            );
+          })}
+        </div>
       </div>
 
-      <Link to={`/section/${data.title.toLowerCase()}`}>
-        <button className="group mt-4 relative flex items-center gap-1 text-blue-600 text-xs font-bold transition-all duration-300 hover:text-slate-900">
-          <span className="relative">
-            See More
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#fe741d] transition-all duration-300 group-hover:w-full group-hover:bg-slate-900"></span>
-          </span>
-          <FiChevronRight className="transition-transform duration-300 group-hover:translate-x-1" />
-        </button>
-      </Link>
+      <div className="pt-4 mt-2 border-t border-slate-50">
+        <Link to={`/section/${data.title.toLowerCase()}`} className="inline-block">
+          <button className="group relative flex items-center gap-1.5 text-[#fe741d] text-xs font-bold transition-all duration-300">
+            <span className="relative">
+              See More Collection
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#fe741d] transition-all duration-300 group-hover:w-full"></span>
+            </span>
+            <FiChevronRight size={14} className="transition-transform duration-300 group-hover:translate-x-0.5" />
+          </button>
+        </Link>
+      </div>
     </div>
   );
 };
@@ -165,7 +167,8 @@ const MultiCategorySection = () => {
 
   const scroll = (direction) => {
     if (scrollRef.current) {
-      const scrollAmount = scrollRef.current.clientWidth * 0.8;
+      // Adjusted scroll calculation to step cleanly by individual card bounds
+      const scrollAmount = scrollRef.current.clientWidth * 0.75;
       const scrollTo =
         direction === "left"
           ? scrollRef.current.scrollLeft - scrollAmount
@@ -176,38 +179,42 @@ const MultiCategorySection = () => {
   };
 
   return (
-    <div className="max-w-[1400px] font-sans mx-auto mt-4 md:px-4 px-2 relative group/main">
-      {/* --- NAVIGATION BUTTONS (DESKTOP ONLY) --- */}
+    <div className="max-w-[1400px] font-sans mx-auto mt-6 md:px-4 px-2 relative group/main w-full">
+      
+      {/* --- SLIDER BUTTON (LEFT) --- */}
       <button
         onClick={() => scroll("left")}
-        className="absolute -left-2 top-1/2 -translate-y-1/2 z-40 bg-white shadow-xl p-3 rounded-full border border-gray-100 hidden group-hover/main:md:flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all duration-300"
+        aria-label="Scroll Left"
+        className="absolute -left-2 md:-left-4 top-1/2 -translate-y-1/2 z-30 bg-white shadow-md border border-slate-200/80 w-10 h-10 rounded-full hidden group-hover/main:md:flex items-center justify-center text-slate-600 hover:text-[#fe741d] hover:border-[#fe741d] transition-all duration-200"
       >
-        <FiChevronLeft size={20} />
+        <FiChevronLeft size={18} strokeWidth={2.5} />
       </button>
 
-      {/* --- HORIZONTAL SINGLE ROW SCROLLER --- */}
+      {/* --- SCROLLER ROW LAYER --- */}
+      {/* Note: Kept snap-x but changed children items to snap-start */}
       <div
         ref={scrollRef}
-        className="flex flex-nowrap overflow-x-auto gap-4 pb-2 no-scrollbar snap-x snap-mandatory"
+        className="flex flex-nowrap overflow-x-auto gap-4 pb-4 no-scrollbar snap-x snap-mandatory scroll-smooth"
       >
         {dummyCategories.map((cat, index) => (
           <div
-            key={index}
-            className="xl:w-[24.2%] lg:w-[32%] md:w-[45%] w-[80%] flex-shrink-0 snap-center"
+            key={cat.id || index}
+            className="xl:w-[23%] lg:w-[22.8%] md:w-[46%] sm:w-[62%] w-[78%] flex-shrink-0 snap-start"
           >
             <CategoryBox data={cat} />
           </div>
         ))}
       </div>
 
+      {/* --- SLIDER BUTTON (RIGHT) --- */}
       <button
         onClick={() => scroll("right")}
-        className="absolute -right-2 top-1/2 -translate-y-1/2 z-40 bg-white shadow-xl p-3 rounded-full border border-gray-100 hidden group-hover/main:md:flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all duration-300"
+        aria-label="Scroll Right"
+        className="absolute -right-2 md:-right-4 top-1/2 -translate-y-1/2 z-30 bg-white shadow-md border border-slate-200/80 w-10 h-10 rounded-full hidden group-hover/main:md:flex items-center justify-center text-slate-600 hover:text-[#fe741d] hover:border-[#fe741d] transition-all duration-200"
       >
-        <FiChevronRight size={20} />
+        <FiChevronRight size={18} strokeWidth={2.5} />
       </button>
 
-      {/* --- CSS FOR HIDING SCROLLBAR --- */}
       <style
         dangerouslySetInnerHTML={{
           __html: `
