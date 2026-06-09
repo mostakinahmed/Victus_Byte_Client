@@ -25,7 +25,7 @@ const CategoryMenu = () => {
   ];
 
   return (
-    <nav className="bg-white font-sans shadow-sm w-full hidden md:flex h-10 sticky top-0 z-[80] border-b border-slate-200">
+    <nav className="bg-white font-sans shadow-sm w-full hidden md:flex h-10  sticky top-0 z-[80] border-b border-slate-200">
       <div className="xl:max-w-[1380px] w-full mx-auto flex justify-between items-center px-4">
         {/* --- LEFT SECTION: Primary Navigation --- */}
         <div className="flex items-center h-full">

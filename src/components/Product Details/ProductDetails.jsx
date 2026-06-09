@@ -83,7 +83,7 @@ const ProductDetail = () => {
         name: product.name,
         price: product.price.selling,
         image: product.images[0],
-        qty: 1, 
+        qty: 1,
         color: selectedColor,
         cartItemId: Date.now() + Math.random(),
       });
@@ -108,7 +108,7 @@ const ProductDetail = () => {
         name: product.name,
         price: product.price.selling,
         image: product.images[0],
-        qty: 1, 
+        qty: 1,
         color: selectedColor,
         cartItemId: Date.now() + Math.random(),
       });
@@ -124,7 +124,7 @@ const ProductDetail = () => {
   };
 
   const WhatsAppButton = ({ productName }) => {
-    const phoneNumber = "8801773820336"; 
+    const phoneNumber = "8801773820336";
     const message = `Hi Victus Byte, I have a question about: ${productName}`;
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
@@ -157,15 +157,12 @@ const ProductDetail = () => {
       {/* Main Layout Container */}
       <section className="max-w-[1400px] lg:mt-[56px] p-3 md:px-5 px-2 mx-auto w-full">
         <div className="flex flex-col lg:flex-row mt-12 md:mt-11 gap-4 lg:gap-3 w-full">
-          
           {/* LEFT COLUMN: Product Images, Details, and Specs */}
           <div className="flex flex-col w-full lg:w-[70%] xl:w-[75%] gap-3">
-            
             {/* Top Product Card */}
             <div className="flex flex-col md:flex-row gap-4 bg-white rounded border border-slate-200 overflow-hidden">
-              
               {/* Image Gallery Section */}
-              <div className="w-full md:w-[45%] flex flex-col md:flex-row bg-white">
+              <div className="w-full md:w-[50%] pt-1  flex flex-col md:flex-row bg-white">
                 {/* Thumbnails */}
                 <div className="order-2 md:order-1 flex md:flex-col gap-2 border-t md:border-t-0 md:border-r border-slate-100 p-3 justify-center md:justify-start overflow-x-auto bg-slate-50/50 hide-scrollbar">
                   {product.images?.map((img, idx) => (
@@ -174,17 +171,17 @@ const ProductDetail = () => {
                       src={img}
                       alt="thumb"
                       onClick={() => setCurrentIndex(idx)}
-                      className={`w-14 h-14 md:w-16 md:h-16 flex-shrink-0 object-contain p-1 rounded border-2 transition-all cursor-pointer ${
+                      className={`w-14 h-14 md:w-16  md:h-16 flex-shrink-0 object-contain p-1 rounded border-2  transition-all cursor-pointer ${
                         idx === currentIndex
                           ? "border-[#fe741d] bg-white"
-                          : "border-transparent opacity-60 hover:opacity-100"
+                          : "  hover:opacity-100"
                       }`}
                     />
                   ))}
                 </div>
 
                 {/* Main Image View */}
-                <div className="order-1 md:order-2 flex-1 relative h-[300px] md:h-[400px] flex items-center justify-center p-4">
+                <div className="order-1 md:order-2 flex-1 relative  h-[300px] md:h-[400px] flex items-center justify-center p-8">
                   <span className="absolute top-5 right-3 z-10 bg-slate-800 backdrop-blur-sm px-2 rounded border border-slate-200 py-[2px] text-[11px] md:text-[12px] font-extrabold text-white uppercase tracking-widest pointer-events-none select-none">
                     {product.brandName}
                   </span>
@@ -216,21 +213,26 @@ const ProductDetail = () => {
               </div>
 
               {/* Product Details Section */}
-              <div className="w-full md:w-[55%] p-4 md:p-6 flex flex-col justify-between">
+              <div className="w-full md:w-[50%] p-4 flex flex-col justify-between">
                 <div>
                   <h1 className="text-lg md:text-2xl font-semibold text-slate-800 leading-tight mb-3">
                     {product.name}
                   </h1>
 
                   <div className="flex flex-wrap items-center gap-2 md:gap-3 mb-4">
-                    <span className="bg-slate-100 text-slate-600 text-[11px] font-bold px-2 py-1 rounded uppercase border border-slate-200">
-                      Type: <span className="text-[#fe741d]">{CurrCat?.catName}</span>
+                    <span className="bg-slate-100 text-slate-600 text-[10px]  md:text-[12px] font-bold md:px-2 px-1 py-1 rounded uppercase border border-slate-200">
+                      Type:{" "}
+                      <span className="text-[#fe741d]">{CurrCat?.catName}</span>
                     </span>
-                    <span className="bg-slate-100 text-slate-600 text-[11px] font-bold px-2 py-1 rounded uppercase border border-slate-200">
-                      Brand: <span className="text-[#fe741d]">{product.brandName}</span>
+                    <span className="bg-slate-100 text-slate-600 text-[10px]  md:text-[12px] font-bold  md:px-2 px-1 p py-1 rounded uppercase border border-slate-200">
+                      Brand:{" "}
+                      <span className="text-[#fe741d]">
+                        {product.brandName}
+                      </span>
                     </span>
-                    <span className="bg-slate-100 text-slate-600 text-[11px] font-bold px-2 py-1 rounded uppercase border border-slate-200">
-                      Code: <span className="text-[#fe741d]">{product.pID}</span>
+                    <span className="bg-slate-100 text-slate-600 text-[10px]  md:text-[12px] font-bold  md:px-2 px-1 ppy-1 rounded uppercase border border-slate-200">
+                      Code:{" "}
+                      <span className="text-[#fe741d]">{product.pID}</span>
                     </span>
                   </div>
 
@@ -239,7 +241,10 @@ const ProductDetail = () => {
                   <div className="flex flex-col mb-4">
                     <div className="flex items-baseline gap-2">
                       <span className="text-3xl font-black text-slate-900">
-                        ৳{(product.price.selling - product.price.discount).toLocaleString()}
+                        ৳
+                        {(
+                          product.price.selling - product.price.discount
+                        ).toLocaleString()}
                       </span>
                       {product.price.discount > 0 && (
                         <span className="text-base text-slate-400 line-through">
@@ -252,7 +257,7 @@ const ProductDetail = () => {
                   {/* Colors */}
                   <div className="space-y-4 mt-2">
                     <div
-                      className={`py-2 px-2 rounded-xl transition-all duration-500 -ml-2 ${
+                      className={`py-2 px-2 rounded-xl transition-all duration-500 -ml-2 -mb- ${
                         showColorError && !selectedColor
                           ? "bg-red-50 border border-red-200"
                           : "border border-transparent"
@@ -283,8 +288,8 @@ const ProductDetail = () => {
                                 isSelected
                                   ? "border-[#fe741d] bg-orange-50/30"
                                   : showColorError && !selectedColor
-                                  ? "border-red-300 bg-white"
-                                  : "border-slate-200 bg-white cursor-pointer hover:border-slate-300"
+                                    ? "border-red-300 bg-white"
+                                    : "border-slate-200 bg-white cursor-pointer hover:border-slate-300"
                               }`}
                             >
                               <div
@@ -293,14 +298,28 @@ const ProductDetail = () => {
                               />
                               <span
                                 className={`text-[11px] font-bold uppercase tracking-wide transition-colors ${
-                                  isSelected ? "text-[#fe741d]" : "text-slate-700"
+                                  isSelected
+                                    ? "text-[#fe741d]"
+                                    : "text-slate-700"
                                 }`}
                               >
                                 {name}
                               </span>
                               {isSelected && (
                                 <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-[#fe741d] rounded-full flex items-center justify-center border-2 border-white shadow-sm">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="8"
+                                    height="8"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="white"
+                                    strokeWidth="4"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                  >
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                  </svg>
                                 </span>
                               )}
                             </button>
@@ -310,7 +329,7 @@ const ProductDetail = () => {
                     </div>
 
                     {/* Quantity & Stock */}
-                    <div className="select-none pt-2">
+                    <div className="select-none -mb-1">
                       <div className="flex items-center mb-2">
                         <h3 className="text-xs tracking-wider font-bold text-slate-800 uppercase">
                           Quantity
@@ -324,7 +343,19 @@ const ProductDetail = () => {
                             onClick={() => setQuantity(quantity - 1)}
                             className="w-8 h-8 flex items-center justify-center rounded-xl bg-white shadow-sm text-slate-600 transition-all enabled:hover:text-red-600 disabled:opacity-40"
                           >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
                           </button>
 
                           <div className="w-12 flex justify-center">
@@ -337,20 +368,41 @@ const ProductDetail = () => {
                             onClick={() => setQuantity(quantity + 1)}
                             className="w-8 h-8 flex items-center justify-center rounded-xl bg-white shadow-sm text-slate-600 transition-all hover:text-indigo-600"
                           >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <line x1="12" y1="5" x2="12" y2="19"></line>
+                              <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
                           </button>
                         </div>
 
                         <div
                           className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border ${
-                            currentStock > 0 ? "bg-green-50 border-green-200" : "bg-red-50 border-red-200"
+                            currentStock > 0
+                              ? "bg-green-100/80 border-green-100"
+                              : "bg-red-100/60 border-red-100"
                           }`}
                         >
                           <div className="relative flex h-2.5 w-2.5">
-                            <span className={`absolute inline-flex h-full w-full rounded-full opacity-75 animate-[ping_2s_linear_infinite] ${currentStock > 0 ? "bg-green-500" : "bg-red-500"}`}></span>
-                            <span className={`relative inline-flex rounded-full h-2.5 w-2.5 ${currentStock > 0 ? "bg-green-600" : "bg-red-600"}`}></span>
+                            <span
+                              className={`absolute inline-flex h-full w-full rounded-full opacity-75 animate-[ping_2s_linear_infinite] ${currentStock > 0 ? "bg-green-500" : "bg-red-500"}`}
+                            ></span>
+                            <span
+                              className={`relative inline-flex rounded-full h-2.5 w-2.5 ${currentStock > 0 ? "bg-green-600" : "bg-red-600"}`}
+                            ></span>
                           </div>
-                          <span className={`text-[11px] font-black uppercase tracking-widest ${currentStock > 0 ? "text-green-700" : "text-red-700"}`}>
+                          <span
+                            className={`text-[11px] font-black uppercase tracking-widest ${currentStock > 0 ? "text-green-700" : "text-red-700"}`}
+                          >
                             {currentStock > 0 ? "In Stock" : "Sold Out"}
                           </span>
                         </div>
@@ -368,7 +420,9 @@ const ProductDetail = () => {
                       className={`group ${currentStock <= 0 ? "hidden" : "block"} relative flex-1 h-12 text-sm md:text-base font-bold border-2 border-[#fe741d] text-[#fe741d] rounded overflow-hidden transition-colors duration-300`}
                     >
                       <span className="absolute inset-0 w-full h-full bg-[#fe741d] transition-transform duration-300 ease-out -translate-y-full group-hover:translate-y-0"></span>
-                      <span className="relative z-10 group-hover:text-white transition-colors duration-300">Add to Cart</span>
+                      <span className="relative z-10 group-hover:text-white transition-colors duration-300">
+                        Add to Cart
+                      </span>
                     </button>
 
                     <button
@@ -382,9 +436,11 @@ const ProductDetail = () => {
                       </span>
                     </button>
                   </div>
-                  
+
                   {/* WhatsApp button visible on all screen sizes below Add to Cart, looks cleaner */}
-                  <WhatsAppButton productName={product.name} />
+                  <div className="md:hidden mt-1">
+                    <WhatsAppButton productName={product.name} />
+                  </div>
                 </div>
               </div>
             </div>
@@ -393,21 +449,19 @@ const ProductDetail = () => {
             <div className="w-full bg-white md:-mb-2 border border-slate-100 overflow-hidden">
               <Specification data={product} />
             </div>
-            
           </div>
 
           {/* RIGHT COLUMN: Related Products */}
-          <div className="w-full lg:w-[30%] flex flex-col bg-white rounded border border-slate-200 overflow-hidden h-fit">
+          <div className="w-full lg:w-[26%] flex flex-col bg-white rounded border border-slate-200 overflow-hidden h-fit">
             <RelatedProduct data={allProductsInCategory} />
           </div>
-
         </div>
       </section>
 
       {/* Description Section */}
       <section className="max-w-[1400px] p-3 md:px-5 px-2 mx-auto w-full">
         <div className="bg-white rounded border border-slate-200 overflow-hidden shadow-sm">
-           <Description data={product} />
+          <Description data={product} />
         </div>
       </section>
 

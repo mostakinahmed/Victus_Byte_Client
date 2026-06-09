@@ -11,7 +11,7 @@ export default function ProductSpecTable({ data }) {
       
       {/* Header Section */}
       <div className="px-6 py-3 border-b border-slate-200 bg-white">
-        <h2 className="text-xl lg:text-2xl font-bold text-slate-800 flex items-center gap-3">
+        <h2 className="text-lg lg:text-xl font-bold text-slate-800 flex items-center gap-3">
           {/* Subtle Icon for visual polish */}
           <span className="p-2 bg-orange-50 text-[#fe741d] rounded-lg">
             <svg
