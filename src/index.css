@@ -205,3 +205,16 @@ body {
   backdrop-filter: blur(8px) !important;
   background: rgba(0, 0, 0, 0.5) !important;
 }
+
+
+@keyframes forceScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.my-custom-scroll {
+  animation: forceScroll 50s linear infinite;
+}
+.my-custom-scroll:hover {
+  animation-play-state: paused;
+}

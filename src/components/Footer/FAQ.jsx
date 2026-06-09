@@ -6,7 +6,6 @@ import {
   FiShield,
   FiTruck,
   FiCreditCard,
-  FiPackage,
   FiHelpCircle,
   FiSearch,
   FiChevronRight,
@@ -20,7 +19,7 @@ const FAQ = () => {
   const faqData = [
     {
       category: "Authenticity & Products",
-      icon: <FiShield />,
+      icon: <FiShield size={18} />,
       questions: [
         {
           id: 1,
@@ -41,7 +40,7 @@ const FAQ = () => {
     },
     {
       category: "Shipping & Logistics",
-      icon: <FiTruck />,
+      icon: <FiTruck size={18} />,
       questions: [
         {
           id: 4,
@@ -62,7 +61,7 @@ const FAQ = () => {
     },
     {
       category: "Payments & Security",
-      icon: <FiCreditCard />,
+      icon: <FiCreditCard size={18} />,
       questions: [
         {
           id: 7,
@@ -78,7 +77,7 @@ const FAQ = () => {
     },
     {
       category: "After-Sales & Warranty",
-      icon: <FiSettings />,
+      icon: <FiSettings size={18} />,
       questions: [
         {
           id: 9,
@@ -108,150 +107,177 @@ const FAQ = () => {
   const toggleFAQ = (id) => setActiveId(activeId === id ? null : id);
 
   return (
-    <div className="max-w-[1400px] mx-auto md:px-4 px-2 md:mt-27 mt-15 min-h-screen pb-5">
-      {/* --- 1. UNIFIED HERO SECTION (Matched to About/Contact) --- */}
-      <section className="relative md:py-20 py-15 bg-slate-900 overflow-hidden">
-        {/* Signature Glow Effect */}
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-600 rounded-full blur-[150px] translate-x-1/2 -translate-y-1/2"></div>
+    <div className="min-h-screen max-w-[1400px] mx-auto mt-30 px-4 bg-slate-50/50 font-sans pb-16">
+      
+      {/* --- 1. HERO SECTION --- */}
+      <section className="relative py-16 md:py-16 px-5 bg-slate-900 overflow-hidden">
+        {/* Subtle Ambient Glow Effect */}
+        <div className="absolute inset-0 opacity-15 pointer-events-none">
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#fe741d] rounded-full blur-[120px] translate-x-1/3 -translate-y-1/3"></div>
         </div>
 
-        {/* ✅ Container: 1400px Max Width */}
-        <div className="max-w-[1400px] mx-auto px-6 relative z-10">
+        <div className="relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-left"
+            transition={{ duration: 0.5 }}
           >
-            <h1 className="text-4xl md:text-7xl font-black text-white tracking-tighter uppercase mb-4">
-              Knowledge <span className="text-indigo-500">Base</span>
+            <span className="text-[11px] font-bold tracking-[0.3em] text-[#fe741d] uppercase block mb-3">
+              Victus Byte Knowledge Base
+            </span>
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-4">
+              Support &amp; Safety Protocols
             </h1>
-            <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.5em]">
-              Victus Byte // Support & Protocol Documentation
+            <p className="text-slate-400 text-sm md:text-base max-w-xl font-medium leading-relaxed">
+              Find instant answers regarding item authenticity, regional shipping channels, warranty validations, and payment pathways.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* --- 2. FAQ GRID SYSTEM --- */}
-      <section className="py-24">
-        {/* ✅ Container: 1400px Max Width */}
-        <div className="max-w-[1400px] mx-auto px-2 lg:grid lg:grid-cols-12 lg:gap-24">
-          {/* LEFT: STICKY SEARCH & HELP CARD */}
-          <div className="lg:col-span-4 mb-16 lg:mb-0">
-            <div className="lg:sticky lg:top-32 space-y-10">
+      {/* --- 2. LAYOUT GRID SYSTEM --- */}
+      <section className=" py-12 lg:py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+          
+          {/* LEFT: STICKY SEARCH BAR & ACTION CENTER */}
+          <div className="lg:col-span-4">
+            <div className="lg:sticky lg:top-28 space-y-6">
+              
+              {/* Header Title Information */}
               <div>
-                <h2 className="text-[10px] font-black text-indigo-600 uppercase tracking-[0.4em] mb-4">
-                  Support Hub
+                <h2 className="text-xs font-bold text-[#fe741d] uppercase tracking-wider mb-2">
+                  Help Desk Hub
                 </h2>
-                <h3 className="text-4xl font-black text-slate-800 uppercase tracking-tight mb-8 leading-tight">
-                  Common Queries &  Safety Protocols
+                <h3 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight leading-tight">
+                  Have Questions? We Have Answers.
                 </h3>
               </div>
 
-         
+              {/* ✅ FIXED: Interactive Search Bar Module */}
+              <div className="relative shadow-sm rounded-xl overflow-hidden">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                  <FiSearch size={18} />
+                </div>
+                <input
+                  type="text"
+                  placeholder="Search keywords, variant protocols..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-11 pr-4 py-3.5 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#fe741d] focus:ring-1 focus:ring-[#fe741d] transition-all"
+                />
+                {searchQuery && (
+                  <button 
+                    onClick={() => setSearchQuery("")}
+                    className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-xs font-bold text-slate-400 hover:text-slate-600"
+                  >
+                    Clear
+                  </button>
+                )}
+              </div>
 
-              {/* Live Node Status Card */}
-              <div className="p-8 bg-slate-50 rounded-[3rem] border border-slate-200 shadow-sm hidden lg:block">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 bg-indigo-600 text-white rounded-xl shadow-lg shadow-indigo-100">
-                    <FiHelpCircle />
+              {/* Live Support Card */}
+              <div className="p-6 bg-white rounded-2xl border border-slate-200 shadow-sm">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="p-2 bg-orange-50 text-[#fe741d] rounded-xl">
+                    <FiHelpCircle size={18} />
                   </div>
-                  <span className="text-[10px] font-black uppercase tracking-widest text-slate-800">
-                    Support Node
+                  <span className="text-xs font-bold uppercase tracking-wider text-slate-800">
+                    Direct Assistance Desk
                   </span>
                 </div>
-                <p className="text-sm text-slate-500 font-medium leading-relaxed mb-8">
-                  Can't find what you are looking for? Contact our live registry
-                  for immediate assistance.
+                <p className="text-xs md:text-sm text-slate-500 font-medium leading-relaxed mb-5">
+                  Can't discover the specific technical context you need? Open a priority diagnostic ticket with our technical team.
                 </p>
-                <button className="w-full py-4 bg-white border border-slate-200 rounded-2xl text-[10px] font-black uppercase tracking-widest text-slate-600 hover:text-indigo-600 hover:border-indigo-600 transition-all shadow-sm">
+                <button className="w-full py-3 bg-slate-900 border border-transparent rounded-xl text-xs font-bold uppercase tracking-wider text-white hover:bg-[#fe741d] transition-colors shadow-sm">
                   Open Support Ticket
                 </button>
               </div>
+
             </div>
           </div>
 
-          {/* RIGHT: ACCORDION LIST */}
-          <div className="lg:col-span-8 space-y-16">
+          {/* RIGHT: FILTERED ACCORDION ROW LIST */}
+          <div className="lg:col-span-8 space-y-10">
             {filteredData.length > 0 ? (
               filteredData.map((section, idx) => (
-                <div
-                  key={idx}
-                  className="animate-in fade-in slide-in-from-bottom-4 duration-500"
-                >
-                  <div className="flex items-center gap-4 mb-8 border-b border-slate-100 pb-4">
-                    <span className="text-indigo-600 p-2 bg-indigo-50 rounded-lg">
+                <div key={idx} className="bg-white p-5 md:p-6 rounded-2xl border border-slate-200/80 shadow-sm">
+                  
+                  {/* Category Header Label */}
+                  <div className="flex items-center gap-3 mb-6 border-b border-slate-100 pb-3">
+                    <span className="text-[#fe741d] p-1.5 bg-orange-50 rounded-lg">
                       {section.icon}
                     </span>
-                    <h4 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.3em]">
+                    <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wider">
                       {section.category}
                     </h4>
                   </div>
 
-                  <div className="space-y-4">
-                    {section.questions.map((faq) => (
-                      <div
-                        key={faq.id}
-                        className={`group border rounded-[2.5rem] transition-all duration-300 ${
-                          activeId === faq.id
-                            ? "bg-slate-50 border-indigo-200"
-                            : "bg-white border-slate-100 hover:border-slate-200"
-                        }`}
-                      >
-                        <button
-                          onClick={() => toggleFAQ(faq.id)}
-                          className="w-full px-6 py-9 flex items-center justify-between text-left"
+                  {/* Accordion List Rows */}
+                  <div className="space-y-3">
+                    {section.questions.map((faq) => {
+                      const isOpen = activeId === faq.id;
+                      return (
+                        <div
+                          key={faq.id}
+                          className={`border rounded-xl transition-all duration-200 overflow-hidden ${
+                            isOpen
+                              ? "bg-slate-50/50 border-orange-200/70 shadow-sm"
+                              : "bg-white border-slate-100 hover:border-slate-200/80"
+                          }`}
                         >
-                          <span className="text-sm md:text-lg font-black uppercase tracking-tight text-slate-800">
-                            {faq.q}
-                          </span>
-                          <div
-                            className={`shrink-0 ml-4 p-2 rounded-2xl transition-all ${
-                              activeId === faq.id
-                                ? "bg-indigo-600 text-white rotate-0 shadow-lg shadow-indigo-100"
-                                : "bg-slate-100 text-slate-400 rotate-90"
-                            }`}
+                          <button
+                            onClick={() => toggleFAQ(faq.id)}
+                            className="w-full px-5 py-4 flex items-center justify-between text-left transition-colors"
                           >
-                            {activeId === faq.id ? (
-                              <FiMinus size={18} />
-                            ) : (
-                              <FiPlus size={18} />
-                            )}
-                          </div>
-                        </button>
-
-                        <AnimatePresence>
-                          {activeId === faq.id && (
-                            <motion.div
-                              initial={{ height: 0, opacity: 0 }}
-                              animate={{ height: "auto", opacity: 1 }}
-                              exit={{ height: 0, opacity: 0 }}
-                              transition={{ duration: 0.4, ease: "circOut" }}
-                              className="overflow-hidden"
+                            <span className="text-sm md:text-base font-semibold text-slate-800 tracking-tight leading-snug">
+                              {faq.q}
+                            </span>
+                            <div
+                              className={`shrink-0 ml-4 p-1.5 rounded-lg transition-all duration-300 ${
+                                isOpen
+                                  ? "bg-[#fe741d] text-white shadow-sm shadow-orange-100"
+                                  : "bg-slate-100 text-slate-400"
+                              }`}
                             >
-                              <div className="px-8 pb-8 text-slate-600 text-base font-medium leading-relaxed border-t border-indigo-100/50 pt-6 mx-4">
-                                <p className="flex gap-4">
-                                  <FiChevronRight className="mt-1 text-indigo-500 shrink-0" />
-                                  {faq.a}
-                                </p>
-                              </div>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </div>
-                    ))}
+                              {isOpen ? <FiMinus size={14} /> : <FiPlus size={14} />}
+                            </div>
+                          </button>
+
+                          <AnimatePresence initial={false}>
+                            {isOpen && (
+                              <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: "auto", opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.25, ease: "easeInOut" }}
+                              >
+                                <div className="px-5 pb-5 pt-1 text-slate-600 text-sm md:text-base font-medium leading-relaxed border-t border-slate-100 mx-1">
+                                  <div className="flex gap-2.5 pt-3">
+                                    <FiChevronRight className="mt-1 text-[#fe741d] shrink-0" size={16} />
+                                    <p className="flex-1 text-slate-600 text-sm leading-relaxed">
+                                      {faq.a}
+                                    </p>
+                                  </div>
+                                </div>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </div>
+                      );
+                    })}
                   </div>
+
                 </div>
               ))
             ) : (
-              <div className="text-center py-20 bg-slate-50 rounded-[3rem] border border-dashed border-slate-200">
-                <p className="text-slate-400 font-black uppercase tracking-widest">
-                  No matching protocols found.
+              <div className="text-center py-16 bg-white rounded-2xl border border-dashed border-slate-200">
+                <p className="text-slate-400 text-sm font-semibold uppercase tracking-wider">
+                  No matching protocols discovered.
                 </p>
               </div>
             )}
           </div>
+
         </div>
       </section>
     </div>

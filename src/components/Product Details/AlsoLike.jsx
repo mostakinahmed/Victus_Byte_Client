@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { DataContext } from "../Context Api/UserContext";
 import ProductCard from "../ProductCard";
 import { Link } from "react-router-dom";
-import { FiHeart } from "react-icons/fi"; // Using a Heart icon for "Also Like"
+import { FiHeart } from "react-icons/fi";
 
 const AlsoLike = () => {
   const { productData } = useContext(DataContext);
@@ -10,15 +10,13 @@ const AlsoLike = () => {
   if (!productData || productData.length === 0) return null;
 
   return (
-    <div className="max-w-[1360px] bg-white mx-auto mt-5  rounded pb-4 ">
-      {/* Header Section - Styled like Featured Product */}
+    <div className="max-w-[1360px] md:-mb-6 bg-white mx-auto  rounded pb-4 overflow-hidden">
+      {/* Header Section */}
       <div className="flex items-center justify-between bg-white shadow-sm border border-gray-100 p-4 mb-4">
         <div className="flex items-center gap-3">
-          {/* Icon Box */}
           <div className="p-2 -ml-4 md:ml-0 bg-pink-50 rounded-xl">
             <FiHeart className="text-xl text-pink-500" />
           </div>
-          {/* Title */}
           <h3 className="text-lg -ml-3 md:ml-0 font-bold text-gray-800 uppercase tracking-tight">
             You May Also Like
           </h3>
@@ -26,12 +24,9 @@ const AlsoLike = () => {
       </div>
 
       {/* Auto-scrolling Row */}
-      <div className="overflow-hidden w-full group">
-        <div
-          className="flex gap-2 animate-scroll group-hover:[animation-play-state:paused]"
-          style={{ width: "max-content" }}
-        >
-          {/* Double the data for a seamless loop */}
+      <div className="w-full group flex overflow-hidden ">
+        {/* The wrapper that actually animates */}
+       <div className="flex gap-2 w-max my-custom-scroll">
           {[...productData, ...productData].map((product, index) => (
             <div
               key={`${product.pID}-${index}`}
