@@ -102,7 +102,7 @@ const BannerSection = () => {
         </div>
 
         {/* Info Cards Section (Headings Only) */}
-        <div className="flex flex-col md:gap-2 gap-1.5 text-gray-700 md:hidden">
+        <div className="flex flex-col md:gap-2 gap-1.5 text-gray-700 hidden">
           {/* Row 1: Card 1 & Card 2 */}
           <div className="flex flex-row md:flex-row md:gap-2.5 gap-2">
             <div className="flex-1 bg-white px-6 py-3 h-12 rounded shadow hover:shadow-md transition text-center">
@@ -228,37 +228,41 @@ const BannerSection = () => {
         </div>
       </div>
 
-      <div className="hidden md:block max-w-[1370px] mx-auto mt-5 relative overflow-hidden rounded border border-blue-200/70 bg-[#E8EDF2]">
-        {/* Brand shine animation overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-100 to-transparent bg-[length:200%_100%] animate-[shine_6s_linear_infinite]"></div>
+      <div className="w-full max-w-[1370px] mx-auto mt-5 relative overflow-hidden rounded border border-blue-200/70 bg-[#E8EDF2]">
+        {/* Shine Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-100/60 to-transparent bg-[length:200%_100%] animate-[shine_6s_linear_infinite]"></div>
 
         {/* Content */}
-        <div className="relative z-10 flex flex-col md:flex-row">
+        <div className="relative z-10 flex flex-nowrap overflow-x-auto md:overflow-visible whitespace-nowrap scrollbar-hide">
           {[
-            {
-              label: "36 Months EMI",
-              icon: "https://cdn-icons-png.flaticon.com/512/3135/3135706.png",
-            },
             {
               label: "Fast Delivery",
               icon: "https://cdn-icons-png.flaticon.com/512/1048/1048319.png",
-            },
-            {
-              label: "Exchange Facility",
-              icon: "https://cdn-icons-png.flaticon.com/512/1828/1828911.png",
             },
             {
               label: "Best Price Deals",
               icon: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
             },
             {
-              label: "After-Sales Service",
+              label: "Exchange Facility",
+              icon: "https://cdn-icons-png.flaticon.com/512/1828/1828911.png",
+            },
+            {
+              label: "36 Months EMI",
+              icon: "https://cdn-icons-png.flaticon.com/512/3135/3135706.png",
+            },
+            {
+              label: "Best Price Deals",
+              icon: "https://cdn-icons-png.flaticon.com/512/3135/3135715.png",
+            },
+            {
+              label: "After Sales Service",
               icon: "https://cdn-icons-png.flaticon.com/512/2950/2950651.png",
             },
           ].map((item, i) => (
             <div
               key={i}
-              className="relative flex-1 flex items-center gap-3 px-5 py-4 group"
+              className="relative flex items-center gap-3 px-5 py-3 min-w-max group"
             >
               {/* ICON */}
               <div className="w-9 h-9 bg-white rounded-md border border-gray-200 flex items-center justify-center overflow-hidden group-hover:border-[#1976d2]/40 transition">
@@ -270,19 +274,19 @@ const BannerSection = () => {
               </div>
 
               {/* TEXT */}
-              <span className="text-gray-700 font-medium text-sm md:text-base group-hover:text-[#1976d2] transition">
+              <span className="text-gray-700 font-medium text-sm md:text-base group-hover:text-[#1976d2] transition whitespace-nowrap">
                 {item.label}
               </span>
 
-              {/* DIAGONAL DIVIDER */}
-              {i !== 4 && (
-                <div className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 w-[1px] h-6 bg-[#1976d2] rotate-12"></div>
+              {/* DIVIDER */}
+              {i !== 5 && (
+                <div className=" absolute right-0 top-1/2 -translate-y-1/2 w-[1px] h-6 bg-[#1976d2] rotate-12"></div>
               )}
             </div>
           ))}
         </div>
 
-        {/* ANIMATIONS */}
+        {/* ANIMATION */}
         <style>
           {`
       @keyframes shine {
@@ -293,6 +297,15 @@ const BannerSection = () => {
       .animate-[shine_6s_linear_infinite] {
         animation: shine 6s linear infinite;
         background-size: 200% 100%;
+      }
+
+      /* Hide scrollbar (optional nice touch) */
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
       }
     `}
         </style>

@@ -16,7 +16,7 @@ export default function AllProduct() {
 
       if (width >= 1024) {
         // lg screens
-        setVisibleProducts(productData.slice(0, 12));
+        setVisibleProducts(productData.slice(0, 18));
       } else {
         // md/sm/xs
         setVisibleProducts(productData.slice(0, 8));
@@ -54,7 +54,7 @@ export default function AllProduct() {
       </div>
 
       <div className="pb-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 md:gap-2.5 gap-2">
-        {visibleProducts.slice(0, 12).map((product) => (
+        {visibleProducts.slice(0, 18).map((product) => (
           <Link
             key={product.pID}
             to={`/${product.category}/${product.name

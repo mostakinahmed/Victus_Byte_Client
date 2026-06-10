@@ -115,7 +115,7 @@ export const SearchBar = () => {
         border-slate-500/35
         rounded-full
         px-5
-        py-2.5
+        py-2
         pr-14
         text-gray-800
         text-md
@@ -132,7 +132,8 @@ export const SearchBar = () => {
         focus:outline-none
 
         placeholder:text-slate-400
-        placeholder:text-sm
+        md:placeholder:text-sm
+        placeholder:text-xs
         placeholder:tracking-wide
       "
     />
@@ -143,8 +144,10 @@ export const SearchBar = () => {
       className="
         absolute
         right-1
-        h-9
-        w-9
+        md:h-9
+        md:w-9
+        h-8
+        w-8
         rounded-full
         bg-[#1976d2]
         flex
