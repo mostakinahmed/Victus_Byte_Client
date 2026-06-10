@@ -117,19 +117,26 @@ const dummyCategories = [
 
 const CategoryBox = ({ data }) => {
   return (
-    <div className="bg-white p-4 border border-slate-200/80 h-full hover:shadow-md transition-all duration-300 rounded flex flex-col justify-between">
+    <div className="bg-gradient-to-br from-white via-blue-50/40 to-blue-100/30 p-4 border border-blue-200/80 h-full hover:shadow-lg hover:-translate-y-1 transition-all duration-300 rounded-t-lg flex flex-col justify-between overflow-hidden">
+      
+      {/* Top Brand Accent */}
+      <div className="h-1 -mx-4 -mt-4 mb-4 bg-gradient-to-r from-[#1976d2] via-[#42a5f5] to-[#1976d2]"></div>
+
       <div>
-        <h3 className="text-slate-800 font-bold mb-4 text-base tracking-tight truncate border-b border-slate-100 pb-2.5">
+        <h3 className="text-[#1976d2] font-bold mb-4 text-base tracking-tight truncate border-b-2 border-[#1976d2]/15 pb-2.5">
           {data.title}
         </h3>
 
         <div className="grid grid-cols-2 gap-3">
           {data.items.slice(0, 4).map((item, idx) => {
-            const itemPath = `/${item.name.toLowerCase().replace(/\s+/g, "-")}`;
+            const itemPath = `/${item.name
+              .toLowerCase()
+              .replace(/\s+/g, "-")}`;
+
             return (
               <div key={idx} className="group/item min-w-0">
                 <Link to={itemPath} className="block w-full">
-                  <div className="bg-slate-50 border border-slate-100 p-3 mb-1.5 rounded-lg w-full aspect-square flex items-center justify-center overflow-hidden transition-colors group-hover/item:border-orange-100 group-hover/item:bg-orange-50/10">
+                  <div className="bg-white border border-blue-100 p-3 mb-1.5 rounded-lg w-full aspect-square flex items-center justify-center overflow-hidden transition-all duration-300 group-hover/item:border-[#1976d2]/40 group-hover/item:bg-blue-50">
                     <img
                       src={item.img}
                       alt={item.name}
@@ -137,7 +144,8 @@ const CategoryBox = ({ data }) => {
                       loading="lazy"
                     />
                   </div>
-                  <span className="text-[11px] md:text-xs text-slate-600 transition-colors group-hover/item:text-[#fe741d] leading-tight block truncate font-medium">
+
+                  <span className="text-[11px] md:text-xs text-slate-600 transition-colors duration-300 group-hover/item:text-[#1976d2] leading-tight block truncate font-medium">
                     {item.name}
                   </span>
                 </Link>
@@ -147,20 +155,29 @@ const CategoryBox = ({ data }) => {
         </div>
       </div>
 
-      <div className="pt-4 mt-2 border-t border-slate-50">
-        <Link to={`/section/${data.title.toLowerCase()}`} className="inline-block">
-          <button className="group relative flex items-center gap-1.5 text-[#fe741d] text-xs font-bold transition-all duration-300">
+      <div className="pt-4 mt-2 border-t border-blue-100">
+        <Link
+          to={`/section/${data.title.toLowerCase()}`}
+          className="inline-block"
+        >
+          <button className="group relative flex items-center gap-1.5 text-[#1976d2] text-xs font-bold transition-all duration-300">
             <span className="relative">
               See More Collection
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#fe741d] transition-all duration-300 group-hover:w-full"></span>
+
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#1976d2] transition-all duration-300 group-hover:w-full"></span>
             </span>
-            <FiChevronRight size={14} className="transition-transform duration-300 group-hover:translate-x-0.5" />
+
+            <FiChevronRight
+              size={14}
+              className="transition-transform duration-300 group-hover:translate-x-0.5"
+            />
           </button>
         </Link>
       </div>
     </div>
   );
 };
+
 
 const MultiCategorySection = () => {
   const scrollRef = useRef(null);

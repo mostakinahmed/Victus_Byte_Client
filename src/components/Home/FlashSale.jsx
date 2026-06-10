@@ -92,7 +92,7 @@ export default function FlashSale() {
           <span className="text-yellow-400 px-1 drop-shadow-[0_2px_5px_rgba(234,179,8,0.4)] animate-pulse">
             ⚡
           </span>
-          <span className="bg-[#007aff] text-white px-3 py-0.5 rounded-sm text-lg md:text-2xl tracking-normal not-italic shadow-inner ml-0.5">
+          <span className="bg-[#007aff] text-white md:px-3 px-2 md:py-0.5 rounded-sm text-lg md:text-2xl tracking-normal not-italic shadow-inner ml-0.5">
             Sale
           </span>
         </div>
