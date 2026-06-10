@@ -9,6 +9,7 @@ import TopCategoryCards from "../components/Home/TopCategoryCards.jsx";
 import FirstBanner from "../components/Home/FirstBanner.jsx";
 import NewArrival from "../components/Home/NewArrival.jsx";
 import MobileCategoryRow from "../components/Home/MobileCategoryRow.jsx";
+import FlashSaleSection from "../components/Home/flashSaleProducts.jsx";
 
 export const Home = () => {
   return (
@@ -17,8 +18,10 @@ export const Home = () => {
       <FeaturedCategory />
       <TopCategoryCards />
       <MobileCategoryRow />
+
       <FlashSale />
       <HorizontalAds />
+
       <FeatureProduct />
       <NewArrival />
       <FirstBanner />
