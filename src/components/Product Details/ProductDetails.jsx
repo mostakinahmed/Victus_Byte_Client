@@ -173,7 +173,7 @@ const ProductDetail = () => {
                       onClick={() => setCurrentIndex(idx)}
                       className={`w-14 h-14 md:w-16  md:h-16 flex-shrink-0 object-contain p-1 rounded border-2  transition-all cursor-pointer ${
                         idx === currentIndex
-                          ? "border-[#fe741d] bg-white"
+                          ? "border-[#1976d2] bg-white"
                           : "opacity-60  hover:opacity-100"
                       }`}
                     />
@@ -460,7 +460,7 @@ const ProductDetail = () => {
 
       {/* Description Section */}
       <section className="max-w-[1400px] p-3 md:px-5 px-2 mx-auto w-full">
-        <div className="bg-white rounded border border-slate-200 overflow-hidden shadow-sm">
+        <div className="bg-white rounded border border-blue-100 overflow-hidden">
           <Description data={product} />
         </div>
       </section>

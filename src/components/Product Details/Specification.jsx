@@ -9,7 +9,7 @@ export default function ProductSpecTable({ data }) {
   return (
     <div className="font-sans bg-white rounded border border-slate-200 overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
       {/* Header */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-[#1976d2] via-[#1e88e5] to-[#1565c0] px-6 py-2.5">
+      <div className="relative overflow-hidden bg-gradient-to-r from-[#1976d2] via-[#1e88e5] to-[#1565c0] px-6 py-2">
         <div className="absolute inset-0 bg-white/5"></div>
 
         <div className="relative flex items-center gap-3">
