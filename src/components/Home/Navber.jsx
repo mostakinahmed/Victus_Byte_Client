@@ -90,47 +90,188 @@ const NavbarTop = () => {
 
           <div className="flex items-center gap-4">
             <Link to="/offer" className="group">
-              <div className="relative flex items-center gap-2 px-4 py-1.5 bg-[#1976d2] rounded-full overflow-hidden">
-                {/* Pulse Animation Layer */}
+              <div
+                className="
+      relative
+      flex
+      items-center
+      gap-2
+      px-4
+      py-2
+      rounded-full
+      overflow-hidden
+      bg-gradient-to-r
+      from-[#1565c0]
+      via-[#1976d2]
+      to-[#42a5f5]
+      shadow-[0_4px_20px_rgba(25,118,210,0.35)]
+      hover:shadow-[0_8px_30px_rgba(25,118,210,0.5)]
+      transition-all
+      duration-300
+      hover:scale-[1.03]
+    "
+              >
+                {/* Animated Glow */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-[shine_4s_linear_infinite]" />
 
-                {/* Icon Container */}
-                <div className="bg-white rounded-full text-center">
-                  <div className="flex justify-center items-center p-[2px]">
-                    <FiPercent size={18} className="text-[#1976d2]" />
-                  </div>
-                
-                
+                {/* Live Pulse */}
+                <div className="absolute left-2">
+                  <span className="relative flex h-2.5 w-2.5">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75"></span>
+                    <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-white"></span>
+                  </span>
                 </div>
 
-                {/* Text Label */}
-                <span className="relative z-10 text-[11px] font-black text-white uppercase tracking-[0.15em]">
+                {/* Icon */}
+                <div
+                  className="
+        ml-3
+        flex
+        items-center
+        justify-center
+        h-7
+        w-7
+        rounded-full
+        bg-white
+        shadow-sm
+      "
+                >
+                  <FiPercent size={15} className="text-[#1976d2]" />
+                </div>
+
+                {/* Text */}
+                <span
+                  className="
+        relative
+        z-10
+        text-xs
+        font-extrabold
+        text-white
+        uppercase
+        tracking-[0.18em]
+      "
+                >
                   Live Offers
                 </span>
 
-                {/* Shine Effect */}
-                <div className="absolute top-0 -inset-full h-full w-1/2 z-20 block transform -skew-x-12 bg-gradient-to-r from-transparent to-white/30 opacity-40 group-hover:animate-shine" />
+                {/* Badge */}
+                <span
+                  className="
+        bg-white/10
+        backdrop-blur-sm
+        text-white
+        text-[9px]
+        font-bold
+        px-2
+        py-[2px]
+        rounded-full
+        border
+        border-white/30
+      "
+                >
+                  HOT
+                </span>
               </div>
             </Link>
 
+            {/* Track Order */}
             <div
               onClick={() => navigate("/track-order")}
-              className="cursor-pointer p-2 rounded hover:bg-gray-100  transition"
+              className="
+    group
+    cursor-pointer
+    h-11
+    w-11
+    rounded-xl
+
+    bg-white
+    flex
+    items-center
+    justify-center
+
+    hover:border-[#1976d2]/30
+    hover:bg-blue-50
+    hover:shadow-md
+    transition-all
+    duration-300
+  "
               title="Track Order"
             >
-              <FiTruck size={24} className="text-gray-800" />
+              <FiTruck
+                size={20}
+                className="
+      text-slate-700
+      group-hover:text-[#1976d2]
+      group-hover:scale-110
+      transition-all
+      duration-300
+    "
+              />
             </div>
 
+            {/* Cart */}
             <div
-              className="relative p-2 rounded hover:bg-gray-100 transition"
+              className="
+    relative
+    group
+    h-11
+    w-11
+    rounded-xl
+    bg-white
+    flex
+    items-center
+    justify-center
+    hover:border-[#1976d2]/30
+    hover:bg-blue-50
+    hover:shadow-md
+    transition-all
+    duration-300
+  "
               title="Cart"
             >
               <Link to="/checkout/cart">
-                <i className="ri-shopping-cart-2-line text-2xl"></i>
+                <i
+                  className="
+        ri-shopping-cart-2-line
+        text-[22px]
+        text-slate-700
+        group-hover:text-[#1976d2]
+        group-hover:scale-110
+        transition-all
+        duration-300
+      "
+                />
               </Link>
+
               {cartItems.length > 0 && (
-                <span className="absolute top-0 right-0 bg-[#fe741d] text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
-                  {cartItems.length}
-                </span>
+                <>
+                  {/* Pulse Ring */}
+                  <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-[#fe741d] animate-ping opacity-30"></span>
+
+                  {/* Counter */}
+                  <span
+                    className="
+          absolute
+          -top-1
+          -right-1
+          min-w-[18px]
+          h-[18px]
+          flex
+          items-center
+          justify-center
+          bg-[#fe741d]
+          text-white
+          text-[10px]
+          font-bold
+          rounded-full
+          shadow-md
+          border
+          border-white
+        "
+                  >
+                    {cartItems.length}
+                  </span>
+                </>
               )}
             </div>
 
@@ -149,7 +290,11 @@ const NavbarTop = () => {
           </div>
 
           <Link to="/">
-            <img className="h-[39px]  ml-18" src="https://7vgva7cju0vcfvwf.public.blob.vercel-storage.com/c5c44365-8659-46b0-8653-d5af8a80a399.png" alt="Logo" />
+            <img
+              className="h-[39px]  ml-18"
+              src="https://7vgva7cju0vcfvwf.public.blob.vercel-storage.com/c5c44365-8659-46b0-8653-d5af8a80a399.png"
+              alt="Logo"
+            />
           </Link>
 
           <div className="flex items-center gap-3 w-[110px] justify-end">

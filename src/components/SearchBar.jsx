@@ -92,94 +92,175 @@ export const SearchBar = () => {
     setSearch("");
   };
 
-  return (
-    <div ref={wrapperRef} className="relative w-full max-w-xl mx-auto md:mx-0">
-      <div className="relative flex items-center">
-        <input
-          type="text"
-          placeholder={placeholder} // ✅ Bind animated placeholder
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && searchPage()}
-          className="w-full bg-white px-4 pr-10 py-1.5 border-1 border-slate-900 rounded-full text-black focus:outline-none placeholder:text-slate-700 placeholder:tracking-widest placeholder:font- placeholder:md:text-sm placeholder:text-xs transition-all duration-300"
-        />
+ return (
+  <div
+  ref={wrapperRef}
+  className="relative w-full max-w-xl mx-auto md:mx-0"
+>
+  {/* Premium Glow */}
+  <div className="absolute -inset-[1px] rounded-xl bg-gradient-to-r from-[#1976d2]/20 via-transparent to-[#1976d2]/20 blur-sm"></div>
 
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={2}
-          stroke="currentColor"
-          onClick={searchPage}
-          className="absolute right-3 w-5 h-5 text-slate-900 cursor-pointer hover:text-[#f4813a] transition"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="m21 21-4.35-4.35m0 0A7.5 7.5 0 1 0 5.64 5.64a7.5 7.5 0 0 0 10.61 10.61Z"
-          />
-        </svg>
-      </div>
+  {/* Search Box */}
+  <div className="relative flex items-center">
+    <input
+      type="text"
+      placeholder={placeholder}
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+      onKeyDown={(e) => e.key === "Enter" && searchPage()}
+      className="
+        w-full
+        bg-slate-50
+        border
+        border-slate-500/35
+        rounded-full
+        px-5
+        py-2.5
+        pr-14
+        text-gray-800
+        text-md
+        transition-all
+        duration-300
 
-      {/* --- SEARCH DROPDOWN --- */}
-      <div
-        className={`absolute left-0 top-full mt-1 w-full bg-white border-x-2 border-b-2 border-[#f4813a] shadow-2xl overflow-hidden z-[110] transition-all duration-300 ease-out origin-top ${
-          search
-            ? "opacity-100 scale-y-100"
-            : "opacity-0 scale-y-95 pointer-events-none"
-        }`}
+        hover:bg-white
+        hover:border-[#1976d2]/40
+
+        focus:bg-white
+        focus:border-[#1976d2]
+        focus:ring-4
+        focus:ring-[#1976d2]/10
+        focus:outline-none
+
+        placeholder:text-slate-400
+        placeholder:text-sm
+        placeholder:tracking-wide
+      "
+    />
+
+    {/* Search Button */}
+    <button
+      onClick={searchPage}
+      className="
+        absolute
+        right-1
+        h-9
+        w-9
+        rounded-full
+        bg-[#1976d2]
+        flex
+        items-center
+        justify-center
+        shadow-md
+        hover:scale-105
+        hover:shadow-lg
+        transition-all
+        duration-300
+      "
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={2}
+        stroke="currentColor"
+        className="w-4 h-4 text-white"
       >
-        <div className="flex items-center justify-between text-white bg-[#f4813a] px-4 py-1.5 text-xs font-black uppercase tracking-widest">
-          <span>Quick Results</span>
-          <span className="text-[10px] opacity-80">
-            {filtered.length} found
-          </span>
-        </div>
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="m21 21-4.35-4.35m0 0A7.5 7.5 0 1 0 5.64 5.64a7.5 7.5 0 0 0 10.61 10.61Z"
+        />
+      </svg>
+    </button>
+  </div>
 
-        <div className="max-h-[350px] overflow-y-auto custom-scrollbar">
-          {filtered.length > 0 ? (
-            filtered.slice(0, 5).map((p) => (
-              <Link
-                key={p.pID}
-                to={`/${p.category}/${p.name}`}
-                onClick={() => setSearch("")}
-                className="flex items-center gap-4 px-4 py-3 border-b border-gray-100 hover:bg-orange-50 transition-colors group"
-              >
-                <div className="w-10 h-10 shrink-0 bg-white rounded border border-gray-100 p-1">
-                  <img
-                    src={p.images[0]}
-                    alt={p.name}
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-                <div className="flex flex-col min-w-0">
-                  <span className="text-sm font-bold text-gray-800 truncate group-hover:text-[#f4813a] transition-colors">
-                    {p.name}
-                  </span>
-                  <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">
-                    {p.category}
-                  </span>
-                </div>
-              </Link>
-            ))
-          ) : (
-            <div className="px-4 py-10 text-center">
-              <p className="text-sm text-gray-400 font-medium">
-                No matches for "<span className="text-gray-800">{search}</span>"
-              </p>
-            </div>
-          )}
-        </div>
+  {/* Search Results Dropdown */}
+  <div
+    className={`absolute left-0 top-full mt-2 w-full bg-white rounded-xl border border-slate-200 shadow-2xl overflow-hidden z-[110] transition-all duration-300 ${
+      search
+        ? "opacity-100 translate-y-0"
+        : "opacity-0 -translate-y-2 pointer-events-none"
+    }`}
+  >
+    <div className="bg-gradient-to-r from-[#1976d2] to-[#2196f3] px-4 py-2 flex justify-between items-center">
+      <span className="text-white text-xs font-bold uppercase tracking-widest">
+        Quick Results
+      </span>
 
-        {filtered.length > 5 && (
-          <button
-            onClick={searchPage}
-            className="w-full py-3 bg-gray-50 text-[#f4813a] hover:bg-[#f4813a] hover:text-white transition-all font-black text-[10px] uppercase tracking-[0.2em] border-t border-gray-100"
-          >
-            See all {filtered.length} results
-          </button>
-        )}
-      </div>
+      <span className="text-white/80 text-[10px]">
+        {filtered.length} Found
+      </span>
     </div>
-  );
+
+    <div className="max-h-[350px] overflow-y-auto">
+      {filtered.length > 0 ? (
+        filtered.slice(0, 5).map((p) => (
+          <Link
+            key={p.pID}
+            to={`/${p.category}/${p.name}`}
+            onClick={() => setSearch("")}
+            className="
+              flex
+              items-center
+              gap-4
+              px-4
+              py-3
+              border-b
+              border-slate-100
+              hover:bg-blue-50
+              transition
+              group
+            "
+          >
+            <div className="w-12 h-12 bg-white rounded-lg border border-slate-100 p-1 shadow-sm">
+              <img
+                src={p.images[0]}
+                alt={p.name}
+                className="w-full h-full object-contain"
+              />
+            </div>
+
+            <div className="flex flex-col min-w-0">
+              <span className="text-sm font-semibold text-gray-800 truncate group-hover:text-[#1976d2] transition">
+                {p.name}
+              </span>
+
+              <span className="text-[10px] uppercase tracking-wider text-slate-400">
+                {p.category}
+              </span>
+            </div>
+          </Link>
+        ))
+      ) : (
+        <div className="py-10 text-center">
+          <p className="text-sm text-slate-400">
+            No products found
+          </p>
+        </div>
+      )}
+    </div>
+
+    {filtered.length > 5 && (
+      <button
+        onClick={searchPage}
+        className="
+          w-full
+          py-3
+          bg-slate-50
+          text-[#1976d2]
+          font-bold
+          text-xs
+          uppercase
+          tracking-widest
+          hover:bg-[#1976d2]
+          hover:text-white
+          transition-all
+        "
+      >
+        View All Results ({filtered.length})
+      </button>
+    )}
+  </div>
+</div>
+);
 };

@@ -218,3 +218,16 @@ body {
 .my-custom-scroll:hover {
   animation-play-state: paused;
 }
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100px) skewX(-20deg);
+  }
+  100% {
+    transform: translateX(250px) skewX(-20deg);
+  }
+}
+
+.animate-shine {
+  animation: shine 0.9s ease;
+}

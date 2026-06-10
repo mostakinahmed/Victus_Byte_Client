@@ -52,14 +52,24 @@ export const Profile = () => {
           </button>
         </div>
       ) : (
-        <div className=" md:hover:border-indigo-300 py-[6px] cursor-pointer md:px-2 md:rounded-2xl md:border border-slate-400 p-1.5 hover:bg-slate-100 transition-all">
-          <button
-            onClick={() => navigate("/signin")}
-            className="flex gap-2 justify-center items-center cursor-pointer md:px-2  "
-          >
-            <User className="md:w-5 md:h-5 w-6 h-6 text-slate-700" />
-            <h2 className="hidden lg:flex text-sm font-medium  tracking-wider text-slate-700">
-              Sign in
+        <div
+          onClick={() => navigate("/signin")}
+          className="group relative cursor-pointer overflow-hidden rounded-full border border-[#1976d2]/30 bg-white md:px-2 md:py-1.5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[#1976d2]/40 hover:shadow-[0_10px_25px_rgba(25,118,210,0.20)]"
+        >
+          {/* Shine Effect */}
+          <div className="absolute inset-0 overflow-hidden rounded-full">
+            <div className="absolute top-0 -left-20 h-full w-8 bg-white/50 skew-x-12 group-hover:animate-shine"></div>
+          </div>
+
+          <button className="relative cursor-pointer z-10 flex items-center gap-3 md:px-2">
+            {/* Icon */}
+            <div className="flex h-8 w-8 items-center md:-ml-2 justify-center rounded-full bg-[#1976d2]/15 transition-all duration-300 group-hover:bg-[#1976d2]">
+              <User className="md:w-4 md:h-4 w-5 h-5 text-[#1976d2] group-hover:text-white transition-all duration-300" />
+            </div>
+
+            {/* Text */}
+            <h2 className="hidden lg:flex text-sm font-semibold tracking-wide text-slate-700 group-hover:text-[#1976d2] transition-colors duration-300">
+              Sign In
             </h2>
           </button>
         </div>
