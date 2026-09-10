@@ -172,7 +172,7 @@ const Comparison = () => {
   // ============================================================
 
   return (
-    <div className="max-w-[1400px] mx-auto px-4 py-8 mt-20 font-sans">
+    <div className="max-w-[1400px] mx-auto px-4 md:-mt-10 font-sans">
       {/* ======================================================
           PAGE TITLE
       ====================================================== */}

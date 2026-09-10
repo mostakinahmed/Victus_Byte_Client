@@ -88,7 +88,7 @@ const CategoryDropdown = () => {
       ======================================================== */}
       <div className="flex items-center">
         {/* HOME */}
-        <Link
+        {/* <Link
           to="/"
           className="
             flex
@@ -108,7 +108,7 @@ const CategoryDropdown = () => {
         >
           <FiHome className="text-lg text-brand" />
           Home
-        </Link>
+        </Link> */}
 
         {/* ALL CATEGORIES */}
         <button
@@ -121,7 +121,6 @@ const CategoryDropdown = () => {
             flex
             items-center
             gap-2
-            px-4
             py-2
             rounded-lg
            

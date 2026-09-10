@@ -40,6 +40,7 @@ import TrackOrderSttedFast from "./components/TrackOrderSteedFast";
 import DailyAccessories from "./components/Daily Accessories/DailyAccessores";
 import VictusByteAssistant from "./components/VictusByteAssistant";
 import Comparison from "./pages/Comparison";
+import { Breadcrumb } from "./components/BreadCrump";
 
 const Loader = () => (
   <div className="fixed inset-0 flex items-center justify-center bg-white z-50">
@@ -91,6 +92,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
 
+  
   // Stop loader as soon as productData is available
   useEffect(() => {
     if (productData && productData.length > 0) {
@@ -140,11 +142,12 @@ function App() {
         {/* <Navber /> */}
         <NavberDark />
         <CatMenu />
+
         {/* <FloatingWhatsApp /> */}
         <FloatingSocials />
         {/* <VictusByteAssistant /> */}
       </div>
-
+      <Breadcrumb />
       {/* 3. MAIN CONTENT: Added padding-top (pt-44) so content isn't 
           hidden behind the fixed navigation on load.
       */}

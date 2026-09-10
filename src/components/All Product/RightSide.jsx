@@ -93,7 +93,7 @@ const RightSide = ({ filterData }) => {
   return (
     <section className="w-full">
       {/* Header showing Category Name */}
-      <h2 className="text-md bg-white text-center p-1.5 rounded shadow font-semibold uppercase mb-2">
+      <h2 className="text-md bg-white text-center p-1.5 rounded shadow-xs font-semibold uppercase mb-2">
         {catName}
       </h2>
 

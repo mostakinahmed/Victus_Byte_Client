@@ -6,10 +6,18 @@ import { RelatedProduct } from "./RelatedProduct.jsx";
 import { RecomProduct } from "./RecomProduct.jsx";
 import { Description } from "./Description.jsx";
 import { CartContext } from "../Context Api/CartContext.jsx";
-import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import {
+  FiChevronLeft,
+  FiChevronRight,
+  FiLink,
+  FiBookmark,
+  FiPlusCircle,
+} from "react-icons/fi";
 import AlsoLike from "./AlsoLike";
+import { FaFacebookMessenger, FaWhatsapp } from "react-icons/fa";
 import ResponsiveToaster from "./ResponsiveToaster";
 import toast from "react-hot-toast";
+import { Breadcrumb } from "../BreadCrump";
 
 const ProductDetail = () => {
   const navigate = useNavigate();
@@ -244,14 +252,53 @@ const ProductDetail = () => {
   };
 
   return (
-    <div className="min-h-screen font-sans pb-5 ">
+    <div className="min-h-screen md:-mt-10 font-sans pb-5 ">
       <ResponsiveToaster />
 
       {/* Main Layout Container */}
-      <section className="max-w-[1400px] lg:mt-[54px] p-3 md:px-5 px-2 mx-auto w-full">
-        <div className="flex flex-col lg:flex-row mt-12 md:mt-11 gap-4 lg:gap-3 w-full">
+      <section className="max-w-[1400px]  md:px-5 px-2 mx-auto w-full">
+        <div className="flex flex-col lg:flex-row gap-4 lg:gap-3 w-full">
           {/* LEFT COLUMN: Product Images, Details, and Specs */}
           <div className="flex flex-col w-full lg:w-[70%] xl:w-[80%] gap-3">
+            {/* Top Header */}
+            <div className="w-full hidden md:flex bg-white border border-slate-200 rounded px-6 py-3 items-center justify-between">
+              <div className="flex items-center gap-3 text-black text-sm font-medium">
+                <span>Share:</span>
+                <div className="flex items-center gap-2.5">
+                  <button
+                    className="p-1 hover:text-blue-600 transition-colors cursor-pointer"
+                    aria-label="Share on Messenger"
+                  >
+                    <FaFacebookMessenger size={18} />
+                  </button>
+                  <button
+                    className="p-1 hover:text-green-600 transition-colors cursor-pointer"
+                    aria-label="Share on WhatsApp"
+                  >
+                    <FaWhatsapp size={18} />
+                  </button>
+                  <button
+                    className="p-1 hover:text-slate-900 transition-colors cursor-pointer"
+                    aria-label="Copy Link"
+                  >
+                    <FiLink size={18} />
+                  </button>
+                </div>
+              </div>
+
+              {/* Right: Save & Add to Compare */}
+              <div className="flex items-center gap-6 text-sm font-semibold text-black">
+                <button className="flex items-center gap-1.5 hover:text-brand transition-colors cursor-pointer">
+                  <FiBookmark size={18} />
+                  <span>Save</span>
+                </button>
+                <button className="flex items-center gap-1.5 hover:text-brand transition-colors cursor-pointer">
+                  <FiPlusCircle className="" size={18} />
+                  <span>Add to Compare</span>
+                </button>
+              </div>
+            </div>
+
             {/* Top Product Card */}
             <div className="flex flex-col md:flex-row gap-2 bg-white rounded border border-slate-200 overflow-hidden">
               {/* Image Gallery Section */}
@@ -332,7 +379,6 @@ const ProductDetail = () => {
                   </div>
 
                   <hr className="border-slate-100 mb-4" />
-                
 
                   {product?.category?.toLowerCase() === "mobile-phone" ? (
                     <div className="flex flex-col mb-4">
