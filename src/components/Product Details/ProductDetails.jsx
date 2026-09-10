@@ -251,6 +251,14 @@ const ProductDetail = () => {
     );
   };
 
+  //for add to compare button
+  const handleAddToCompare = () => {
+    console.log("clcik");
+
+    // Navigate to the comparison page and pass the product ID in state
+    navigate("/product/compare", { state: { compareProductId: product?.pID } });
+  };
+
   return (
     <div className="min-h-screen md:-mt-10 font-sans pb-5 ">
       <ResponsiveToaster />
@@ -292,7 +300,10 @@ const ProductDetail = () => {
                   <FiBookmark size={18} />
                   <span>Save</span>
                 </button>
-                <button className="flex items-center gap-1.5 hover:text-brand transition-colors cursor-pointer">
+                <button
+                  onClick={handleAddToCompare}
+                  className="flex items-center gap-1.5 hover:text-brand transition-colors cursor-pointer"
+                >
                   <FiPlusCircle className="" size={18} />
                   <span>Add to Compare</span>
                 </button>
@@ -344,7 +355,7 @@ const ProductDetail = () => {
                       onClick={() => setCurrentIndex(idx)}
                       className={`w-14 h-14 md:w-16 md:h-16 flex-shrink-0 object-contain p-1 rounded border-2 transition-all cursor-pointer ${
                         idx === currentIndex
-                          ? "border-brand bg-white shadow-sm"
+                          ? "border-brand/70 bg-white shadow-sm"
                           : "border-slate-200 opacity-70 hover:opacity-100"
                       }`}
                     />
@@ -722,7 +733,7 @@ const ProductDetail = () => {
       </section>
 
       {/* Description Section */}
-      <section className="max-w-[1400px] p-3 md:px-5 px-2 mx-auto w-full">
+      <section className="max-w-[1400px] p-3 md:mt-4 md:px-5 px-2 mx-auto w-full">
         <div className="bg-white rounded border border-blue-100 overflow-hidden">
           <Description data={product} />
         </div>

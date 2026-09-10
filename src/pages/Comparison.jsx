@@ -1,17 +1,16 @@
-import React, { useContext, useMemo, useState } from "react";
-
+import React, { useContext, useMemo, useState, useEffect } from "react";
 import { DataContext } from "../components/Context Api/UserContext.jsx";
-
 import { FiSearch, FiX, FiShoppingBag, FiPlus } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Comparison = () => {
   const { productData } = useContext(DataContext);
   const navigate = useNavigate();
+  const location = useLocation();
+
   // ============================================================
   // TWO PRODUCT SLOTS
   // ============================================================
-
   const [selectedProducts, setSelectedProducts] = useState([null, null]);
 
   // Search query for each product column
@@ -21,55 +20,57 @@ const Comparison = () => {
   const [activeDropdown, setActiveDropdown] = useState(null);
 
   // ============================================================
+  // AUTO-FILL FROM "ADD TO COMPARE" STATE
+  // ============================================================
+  useEffect(() => {
+    const passedId = location.state?.compareProductId;
+
+    if (passedId && productData && Array.isArray(productData)) {
+      // Find the product matching the passed ID
+      const matchedProduct = productData.find((p) => p.pID === passedId);
+
+      if (matchedProduct) {
+        setSelectedProducts((prev) => [matchedProduct, prev[1]]);
+      }
+    }
+  }, [location.state, productData]);
+
+  // ============================================================
   // SELECT PRODUCT
   // ============================================================
-
   const handleSelectProduct = (index, product) => {
     const updatedProducts = [...selectedProducts];
-
     updatedProducts[index] = product;
-
     setSelectedProducts(updatedProducts);
 
     // Clear search after selection
     const updatedQueries = [...searchQueries];
-
     updatedQueries[index] = "";
-
     setSearchQueries(updatedQueries);
-
     setActiveDropdown(null);
   };
 
   // ============================================================
   // REMOVE PRODUCT
   // ============================================================
-
   const handleRemoveProduct = (index) => {
     const updatedProducts = [...selectedProducts];
-
     updatedProducts[index] = null;
-
     setSelectedProducts(updatedProducts);
 
     const updatedQueries = [...searchQueries];
-
     updatedQueries[index] = "";
-
     setSearchQueries(updatedQueries);
-
     setActiveDropdown(null);
   };
 
   // ============================================================
   // SEARCH PRODUCT
   // ============================================================
-
   const getFilteredProducts = (index) => {
     const query = searchQueries[index]?.trim().toLowerCase();
 
     if (!query) return [];
-
     if (!productData || !Array.isArray(productData)) {
       return [];
     }
@@ -119,7 +120,6 @@ const Comparison = () => {
   // ============================================================
   // GET SPECIFICATION VALUE
   // ============================================================
-
   const getSpecificationValue = (product, specKey) => {
     if (!product) {
       return "-";
@@ -143,28 +143,21 @@ const Comparison = () => {
   // ============================================================
   // HANDLE SEARCH CHANGE
   // ============================================================
-
   const handleSearchChange = (index, value) => {
     const updatedQueries = [...searchQueries];
-
     updatedQueries[index] = value;
-
     setSearchQueries(updatedQueries);
-
     setActiveDropdown(index);
   };
 
   // ============================================================
   // PRODUCT URL
   // ============================================================
-
   const shopNow = (product) => {
     if (!product) return "#";
 
     const productName = product.name?.replace(/\s+/g, "-").toLowerCase();
-
     navigate(`/${product.category}/${productName}`);
-    // return `/${product.category}/${productName}`;
   };
 
   // ============================================================

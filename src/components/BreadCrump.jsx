@@ -7,10 +7,35 @@ export const Breadcrumb = () => {
   const currentPath = location.pathname;
 
   // Define routes where the breadcrumb should be completely hidden
-  const hiddenRoutes = ["/", "/checkout/purchase", "/checkout/cart"];
+  const hiddenRoutes = [
+    "/",
+    "/checkout/purchase",
+    "/checkout/cart",
+    "/signup",
+    "/signin",
+    "/electronics",
+    "/kids-zone",
+    "/daily-accessories",
+    "/offer",
+  ];
 
   // If the current path matches any hidden route, render nothing
   if (hiddenRoutes.includes(currentPath)) {
+    return null;
+  }
+
+  // 2. Route prefixes that have dynamic parameters (like search keywords or IDs)
+  const dynamicHiddenPrefixes = [
+    "/search-result/",
+    // Add other dynamic paths here if needed, e.g., "/product-details/"
+  ];
+
+  // Check if current path matches exact routes OR starts with any dynamic prefix
+  const isHidden =
+    hiddenRoutes.includes(currentPath) ||
+    dynamicHiddenPrefixes.some((prefix) => currentPath.startsWith(prefix));
+
+  if (isHidden) {
     return null;
   }
 

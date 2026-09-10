@@ -157,7 +157,7 @@ const Profile = () => {
   return (
     <div>
       {/* --- DESKTOP VERSION --- */}
-      <div className="hidden md:block max-w-[1400px] lg:mt-[86px] mt-[49px] px-2 lg:px-4 mx-auto md:py-6 py-3 font-sans">
+      <div className="hidden md:block max-w-[1400px] -mt-10 px-2 lg:px-4 mx-auto font-sans">
         <div className="flex flex-col lg:flex-row md:gap-4 gap-2">
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -321,7 +321,7 @@ const Profile = () => {
       </div>
 
       {/* --- MOBILE VERSION --- */}
-      <div className="px-2 mt-15 min-h-screen md:hidden">
+      <div className="px-2  min-h-screen md:hidden">
         {activeTab === "overview" ? (
           <div className="animate-in fade-in duration-300">
             <div className="relative mb-2 bg-white border border-slate-200 p-2">
@@ -361,7 +361,7 @@ const Profile = () => {
                     <p className="text-[9px] uppercase font-bold text-slate-400">
                       ID
                     </p>
-                    <p className="text-[11px] font-bold text-blue-600">
+                    <p className="text-[12px] font-bold text-blue-600">
                       #{user.cID || "000"}
                     </p>
                   </div>
@@ -369,7 +369,7 @@ const Profile = () => {
                     <p className="text-[8px] uppercase font-bold text-slate-400">
                       Gender
                     </p>
-                    <p className="text-[11px] font-medium text-slate-700">
+                    <p className="text-[12px] font-medium text-slate-700">
                       {user.gender || "N/A"}
                     </p>
                   </div>
@@ -379,7 +379,7 @@ const Profile = () => {
                     <p className="text-[8px] uppercase font-bold text-slate-400">
                       Phone
                     </p>
-                    <p className="text-[11px] font-medium text-slate-700">
+                    <p className="text-[12px] font-medium text-slate-700">
                       {user.phone || "N/A"}
                     </p>
                   </div>
@@ -387,7 +387,7 @@ const Profile = () => {
                     <p className="text-[8px] uppercase font-bold text-slate-400">
                       Member Since
                     </p>
-                    <p className="text-[10px] font-medium text-slate-700">
+                    <p className="text-[12px] font-medium text-slate-700">
                       {user.createdAt
                         ? new Date(user.createdAt).toLocaleDateString("en-GB")
                         : "N/A"}

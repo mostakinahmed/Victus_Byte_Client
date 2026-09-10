@@ -10,10 +10,10 @@ const Maintenance = ({ pageName }) => {
           <div className="flex justify-center mb-16">
             <div className="relative">
               {/* Outer Glow Effect */}
-              <div className="absolute inset-0 rounded-full bg-[#1976d2] opacity-10 animate-pulse scale-150"></div>
+              <div className="absolute inset-0 rounded-full bg-brand opacity-10 animate-pulse scale-150"></div>
 
               <svg
-                className="w-16 h-16 text-[#1976d2] animate-[spin_4s_linear_infinite] relative z-10"
+                className="w-16 h-16 text-brand animate-[spin_4s_linear_infinite] relative z-10"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -35,14 +35,14 @@ const Maintenance = ({ pageName }) => {
           </div>
 
           <h1 className="md:text-xl text-lg font-bold text-gray-800 mb-4 uppercase tracking-tight">
-            {pageName} <span className="text-[#1976d2]">Under Development</span>
+            {pageName} <span className="text-brand">Under Development</span>
           </h1>
 
          
 
           <Link
             to="/"
-            className="inline-block bg-[#1976d2] hover:bg-[#1565c0] text-white font-bold md:text-sm text-xs   py-3 md:px-10 px-4 rounded shadow-md hover:shadow-lg transition-all uppercase tracking-wider active:scale-95"
+            className="inline-block bg-brand hover:cursor-pointer text-white font-bold md:text-sm text-xs   py-3 md:px-10 px-4 rounded shadow-md hover:shadow-lg transition-all uppercase tracking-wider active:scale-95"
           >
             Return to Home
           </Link>

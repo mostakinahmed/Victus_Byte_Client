@@ -723,7 +723,7 @@ const DailyAccessories = () => {
                   justify-center
                 "
               >
-                <span className="text-blue-400 font-bold uppercase tracking-widest text-xs mb-2">
+                <span className="text-brand font-bold uppercase tracking-widest text-xs mb-2">
                   Everyday Collection
                 </span>
 
@@ -736,7 +736,7 @@ const DailyAccessories = () => {
                 <Link
                   to="/daily-accessories"
                   className="
-                    bg-[#1976d2]
+                    bg-brand
                     w-fit
                     text-white
                     px-8

@@ -150,7 +150,7 @@ const Footer = () => {
           <div className="lg:col-span-2 grid grid-cols-2 gap-4">
             <div>
               <h4 className="text-white/90 font-bold text-base mb-6 flex items-center gap-2 uppercase tracking-wider">
-                <span className="w-1.5 h-1.5 bg-[#1976d2] rounded-full"></span>{" "}
+                <span className="w-1.5 h-1.5 bg-brand rounded-full"></span>{" "}
                 Explore
               </h4>
               <ul className="space-y-4 text-sm">
@@ -158,14 +158,14 @@ const Footer = () => {
                   <li
                     key={link.name}
                     onClick={() => navigate(link.path)}
-                    className="group flex items-center gap-3 cursor-pointer hover:text-[#1976d2] transition-colors"
+                    className="group flex items-center gap-3 cursor-pointer hover:text-brand transition-colors"
                   >
-                    <span className="text-[#1976d2] group-hover:scale-110 transition-transform">
+                    <span className="text-brand group-hover:scale-110 transition-transform">
                       {link.icon}
                     </span>
                     <span className="relative">
                       {link.name}
-                      <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-[#1976d2] transition-all duration-300 group-hover:w-full"></span>
+                      <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-brand transition-all duration-300 group-hover:w-full"></span>
                     </span>
                   </li>
                 ))}
@@ -173,7 +173,7 @@ const Footer = () => {
             </div>
             <div>
               <h4 className="text-white/90 font-bold text-base mb-6 flex items-center gap-2 uppercase tracking-wider">
-                <span className="w-1.5 h-1.5 bg-[#1976d2] rounded-full"></span>{" "}
+                <span className="w-1.5 h-1.5 bg-brand rounded-full"></span>{" "}
                 Service
               </h4>
               <ul className="space-y-4 text-sm">
@@ -181,14 +181,14 @@ const Footer = () => {
                   <li
                     key={link.name}
                     onClick={() => navigate(link.path)}
-                    className="group flex items-center gap-3 cursor-pointer hover:text-[#1976d2] transition-colors"
+                    className="group flex items-center gap-3 cursor-pointer hover:text-brand transition-colors"
                   >
-                    <span className="text-[#1976d2] group-hover:rotate-12 transition-transform">
+                    <span className="text-brand group-hover:rotate-12 transition-transform">
                       {link.icon}
                     </span>
                     <span className="relative">
                       {link.name}
-                      <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-[#1976d2] transition-all duration-300 group-hover:w-full"></span>
+                      <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-brand transition-all duration-300 group-hover:w-full"></span>
                     </span>
                   </li>
                 ))}
@@ -205,9 +205,9 @@ const Footer = () => {
               <input
                 type="email"
                 placeholder="email@example.com"
-                className="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 focus:border-[#1976d2] focus:outline-none text-xs transition-colors"
+                className="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 focus:border-brand focus:outline-none text-xs transition-colors"
               />
-              <button className="w-full bg-[#1976d2] hover:bg-[#1565c0] text-white font-bold py-3 rounded-xl transition-all active:scale-95 shadow-lg text-xs uppercase tracking-widest">
+              <button className="w-full bg-brand hover:cursor-pointer text-white font-bold py-3 rounded-xl transition-all active:scale-95 shadow-lg text-xs uppercase tracking-widest">
                 Subscribe
               </button>
             </form>
