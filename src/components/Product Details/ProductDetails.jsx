@@ -345,8 +345,16 @@ const ProductDetail = () => {
                   )}
                 </div>
 
-                {/* 2. Thumbnails (Now Below, Horizontal Row) */}
-                <div className="order-2 flex gap-2 border-t border-slate-100 p-3 justify-center overflow-x-auto bg-slate-50/50 hide-scrollbar">
+                {/* 2. Thumbnails (Scrollable on desktop via mouse wheel) */}
+                <div
+                  onWheel={(e) => {
+                    if (e.deltaY !== 0) {
+                      e.currentTarget.scrollLeft += e.deltaY;
+                      e.preventDefault();
+                    }
+                  }}
+                  className="order-2 flex gap-2 border-t border-slate-100 p-3 justify-start md:justify-center overflow-x-auto max-w-md mx-auto hide-scrollbar cursor-grab active:cursor-grabbing"
+                >
                   {product.images?.map((img, idx) => (
                     <img
                       key={idx}

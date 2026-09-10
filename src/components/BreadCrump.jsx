@@ -45,7 +45,7 @@ export const Breadcrumb = () => {
 
   return (
     <nav className="max-w-[1400px] font-light mt-13 -mb-2 md:-mb-0 md:px-6 px-2.5 mx-auto w-full flex items-center text-xs md:text-sm md:mt-32 text-black/95 py-3">
-      <ol className="flex items-center flex-wrap gap-2">
+      <ol className="flex items-center flex-wrap gap-1">
         {/* Home Link */}
         <li>
           <Link

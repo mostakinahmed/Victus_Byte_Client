@@ -110,7 +110,7 @@ export const SearchBar = () => {
         bg-slate-50
         md:bg-gray-900
         border
-        border-slate-500/35
+        border-slate-500/20
         rounded-full
         px-5
         py-2
