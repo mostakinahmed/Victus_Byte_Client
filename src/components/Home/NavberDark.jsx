@@ -6,8 +6,9 @@ import { DataContext } from "../Context Api/UserContext";
 import { SearchBar } from "../SearchBar";
 import { Profile } from "../Profile/ProfileNav";
 import { FiTruck, FiPercent, FiRefreshCw } from "react-icons/fi";
-import { ArrowLeftRight } from "lucide-react";
+import { ArrowLeftRight, Sidebar } from "lucide-react";
 import Header from "../Home/Header";
+import { ModernSidebar } from "./Sidebar";
 
 const NavbarDark = () => {
   const navigate = useNavigate();
@@ -91,73 +92,6 @@ const NavbarDark = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            {/* <Link to="/offer" className="group">
-              <div
-                className="
-      relative
-      flex
-      items-center
-      gap-2
-      px-2
-      py-1.5
-      rounded-full
-      overflow-hidden
-      bg-gradient-to-r
-      from-[#1565c0]
-      via-[#1976d2]
-      to-[#42a5f5]
-      shadow-[0_4px_20px_rgba(25,118,210,0.35)]
-      hover:shadow-[0_8px_30px_rgba(25,118,210,0.5)]
-      transition-all
-      duration-300
-      hover:scale-[1.03]
-    "
-              >
-            
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-[shine_4s_linear_infinite]" />
-
-         
-                <div className="absolute left-2">
-                  <span className="relative flex h-2.5 w-2.5">
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-white opacity-75"></span>
-                    <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-white"></span>
-                  </span>
-                </div>
-
-             
-                <div
-                  className="
-        ml-4
-        flex
-        items-center
-        justify-center
-        h-5
-        w-5
-        rounded-full
-        bg-white
-        shadow-sm
-      "
-                >
-                  <FiPercent size={13} className="text-[#1976d2]" />
-                </div>
-
-             
-                <span
-                  className="
-        relative
-        z-10
-        text-xs
-        font-extrabold
-        text-white
-        uppercase
-        tracking-[0.18em]
-      "
-                >
-                  Live Offers
-                </span>
-              </div>
-            </Link> */}
-
             <Link
               to="/offer"
               className="flex items-center gap-1 text-sm font-semibold"
@@ -343,7 +277,10 @@ const NavbarDark = () => {
 
         {/* ======= MOBILE NAV ======= */}
         <div className="bg-black w-full h-[45px] md:hidden flex items-center justify-between px-3">
-          <div className="text-2xl cursor-pointer text-white/90" onClick={toggle}>
+          <div
+            className="text-2xl cursor-pointer text-white/90"
+            onClick={toggle}
+          >
             <i
               className={
                 values ? "ri-close-line text-white/90" : "ri-menu-2-line"
@@ -389,39 +326,17 @@ const NavbarDark = () => {
 
         {/* ======= SIDEBAR + OVERLAY ======= */}
         <div
-          className={`fixed inset-0  ${navHeight}  bg-black/20 backdrop-blur-sm z-40 transition-opacity duration-300 ${
+          className={`fixed inset-0 ${navHeight} bg-black/20 backdrop-blur-sm z-40 transition-opacity duration-300 ${
             values ? "opacity-100 visible" : "opacity-0 invisible"
           }`}
           onClick={() => setValue(false)}
         />
 
-        {/* Sidebar starts below Navbar */}
-        <div
-          className={`fixed ${navHeight} left-0 bottom-0 w-1/2 bg-white z-50 transform transition-transform duration-500 ease-in-out overflow-y-auto border-r ${
-            values ? "translate-x-0" : "-translate-x-full"
-          }`}
-        >
-          <div className="flex items-center justify-between bg-gray-50 p-4 border-b">
-            <span className="text-gray-800 font-bold uppercase tracking-wider text-xs">
-              Categories
-            </span>
-            <i className="ri-arrow-left-s-line text-gray-400"></i>
-          </div>
-
-          <nav className="flex flex-col pb-20">
-            {catData?.map((cat, index) => (
-              <Link
-                key={index}
-                to={`/${cat.catName}`}
-                className="group flex items-center justify-between px-4 py-3 border-b-1 text-gray-700  border-gray-200 text-sm font-medium hover:bg-indigo-50 hover:text-indigo-600 transition-all"
-                onClick={() => setValue(false)}
-              >
-                <span>{cat.catName}</span>
-                <i className="ri-arrow-right-s-line opacity-0 group-hover:opacity-100 transition-opacity"></i>
-              </Link>
-            ))}
-          </nav>
-        </div>
+        <ModernSidebar
+          isOpen={values}
+          onClose={() => setValue(false)}
+          catData={catData}
+        />
       </div>
     </>
   );
