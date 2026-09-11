@@ -49,7 +49,7 @@ export const ModernSidebar = ({ isOpen, onClose, catData }) => {
 
       {/* Sidebar */}
       <div
-        className={`relative z-10 w-full max-w-[380px] bg-white h-full shadow-2xl flex flex-col justify-between overflow-y-auto font-sans transform-gpu transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+        className={`relative z-10 w-full bg-white h-full shadow-2xl flex flex-col justify-between overflow-y-auto font-sans transform-gpu transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
