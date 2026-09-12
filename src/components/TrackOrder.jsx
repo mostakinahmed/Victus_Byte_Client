@@ -91,7 +91,7 @@ const TrackOrderPage = () => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="max-w-[1400px] lg:mt-[70px] mt-[38px] px-2 lg:px-4 mx-auto md:py-10 py-6 font-sans"
+      className="max-w-[1400px] px-2 md:-mt-10 lg:px-4 mx-auto font-sans"
     >
       <div className="bg-white border border-slate-100 rounded md:p-10 pb-10 p-3 min-h-[75vh]">
         {/* Header */}
@@ -148,7 +148,7 @@ const TrackOrderPage = () => {
               (e.currentTarget.style.backgroundColor = "#F66107")
             }
           >
-            {loading ? "Searching..." : "Track System"}
+            {loading ? "Searching..." : "Track Order"}
           </button>
         </div>
 

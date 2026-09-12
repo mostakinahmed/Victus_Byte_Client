@@ -99,7 +99,7 @@ const Footer = () => {
                     9 AM - 8 PM
                   </span>
 
-                  <span className="text-base font-bold text-orange-500 tracking-wider">
+                  <span className="text-lg font-bold text-orange-500 tracking-wider">
                     09611-342936
                   </span>
                 </div>

@@ -16,6 +16,8 @@ import {
   FaTwitter,
   FaYoutube,
   FaLinkedinIn,
+  FaInstagram,
+  FaWhatsapp,
 } from "react-icons/fa";
 
 export const ModernSidebar = ({ isOpen, onClose, catData }) => {
@@ -56,6 +58,7 @@ export const ModernSidebar = ({ isOpen, onClose, catData }) => {
         {/* Header */}
         <div className="flex items-center h-[55px] shrink-0 justify-between px-3 border-b border-white/10 sticky top-0 bg-black z-10">
           <img
+            onClick={() => handleNavigate("/")}
             src="/logo/web NAV tp white1.png"
             alt="Victus-Byte Logo"
             className="w-36 h-auto object-contain"
@@ -309,14 +312,14 @@ export const ModernSidebar = ({ isOpen, onClose, catData }) => {
           {[
             {
               icon: <FaFacebookF size={14} />,
+              link: "https://www.facebook.com/victusbyte",
+            },
+            {
+              icon: <FaInstagram size={15} />,
               link: "#",
             },
             {
-              icon: <FaTwitter size={14} />,
-              link: "#",
-            },
-            {
-              icon: <FaYoutube size={14} />,
+              icon: <FaWhatsapp size={16} />,
               link: "#",
             },
             {

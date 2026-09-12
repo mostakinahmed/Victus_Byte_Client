@@ -17,7 +17,7 @@ export const Home = () => {
       <HeroSection />
       <FeaturedCategory />
       <TopCategoryCards />
-      <MobileCategoryRow />
+      {/* <MobileCategoryRow /> */}
 
       <FlashSale />
       <HorizontalAds />

@@ -268,11 +268,13 @@ const ProductDetail = () => {
         <div className="flex flex-col lg:flex-row gap-4 lg:gap-3 w-full">
           {/* LEFT COLUMN: Product Images, Details, and Specs */}
           <div className="flex flex-col w-full lg:w-[70%] xl:w-[80%] gap-3">
+        
+        
             {/* Top Header */}
-            <div className="w-full hidden md:flex bg-white border border-slate-200 rounded px-6 py-3 items-center justify-between">
-              <div className="flex items-center gap-3 text-black text-sm font-medium">
+            <div className="w-full flex bg-white border border-slate-200 rounded md:px-6  px-2 md:py-3 py-2 items-center justify-between">
+              <div className="flex items-center md:gap-3 gap-2 text-black text-sm font-medium">
                 <span>Share:</span>
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center md:gap-2.5 gap-1.5">
                   <button
                     className="p-1 hover:text-blue-600 transition-colors cursor-pointer"
                     aria-label="Share on Messenger"
@@ -296,15 +298,15 @@ const ProductDetail = () => {
 
               {/* Right: Save & Add to Compare */}
               <div className="flex items-center gap-6 text-sm font-semibold text-black">
-                <button className="flex items-center gap-1.5 hover:text-brand transition-colors cursor-pointer">
+                <button className="hidden md:flex items-center gap-1.5 hover:text-brand transition-colors cursor-pointer">
                   <FiBookmark size={18} />
                   <span>Save</span>
                 </button>
                 <button
                   onClick={handleAddToCompare}
-                  className="flex items-center gap-1.5 hover:text-brand transition-colors cursor-pointer"
+                  className="flex items-center gap-1.5 hover:text-brand  transition-colors cursor-pointer"
                 >
-                  <FiPlusCircle className="" size={18} />
+                  <FiPlusCircle size={18} />
                   <span>Add to Compare</span>
                 </button>
               </div>
