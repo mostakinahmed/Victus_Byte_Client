@@ -18,6 +18,7 @@ export const Breadcrumb = () => {
     "/daily-accessories",
     "/offer",
     "/forgot-password",
+    "/contact-us"
   ];
 
   // If the current path matches any hidden route, render nothing

@@ -298,7 +298,7 @@ export const ModernSidebar = ({ isOpen, onClose, catData }) => {
           {/* Let's Talk */}
           <div className="mt-6">
             <button
-              onClick={() => handleNavigate("/contact")}
+              onClick={() => handleNavigate("/contact-us")}
               className="w-full bg-[#FF751F] hover:bg-[#e6671a] text-white py-3 rounded-md font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-2 transition-all duration-300 cursor-pointer shadow-md hover:shadow-lg"
             >
               <span>Let's Talk</span>
